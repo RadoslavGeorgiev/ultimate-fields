@@ -1,0 +1,37 @@
+.uf-field-type-number .input {
+	position: relative;
+}
+
+.uf-number {
+	margin: 8px 15px 8px 65px;
+	box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	background: #e5e5e5;
+	height: 12px;
+	position: relative;
+
+	.ui-slider-handle {
+		border: 1px solid #dfdfdf;
+		background: #0073aa;
+		font-weight: normal;
+		color: #555555;
+		top: -.5em;
+		margin-left: -.6em;
+		position: absolute;
+		z-index: 2;
+		width: 1.7em;
+		height: 1.7em;
+		cursor: default;
+		border-radius: 50%;
+	}
+
+	&-indicator {
+		float: left;
+		width: 50px;
+		border: 1px solid #ccc;
+		background: #eee;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		margin-top: -9px;
+	}
+}

@@ -1,0 +1,47 @@
+.uf-settings {
+	&-toolbar {
+		margin-bottom: 0;
+		margin-top: 10px;
+	}
+
+	&-website-link {
+		display: inline-block;
+
+		svg {
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 5px;
+
+			path {
+				fill: #666;
+			}
+		}
+
+		&:hover svg {
+			path {
+				fill: #0073aa;
+			}
+		}
+	}
+
+	&-pro-link {
+		float: right;
+		color: #a00;
+		line-height: 20px;
+		padding: 15px 5px;
+
+		.dashicons {
+			vertical-align: middle;
+			margin-right: 3px;
+			margin-top: -1px;
+		}
+	}
+
+	& + .wrap > h1 {
+		display: none;
+
+		& + .notice {
+			margin-top: 20px;
+		}
+	}
+}

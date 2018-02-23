@@ -1,0 +1,81 @@
+.uf-welcome {
+	.version {
+		float: right;
+		padding: 10px 0 18px;
+		text-align: center;
+		background: #0074a2;
+		width: 150px;
+		height: 150px;
+		margin-bottom: 20px;
+		box-shadow: 0 0 7px rgba(0,0,0,0.3);
+
+		span {
+			font-size: 120px;
+			line-height: 120px;
+		}
+
+		svg {
+			width: 120px; height: 120px;
+
+			path {
+				fill: #fff;
+			}
+		}
+
+		strong {
+			display: block;
+			font-weight: 100;
+			font-size: 20px;
+		}
+	}
+
+	.changelog {
+		margin-bottom: 30px;
+	}
+
+	p {
+		text-align: justify;
+	}
+
+	img {
+		padding: 3px;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		max-width: 100%;
+
+		&.aligncenter {
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+		}
+	}
+
+	hr {
+		clear: both;
+	}
+
+	h1 {
+		padding-top: 20px;
+	}
+
+	h2 {
+		.dashicons {
+			width: auto;
+			font-size: 60px;
+			height: 60px;
+			line-height: 60px;
+			vertical-align: middle;
+			margin-right: 10px;
+			float: left;
+		}
+	}
+
+	.text-col .col {
+		vertical-align: top !important;
+		margin-top: 0 !important;
+	}
+}
+
+.post-type-ultimate-fields .wp-pointer {
+	z-index: 500023 !important;
+}
