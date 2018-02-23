@@ -1,5 +1,5 @@
 {
-	"name": "ultimate-fields/ultimate-fields",
+	"name": "ultimate-fields",
 	"version": "3.0.0",
 	"description": "A plugin for custom fields in WordPres",
 	"main": "gulpfile.js",
@@ -8,7 +8,6 @@
 		"gulp-sass": "*",
 		"gulp-sourcemaps": "^2.6.0"
 	},
-	"devDependencies": {},
 	"scripts": {
 		"build": "gulp",
 		"watch": "gulp watch"
@@ -18,7 +17,7 @@
 		"url": "git+https://github.com/RadoslavGeorgiev/ultimate-fields.git"
 	},
 	"author": "Radoslav Georgiev <rageorgiev@gmail.com>",
-	"license": "ISC",
+	"license": "GPL-3.0",
 	"bugs": {
 		"url": "https://github.com/RadoslavGeorgiev/ultimate-fields/issues"
 	},
