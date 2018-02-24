@@ -22,4 +22,15 @@ abstract class Screen {
 	 * @var bool
 	 */
 	public $active = false;
+
+	/**
+	 * Checks if the screen is available.
+	 *
+	 * @since 3.0
+	 *
+	 * @return bool
+	 */
+	public function is_available() {
+		return true;
+	}
 }

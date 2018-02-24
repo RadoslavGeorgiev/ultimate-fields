@@ -78,15 +78,15 @@ class Page {
 	 * @since 3.0
 	 */
 	public function load() {
-		$this->screens = array();
+		$screens = array();
 
-		$this->screens[] = new Screen_General;
-		$this->screens[] = new Screen_Import_Export;
-		$this->screens[] = new Screen_JSON_Sync;
-		$this->screens[] = new Screen_About;
+		$screens[] = new Screen_General;
+		$screens[] = new Screen_Import_Export;
+		$screens[] = new Screen_JSON_Sync;
+		$screens[] = new Screen_About;
 
 		if( Migration::instance()->get_state() == Migration::STATE_PENDING ) {
-			$this->screens[] = new Screen_Migration;
+			$screens[] = new Screen_Migration;
 		}
 
 		/**
@@ -97,7 +97,15 @@ class Page {
 		 * @param Ultimate_Fields\UI\Settings\Screen[] $screens
 		 * @return Ultimate_Fields\UI\Settings\Screen[]
 		 */
-		$this->screens = apply_filters( 'uf.settings.tabs', $this->screens );
+		$screens = apply_filters( 'uf.settings.tabs', $screens );
+
+		// Filter the screens based on availability
+		$this->screens = array();
+		foreach( $screens as $screen ) {
+			if( $screen->is_available() ) {
+				$this->screens[] = $screen;
+			}
+		}
 
 		$base_url = admin_url( 'edit.php?post_type=ultimate-fields&page=settings' );
 		$current = isset( $_GET[ 'screen' ] ) ? $_GET[ 'screen' ] : false;
