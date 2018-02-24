@@ -110,7 +110,7 @@ class UI {
 
 		wp_register_style( 'uf-ui', ULTIMATE_FIELDS_UI_URL . 'assets/css/ultimate-fields-ui.css', array( 'ultimate-fields-css' ), $v );
 
-		if( ! is_admin() || 'ultimate-fields' != get_current_screen()->id )
+		if( ! is_admin() || 'ultimate-fields' != get_current_screen()->post_type )
 			return;
 
 		// Enqueue assets for the UI
