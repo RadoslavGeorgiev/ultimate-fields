@@ -15,9 +15,11 @@
 			} ?>
 		</ul>
 
+		<?php if( ! defined( 'ULTIMATE_FIELDS_PRO' ) || ! ULTIMATE_FIELDS_PRO ): ?>
 		<a href="http://www.ultimate-fields.com/pro/" target="_blank" class="uf-settings-pro-link">
 			<span class="dashicons dashicons-info"></span>
 			<?php _e( 'Get Ultimate Fields Pro', 'ultimate-fields' ) ?>
 		</a>
+		<?php endif ?>
 	</div>
 </div><!-- /.uf-options -->

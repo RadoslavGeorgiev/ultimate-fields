@@ -2,7 +2,6 @@
 namespace Ultimate_Fields\UI\Settings;
 
 use Ultimate_Fields\Container;
-use Ultimate_Fields\Field;
 use Ultimate_Fields\Options_Page;
 
 /**
@@ -11,6 +10,15 @@ use Ultimate_Fields\Options_Page;
  * @since 3.0
  */
 class Screen_General extends Screen {
+	/**
+	 * Holds the fields, which will be used for the settings page.
+	 *
+	 * @since 3.0
+	 *
+	 * @var Ultimate_Fields\Field[]
+	 */
+	protected $fields;
+
 	/**
 	 * Returns the ID of the screen.
 	 *
@@ -29,6 +37,29 @@ class Screen_General extends Screen {
 	 */
 	public function get_title() {
 		return __( 'Settings', 'ultimate-fields' );
+	}
+
+	/**
+	 * Checks if the screen is available at all.
+	 *
+	 * @since 3.0
+	 *
+	 * @return bool
+	 */
+	public function is_available() {
+		/**
+		 * Allows the fields of the settings page to be modified.
+		 *
+		 * If no fields are found, the whole screen will be ignored.
+		 *
+		 * @since 3.0
+		 *
+		 * @param array $fields An empty array of fields.
+		 * @return array
+		 */
+		$this->fields = apply_filters( 'uf.settings.fields', array() );
+
+		return ! empty( $this->fields );
 	}
 
 	/**
@@ -52,8 +83,7 @@ class Screen_General extends Screen {
 		# Create a container for the setting
 		Container::create( __( 'Settings', 'ultimate-fields' ) )
 			->add_location( 'options', $this->page )
-			// ->set_description_position( 'label' )
-			->add_fields( $this->get_settings_fields() );
+			->add_fields( $this->fields );
 
 		$this->page->load();
 	}
@@ -65,36 +95,5 @@ class Screen_General extends Screen {
 	 */
 	public function display() {
 		$this->page->display();
-	}
-
-	/**
-	 * Returns the field settings for the container.
-	 *
-	 * @since 3.0
-	 *
-	 * @return Ultimate_Fields\Field
-	 */
-	public function get_settings_fields() {
-		static $fields;
-
-		if( ! is_null( $fields ) ) {
-			return $fields;
-		}
-
-		$fields = array(
-			Field::create( 'section', 'general_settings', __( 'Ultimate Fields Pro', 'ultimate-fields' ) )
-				->set_icon( 'dashicons dashicons-admin-generic' ),
-			Field::create( 'text', 'uf_pro_key', __( 'License key', 'ultimate-fields' ) )
-				->set_description( __( 'Enter your license key here to enable automatic updates. If you don\'t have one yet, click the "Get Ultimate Fields Pro" link above to learn more about Ultimate Fields Pro.', 'ultimate-fields' ) ),
-			Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields' ) )
-				->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) )
-				->set_icon( 'dashicons dashicons-list-view' ),
-			Field::create( 'text', 'uf_google_maps_api_key', __( 'Google Maps API Key', 'ultimate-fields' ) ),
-				// ->set_description( __( 'This key would be used for all Map fields throughout the site. If no value is entered, the Map field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) ),
-			Field::create( 'text', 'uf_google_fonts_api_key', __( 'Google Fonts API Key', 'ultimate-fields' ) ),
-				// ->set_description( __( 'This key would be used for all Font fields throughout the site. If no value is entered, the Google Fonts tab will not be available for the field. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) )
-		);
-
-		return $fields;
 	}
 }
