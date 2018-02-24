@@ -13,5 +13,18 @@
  * Description: Ultimate Fields is a plugin, that allows you to add custom fields in many places throughout the WordPress administration area, supporting a total of more than 30 field types, including repeaters, layouts and etc.
  */
 
-require_once( 'core/ultimate-fields.php' );
-require_once( 'ui/ultimate-fields-ui.php' );
+/**
+ * Loads the files of the plugin.
+ *
+ * @since 3.0
+ */
+add_action( 'plugins_loaded', 'load_ultimate_fields', 9 );
+function load_ultimate_fields() {
+	// Check if Ultimate Fields Pro (priority 8) has already been loaded
+	if( function_exists( 'ultimate_fields' ) ) {
+		return;
+	}
+
+	require_once( 'core/ultimate-fields.php' );
+	require_once( 'ui/ultimate-fields-ui.php' );
+}
