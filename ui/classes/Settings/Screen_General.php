@@ -71,7 +71,7 @@ class Screen_General extends Screen {
 	 */
 	public function load() {
 		# Create an options page
-		$this->page = Options_Page::create( 'settings', __( 'Settings', 'ultimate-fields' ) );
+		$this->page = Options_Page::create( 'uf-plugin-settings', __( 'Settings', 'ultimate-fields' ) );
 		$this->page->set_screen_id( get_current_screen()->id );
 
 		# Remove the page from the menu
@@ -79,9 +79,11 @@ class Screen_General extends Screen {
 
 		# Remove the screen options
 		add_filter( 'screen_options_show_screen', '__return_false' );
+		add_filter( 'uf.options_page.redirect_url', array( $this, 'fix_redirect' ), 10, 2 );
 
 		# Create a container for the setting
-		Container::create( __( 'Settings', 'ultimate-fields' ) )
+		Container::create( 'uf-plugin-settings' )
+			->set_title( __( 'Settings', 'ultimate-fields' ) )
 			->add_location( 'options', $this->page )
 			->add_fields( $this->fields );
 
@@ -95,5 +97,19 @@ class Screen_General extends Screen {
 	 */
 	public function display() {
 		$this->page->display();
+	}
+
+	/**
+	 * Fixes the redirect URL of the options page.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $url The pre-determined URL.
+	 * @param Options_Page $page
+	 * @return string
+	 */
+	public function fix_redirect( $url, $page ) {
+		$url = admin_url( 'edit.php?post_type=ultimate-fields&page=settings' );
+		return $url;
 	}
 }

@@ -45,3 +45,26 @@
 		}
 	}
 }
+
+.uf-license-state {
+	.uf-field-input-wrap {
+		padding: 0;
+	}
+
+	.uf-field-description {
+		font-style: normal;
+		border-left: 4px solid red;
+		padding: 15px;
+		color: #444;
+		font-size: 14px;
+		opacity: 1;
+	}
+
+	&-valid .uf-field-description {
+		border-left-color: green;
+	}
+
+	&-invalid .uf-field-description {
+		border-left-color: darkred;
+	}
+}

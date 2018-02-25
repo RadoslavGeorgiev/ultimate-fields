@@ -629,9 +629,13 @@ class Options_Page {
 	 * @return string
 	 */
 	public function get_url() {
-		return is_network_admin()
+		$url = is_network_admin()
 			? network_admin_url( 'admin.php?page=' . $this->id )
 			: menu_page_url( $this->id, false );
+
+		$url = apply_filters( 'uf.options_page.redirect_url', $url, $this );
+
+		return $url;
 	}
 
 	/**
