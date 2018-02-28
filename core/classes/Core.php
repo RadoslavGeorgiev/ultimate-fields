@@ -72,6 +72,7 @@ class Core {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 9 );
 		add_action( 'login_enqueue_scripts', array( $this, 'register_scripts' ), 9 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_scripts' ), 12 );
+		add_action( 'wp_enqueue_editor', array( $this, 'initialize_scripts' ), 12 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_scripts' ), 12 );
 		add_action( 'login_enqueue_scripts', array( $this, 'initialize_scripts' ), 12 );
 		add_action( 'after_setup_theme', array( $this, 'initialize' ), 999 );
