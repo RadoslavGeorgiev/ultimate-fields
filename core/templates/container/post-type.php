@@ -4,6 +4,6 @@
 </div>
 <% } %>
 
-<div class="uf-fields uf-boxed-fields"></div>
+<div class="uf-fields <% if( boxed ) { %>uf-boxed-fields<% } %>"></div>
 
 <input type="hidden" name="uf_post_type_<%= id %>" value="" class="uf-container-data" />

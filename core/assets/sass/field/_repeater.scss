@@ -190,9 +190,10 @@ $number-width: 38px;
 	}
 
 	&-control {
+		box-sizing: border-box;
 		text-decoration: none;
 		float: left;
-		height: 20px;
+		height: 35px;
 		line-height: 20px;
 		width: 36px;
 		text-align: center;

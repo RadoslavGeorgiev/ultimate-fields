@@ -3,3 +3,15 @@
 		margin-top: 10px;
 	}
 }
+
+.gutenberg {
+	.uf-basic-input input {
+		max-width: none;
+	}
+
+	// Remove borders from metaboxes
+	.postbox .uf-container-post-type {
+		border: 0;
+		margin: -21px -15px -15px -15px;
+	}
+}

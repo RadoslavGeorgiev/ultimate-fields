@@ -54,7 +54,9 @@
  				tmpl = UltimateFields.template( 'post-type' );
 
  			// Add the basic layout
- 			this.$el.html( tmpl( this.model.toJSON() ) );
+ 			var settings = this.model.toJSON();
+			settings.boxed = ! $( 'body' ).is( '.gutenberg-editor-page' );
+ 			this.$el.html( tmpl( settings ) );
 
 			// If the container is seamless, remove the metabox class
 			this.seamless();
