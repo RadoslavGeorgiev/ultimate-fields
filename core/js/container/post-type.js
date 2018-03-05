@@ -38,7 +38,11 @@
  		initialize: function() {
  			var that = this;
 
-			this.initializeLocations( UltimateFields.Location.Post_Type );
+			this.initializeLocations(
+				'undefined' != typeof _wpGutenbergCodeEditorSettings
+					? UltimateFields.Location.Post_Type_in_Gutenberg
+					: UltimateFields.Location.Post_Type
+			);
 
 			// Connect to the controller
 			controller.addContainer( this );
@@ -126,12 +130,19 @@
 		},
 
 		/**
+		 * Checks templates.
+		 */
+		checkTemplate: function( template ) {
+			var templates = this.get( 'templates' );
+			that.checked.set( 'templates', that.checkSingleValue( template, templates ) );
+		},
+
+		/**
 		 * Listens for template changes, if templates are present.
 		 */
 		listenForTemplates: function() {
-			var that      = this,
-				templates = this.get( 'templates' ),
-				$select   = $( 'select#page_template' ),
+			var that    = this,
+				$select = $( 'select#page_template' ),
 				check;
 
 			// Check if there is a selector at all
@@ -140,7 +151,7 @@
 			}
 
 			check = function() {
-				that.checked.set( 'templates', that.checkSingleValue( $select.val(), templates ) );
+				that.checkTemplate( $select.val() );
 			}
 
 			// Listen for changes
@@ -149,11 +160,18 @@
 		},
 
 		/**
+		 * Checks post formats.
+		 */
+		checkFormats: function( format ) {
+			var formats = this.get( 'formats' );
+			this.checked.set( 'formats', this.checkSingleValue( format, formats ) );
+		},
+
+		/**
 		 * Listens for post formats if any.
 		 */
 		listenForFormats: function() {
-			var formats = this.get( 'formats' ),
-				$radios = $( '#post-formats-select input:radio' ),
+			var $radios = $( '#post-formats-select input:radio' ),
 				check;
 
 			// If there are no radios, don't listen to anything
@@ -162,8 +180,7 @@
 			}
 
 			check = function() {
-				var format = $radios.filter( ':checked' ).val();
-				this.checked.set( 'formats', this.checkSingleValue( format, formats ) );
+				that.checkFormats( $radios.filter( ':checked' ).val() );
 			}
 
 			$radios.on( 'change', _.bind( check, this ) );
@@ -171,17 +188,23 @@
 		},
 
 		/**
+		 * Checks post stati.
+		 */
+		checkStati: function( status ) {
+			var stati   = this.get( 'stati' );
+
+			this.checked.set( 'stati', this.checkSingleValue( status, stati ) );
+		},
+
+		/**
 		 * Listen for the current post status.
 		 */
 		listenForStati: function() {
-			var stati   = this.get( 'stati' ),
-				$select = $( '#post_status' ),
+			var $select = $( '#post_status' ),
 				check;
 
 			check = function() {
-				var status = $select.val();
-
-				this.checked.set( 'stati', this.checkSingleValue( status, stati ) );
+				this.checkStati( $select.val() );
 			}
 
 			// Listen for changes
@@ -190,15 +213,10 @@
 		},
 
 		/**
-		 * Listens for particular post(page) parents.
+		 * Initializes/prepares parents.
 		 */
-		listenForParents: function() {
-			var parents = this.get( 'parents' ),
-				$select = $( '#parent_id' ),
-				check;
-
-			// If there is no parents dropdown, don't use the rules
-			if( 0 === $select.length ) {
+		initializeParents: function( parents ) {
+			if( this.parentsInitialized ) {
 				return;
 			}
 
@@ -206,15 +224,46 @@
 			parents.visible = parents.visible.map( parseInt );
 			parents.hidden  = parents.hidden.map( parseInt );
 
+			this.parentsInitialized = true;
+		},
+
+		/**
+		 * Checks the parent for hierarchical post types.
+		 */
+		checkParent: function( parent ) {
+			var parents = this.get( 'parents' );
+
+			this.initializeParents( parents );
+			this.checked.set( 'parents', this.checkSingleValue( parent, parents ) );
+		},
+
+		/**
+		 * Listens for particular post(page) parents.
+		 */
+		listenForParents: function() {
+			var $select = $( '#parent_id' ),
+				check;
+
+			// If there is no parents dropdown, don't use the rules
+			if( 0 === $select.length ) {
+				return;
+			}
+
 			// Performs checks for the rule
 			check = function() {
-				var parent = parseInt( $select.val() );
-				this.checked.set( 'parents', this.checkSingleValue( parent, parents ) );
+				this.checkParent( parseInt( $select.val() ) );
 			}
 
 			// Listen for changes
 			$select.on( 'change', _.bind( check, this ) );
 			check.apply( this );
+		},
+
+		/**
+		 * Checks if the correct terms have been applied.
+		 */
+		checkTerms: function( terms ) {
+			that.checked.set( 'tax_' + taxonomy, that.checkMultipleValues( current, terms ) );
 		},
 
 		/**
@@ -235,7 +284,7 @@
 					}
 				});
 
-				that.checked.set( 'tax_' + taxonomy, that.checkMultipleValues( current, terms ) );
+				this.checkTerms( current );
 			}
 
 			$box = $( '#' + taxonomy + 'div' );
@@ -249,11 +298,36 @@
 		},
 
 		/**
+		 * Initializes/prepares levels.
+		 */
+		initializeLevels: function( levels ) {
+			if( this.levelsInitialized ) {
+				return;
+			}
+
+			// Format levels
+			levels.visible = levels.visible.map(function( level ) { return parseInt( level ) });
+			levels.hidden  = levels.hidden.map(function( level ) { return parseInt( level ) });
+
+			this.levelsInitialized = true;
+		},
+
+		/**
+		 * Checks levels.
+		 */
+		checkLevel: function( level ) {
+			var levels = this.get( 'levels' );
+
+			this.initializeLevels( levels );
+
+			that.checked.set( 'levels', that.checkSingleValue( level, levels ) );
+		},
+
+		/**
 		 * Listens for level changes on hierarchical post-types.
 		 */
 		listenForLevels: function() {
 			var that    = this,
-				levels  = this.get( 'levels' ),
 				$select = $( 'select#parent_id' ),
 				check;
 
@@ -261,10 +335,6 @@
 			if( ! $select.length ) {
 				return;
 			}
-
-			// Format levels
-			levels.visible = levels.visible.map(function( level ) { return parseInt( level ) });
-			levels.hidden  = levels.hidden.map(function( level ) { return parseInt( level ) });
 
 			// Does the checks
 			check = function() {
@@ -281,12 +351,41 @@
 				level = level || 'level--1';
 				level = parseInt( level.replace( 'level-', '' ) ) + 2;
 
-				that.checked.set( 'levels', that.checkSingleValue( level, levels ) );
+				this.checkLevel( level );
 			}
 
 			// Listen for changes
 			$select.change( _.bind( check, this ) );
 			check();
+		}
+	});
+
+	/**
+	 * Handles the location properties of post types when Gutenberg is being used.
+	 */
+	UltimateFields.Location.Post_Type_in_Gutenberg = UltimateFields.Location.Post_Type.extend({
+		/**
+		 * Starts listening for everything needed.
+		 */
+		listen: function() {
+			var location = this;
+
+			UltimateFields.Location.Post_Type.prototype.listen.apply( this );
+
+			// Start globally listening for changes
+			this.state = {};
+			this.collectState();
+			wp.data.subscribe(function() {
+				location.collectState();
+				console.log(location.state);
+			});
+		},
+
+		/**
+		 * Collects the state of the current screen.
+		 */
+		collectState() {
+			this.state.template = wp.data.select('core/editor').getEditedPostAttribute('template');
 		}
 	});
 
