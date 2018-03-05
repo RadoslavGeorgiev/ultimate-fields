@@ -37,12 +37,14 @@
  		 */
  		initialize: function() {
  			var that = this;
-console.log(this.model.get('id'));
-			this.initializeLocations(
-				'undefined' != typeof _wpGutenbergCodeEditorSettings
-					? UltimateFields.Location.Post_Type_in_Gutenberg
-					: UltimateFields.Location.Post_Type
-			);
+
+			if( 'undefined' != typeof _wpGutenbergCodeEditorSettings ) {
+				// Gutenberg mode
+				that._initializeLocations( UltimateFields.Location.Post_Type_in_Gutenberg );
+			} else {
+				// Classic mode
+				this.initializeLocations( UltimateFields.Location.Post_Type );
+			}
 
 			// Connect to the controller
 			controller.addContainer( this );
@@ -74,7 +76,6 @@ console.log(this.model.get('id'));
  		 * Shows the meta box of the container and the responsible checkbox.
  		 */
  		show: function() {
-			console.log('showing');
  			this.$el.closest( '.postbox' ).show();
  			$( '#adv-settings label[for="' + this.model.get( 'id' ) + '-hide"]' ).show();
  		},
@@ -83,7 +84,6 @@ console.log(this.model.get('id'));
  		 * Hides the meta box of the container and the responsible checkbox.
  		 */
  		hide: function() {
-			console.log('hiding');
  			this.$el.closest( '.postbox' ).hide();
  			$( '#adv-settings label[for="' + this.model.get( 'id' ) + '-hide"]' ).hide();
  		}
@@ -135,7 +135,7 @@ console.log(this.model.get('id'));
 		 * Checks templates.
 		 */
 		checkTemplate: function( template ) {
-			var templates = this.get( 'templates' );;
+			var templates = this.get( 'templates' );
 			this.checked.set( 'templates', this.checkSingleValue( template, templates ) );
 		},
 
@@ -264,7 +264,7 @@ console.log(this.model.get('id'));
 		/**
 		 * Checks if the correct terms have been applied.
 		 */
-		checkTerms: function( terms ) {
+		checkTerms: function( taxonomy, terms, current ) {
 			this.checked.set( 'tax_' + taxonomy, this.checkMultipleValues( current, terms ) );
 		},
 
@@ -286,7 +286,7 @@ console.log(this.model.get('id'));
 					}
 				});
 
-				this.checkTerms( current );
+				this.checkTerms( taxonomy, terms, current );
 			}
 
 			$box = $( '#' + taxonomy + 'div' );
@@ -370,35 +370,113 @@ console.log(this.model.get('id'));
 		 * Starts listening for everything needed.
 		 */
 		listen: function() {
-			console.log(2);
 			var location = this;
-
-			this.checked = new Backbone.Model();
 
 			// Start globally listening for changes
 			this.state = {};
 			this.collectState();
-			wp.data.subscribe(function() {
-				location.collectState();
-				location.checkState();
+
+			wp.data.subscribe( function() {
+				location.update();
 			});
+		},
+
+		/**
+		 * Handles updates of the state.
+		 */
+		update() {
+			// Wait for Gutenberg to fully load the post
+			if( 'undefined' === typeof wp.data.select( 'core/editor' ).getEditedPostAttribute( 'title' ) ) {
+				return;
+			}
+
+			var oldState = _.extend( {}, this.state );
+			this.collectState();
+
+			if( ! _.isEqual( this.state, oldState ) ) {
+				this.checkState();
+			}
 		},
 
 		/**
 		 * Collects the state of the current screen.
 		 */
 		collectState() {
-			this.state.template = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'template' );
+			var that     = this,
+				supports = this.get( 'supports' ),
+				state    = this.state;
+
+			var attribute = wp.data.select( 'core/editor' ).getEditedPostAttribute;
+
+			if( supports.templates && this.get( 'templates' ) && ! this.empty( this.get( 'templates' ) ) ) {
+				state.template = attribute( 'template' );
+			}
+
+			if( supports.levels && this.get( 'levels' ) && ! this.empty( this.get( 'levels' ) ) ) {
+				// @todo: Create an API call that handles an actual hierarchical structure
+				state.level = attribute( 'parent' ) ? 2 : 1;
+			}
+
+			if( supports.parents && this.get( 'parents' ) && ! this.empty( this.get( 'parents' ) ) ) {
+				state.parent = parseInt( attribute( 'parent' ) );
+			}
+
+			if( supports.taxonomies ) {
+				_.each( this.get( 'terms' ), function( terms, taxonomyName ) {
+					if( that.empty( terms ) ) {
+						return;
+					}
+
+					var plural = taxonomyName + 's';
+					plural = plural.replace( /ys$/, 'ies' );
+
+					state[ taxonomyName ] = attribute( plural );
+				});
+			}
+
+			if( supports.formats && this.get( 'formats' ) && ! this.empty( this.get( 'formats' ) ) ) {
+				state.format = attribute( 'format' );
+			}
+
+			if( this.get( 'stati' ) && ! this.empty( this.get( 'stati' ) ) ) {
+				state.status = attribute( 'status' );
+			}
 		},
 
 		/**
 		 * Checks the current state of the location.
 		 */
 		checkState() {
-			var that = this;
+			var that     = this,
+				supports = this.get( 'supports' );
 
-			this.checkTemplate( this.state.template );
-			console.log(this.checked.toJSON());
+			if( 'undefined' != typeof this.state.template ) {
+				this.checkTemplate( this.state.template );
+			}
+
+			if( 'undefined' != typeof this.state.level ) {
+				this.checkLevel( this.state.level );
+			}
+
+			if( supports.taxonomies ) {
+				_.each( this.get( 'terms' ), function( terms, taxonomy ) {
+					if( 'undefined' != typeof that.state[ taxonomy ] ) {
+						that.checkTerms( taxonomy, terms, that.state[ taxonomy ] );
+					}
+				});
+			}
+
+			if( 'undefined' != typeof this.state.format ) {
+				this.checkFormats( this.state.format );
+			}
+
+			if( 'undefined' != typeof this.state.status ) {
+				this.checkStati( this.state.status );
+			}
+
+			if( 'undefined' != typeof this.state.parent ) {
+				this.checkParent( this.state.parent );
+			}
 		}
 	});
 

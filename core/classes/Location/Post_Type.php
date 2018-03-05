@@ -385,10 +385,12 @@ class Post_Type extends Location {
 	 *
 	 * @return mixed[]
 	 */
-	public function export_settings() {
+	public function export_settings( $post_type ) {
 		$this->parse_arguments( $this->arguments );
 
-		$data = array();
+		$data = array(
+			'supports' => $this->get_post_type_supports( $post_type )
+		);
 
 		if( ! empty( $this->templates ) ) $data[ 'templates' ] = $this->templates;
 		if( ! empty( $this->terms ) )     $data[ 'terms' ]     = $this->terms;
@@ -678,5 +680,38 @@ class Post_Type extends Location {
 	 */
 	public function output_column( $column_name, $item_id ) {
 		echo $this->render_column( $column_name, $item_id );
+	}
+
+	/**
+	 * Returns the rules, supported for a post type.
+	 *
+	 * @since 3.0
+	 *
+	 * @return mixed
+	 */
+	public function get_post_type_supports( $slug ) {
+		static $cached;
+
+		if( is_null( $cached ) ) {
+			$cached = array();
+		}
+
+		if( isset( $cached[ $slug ] ) ) {
+			return $cached[ $slug ];
+		}
+
+		$templates = array_keys( wp_get_theme()->get_page_templates( null, $slug ) );
+
+		$supports = array(
+			'templates'  => count( $templates ) > 1,
+			'formats'    => post_type_supports( $slug, 'post-formats' ),
+			'taxonomies' => array_keys( get_taxonomies( array( 'object_type' => array( $slug ) ) ) ),
+			'levels'     => is_post_type_hierarchical( $slug ),
+			'parents'    => is_post_type_hierarchical( $slug )
+				? get_post_type_object( $slug )->rest_base
+				: false
+		);
+
+		return $cached[ $slug ] = $supports;
 	}
 }

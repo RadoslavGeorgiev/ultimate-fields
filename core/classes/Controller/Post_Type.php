@@ -170,7 +170,7 @@ class Post_Type extends Controller {
 				$datastore_set = true;
 			}
 
-			$locations[] = $location->export_settings();
+			$locations[] = $location->export_settings( $post->post_type );
 		}
 
 		$settings = $container->export_settings();
