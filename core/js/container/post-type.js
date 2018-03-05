@@ -37,7 +37,7 @@
  		 */
  		initialize: function() {
  			var that = this;
-
+console.log(this.model.get('id'));
 			this.initializeLocations(
 				'undefined' != typeof _wpGutenbergCodeEditorSettings
 					? UltimateFields.Location.Post_Type_in_Gutenberg
@@ -74,6 +74,7 @@
  		 * Shows the meta box of the container and the responsible checkbox.
  		 */
  		show: function() {
+			console.log('showing');
  			this.$el.closest( '.postbox' ).show();
  			$( '#adv-settings label[for="' + this.model.get( 'id' ) + '-hide"]' ).show();
  		},
@@ -82,6 +83,7 @@
  		 * Hides the meta box of the container and the responsible checkbox.
  		 */
  		hide: function() {
+			console.log('hiding');
  			this.$el.closest( '.postbox' ).hide();
  			$( '#adv-settings label[for="' + this.model.get( 'id' ) + '-hide"]' ).hide();
  		}
@@ -133,8 +135,8 @@
 		 * Checks templates.
 		 */
 		checkTemplate: function( template ) {
-			var templates = this.get( 'templates' );
-			that.checked.set( 'templates', that.checkSingleValue( template, templates ) );
+			var templates = this.get( 'templates' );;
+			this.checked.set( 'templates', this.checkSingleValue( template, templates ) );
 		},
 
 		/**
@@ -191,7 +193,7 @@
 		 * Checks post stati.
 		 */
 		checkStati: function( status ) {
-			var stati   = this.get( 'stati' );
+			var stati = this.get( 'stati' );
 
 			this.checked.set( 'stati', this.checkSingleValue( status, stati ) );
 		},
@@ -263,7 +265,7 @@
 		 * Checks if the correct terms have been applied.
 		 */
 		checkTerms: function( terms ) {
-			that.checked.set( 'tax_' + taxonomy, that.checkMultipleValues( current, terms ) );
+			this.checked.set( 'tax_' + taxonomy, this.checkMultipleValues( current, terms ) );
 		},
 
 		/**
@@ -320,7 +322,7 @@
 
 			this.initializeLevels( levels );
 
-			that.checked.set( 'levels', that.checkSingleValue( level, levels ) );
+			this.checked.set( 'levels', this.checkSingleValue( level, levels ) );
 		},
 
 		/**
@@ -368,16 +370,17 @@
 		 * Starts listening for everything needed.
 		 */
 		listen: function() {
+			console.log(2);
 			var location = this;
 
-			UltimateFields.Location.Post_Type.prototype.listen.apply( this );
+			this.checked = new Backbone.Model();
 
 			// Start globally listening for changes
 			this.state = {};
 			this.collectState();
 			wp.data.subscribe(function() {
 				location.collectState();
-				console.log(location.state);
+				location.checkState();
 			});
 		},
 
@@ -385,7 +388,17 @@
 		 * Collects the state of the current screen.
 		 */
 		collectState() {
-			this.state.template = wp.data.select('core/editor').getEditedPostAttribute('template');
+			this.state.template = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'template' );
+		},
+
+		/**
+		 * Checks the current state of the location.
+		 */
+		checkState() {
+			var that = this;
+
+			this.checkTemplate( this.state.template );
+			console.log(this.checked.toJSON());
 		}
 	});
 
