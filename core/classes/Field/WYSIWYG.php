@@ -4,6 +4,12 @@ namespace Ultimate_Fields\Field;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Template;
 
+/**
+ * Handles editors.
+ *
+ * @since 3.0
+ * @see https://github.com/WordPress/gutenberg/issues/3302 for Gubenberg compatability.
+ */
 class WYSIWYG extends Textarea {
 	/**
 	 * Enqueue the scripts for the field.
