@@ -89,6 +89,9 @@ class UI {
 
 		// Register the containers
 		add_action( 'uf.init', array( $this, 'register_containers' ) );
+
+		// Redirect for the onboarding process
+		add_action( 'current_screen', array( $this, 'redirect_to_welcome' ) );
 	}
 
 	/**
@@ -193,5 +196,26 @@ class UI {
 		}
 
 		Select_Helper::generate_ajax_options();
+	}
+
+	/**
+	 * Redirects the user to the welcome settings page when they visit the UI for the first time.
+	 *
+	 * @since 3.0
+	 */
+	public function redirect_to_welcome() {
+		if( get_option( 'uf_boarding_finished' ) ) {
+			return;
+		}
+
+		$slug = Post_Type::instance()->get_slug();
+		if( 'edit-' . $slug != get_current_screen()->id ) {
+			return;
+		}
+
+		$url = sprintf( 'edit.php?post_type=%s&page=settings&screen=about', $slug );
+		wp_redirect( $url );
+		add_option( 'uf_boarding_finished', true, null, 'yes' );
+		exit;
 	}
 }
