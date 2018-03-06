@@ -1,35 +1,3 @@
-<!--
-## Fields
-
-### Improved repeaters
-
-- Tabs
-- Full-screen mode
-- __more stuff__
-- Existing groups
-- Table mode
-
-### Complex field
-
-### Relational fields
-Object
-Objects
-Link
-
-
-## Others
-
-### JSON Import/Export
-### JSON Synchronization
-### New website & Documentation
-### New layout
-###
-### Unlimited nesting
-### REST API
-### Admin columns
-
--->
-
 <div class="wrap uf-welcome">
 	<div class="uf-welcome-section uf-welcome-section-first uf-welcome-top">
 		<div class="uf-welcome-intro">
@@ -106,49 +74,97 @@ Link
 
 		<div class="uf-welcome-columns">
 			<div class="uf-welcome-column">
-				<h3>Repeaters</h3>
-				<p>Repeaters now support tabs, full-screen mode for groups, table layouts and more.</p>
+				<h4>Repeaters</h4>
+				<p>Repeaters just became way more powerful.</p>
+				<p>They now support tabs, full-screen mode for groups, table layouts, icons, color customization, minimum/maximum limits and that is not even all!</p>
 			</div>
 
 			<div class="uf-welcome-column">
-				<h3>Complex Field</h3>
-				<p>The complex field allows you to group multiple fields (in the same row) and makes your containers more reusable </p>
+				<h4>Complex Field</h4>
+				<p>The new Complex field allows you to add multiple sub-fields to the same field. Those fields may even be loaded from an existing container, making reusable fields possible.</p>
 			</div>
 
-			<div class="uf-welcome-column">
-				<h3>Relational fields</h3>
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>Relational fields</h4>
+				<p>The new WP Object, WP Objects and Link field allow users to select all types of content through a JS-driven and intuitive field!</p>
 			</div>
 
-			<div class="uf-welcome-column">
-				<h3>Conditional Logic</h3>
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>Conditional Logic</h4>
+				<p>Conditional Logic is now supported in the User Interface. Not only that, but you can actually create multiple groups of rules.</p>
+			</div>
+
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>Unlimited nesting</h4>
+				<p>Now you can not just create repeaters, but also have fields within a complex field within a repeater within a layout field. From now on, the sky is the limit!</p>
+			</div>
+
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>Minor UI Tweaks</h4>
+				<p>Most existing fields will now work and look better, thanks to various tweaks and improvements in the interface.</p>
 			</div>
 		</div>
 	</div>
 
-
 	<hr />
 
+	<div class="uf-welcome-section uf-welcome-section-centered">
+		<h2>...and much more</h2>
 
-	<div class="uf-welcome-section uf-welcome-two-col">
-		<div class="col">
-			<h2 class="about-headline-callout">Ultimate Fields Pro</h2>
-			<p>The Pro version of the plugin includes various things like more containers, more fields and some other small goodies.</p>
-			<p>You can read more about it on the official page.</p>
+		<div class="uf-welcome-columns">
+			<div class="uf-welcome-column">
+				<h4>JSON Import/Export</h4>
+				<p>Reliably export and import fields from the admin as JSON files.</p>
+			</div>
 
-			<a href="http://ultimate-fields.com/pro" class="button-primary">Read More &raquo;</a>
-		</div>
+			<div class="uf-welcome-column">
+				<h4>JSON Synchronization</h4>
+				<p>Fields can be automatically saved and synchronized in your theme.</p>
+			</div>
 
-		<div class="col">
-			<img src="<?php echo ULTIMATE_FIELDS_UI_URL ?>assets/images/layout-field.png" alt="Repeater Tabs" width="460" />
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>New website & Documentation</h4>
+				<p>The website of the plugin is now live and full of docs.</p>
+			</div>
+
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>New layout</h4>
+				<p>The new Grid layout allows fields to be added to columns.</p>
+			</div>
+
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>REST API</h4>
+				<p>Automatically expose fields in the REST API.</p>
+			</div>
+
+			<div class="uf-welcome-column uf-welcome-column-top">
+				<h4>Admin columns</h4>
+				<p>Easily display the values of fields as columns in listings.</p>
+			</div>
 		</div>
 	</div>
 
+	<hr>
+
+	<div class="uf-welcome-section">
+		<img src="<?php echo ULTIMATE_FIELDS_UI_URL ?>assets/images/layout-field.png" alt="Repeater Tabs" width="460" class="uf-welcome-image" />
+
+		<h2>Ultimate Fields Pro</h2>
+		<p><strong>More Locations and Fields, Front-end Forms &amp; Faster Support</strong></p>
+		<p>Read more about it on the official page.</p>
+
+		<a href="https://www.ultimate-fields.com/pro/" target="_blank" class="button-primary">Read More &raquo;</a>
+
+		<div class="clearfix"></div>
+	</div>
 
 	<hr />
 
-	<p>
-		<a href="<?php echo admin_url( 'post-new.php?post_type=ultimate-fields&demo' ) ?>" class="button button-hero button-primary">Create your first container</a>
-		&nbsp;
-		<a href="http://ultimate-fields.com/pro/" class="button button-hero button-secondary" target="_blank">Get Ultimate Fields Pro</a>
-	</p>
+	<div class="uf-welcome-section">
+		<p>
+			<a href="<?php echo admin_url( 'post-new.php?post_type=ultimate-fields&demo' ) ?>" class="button button-hero button-primary">Create your first container</a>
+			&nbsp;
+			<a href="https://www.ultimate-fields.com/pro/" class="button button-hero button-secondary" target="_blank">Get Ultimate Fields Pro</a>
+		</p>
+	</div>
 </div>

@@ -50,6 +50,7 @@
 				if( dismissed )
 					return;
 
+					console.log(unhook[0], unhook[1], pointer);
 				// Make sure that only actual strokes are registered for keyup
 				if( 'keyup' == unhook[ 0 ] && 9 == e.which ) {
 					return;
@@ -58,7 +59,15 @@
 				dismissed = 1;
 
 				that.autoClose = true;
-				pointer.$pointer.pointer( 'close' );
+
+				try {
+					pointer.$pointer.pointer( 'close' );
+				} catch( e ) {
+					that.displayed.push( pointer.selector );
+					that.nextPointer();
+					return;
+				}
+
 				setTimeout(function(){
 					that.autoClose = false;
 				}, 50);
@@ -125,7 +134,6 @@
 			// Wait a little if needed
 			if( pointer.timeout ) {
 				setTimeout(function(){
-
 					// Display the pointer
 					pointer.$pointer.pointer( 'open' );
 				} , pointer.timeout);

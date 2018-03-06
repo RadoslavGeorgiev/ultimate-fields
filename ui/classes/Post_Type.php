@@ -813,29 +813,25 @@ class Post_Type {
 		);
 
 		# Ask the user to save the field
-		$pointers[ '.uf-popup .bottom .button-primary' ] = array(
+		$pointers[ '.uf-overlay-footer .button-primary' ] = array(
 			'title'    => __( 'Save the field', 'ultimate-fields' ),
 			'text'     => __( 'When you have entered all needed information about the field, you can save it.', 'ultimate-fields' ),
-			'position' => 'right,bottom',
-			'hook'     => 'change .uf-field[data-id="type"] select',
+			'position' => 'left,bottom',
 			'dismiss'  => 'click'
 		);
 
-		$pointers[ '.uf-field[data-id="container_type"] li label:eq(0)' ] = array(
+		$pointers[ '.uf-repeater-tags-tag:eq(1)' ] = array(
 			'title'    => __( 'Change the location type', 'ultimate-fields' ),
 			'text'     => __( 'Containers can be displayed in different regions of the admin.<br /><br />Select "Options Page" to display the container as an options page in the administration menu.', 'ultimate-fields' ),
 			'position' => 'left,left',
-			'hook'     => 'uf-field-post-render',
-			'dismiss'  => 'change',
-			'timeout'  => 50,
-			'scroll'   => 300
+			'dismiss'  => 'click',
+			'timeout'  => 100
 		);
 
 		$pointers[ '#publish' ] = array(
 			'title'    => __( 'Good job!', 'ultimate-fields' ),
 			'text'     => __( 'This will save all changes you just made and refresh the page.<br /><br />When the page is refreshed, you will see a "Theme Options" link in the menu on the left.<br /><br />If you need further help, please check the documentation of the plugin on the official website.', 'ultimate-fields' ),
 			'position' => 'middle,right',
-			'hook'     => 'change .uf-field[data-id="container_type"] li input:eq(0)',
 			'dismiss'  => 'click',
 			'scroll'   => 0
 		);
@@ -847,7 +843,7 @@ class Post_Type {
 
 			$processed[] = array(
 				'selector' => $key,
-				'hook'     => $pointer[ 'hook' ],
+				'hook'     => isset( $pointer[ 'hook' ] ) ? $pointer[ 'hook' ] : false,
 				'unhook'   => $pointer[ 'dismiss' ],
 				'timeout'  => isset( $pointer[ 'timeout' ] ) ? $pointer[ 'timeout' ] : 0,
 				'scroll'   => isset( $pointer[ 'scroll' ] ) ? $pointer[ 'scroll' ] : -1,

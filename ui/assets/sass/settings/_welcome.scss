@@ -101,6 +101,14 @@
 
 	&-column {
 		flex: 0 0 48.5%;
+
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&-column-top {
+		margin-top: 2em;
 	}
 }
 
