@@ -196,7 +196,8 @@ class Field_Editor {
 				->required(),
 			Field::create( 'text', 'name', __( 'Name', 'ultimate-fields' ) )
 				->required( '~^[0-9a-z_]{1,190}$~i' )
-				->set_description( __( 'You will use this name when retrieving the value of the field.', 'ultimate-fields' ) ),
+				->set_description( __( 'You will use this name when retrieving the value of the field.', 'ultimate-fields' ) )
+				->set_validation_message( __( 'Names must contain between 1 and 100 characters, which may be digits, letters or underscores.', 'ultimate-fields' ) ),
 			$type_field = Field::create( 'select', 'type', __( 'Type', 'ultimate-fields' ) )
 		));
 

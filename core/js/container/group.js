@@ -296,6 +296,8 @@
 			}
 
 			UltimateFields.resizeGrid( false );
+
+			this.focusFirstField();
 		},
 
 		/**
@@ -420,6 +422,8 @@
 			this.addFields( this.$fields, {
 				tabs: false
 			});
+
+			this.focusFirstField();
 		},
 
 		getbuttons: function() {

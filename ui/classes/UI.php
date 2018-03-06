@@ -88,7 +88,7 @@ class UI {
 		}
 
 		// Register the containers
-		$this->register_containers();
+		add_action( 'uf.init', array( $this, 'register_containers' ) );
 	}
 
 	/**

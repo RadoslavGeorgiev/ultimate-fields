@@ -356,7 +356,7 @@ class V1_Migrator {
 	 * @return Ultimate_Fields\Field
 	 */
 	protected static function add_select_term( $source ) {
-		$field = Field::create( 'object', $source[ 'field_id' ], $source[ 'field_title' ] );
+		$field = Field::create( 'wp_object', $source[ 'field_id' ], $source[ 'field_title' ] );
 		self::generic( $field, $source );
 		$field->add( 'terms', 'taxonomy=' . $source[ 'taxonomy' ]  );
 
@@ -376,7 +376,7 @@ class V1_Migrator {
 	 * @return Ultimate_Fields\Field
 	 */
 	protected static function add_select_page( $source ) {
-		$field = Field::create( 'object', $source[ 'field_id' ], $source[ 'field_title' ] );
+		$field = Field::create( 'wp_object', $source[ 'field_id' ], $source[ 'field_title' ] );
 		self::generic( $field, $source );
 		$field->add( 'posts', 'post_type=page' );
 

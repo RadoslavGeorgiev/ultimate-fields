@@ -178,7 +178,7 @@ class Field_Helper {
 		$meta  = $this->meta;
 		$name  = $meta[ 'name' ];
 		$label = $meta[ 'label' ];
-		$type  = $meta[ 'type' ];
+		$type  = strtolower( $meta[ 'type' ] );
 
 		$field = Field::create( $type, $name, $label );
 		if( ! $field ) {

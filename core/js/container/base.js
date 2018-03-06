@@ -220,6 +220,7 @@
 
 			// Save a handle to the div
 			this.$fields = $container;
+			this.fieldViews = [];
 
 			options = _.extend( {
 				wrap: UltimateFields.Field[ 'grid' == this.model.get( 'layout' ) ? 'GridWrap' : 'Wrap' ],
@@ -263,6 +264,7 @@
 
 				view.$el.appendTo( $container );
 				view.render();
+				that.fieldViews.push( view );
 			});
 
 			// Let borders work
@@ -416,6 +418,26 @@
 			$box.children( '.hndle' ).remove();
 
 			this.$el.find( '.uf-fields' ).eq( 0 ).addClass( 'uf-fields-seamless' ).removeClass( 'uf-boxed-fields' );
+		},
+
+		/**
+		 * Focuses the first field in the container.
+		 */
+		focusFirstField: function() {
+			var focused = false;
+
+			_.each( this.fieldViews, function( view ) {
+				if( focused ) {
+					return;
+				}
+
+				if( 'function' != typeof view.input.focus ) {
+					return;
+				}
+
+				view.input.focus();
+				focused = true;
+			})
 		}
 	});
 
