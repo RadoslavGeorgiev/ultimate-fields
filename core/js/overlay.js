@@ -30,6 +30,9 @@
 
 		render: function() {
 			this.$el.append( this.view.$el );
+			if( this.model.get('media' ) ) {
+				this.$el.addClass( 'uf-overlay-screen-media' );
+			}
 			this.view.render();
 		},
 
@@ -337,6 +340,10 @@
 
 		if( 'buttons' in args ) {
 			model.set( 'buttons', args.buttons );
+		}
+
+		if( 'media' in args ) {
+			model.set( 'media', true );
 		}
 
 		view = new overlay.View({

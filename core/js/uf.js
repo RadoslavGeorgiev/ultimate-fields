@@ -173,11 +173,6 @@
 	 */
 	var l10n = root.L10N = {
 		/**
-		 * Indicates whether the strings are loaded.
-		 */
-		loaded: false,
-
-		/**
 		 * Contains all translateable strings.
 		 */
 		strings: {},
@@ -186,11 +181,6 @@
 		 * Loads the strings if not already loaded.
 		 */
 		init: function() {
-			if( l10n.loaded ) {
-				return;
-			}
-
-			l10n.loaded = true;
 			$.extend( l10n.strings, ( 'undefined' != typeof uf_l10n ) ? uf_l10n : {} );
 		},
 

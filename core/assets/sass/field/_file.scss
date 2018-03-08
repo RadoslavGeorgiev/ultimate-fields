@@ -112,3 +112,42 @@
 		left: -4000px;;
 	}
 }
+
+.uf-overlay-screen-media {
+	overflow: visible;
+}
+
+.uf-overlay-body {
+	.media-modal-backdrop {
+		display: none;
+	}
+
+	.media-modal {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: -49px;
+	}
+
+	.media-modal-content {
+		box-shadow: none;
+	}
+
+	.media-modal-close,
+	.media-frame-title {
+		display: none;
+	}
+
+	.media-frame-router {
+		top: 5px;
+	}
+
+	.media-frame-content {
+		top: 39px;
+	}
+}
+
+.uf-overlay-screen > .supports-drag-drop {
+	position: static !important;
+}

@@ -355,7 +355,18 @@
 			});
 
 			// Open the popup
-			frame.open();
+			frame.modal.open();
+
+			var overlay = UltimateFields.Overlay.show({
+				view: frame.modal,
+				title: 'Select file',
+				buttons: [],
+				media: true
+			});
+
+			frame.modal.on( 'close', function() {
+				overlay.removeScreen();
+			})
 		},
 
 		/**

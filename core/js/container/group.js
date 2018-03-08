@@ -279,7 +279,7 @@
 		open: function() {
 			var that    = this,
 				$inside;
-
+				
 			if( 'popup' == this.model.get( 'edit_mode' ) ) {
 				this.openPopup();
 				return;

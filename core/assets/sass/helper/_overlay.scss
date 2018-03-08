@@ -5,10 +5,6 @@
 	&-open {
 		// Applies to the body element
 		overflow: hidden;
-
-		.media-modal {
-			z-index: 500001;
-		}
 	}
 
 	&-wrapper {
@@ -17,7 +13,11 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 500000;
+		z-index: 160010;
+
+		.wp-customizer & {
+			z-index: 500001;
+		}
 	}
 
 	&-background {

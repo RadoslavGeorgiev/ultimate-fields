@@ -46,7 +46,7 @@ class JS_L10N {
 	 *
 	 * @since 3.0
 	 */
-	public function enqueue() {
+	public function enqueue( $script = 'uf-initialize' ) {
 		/**
 		 * Fires before translations are sent to WordPress's script translation
 		 * functionality, allowing to add some last-minute details.
@@ -57,7 +57,7 @@ class JS_L10N {
 		 */
 		do_action( 'uf.l10n.before_enqueue', $this );
 
-		wp_localize_script( 'uf-initialize', 'uf_l10n', $this->strings );
+		wp_localize_script( $script, 'uf_l10n', $this->strings );
 	}
 
 	/**
