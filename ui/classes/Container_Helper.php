@@ -112,13 +112,28 @@ class Container_Helper {
 			$real_field = $helper->setup_field();
 
 			if( $real_field ) {
-				$container->add_field( $real_field );				
+				$container->add_field( $real_field );
 			}
 		}
 
 		# Add locations
 		foreach( $this->props[ 'locations' ] as $raw ) {
-			$class_name = ultimate_fields()->generate_class_name( 'UI/Location/' . $raw[ '__type' ] );
+			$type = $raw['__type'];
+
+			/**
+			 * Allows the UI class name for a location to be overwritten.
+			 *
+			 * @since 3.0
+			 *
+			 * @param mixed  $class_name The name of the class, null by default.
+			 * @param string $type       The basic type of the location (ex. `comment`).
+			 * @return mixed             Either a string class or the original null.
+			 */
+			$class_name = apply_filters( 'uf.ui.location.class', null, $type );
+
+			if( is_null( $class_name ) ) {
+				$class_name = ultimate_fields()->generate_class_name( "UI/Location/$type" );
+			}
 
 			# Silently fail if there is no supported location
 			if( class_exists( $class_name ) ) {

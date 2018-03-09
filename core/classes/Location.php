@@ -38,9 +38,16 @@ abstract class Location {
 	protected $forced_datastore;
 
 	/**
-	 * @todo: Comment
+	 * Creates a basic location from a given type.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $type The type ofthe location.
+	 * @return mixed
 	 */
-	public static function create( $type ) {
+	protected static function _get_location_class( $type ) {
+		$type = strtolower( $type );
+		
 		/**
 		* @todo: Comment
 		*/
@@ -49,6 +56,15 @@ abstract class Location {
 		if( is_null( $class_name ) ) {
 			$class_name = ultimate_fields()->generate_class_name( "Location/$type" );
 		}
+
+		return $class_name;
+	}
+
+	/**
+	 * @todo: Comment
+	 */
+	public static function create( $type ) {
+		$class_name = self::_get_location_class( $type );
 
 		if( ! class_exists( $class_name ) ) {
 			Helper\Missing_Features::instance()->report( $class_name, 'location' );
@@ -368,7 +384,12 @@ abstract class Location {
 	 * @return Location
 	 */
 	public static function create_from_array( $args ) {
-		$class_name = ultimate_fields()->generate_class_name( 'Location/' . $args[ 'type' ] );
+		$class_name = self::_get_location_class( $args['type'] );
+
+		if( ! class_exists( $class_name ) ) {
+			Helper\Missing_Features::instance()->report( $class_name, 'location' );
+			return new Helper\Dummy_Class;
+		}
 
 		$location = new $class_name;
 		$location->import( $args );
