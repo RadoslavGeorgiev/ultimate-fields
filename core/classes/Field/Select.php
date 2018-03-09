@@ -387,6 +387,24 @@ class Select extends Field {
 	}
 
 	/**
+	 * When the data API is being used, this method will "handle" a value.
+	 *
+	 * @param  mixed       $value  The raw value.
+	 * @param  Data_Source $source The data source that the value is associated with.
+	 * @return mixed
+	 */
+	public function handle( $value, $source = null ) {
+		$value   = parent::handle( $value, $source );
+		$options = $this->get_options();
+
+		if( ! isset( $options[ $value ] ) ) {
+			$value = $this->default_value;
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Proceses a value for get_the_field().
 	 *
 	 * @since 3.0

@@ -118,6 +118,29 @@ class Multiselect extends Select {
 	}
 
 	/**
+	 * When the data API is being used, this method will "handle" a value.
+	 *
+	 * @param  mixed       $value  The raw value.
+	 * @param  Data_Source $source The data source that the value is associated with.
+	 * @return mixed
+	 */
+	public function handle( $value, $source = null ) {
+		$value     = Field::handle( $value, $source );
+		$options   = $this->get_options();
+		$available = array();
+
+		if( is_array( $value ) ) {
+			foreach( $value as $chosen ) {
+				if( isset( $options[ $chosen ] ) ) {
+					$available[] = $chosen;
+				}
+			}
+		}
+
+		return $available;
+	}
+
+	/**
 	 * Processes a value to a string, ready to display.
 	 *
 	 * @since 3.0

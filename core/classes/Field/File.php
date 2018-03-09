@@ -550,6 +550,37 @@ class File extends Field {
 	}
 
 	/**
+	 * When the data API is being used, this method will "handle" a value.
+	 *
+	 * @param  mixed       $value  The raw value.
+	 * @param  Data_Source $source The data source that the value is associated with.
+	 * @return mixed
+	 */
+	public function handle( $value, $source = null ) {
+		$value   = parent::handle( $value, $source );
+
+		if( $this->multiple ) {
+			$selected = array();
+
+			foreach( $value as $id ) {
+				if( $id ) {
+					$selected[] = intval( $id );
+				}
+			}
+
+			$value = $selected;
+		} else {
+			if( $value ) {
+				$value = intval( $value );
+			} else {
+				$value = false;
+			}
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Processes the value for the_field.
 	 *
 	 * @since 3.0
