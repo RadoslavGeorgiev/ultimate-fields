@@ -335,6 +335,9 @@
 		resize = function() {
 			var top, left;
 
+			// Let fields update their sizes
+			$( document ).trigger( 'uf-before-resize' );
+
 			// Crawl
 			$elements.filter( ':visible' ).each(function() {
 				var $el    = $( this ), elTop, elLeft;

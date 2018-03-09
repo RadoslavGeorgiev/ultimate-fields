@@ -16,11 +16,17 @@
 		},
 
 		initialize: function( args ) {
+			var that = this;
+
 			args = args || {};
 
 			this.set( 'tabs', {} );
-
 			this.set( 'fields', new UltimateFields.Field.Collection( args.fields || this.get( 'fields' ) || [] ) );
+
+			// Proxy some settings to the fields
+			this.get( 'fields' ).each( function( field ) {
+				field.set( 'description_position', that.get( 'description_position' ) );
+			});
 		},
 
 		/**
@@ -210,8 +216,12 @@
 		 * Adds fields to container while formatting their div properly.
 		 */
 		addFields: function( $container, options ) {
-			var that = this, tabsAdded = false, $tabs, grid, layout;
+			var that = this,
+				tabsAdded = false,
+				$tabs,
+				grid;
 
+			// Locate the HTML Element
 			if( ! $container ) {
 				$container = this.$el.find( '.uf-fields' );
 			} else if( 'string' == typeof $container ) {
@@ -222,59 +232,71 @@
 			this.$fields = $container;
 			this.fieldViews = [];
 
-			options = _.extend( {
-				wrap: UltimateFields.Field[ 'grid' == this.model.get( 'layout' ) ? 'GridWrap' : 'Wrap' ],
-				tabs: true
-			}, options || {});
+			// Ensure a correct layout
+			var layout = 'grid' === this.model.get( 'layout' )
+				? 'grid'
+				: 'rows';
 
-			// Add some classes
-			layout = this.model.get( 'layout' );
-			if( 'auto' == layout ) layout = 'rows';
-			$container
-				.addClass( 'uf-fields-layout-' + ( 'rows' == layout ? 'rows' : 'grid' ) );
+			// Load the options and merge them with the defaults
+			options = _.extend( {
+				// An indicator whether tabs should be added to the fields div
+				tabs: true,
+
+				// Use the correct input wrapper for the field
+				wrap: UltimateFields.Field[
+					'grid' == this.model.get( 'layout' )
+						? 'GridWrap'
+						: 'Wrap'
+				],
+
+				// Prepare the correct layout
+			}, options || {});
 
 			// Add each individual field
 			this.model.get( 'fields' ).each(function( model ) {
-				var wrap = options.wrap;
+				var wrap = options.wrap, view;
 
+				// If the model is a tab, add the tabs wrapper
 				if( model instanceof UltimateFields.Field.Tab.Model ) {
-					if( tabsAdded || ! options.tabs ) {
+					if( ! tabsAdded && options.tabs ) {
+						return tabsAdded = $tabs = that.createTabsElement( $container );
+					} else {
 						return;
 					}
-
-					that.$tabs = $tabs = $( '<div class="uf-tab-wrapper" />' )
-						.append( that.getTabs() )
-						.appendTo( $container );
-
-					tabsAdded = true;
-
-					return;
 				}
 
+				// Sections have a special wrap
 				if( model instanceof UltimateFields.Field.Section.Model ) {
 					wrap = UltimateFields.Field.Section.Wrap;
 				}
 
-				// Set the appropriate description position
-				model.set( 'description_position', that.model.get( 'description_position' ) );
-
-				var view = new wrap({
+				// Generate, append and render the view
+				that.fieldViews.push( view = new wrap({
 					model: model
-				});
+				}));
 
 				view.$el.appendTo( $container );
 				view.render();
-				that.fieldViews.push( view );
 			});
 
-			// Let borders work
-			if( 'grid' == this.model.get( 'layout' ) ) {
-				grid = UltimateFields.grid( $container );
+			new UltimateFields.ContainerLayout({
+				el:        $container,
+				container: this,
+				layout:    layout,
+				fields:    that.fieldViews,
+				tabs:      $tabs
+			})
+		},
 
-				// Fix the grid when there is conditional logic or the tab changes
-				this.model.get( 'fields' ).on( 'change:visible', grid );
-				this.model.datastore.on( 'change:__tab', grid );
-			}
+		/**
+		 * Creates an element for tabs.
+		 */
+		createTabsElement: function( $container ) {
+			this.$tabs = $( '<div class="uf-tab-wrapper" />' )
+				.append( this.getTabs() )
+				.appendTo( $container );
+
+			return this.$tabs;
 		},
 
 		/**

@@ -421,6 +421,15 @@
 			} else {
 				$label.addClass( 'uf-field-label-unclickable' );
 			}
+		},
+
+		/**
+		 * Adjust the classes of the field based on size.
+		 */
+		useLayout( layout ) {
+			this.$el
+				.addClass( 'uf-field-layout-' + layout )
+				.removeClass( 'uf-field-layout-' + ( 'grid' == layout ? 'rows' : 'grid' ) );
 		}
 	});
 
@@ -591,6 +600,10 @@
 
 				method = visible ? 'removeClass' : 'addClass';
 				this.$el[ method ]( 'uf-field-hidden' );
+			},
+
+			useLayout: function( layout ) {
+				//
 			}
 		}),
 
