@@ -5,8 +5,8 @@ use Ultimate_Fields\UI\Location;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Fields_Collection;
 use Ultimate_Fields\UI\Post_Type as UI_Post_Type;
-use Ultimate_Fields\Location\Options as Core_Location;
 use Ultimate_Fields\Options_Page as Page;
+use Ultimate_Fields\Location as Core_Location;
 
 /**
  * Handles containers on option pages.
@@ -285,7 +285,7 @@ class Options_Page extends Location {
 		if( $data['context'] )  $args['context']  = $data['context'];
 		if( $data['priority'] ) $args['priority'] = $data['priority'];
 
-		$location = new Core_Location( $page, $args );
+		$location = Core_Location::create( 'options', $page, $args );
 
 		# Setup the rest API
 		self::setup_location_customizer( $location, $data );

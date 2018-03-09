@@ -423,7 +423,11 @@ class Post_Type extends Location {
 
 		# Export taxonomy terms
 		foreach( $this->terms as $taxonomy => $terms ) {
-			$settings[ $taxonomy ] = $this->export_values_for_rule( $terms );
+			$exported_terms = $this->export_values_for_rule( $terms );
+
+			if( ! empty( $exported_terms ) ) {
+				$settings[ $taxonomy ] = $exported_terms;
+			}
 		}
 
 		# Export customizable data

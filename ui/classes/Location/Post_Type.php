@@ -4,7 +4,7 @@ namespace Ultimate_Fields\UI\Location;
 use Ultimate_Fields\UI\Location;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\UI\Post_Type as UI_Post_Type;
-use Ultimate_Fields\Location\Post_Type as Core_Location;
+use Ultimate_Fields\Location as Core_Location;
 use Ultimate_Fields\Helper\Util;
 
 /**
@@ -238,7 +238,7 @@ class Post_Type extends Location {
 	 * @return Core_Location
 	 */
 	public static function export( $data ) {
-		$location = new Core_Location( isset( $data[ 'post_types' ] ) ? $data[ 'post_types' ] : array( 'post' ) );
+		$location = Core_Location::create( 'post_type', isset( $data[ 'post_types' ] ) ? $data[ 'post_types' ] : array( 'post' ) );
 
 		$mappable = array(
 			'templates'    => 'templates',

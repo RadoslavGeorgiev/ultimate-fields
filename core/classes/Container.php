@@ -741,8 +741,8 @@ class Container {
 			'layout'               => array( 'layout', 'auto' ),
 			'description'          => array( 'description', '' ),
 			'description_position' => array( 'description_position', 'input' ),
-			'layout'               => array( 'layout', 'rows' ),
-			'style'                => array( 'style', 'auto' ),
+			'layout'               => array( 'layout', 'auto' ),
+			'style'                => array( 'style', 'boxed' ),
 			'roles'                => array( 'roles', array() )
 		));
 
