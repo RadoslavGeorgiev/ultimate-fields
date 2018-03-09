@@ -252,6 +252,10 @@ class Number extends Field {
 	 * @return mixed
 	 */
 	public function handle( $value, $source = null ) {
-		return intval( $value );
+		$value = parent::handle( $value, $source );
+
+		return is_int( $value ) || ( is_string( $value ) && strlen( $value ) )
+			? intval( $value )
+			: null;
 	}
 }
