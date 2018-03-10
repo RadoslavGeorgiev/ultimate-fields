@@ -258,11 +258,15 @@
 
 				// If the model is a tab, add the tabs wrapper
 				if( model instanceof UltimateFields.Field.Tab.Model ) {
-					if( ! tabsAdded && options.tabs ) {
-						return tabsAdded = $tabs = that.createTabsElement( $container );
-					} else {
+					if( ! options.tabs ) {
 						return;
 					}
+
+					if( ! tabsAdded ) {
+						tabsAdded = $tabs = that.createTabsElement( $container );
+					}
+
+					return that.addInlineTab( model, $container );
 				}
 
 				// Sections have a special wrap
@@ -279,12 +283,17 @@
 				view.render();
 			});
 
-			new UltimateFields.ContainerLayout({
+			// Initialize tabs if any
+			if( $tabs ) {
+				$tabs.ultimateResponsiveTabs();
+			}
+
+			this.fieldsLayout = new UltimateFields.ContainerLayout({
 				el:        $container,
 				container: this,
 				layout:    layout,
 				fields:    that.fieldViews,
-				tabs:      $tabs
+				tabs:      $tabs || this.$popupTabs || false
 			})
 		},
 
@@ -340,6 +349,15 @@
 			});
 
 			return tabs;
+		},
+
+		/**
+		 * Adds an inline tab, which will be visible in responsive mode.
+		 */
+		addInlineTab: function( model, $container ) {
+			var tmpl = UltimateFields.template( 'inline-tab' );
+
+			$container.append( tmpl( model.toJSON() ) );
 		},
 
 		/**

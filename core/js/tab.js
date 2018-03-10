@@ -63,7 +63,7 @@
 			this.$el.blur();
 
 			$( document ).trigger( 'uf-tab-changed' );
-			$( document ).trigger( 'uf-grid-resize' );
+			UltimateFields.ContainerLayout.DOMUpdated();
 
 			return false;
 		},
@@ -80,5 +80,9 @@
 			this.$el[ this.model.get( 'visible' ) ? 'removeClass' : 'addClass' ]( 'disabled' );
 		}
 	});
+
+	$.fn.ultimateResponsiveTabs = function() {
+		console.log('remove me');
+	}
 
 })( jQuery );

@@ -8,6 +8,10 @@
 		position: relative;
 		z-index: 2;
 		margin-bottom: 10px;
+
+		.uf-fields-inline-tabs > & {
+			display: none;
+		}
 	}
 
 	display: inline-block;
@@ -89,5 +93,22 @@
 	&-active {
 		background: #fff;
 		border-bottom-color: #fff;
+	}
+}
+
+.uf-inline-tab {
+	background: #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	width: 100%;
+
+	&-title {
+
+	}
+
+	&-toggle {
+
 	}
 }

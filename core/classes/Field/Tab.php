@@ -1,6 +1,8 @@
 <?php
 namespace Ultimate_Fields\Field;
+
 use Ultimate_Fields\Field;
+use Ultimate_Fields\Template;
 
 class Tab extends Field {
 	protected $icon = '';
@@ -52,6 +54,8 @@ class Tab extends Field {
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'uf-tab' );
+
+		Template::add( 'inline-tab', 'container/inline-tab' );
 	}
 
 	/**

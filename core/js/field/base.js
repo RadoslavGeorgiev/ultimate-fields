@@ -286,6 +286,11 @@
 			this.$el.addClass( 'uf-field-type-' + this.model.get( 'type' ).toLowerCase() );
 			this.$el.addClass( 'uf-field-name-' + this.model.get( 'name' ) );
 
+			// Wrap width
+			this.$el.css({
+				width: this.model.get( 'field_width' ) + '%'
+			});
+
 			if( this.model.get( 'hide_label' ) ) {
 				this.$el.addClass( 'uf-field-no-label' );
 			}
@@ -427,25 +432,23 @@
 		 * Adjust the classes of the field based on size.
 		 */
 		useLayout( layout ) {
+			if( 'rows' === layout ) {
+				layout = 'row';
+			}
+
 			this.$el
 				.addClass( 'uf-field-layout-' + layout )
-				.removeClass( 'uf-field-layout-' + ( 'grid' == layout ? 'rows' : 'grid' ) );
+				.removeClass( 'uf-field-layout-' + ( 'grid' == layout ? 'row' : 'grid' ) );
+
+			if( this.input && 'function' === typeof this.input.adjustToWidth ) {
+				this.input.adjustToWidth();
+			}
 		}
 	});
 
 	// Grid wrap for grid fields
 	field.GridWrap = field.Wrap.extend({
-		className: 'uf-field uf-field-layout-grid',
-
-		render: function() {
-			// Normal render
-			field.Wrap.prototype.render.call( this );
-
-			// Wrap width
-			this.$el.css({
-				width: this.model.get( 'field_width' ) + '%'
-			});
-		}
+		className: 'uf-field uf-field-layout-grid'
 	});
 
 	// Table cell wrap

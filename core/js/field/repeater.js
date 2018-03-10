@@ -743,7 +743,7 @@
 
 			if( initial != this.visible) {
 				// Force grid layout
-				$( document ).trigger( 'uf-grid-resize' );
+				UltimateFields.ContainerLayout.DOMUpdated();				
 			}
 		},
 

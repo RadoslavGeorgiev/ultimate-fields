@@ -521,6 +521,9 @@
 			$div.append( this.getTabs() );
 			$div.addClass( 'uf-tabs-layout-rows' );
 
+			// Save internally
+			this.$popupTabs = $div;
+
 			return $div;
 		},
 

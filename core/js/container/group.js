@@ -279,7 +279,7 @@
 		open: function() {
 			var that    = this,
 				$inside;
-				
+
 			if( 'popup' == this.model.get( 'edit_mode' ) ) {
 				this.openPopup();
 				return;
@@ -295,8 +295,7 @@
 				this.fieldsRendered = true;
 			}
 
-			UltimateFields.resizeGrid( false );
-
+			UltimateFields.ContainerLayout.DOMUpdated( false );
 			this.focusFirstField();
 		},
 
