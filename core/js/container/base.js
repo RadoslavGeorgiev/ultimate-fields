@@ -355,9 +355,20 @@
 		 * Adds an inline tab, which will be visible in responsive mode.
 		 */
 		addInlineTab: function( model, $container ) {
-			var tmpl = UltimateFields.template( 'inline-tab' );
+			var that = this,
+				tmpl = UltimateFields.template( 'inline-tab' ),
+				$tab = $( tmpl( model.toJSON() ) );
 
-			$container.append( tmpl( model.toJSON() ) );
+			$container.append( $tab );
+			$tab.on( 'click', '.uf-button', function() {
+				model.datastore.set( '__tab', model.get( 'name' ) );
+			});
+
+			model.datastore.on( 'change:__tab', function() {
+				model.datastore.get( '__tab' ) == model.get( 'name' )
+					? $tab.find( 'button' ).attr( 'disabled', 'disabled' )
+					: $tab.find( 'button' ).attr( 'disabled', false )
+			});
 		},
 
 		/**

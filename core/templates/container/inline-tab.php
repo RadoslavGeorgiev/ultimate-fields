@@ -1,7 +1,7 @@
 <div class="uf-inline-tab">
-    <h3 class="uf-inline-tab-title"><%= name %></h3>
+    <h3 class="uf-inline-tab-title"><%= label %></h3>
 
-    <button href="#" class="uf-inline-tab-toggle">
-        <span class="dashicons dashicons-arrow-down"></span>
+    <button type="button" class="button-secondary uf-button uf-button-no-text uf-inline-tab-toggle">
+        <span class="uf-button-icon dashicons dashicons-arrow-down"></span>
     </button>
 </div>
