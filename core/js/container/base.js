@@ -369,6 +369,14 @@
 					? $tab.find( 'button' ).attr( 'disabled', 'disabled' )
 					: $tab.find( 'button' ).attr( 'disabled', false )
 			});
+
+			model.on( 'change:visible', function() {
+				$tab[
+					model.get( 'visible' )
+						? 'removeClass'
+						: 'addClass'
+				]( 'uf-inline-tab-disabled' );
+			});
 		},
 
 		/**

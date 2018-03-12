@@ -98,12 +98,20 @@
 
 .uf-inline-tab {
 	background: #fafafa;
-	border-bottom: 1px solid #ddd;
-	display: flex;
+	border-top: 1px solid #ddd;
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px 15px;
 	width: 100%;
+	display: none;
+
+	&.top-row {
+		border-top: none;
+	}
+
+	.uf-fields-inline-tabs & {
+		display: flex;
+	}
 
 	&-title {
 
@@ -111,5 +119,10 @@
 
 	&-toggle {
 
+	}
+
+	&-disabled,
+	.uf-fields-inline-tabs &-disabled {
+		display: none;
 	}
 }

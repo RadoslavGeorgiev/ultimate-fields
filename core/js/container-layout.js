@@ -18,8 +18,8 @@
 
 			// Save the args (not a model)
 			this.args = $.extend( {
-				mainPoint: 1000,
-				gridSelector: '.uf-field, .uf-section, .uf-tab-wrapper'
+				mainPoint: 500,
+				gridSelector: '.uf-field, .uf-section, .uf-tab-wrapper, .uf-inline-tab'
 			}, args || {} );
 
 			// Add a proper callback
@@ -108,7 +108,7 @@
 			this.$gridElements.filter( ':visible' ).each(function() {
 				var $el = $( this ), elTop, elLeft;
 
-				if( $el.hasClass( 'uf-tab-wrapper' ) ) {
+				if( $el.hasClass( 'uf-tab-wrapper' ) || $el.hasClass( 'uf-inline-section' ) ) {
 					top = left = undefined;
 					return;
 				}
