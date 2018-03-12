@@ -3,11 +3,12 @@
 	&-wrapper {
 		border-bottom: 1px solid #ccc;
 		font-size: 0;
-		padding-top: 3px;
 		width: 100%;
 		position: relative;
 		z-index: 2;
 		margin-bottom: 10px;
+		padding-left: 10px;
+		box-sizing: border-box;
 
 		.uf-fields-inline-tabs > & {
 			display: none;
@@ -25,6 +26,7 @@
 	border: 1px solid #ccc;
 	margin-bottom: -1px;
 	margin-right: 6px;
+	margin-top: 3px;
 	color: #444;
 
 	.uf-boxed-fields & {
@@ -33,10 +35,6 @@
 
 	&:focus {
 		box-shadow: none;
-	}
-
-	&:first-child {
-		margin-left: 10px;
 	}
 
 	&:hover {

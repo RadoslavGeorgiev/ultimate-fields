@@ -8,8 +8,7 @@
 		});
 	};
 
-	// $( document ).on( 'uf-grid-init uf-before-resize', triggerResizers );
-	$( window ).on( 'resize', triggerResizers );
+	$( window ).on( 'resize', _.throttle( triggerResizers ) );
 
 	UltimateFields.ContainerLayout = Backbone.View.extend({
 		initialize: function( args ) {
