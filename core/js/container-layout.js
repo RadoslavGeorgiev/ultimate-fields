@@ -23,9 +23,6 @@
 
 			// Add a proper callback
 			resizers.push( _.bind( this.update, this ) );
-			// if( 'grid' == args.layout ) {
-			// 	this.startGrid();
-			// }
 		},
 
 		update: function() {
@@ -69,7 +66,7 @@
 			}
 
 			// Change tabs
-			if( this.args.tabs ) {
+			if( this.args.tabs && this.args.container.allowsInlineTabs() ) {
 				this.args.tabs
 					.removeClass( 'uf-tabs-layout-' + ( 'rows' == layout ? 'grid' : 'rows' ) )
 					.addClass( 'uf-tabs-layout-' + layout );
@@ -90,8 +87,10 @@
 			resizers.push( _.bind( this.resizeGrid, this ) );
 
 			// Fix the grid when there is conditional logic or the tab changes
-			this.args.container.model.get( 'fields' ).on( 'change:visible', triggerResizers );
-			this.args.container.model.datastore.on( 'change:__tab', triggerResizers );
+			if( this.args.container ) {
+				this.args.container.model.get( 'fields' ).on( 'change:visible', triggerResizers );
+				this.args.container.model.datastore.on( 'change:__tab', triggerResizers );
+			}
 
 			// Save the flag
 			this.gridAdded = true;
@@ -142,9 +141,9 @@
 			this.update();
 		}
 	}, {
-		DOMUpdated: function() {
+		DOMUpdated: function( withTimeout ) {
 			if( 'undefined' == typeof withTimeout ) {
-				withTimeout = true;
+				withTimeout = false;
 			}
 
 			withTimeout

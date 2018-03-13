@@ -322,11 +322,6 @@
 		}
 	});
 
-	UltimateFields.grid = function( $container, options ) {
-		// @todo: Remove this function
-		console.log('somebodu needs me');
-	}
-
 	/**
 	 * Allow creation of simple containers through jQuery.
 	 */

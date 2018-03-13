@@ -81,8 +81,4 @@
 		}
 	});
 
-	$.fn.ultimateResponsiveTabs = function() {
-		console.log('remove me');
-	}
-
 })( jQuery );

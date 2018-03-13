@@ -588,9 +588,13 @@
 	 		this.$el.append( $prototypes );
 
 			// Add custom layout
-			UltimateFields.grid( $prototypes, {
-				elements: '.uf-repeater-prototypes-column'
+			var layout = new UltimateFields.ContainerLayout({
+				el: $prototypes,
+				gridSelector: '.uf-repeater-prototypes-column',
+				layout: 'grid'
 			});
+
+			layout.startGrid();
 	 	},
 
 		/**
@@ -743,7 +747,7 @@
 
 			if( initial != this.visible) {
 				// Force grid layout
-				UltimateFields.ContainerLayout.DOMUpdated();				
+				UltimateFields.ContainerLayout.DOMUpdated();
 			}
 		},
 

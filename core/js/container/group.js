@@ -175,6 +175,7 @@
 			if( ! this.fieldsRendered && ! this.model.datastore.get( '__hidden' ) ) {
 				this.addFields();
 				this.fieldsRendered = true;
+				UltimateFields.ContainerLayout.DOMUpdated();
 			}
 
 			// When values change, re-render the fields
@@ -295,7 +296,7 @@
 				this.fieldsRendered = true;
 			}
 
-			UltimateFields.ContainerLayout.DOMUpdated( false );
+			UltimateFields.ContainerLayout.DOMUpdated( true );
 			this.focusFirstField();
 		},
 

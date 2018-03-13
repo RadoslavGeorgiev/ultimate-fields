@@ -283,11 +283,6 @@
 				view.render();
 			});
 
-			// Initialize tabs if any
-			if( $tabs ) {
-				$tabs.ultimateResponsiveTabs();
-			}
-
 			this.fieldsLayout = new UltimateFields.ContainerLayout({
 				el:        $container,
 				container: this,
@@ -497,6 +492,13 @@
 				view.input.focus();
 				focused = true;
 			})
+		},
+
+		/**
+		 * Indicates whether the container supports inline tabs.
+		 */
+		allowsInlineTabs() {
+			return true;
 		}
 	});
 
