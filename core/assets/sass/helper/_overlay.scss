@@ -299,3 +299,24 @@
 		margin-left: 1.5em;
 	}
 }
+
+@media (max-width: 800px) {
+	.uf-overlay-box {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border: 0;
+		transform: translate(0,0);
+		max-width: none;
+		width: 100%;
+	}
+
+	.uf-overlay-header .uf-tab-icon {
+		margin-right: 0;
+	}
+	
+	.uf-overlay-header .uf-tab-text {
+		display: none;
+	}
+}

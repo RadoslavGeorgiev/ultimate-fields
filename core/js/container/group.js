@@ -339,13 +339,6 @@
 		toggleElements: function() {
 			this.$el.find( '.uf-group-control-duplicate' )[ this.model.get( 'duplicateable' ) ? 'show' : 'hide' ]();
 			this.$el.find( '.uf-group-control-remove' )[ this.model.get( 'deleteable' ) ? 'show' : 'hide' ]();
-		},
-
-		/**
-		 * Indicates whether the container supports inline tabs.
-		 */
-		allowsInlineTabs() {
-			return false;
 		}
 	});
 

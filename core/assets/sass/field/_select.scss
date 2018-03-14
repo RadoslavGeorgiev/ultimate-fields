@@ -30,6 +30,21 @@
 	}
 }
 
+@media screen and (max-width: 782px) {
+	.uf-radio {
+		input[type=radio], input[type=checkbox] {
+			height: 20px;
+			width: 20px;
+		}
+
+		input[type=radio]:checked:before {
+			width: 7px;
+		    height: 7px;
+		    margin: 6px;
+		}
+	}
+}
+
 // Select2 fields
 .select2-container {
 	z-index: 160000;
