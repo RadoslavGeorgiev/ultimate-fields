@@ -59,3 +59,15 @@
 		margin: 12px 0;
 	}
 }
+
+// Fixed-width label containers
+.uf-fields-label-200 {
+	&.uf-fields-layout-rows > .uf-tab-wrapper {
+		box-sizing: border-box;
+		padding-left: 210px;
+
+		.uf-tab:first-child {
+			margin-left: 0;
+		}
+	}
+}

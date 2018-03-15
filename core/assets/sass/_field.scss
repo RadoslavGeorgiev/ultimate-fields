@@ -235,15 +235,6 @@
 			width: 210px;
 		}
 	}
-
-	&.uf-fields-layout-rows > .uf-tab-wrapper {
-		box-sizing: border-box;
-		padding-left: 210px;
-
-		.uf-tab:first-child {
-			margin-left: 0;
-		}
-	}
 }
 
 .uf-fields-label-200.uf-boxed-fields {
@@ -279,7 +270,8 @@
 	}
 }
 
-.uf-fields-layout-grid.uf-fields-seamless {
-	margin-left: -10px;
-	margin-right: -10px;
-}
+// @todo: is this useful in any situation?
+// .uf-fields-layout-grid.uf-fields-seamless {
+// 	margin-left: -10px;
+// 	margin-right: -10px;
+// }

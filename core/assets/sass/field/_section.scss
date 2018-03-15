@@ -2,10 +2,18 @@
 .uf-section {
 	box-sizing: border-box;
 	width: 100%;
-	padding: 15px;
-	background: #fff;
+	padding: 15px 10px;
 	position: relative;
 	z-index: 1;
+
+	.uf-boxed-fields & {
+		background: #fff;
+	}
+
+	.uf-fields-layout-grid & {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
 
 	&.first-col {
 		border-left: 0;
@@ -15,7 +23,7 @@
 		border-top: 0;
 	}
 
-	.uf-fields-layout-grid > & {
+	.uf-boxed-fields.uf-fields-layout-grid > & {
 		border-top: 1px solid #ddd;
 
 		&.top-row {

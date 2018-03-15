@@ -38,8 +38,11 @@
 	}
 
 	&:hover {
-		background: #fff;
 		color: #222;
+	}
+
+	.uf-boxed-fields > &:hover {
+		background: #fff;
 	}
 
 	&-active {
@@ -64,7 +67,7 @@
 	}
 
 	&-invalid.uf-tab-active {
-		background: #fff;
+		background: inherit;
 		color: $required;
 	}
 
