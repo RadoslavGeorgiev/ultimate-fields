@@ -25,7 +25,21 @@
 	/**
 	 * Add functionality for the password field.
 	 */
-	field.Helper.Password = field.Helper.Text.extend();
+	field.Helper.Password = field.Helper.extend({
+		/**
+		 * Sets the model for the preview up.
+		 */
+		setupPreview: function( args ) {
+			var attributes = args.data.get( 'password_attributes' ) || {};
+
+			args.model.set({
+				default_value: args.data.get( 'default_value_password' ),
+				placeholder:   attributes.password_placeholder,
+				prefix:        attributes.prefix,
+				suffix:        attributes.suffix
+			});
+		}
+	});
 
 	/**
 	 * Preview and editing functionality for the WYSIWYG field.

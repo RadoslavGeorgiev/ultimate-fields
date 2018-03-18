@@ -127,7 +127,6 @@ class Select extends Field {
 	 * Lets the select work exclusively with posts.
 	 *
 	 * @since 3.0
-	 * @todo: Add something for terms
 	 *
 	 * @param string $post_type The post type to load.
 	 * @return Ultimate_Fields\Field\Select

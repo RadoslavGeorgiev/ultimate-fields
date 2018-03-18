@@ -47,10 +47,16 @@ abstract class Location {
 	 */
 	protected static function _get_location_class( $type ) {
 		$type = strtolower( $type );
-		
+
 		/**
-		* @todo: Comment
-		*/
+		 * Allows the class, used for a location to be generated externally.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $class_name The name of the class.
+		 * @param string $type       The location type (ex. 'post_type').
+		 * @return string
+		 */
 		$class_name = apply_filters( 'uf.location.class', null, $type );
 
 		if( is_null( $class_name ) ) {
@@ -61,7 +67,12 @@ abstract class Location {
 	}
 
 	/**
-	 * @todo: Comment
+	 * Creates a new location object based on a string type.
+	 *
+	 * @since 3.0
+	 *
+	 * @param  string $type The type of location (ex. post_type).
+	 * @return Location
 	 */
 	public static function create( $type ) {
 		$class_name = self::_get_location_class( $type );
@@ -89,7 +100,11 @@ abstract class Location {
 	protected $api_fields = array();
 
 	/**
-	 * @todo: Comment
+	 * Creates a new basic location.
+	 *
+	 * @since 3.0
+	 * 
+	 * @param array $args Arguments (optional).
 	 */
 	public function __construct( $args ) {
 		$this->set_and_unset( $args, array(

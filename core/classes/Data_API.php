@@ -240,7 +240,21 @@ class Data_API {
 	 */
 	public function get_the_value( $name, $type = '' ) {
 		$source = $this->parse_source( $type, $name );
-		return $this->get( $source, true );
+		$value  = $this->get( $source, true );
+
+		/**
+		 * Allows the value of `get_the_value` or `the_value` to be modified.
+		 *
+		 * @since 3.0
+		 *
+		 * @param mixed       $value  The value that has been loaded.
+		 * @param string      $name   The name of the field whose value is displayed.
+		 * @param Data_Source $source The context of the value (name, location type, etc.).
+		 * @return mixed
+		 */
+		$value = apply_filters( 'uf.api.the_value', $value, $name, $type );
+
+		return $value;
 	}
 
 	/**
@@ -252,21 +266,7 @@ class Data_API {
 	 * @param mixed  $type The type of the object, which the value belongs to.
 	 */
 	public function the_value( $name, $type = '' ) {
-		$value = $this->get_the_value( $name, $type );
-
-		/**
-		 * Allows the value to be modified and/or escaped before being displayed.
-		 *
-		 * @since 3.0
-		 *
-		 * @param mixed  $value   The value that will be displayed.
-		 * @param string $name    The name of the field whose value is displayed.
-		 * @return mixed
-		 */
-		// $value = apply_filters( 'uf.api.the_value', $value, $name );
-		// @todo: Bring this back
-
-		echo $value;
+		echo $this->get_the_value( $name, $type );
 	}
 
 	/**

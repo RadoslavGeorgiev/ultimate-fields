@@ -413,7 +413,7 @@
 			}
 
 			if( supports.levels && this.get( 'levels' ) && ! this.empty( this.get( 'levels' ) ) ) {
-				// @todo: Create an API call that handles an actual hierarchical structure
+				// @todo when Gutenberg is ready: Create an API call that handles an actual hierarchical structure
 				state.level = attribute( 'parent' ) ? 2 : 1;
 			}
 

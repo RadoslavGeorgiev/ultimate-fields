@@ -6,6 +6,8 @@
 		_.each( resizers, function( resizer ) {
 			resizer();
 		});
+
+		$( document ).trigger( 'uf-grid-resize' );
 	};
 
 	$( window ).on( 'resize', _.throttle( triggerResizers ) );

@@ -2,11 +2,25 @@
 namespace Ultimate_Fields\Helper;
 
 /**
- * @todo: Comment the whole class.
+ * Handles the indication of missing features.
+ *
+ * @since 3.0
  */
 class Missing_Features {
+	/**
+	 * Holds the class names of all missing features.
+	 *
+	 * @since 3.0
+	 * @var string[]
+	 */
 	protected $features = array();
 
+	/**
+	 * Creates an instance of the class.
+	 *
+	 * @since 3.0
+	 * @return Missing_Features
+	 */
 	public static function instance() {
 		static $instance;
 
@@ -17,14 +31,32 @@ class Missing_Features {
 		return $instance;
 	}
 
+	/**
+	 * Adds the necessary handlers for the class.
+	 *
+	 * @since 3.0
+	 */
 	private function __construct() {
 		add_action( 'admin_notices', array( $this, 'display_notices') );
 	}
 
+	/**
+	 * Use this method to indicate that a feature is missing.
+	 *
+	 * @since 3.0
+	 *
+	 * @param  string $class_name The name of the missing class.
+	 * @param  string $context    The context (ex. location).
+	 */
 	public function report( $class_name, $context ) {
 		$this->features[ $class_name ] = compact( 'class_name', 'context' );
 	}
 
+	/**
+	 * Displays all necessary notices.
+	 *
+	 * @since 3.0
+	 */
 	public function display_notices() {
 		$generic = array();
 		$pro     = array();
@@ -56,6 +88,14 @@ class Missing_Features {
 		echo '</div>';
 	}
 
+	/**
+	 * Checks if a certain class belongs to UF Pro.
+	 *
+	 * @since 3.0
+	 *
+	 * @param  string  $class_name The name of the class.
+	 * @return boolean
+	 */
 	public function is_pro_feature( $class_name ) {
 		static $features;
 
@@ -89,6 +129,13 @@ class Missing_Features {
 		return in_array( $class_name, $features );
 	}
 
+	/**
+	 * Lists the classes of a specific context.
+	 *
+	 * @since 3.0
+	 *
+	 * @param mixed $features The features to print.
+	 */
 	protected function list( $features ) {
 		$items = array();
 

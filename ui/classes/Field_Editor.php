@@ -91,7 +91,11 @@ class Field_Editor {
 		$this->add_type( 'advanced',   'Repeater',     Field_Helper\Repeater::class );
 
 		/**
-		 * @todo: Comment
+		 * Allows the fields from the UI to be changed.
+		 *
+		 * @since 3.0
+		 *
+		 * @param Field_Editor $editor The editor that fields are added to.
 		 */
 		do_action( 'uf.ui.fields', $this );
 

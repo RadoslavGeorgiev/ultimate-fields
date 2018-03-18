@@ -26,15 +26,28 @@ class Group extends Container {
     }
 
     /**
-     * @todo: Comment
+     * Exports the data of the group, including type and visiblity.
+     *
+     * @since 3.0
+     *
+     * @return array
      */
     public function export_data() {
         $data = parent::export_data();
-        $data[ '__type' ] = $this->id;
-        $data[ '__hidden' ] = $this->datastore->get( '__hidden' );
+
+        $data[ '__type' ]   = $this->id;
+        $data[ '__hidden' ] = (bool) $this->datastore->get( '__hidden' );
+
         return $data;
     }
 
+	/**
+	 * Exports the group for JSON/PHP.
+	 *
+	 * @since 3.0
+	 * 
+	 * @return array
+	 */
     public function export() {
         $settings = parent::export();
 

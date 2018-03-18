@@ -165,8 +165,14 @@ abstract class Field {
 	 */
 	public static function create( $type, $name, $label = null ) {
 		/**
-		* @todo: Comment
-		*/
+		 * Allows the class name that is used for a field type to be changed.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $class_name The class name to use, initially null.
+		 * @param string $type       The requested type (ex. `text`).
+		 * @return string
+		 */
 		$class_name = apply_filters( 'uf.field.class', null, $type );
 
 		if( is_null( $class_name ) ) {
@@ -565,7 +571,12 @@ abstract class Field {
 	}
 
 	/**
-	 * @todo : Comment
+	 * Allows the label of the field to be changed after it is created.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $Label The new label.
+	 * @return Field
 	 */
 	public function set_label( $label ) {
 		$this->label = $label;

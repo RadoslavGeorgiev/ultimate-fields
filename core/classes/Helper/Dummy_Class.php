@@ -2,7 +2,10 @@
 namespace Ultimate_Fields\Helper;
 
 /**
- * @todo: Comment
+ * This is a class, which will be returned by some generators
+ * from within the plugin, that will indicate something missing and does nothing.
+ *
+ * @since 3.0
  */
 class Dummy_Class {
 	public function __set( $key, $value ) {

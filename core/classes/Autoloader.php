@@ -2,19 +2,51 @@
 namespace Ultimate_Fields;
 
 /**
- * @todo: Comment the whole class.
+ * Handles the autoloading of classes in the absence of Composer.
+ *
+ * @since 3.0
  */
 class Autoloader {
+	/**
+	 * The namespace that will be handled.
+	 *
+	 * @since 3.0
+	 * @var string
+	 */
 	protected $ns;
+
+	/**
+	 * A path for the given namespace.
+	 *
+	 * @since 3.0
+	 * @var string
+	 */
 	protected $path;
+
+	/**
+	 * Statically holds all autoloaders in order to be able to
+	 * traverse them in reverse order once a class must be loaded.
+	 *
+	 * @since 3.0
+	 * @var string
+	 */
 	protected static $loaders = array();
 
+	/**
+	 * Creates a new autoloader.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $ns   The namespace to load.
+	 * @param string $path The path, containing the classes.
+	 */
 	public function __construct( $ns, $path ) {
 		static $callback_added;
 
 		$this->ns   = $ns;
 		$this->path = $path;
 
+		// Force LIFO
 		array_unshift( self::$loaders, $this );
 
 		if( is_null( $callback_added ) ) {

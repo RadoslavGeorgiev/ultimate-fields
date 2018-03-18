@@ -970,12 +970,21 @@ class Container {
 		$this->fields    = clone $this->fields;
 	}
 
+	/**
+	 * Allows a location rule to be added directly to the first location of the container.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $rule  The name of the rule to set.
+	 * @param mixed  $value The value to apply to the new rule.
+	 * @return Container
+	 */
 	public function add_location_rule( $rule, $value ) {
 		if( ! empty( $this->locations ) ) {
 			$this->locations[ 0 ]->__set( $rule, $value );
 			return $this;
 		}
 
-		throw new \Exception( 'Undefined method @todo' );
+		throw new \Exception( 'Location rules cannot be added before adding a location!' );
 	}
 }

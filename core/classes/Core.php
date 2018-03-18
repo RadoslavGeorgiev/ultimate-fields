@@ -81,7 +81,7 @@ class Core {
 		# Add some generic filters/actions
 		add_filter( 'uf.api.the_value', 'wp_kses_post', 5 );
 
-		// @todo: Load translations properly
+		// Load translations properly
 		if( 'bg_BG' == get_option( 'WPLANG' ) ) {
 			load_textdomain( 'ultimate-fields', ULTIMATE_FIELDS_DIR . 'assets/languages/ultimate-fields-bg_BG.mo' );
 		}
