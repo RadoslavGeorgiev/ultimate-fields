@@ -85,6 +85,8 @@
 				}
 			});
 
+			$slider.find( '.ui-slider-handle' ).addClass( 'wp-ui-highlight' );
+
 			$input.change(function(){
 				$slider.slider( 'value', $input.val() );
 			});

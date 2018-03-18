@@ -42,7 +42,7 @@
 
 			if( this.model.get( 'fancy' ) ) {
 				this.$el.addClass( 'uf-fancy-checkbox' );
-				$input.after( '<span class="uf-fancy-checkbox-wrap">\
+				$input.after( '<span class="uf-fancy-checkbox-wrap wp-ui-highlight">\
 					<span class="uf-fancy-checkbox-button" />\
 				</span>' );
 
