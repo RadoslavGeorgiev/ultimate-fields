@@ -35,16 +35,17 @@
 }
 
 // Change tabs for block containers
-.uf-boxed-fields.uf-fields-layout-rows > .uf-tab-wrapper > .uf-tab:first-child {
-	margin-left: 20%;
+.uf-boxed-fields.uf-fields-layout-rows > .uf-tab-wrapper {
+	margin-left: 0;
+	padding-left: 20%;
 }
 
 .uf-tab-wrapper.uf-tabs-layout-rows > .uf-tab:first-child {
-	margin-left: 210px;
+	// margin-left: 210px;
 }
 
 .uf-tab-wrapper.uf-tabs-layout-rows.uf-fields-label-250 > .uf-tab:first-child {
-	margin-left: 250px;
+	// margin-left: 250px;
 }
 
 .uf-container-description {
@@ -56,5 +57,17 @@
 
 	p {
 		margin: 12px 0;
+	}
+}
+
+// Fixed-width label containers
+.uf-fields-label-200 {
+	&.uf-fields-layout-rows > .uf-tab-wrapper {
+		box-sizing: border-box;
+		padding-left: 210px;
+
+		.uf-tab:first-child {
+			margin-left: 0;
+		}
 	}
 }

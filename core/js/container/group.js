@@ -175,6 +175,7 @@
 			if( ! this.fieldsRendered && ! this.model.datastore.get( '__hidden' ) ) {
 				this.addFields();
 				this.fieldsRendered = true;
+				UltimateFields.ContainerLayout.DOMUpdated();
 			}
 
 			// When values change, re-render the fields
@@ -279,7 +280,7 @@
 		open: function() {
 			var that    = this,
 				$inside;
-				
+
 			if( 'popup' == this.model.get( 'edit_mode' ) ) {
 				this.openPopup();
 				return;
@@ -295,8 +296,7 @@
 				this.fieldsRendered = true;
 			}
 
-			UltimateFields.resizeGrid( false );
-
+			UltimateFields.ContainerLayout.DOMUpdated( true );
 			this.focusFirstField();
 		},
 
@@ -524,6 +524,13 @@
 
  			// Add normal fields
  			this.addFields();
+		},
+
+		/**
+		 * Indicates whether the container supports inline tabs.
+		 */
+		allowsInlineTabs() {
+			return false;
 		}
 	});
 

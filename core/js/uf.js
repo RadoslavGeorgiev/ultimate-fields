@@ -42,7 +42,7 @@
 			UltimateFields.initializeContainer( $root, data );
 		});
 
-		$( document ).trigger( 'uf-grid-resize' );
+		UltimateFields.ContainerLayout.DOMUpdated();
 	}
 
 	// Initializes a container
@@ -321,74 +321,6 @@
 			return visible;
 		}
 	});
-
-	UltimateFields.grid = function( $container, options ) {
-		var $elements, top, left, resize;
-
-		options = $.extend({
-			elements: '.uf-field, .uf-section, .uf-tab-wrapper'
-		}, options || {} );
-
-		// Locate elements
-		$elements = $container.children( options.elements );
-
-		resize = function() {
-			var top, left;
-
-			// Crawl
-			$elements.filter( ':visible' ).each(function() {
-				var $el    = $( this ), elTop, elLeft;
-
-				if( $el.hasClass( 'uf-tab-wrapper' ) ) {
-					top = left = undefined;
-					return;
-				}
-
-				elTop  = $el.offset().top - parseInt( $el.css( 'margin-top' ) );
-				elLeft = $el.offset().left - parseInt( $el.css( 'margin-left' ) );
-
-				// For the first element, get the offsets
-				if( 'undefined' == typeof left ) {
-					left = elLeft;
-					top  = elTop;
-				}
-
-				// Add the top index
-				if( elTop == top ) {
-					$el.addClass( 'top-row' );
-				} else if( $el.hasClass( 'top-row' ) ) {
-					$el.removeClass( 'top-row' );
-				}
-
-				// Add the left index
-				if( elLeft == left ) {
-					$el.addClass( 'first-col' );
-				} else if( $el.hasClass( 'first-col' ) ) {
-					$el.removeClass( 'first-col' );
-				}
-			});
-		}
-
-		resize();
-		$( window ).resize( resize );
-		$( document ).on( 'uf-grid-resize', resize );
-
-		return resize;
-	}
-
-	UltimateFields.resizeGrid = function( withTimeout ) {
-		if( 'undefined' == typeof withTimeout ) {
-			withTimeout = true;
-		}
-
-		if( withTimeout ) {
-			setTimeout( function(){
-				$( document ).trigger( 'uf-grid-resize' );
-			}, 1 );
-		} else {
-			$( document ).trigger( 'uf-grid-resize' );
-		}
-	}
 
 	/**
 	 * Allow creation of simple containers through jQuery.

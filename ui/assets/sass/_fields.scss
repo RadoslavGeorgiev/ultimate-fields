@@ -109,6 +109,7 @@
 		left: 50%;
 		user-select: none;
 		max-width: 98%;
+		min-width: 173px;
 		z-index: 20;
 		background: #f5f5f5;
 		padding: 4px 3px 5px;
@@ -180,6 +181,10 @@
 
 	&-complex {
 		padding: 0;
+	}
+
+	.uf-field-layout-grid {
+		min-width: 0;
 	}
 }
 

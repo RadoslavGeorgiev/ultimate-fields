@@ -286,7 +286,7 @@
 					}
 				});
 
-				this.checkTerms( taxonomy, terms, current );
+				that.checkTerms( taxonomy, terms, current );
 			}
 
 			$box = $( '#' + taxonomy + 'div' );

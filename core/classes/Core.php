@@ -278,7 +278,8 @@ class Core {
 		wp_register_script( 'uf-datastore',           $js . 'datastore.js',           array( 'uf-core' ), $v );
 		wp_register_script( 'uf-dependencies',        $js . 'dependencies.js',        array( 'uf-core' ), $v );
 		wp_register_script( 'uf-overlay',             $js . 'overlay.js',             array( 'uf-core' ), $v );
-		wp_register_script( 'uf-container',           $js . 'container/base.js',      array( 'uf-core', 'uf-datastore' ), $v );
+		wp_register_script( 'uf-container-layout',    $js . 'container-layout.js',    array( 'uf-core' ), $v );
+		wp_register_script( 'uf-container',           $js . 'container/base.js',      array( 'uf-core', 'uf-datastore', 'uf-container-layout' ), $v );
 		wp_register_script( 'uf-container-group',     $js . 'container/group.js',     array( 'uf-container', 'uf-overlay' ), $v );
 		wp_register_script( 'uf-container-post-type', $js . 'container/post-type.js', array( 'uf-container' ), $v );
 		wp_register_script( 'uf-container-options',   $js . 'container/options.js',   array( 'uf-container' ), $v );

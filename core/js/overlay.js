@@ -97,6 +97,8 @@
 			if( 'function' == typeof args.view.view.attachToOverlay ) {
 				args.view.view.attachToOverlay( this );
 			}
+
+			UltimateFields.ContainerLayout.DOMUpdated();
 		},
 
 		removeScreen: function() {

@@ -14,16 +14,15 @@
 
 .uf-field-suffix,
 .uf-field-prefix {
-	display: inline-block;
-	vertical-align: middle;
-	background: red;
+	display: flex;
 	line-height: 27px;
-	height: 27px;
 	font-size: 12px;
 	box-sizing: border-box;
 	background: #eee;
 	border: 1px solid #ccc;
 	padding: 0 8px;
+	align-items: center;
+	justify-content: center;
 }
 
 .uf-field-prefix {

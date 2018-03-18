@@ -3,11 +3,16 @@
 	&-wrapper {
 		border-bottom: 1px solid #ccc;
 		font-size: 0;
-		padding-top: 3px;
 		width: 100%;
 		position: relative;
 		z-index: 2;
 		margin-bottom: 10px;
+		padding-left: 10px;
+		box-sizing: border-box;
+
+		.uf-fields-inline-tabs > & {
+			display: none;
+		}
 	}
 
 	display: inline-block;
@@ -21,6 +26,7 @@
 	border: 1px solid #ccc;
 	margin-bottom: -1px;
 	margin-right: 6px;
+	margin-top: 3px;
 	color: #444;
 
 	.uf-boxed-fields & {
@@ -31,13 +37,12 @@
 		box-shadow: none;
 	}
 
-	&:first-child {
-		margin-left: 10px;
+	&:hover {
+		color: #222;
 	}
 
-	&:hover {
+	.uf-boxed-fields > &:hover {
 		background: #fff;
-		color: #222;
 	}
 
 	&-active {
@@ -62,7 +67,7 @@
 	}
 
 	&-invalid.uf-tab-active {
-		background: #fff;
+		background: inherit;
 		color: $required;
 	}
 
@@ -89,5 +94,36 @@
 	&-active {
 		background: #fff;
 		border-bottom-color: #fff;
+	}
+}
+
+.uf-inline-tab {
+	background: #fafafa;
+	border-top: 1px solid #ddd;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 15px;
+	width: 100%;
+	display: none;
+
+	&.top-row {
+		border-top: none;
+	}
+
+	.uf-fields-inline-tabs & {
+		display: flex;
+	}
+
+	h3 {
+		margin: 0;
+	}
+
+	&-toggle {
+
+	}
+
+	&-disabled,
+	.uf-fields-inline-tabs &-disabled {
+		display: none;
 	}
 }

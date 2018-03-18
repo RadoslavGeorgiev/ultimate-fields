@@ -214,6 +214,10 @@
 	    color: #444;
 	}
 
+	.select2-container {
+		max-width: 100%;	
+	}
+
 	.select2-container--default .select2-selection--multiple {
 		.select2-search__field {
 			padding-left: 4px;
