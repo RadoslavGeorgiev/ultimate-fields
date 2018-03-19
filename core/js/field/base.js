@@ -382,6 +382,7 @@
 
 			if( visible && ! this.inputRendered ) {
 				this.renderInput();
+				UltimateFields.ContainerLayout.DOMUpdated();
 			}
 		},
 

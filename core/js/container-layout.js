@@ -2,15 +2,15 @@
 
 	var resizers = [];
 
-	var triggerResizers = function() {
+	var triggerResizers = _.throttle( function() {
 		_.each( resizers, function( resizer ) {
 			resizer();
 		});
 
 		$( document ).trigger( 'uf-grid-resize' );
-	};
+	}, 1 );
 
-	$( window ).on( 'resize', _.throttle( triggerResizers ) );
+	$( window ).on( 'resize', triggerResizers );
 
 	UltimateFields.ContainerLayout = Backbone.View.extend({
 		initialize: function( args ) {

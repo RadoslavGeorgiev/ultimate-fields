@@ -29,9 +29,6 @@ class Password extends Field_Helper {
 	 * @return mixed[]
 	 */
 	 public static function get_fields() {
-	 	/**
-	 	 * @todo: Setup those in the UI Javascript
-	 	 */
  		$fields = array(
 			Field::create( 'text', 'default_value_password', __( 'Default value', 'ultimate-fields' ) ),
 			Field::create( 'complex', 'password_attributes', __( 'Attributes', 'ultimate-fields' ) )

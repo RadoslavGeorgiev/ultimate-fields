@@ -56,6 +56,10 @@
 			// Create a collection witht he fields first
 			this.set( 'fields', new UltimateFields.Field.Collection( this.get( 'rawFields') ) );
 
+			this.get( 'fields' ).each( function( field ) {
+				field.set( 'description_position', that.get( 'description_position' ) );
+			});
+
 			// Hook into the validation of the name field to prevent duplicates
 			nameField = this.get( 'fields' ).findWhere({ name: 'name' });
 			this.addNameValidation( nameField );

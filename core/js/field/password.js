@@ -45,11 +45,6 @@
 					.appendTo( this.$el );
 			}
 
-			// Add autocomplete suggestions
-			$( document ).on( 'uf-init', function() {
-				that.addAutoComplete( $input );
-			});
-
 			// Listen for external changes
 			this.model.on( 'external-value', function() {
 				$input.val( that.model.getValue() );

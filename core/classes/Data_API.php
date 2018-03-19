@@ -482,11 +482,6 @@ class Data_API {
 		}
 
 		foreach( array_reverse( $this->tree ) as $hash => $iterator ) {
-			/** @todo: Iterators automatically use the first group, see if it works right now */
-			// if( ! $iterator->ready() ) {
-				// continue;
-			// }
-
 			$group = $iterator->current();
 
 			if( isset( $group[ $name ] ) ) {

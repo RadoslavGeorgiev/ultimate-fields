@@ -330,7 +330,7 @@
 				views.push( tab );
 
 				if( ! that.tabHasVisibleFields( field ) ) {
-					tab.$el.hide();
+					tab.$el.addClass( 'uf-tab-hidden' )
 				}
 			});
 

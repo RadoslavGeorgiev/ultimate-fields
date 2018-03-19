@@ -35,8 +35,8 @@
 			args.model.set({
 				default_value: args.data.get( 'default_value_password' ),
 				placeholder:   attributes.password_placeholder,
-				prefix:        attributes.prefix,
-				suffix:        attributes.suffix
+				prefix:        attributes.password_prefix,
+				suffix:        attributes.password_suffix
 			});
 		}
 	});
