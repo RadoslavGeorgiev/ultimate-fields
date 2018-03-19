@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Fields 3\n"
-"POT-Creation-Date: 2018-03-19 15:03+0100\n"
-"PO-Revision-Date: 2018-03-19 15:04+0100\n"
+"POT-Creation-Date: 2018-03-19 15:46+0100\n"
+"PO-Revision-Date: 2018-03-19 16:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: Radoslav Georgiev (rageorgiev@gmail.com)\n"
 "Language: bg_BG\n"
@@ -70,19 +70,19 @@ msgstr "Настройките бяха обновени успешно."
 msgid "Failed to update %s."
 msgstr "Провал при обновението на %s."
 
-#: core/classes/Core.php:360
+#: core/classes/Core.php:361
 msgid "Full"
 msgstr "Пълен"
 
-#: core/classes/Core.php:362
+#: core/classes/Core.php:363
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: core/classes/Core.php:364
+#: core/classes/Core.php:365
 msgid "Medium"
 msgstr "Среден"
 
-#: core/classes/Core.php:366
+#: core/classes/Core.php:367
 msgid "Large"
 msgstr "Голям"
 
@@ -270,8 +270,8 @@ msgstr ""
 "Pro, което значи че е нужно да активирате дадено разширение, преди да ги "
 "използвате."
 
-#: core/classes/Helper/Missing_Features.php:145 ui/classes/Location.php:229
-#: ui/classes/Location.php:231 ui/classes/Location.php:262
+#: core/classes/Helper/Missing_Features.php:145 ui/classes/Location.php:230
+#: ui/classes/Location.php:232 ui/classes/Location.php:263
 msgid "Field"
 msgstr "Поле"
 
@@ -578,7 +578,7 @@ msgstr "Редактиране на полето"
 msgid "New Field"
 msgstr "Ново поле"
 
-#: ui/classes/Field/Fields.php:28 ui/classes/Location.php:240
+#: ui/classes/Field/Fields.php:28 ui/classes/Location.php:241
 #: ui/templates/ui/fields-box.php:15 ui/templates/ui/fields-field.php:10
 msgid "Add field"
 msgstr "Добавяне на поле"
@@ -783,6 +783,7 @@ msgstr ""
 "FIelds ще генерира обобщено съобщение."
 
 #: ui/classes/Field_Editor.php:289 ui/classes/Field_Editor.php:294
+#: ui/templates/settings/welcome.php:93
 msgid "Conditional Logic"
 msgstr "Условна логика"
 
@@ -1612,18 +1613,19 @@ msgstr ""
 "Моля, запишете контейнера за да презапишете файла."
 
 #: ui/classes/JSON_Box.php:101 ui/templates/settings/json.php:4
+#: ui/templates/settings/welcome.php:121
 msgid "JSON Synchronization"
 msgstr "JSON Синхронизация"
 
-#: ui/classes/Location.php:193
+#: ui/classes/Location.php:194
 msgid "Customizer"
 msgstr "Персонализатор"
 
-#: ui/classes/Location.php:196
+#: ui/classes/Location.php:197
 msgid "Show in customizer"
 msgstr "Показване в персонализатора"
 
-#: ui/classes/Location.php:197
+#: ui/classes/Location.php:198
 msgid ""
 "Show this container in the customizer when the customizer was opened from a "
 "post that this location applies to"
@@ -1631,85 +1633,85 @@ msgstr ""
 "Показване на този контейнер в персонализатора, когато той е отворен от "
 "публикация, която работи с този контейнер."
 
-#: ui/classes/Location.php:200
+#: ui/classes/Location.php:201
 msgid "postMessage fields"
 msgstr "postMessage полета"
 
-#: ui/classes/Location.php:201
+#: ui/classes/Location.php:202
 msgid "The selected fields will be sent to the page without refreshing."
 msgstr "Избраните полета ще бъдат изпратени към страницата без обновяване."
 
-#: ui/classes/Location.php:217
+#: ui/classes/Location.php:218 ui/templates/settings/welcome.php:136
 msgid "REST API"
 msgstr "REST API"
 
-#: ui/classes/Location.php:220
+#: ui/classes/Location.php:221
 msgid "Expose"
 msgstr "Разкриване"
 
-#: ui/classes/Location.php:221
+#: ui/classes/Location.php:222
 msgid "Expose the values of this container to the REST API"
 msgstr "Разкриване на стойностите на този контейнер чрез REST API"
 
-#: ui/classes/Location.php:224
+#: ui/classes/Location.php:225
 msgid "API fields"
 msgstr "API полета"
 
-#: ui/classes/Location.php:226
+#: ui/classes/Location.php:227
 msgid "The selected fields will be exposed to the REST API."
 msgstr "Избраните полета ще бъдат показани в REST API."
 
-#: ui/classes/Location.php:233
+#: ui/classes/Location.php:234
 msgid "Editable"
 msgstr "Позволяване на редакция"
 
-#: ui/classes/Location.php:236 ui/classes/Location.php:275
+#: ui/classes/Location.php:237 ui/classes/Location.php:276
 #: ui/templates/settings/json.php:151
 msgid "Yes"
 msgstr "Да"
 
-#: ui/classes/Location.php:255
+#: ui/classes/Location.php:256
 msgid "Columns"
 msgstr "Колони"
 
-#: ui/classes/Location.php:258
+#: ui/classes/Location.php:259
 msgid "Admin Columns"
 msgstr "Колони"
 
-#: ui/classes/Location.php:260
+#: ui/classes/Location.php:261
 msgid "Column"
 msgstr "Колона"
 
-#: ui/classes/Location.php:264
+#: ui/classes/Location.php:265
 msgid "Position"
 msgstr "Позиция в менюто"
 
-#: ui/classes/Location.php:267
+#: ui/classes/Location.php:268
 msgid "prepend"
 msgstr "добавяне в началото"
 
-#: ui/classes/Location.php:268
+#: ui/classes/Location.php:269
 msgid "after title"
 msgstr "след заглавието"
 
-#: ui/classes/Location.php:269
+#: ui/classes/Location.php:270
 msgid "append"
 msgstr "добавяне в края"
 
-#: ui/classes/Location.php:272
+#: ui/classes/Location.php:273
 msgid "Sortable"
 msgstr "Подлежи на сортиране"
 
-#: ui/classes/Location.php:280
+#: ui/classes/Location.php:281
 msgid "Please click the \"Add column\" button to add a new column."
 msgstr ""
 "Моля, натиснете бутона \"Добавяне на колона\" за да добавите нова колона."
 
-#: ui/classes/Location.php:281
+#: ui/classes/Location.php:282
 msgid "Add column"
 msgstr "Добавяне на колона"
 
-#: ui/classes/Location.php:282
+#: ui/classes/Location.php:283
 msgid ""
 "If you need to display additional columns on the post type listing, add them "
 "here."
@@ -2511,9 +2513,292 @@ msgstr "Следните контейнери ще бъдат мигрирани
 msgid "Migrate"
 msgstr "Миграция"
 
-#: ui/templates/settings/page.php:21
+#: ui/templates/settings/page.php:21 ui/templates/settings/welcome.php:167
 msgid "Get Ultimate Fields Pro"
 msgstr "Изтегляне на Ultimate Fields Pro"
+
+#: ui/templates/settings/welcome.php:4
+msgid "Hello!"
+msgstr "Здравейте!"
+
+#: ui/templates/settings/welcome.php:6
+msgid "Thank you for installing or updating to Ultimate Fields 3!"
+msgstr "Благодаря, че инсталирахте или обновихте Ultimate Fields до версия 3!"
+
+#: ui/templates/settings/welcome.php:7
+msgid ""
+"This is a complete rewrite of the plugin, which brings a ton of improvements "
+"and new features. To learn more about them, take a look below or visit <a "
+"href=\"https://www.ultimate-fields.com/\" target=\"_blank\">our new website</"
+"a>."
+msgstr ""
+"Разширението е изцяло пренаписано, което допринася куп подобрения и нови "
+"функционалности. За да научите за тях, разгледайте остатъкът от страницата "
+"или постете  <a href=\"https://www.ultimate-fields.com/\" target=\"_blank"
+"\">новия ни уебсайт</a>."
+
+#: ui/templates/settings/welcome.php:15
+#, php-format
+msgid "Version %s"
+msgstr "Версия %s"
+
+#: ui/templates/settings/welcome.php:22
+msgid "Introducing a cool new plugin"
+msgstr "Представяме Ви едно ново разширение"
+
+#: ui/templates/settings/welcome.php:23
+msgid ""
+"Ultimate Fields 3 is a completely new plugin, following the same philosophy "
+"as the first version."
+msgstr ""
+"Ultimate Fields 3 е изцяло ново разширение, което следва философията на "
+"първата версия."
+
+#: ui/templates/settings/welcome.php:24
+msgid ""
+"Following the trends on the World Wide Web and the ones for WordPress, this "
+"version introduces a completely JavaScript driven interface. This allows for "
+"improved user experience and various functions, which were nearly impossible "
+"to exist in its PHP based equivalent."
+msgstr ""
+"Следвайки тенденциите в онлайн пространството, както и тези при WordPress, "
+"тази версия представя напълно обновен JavaScript интерфейс. Това позволява "
+"подобреното потребителско изживяване, както и разнообразни функционалности, "
+"които не биха били възможни в PHP-базирания еквивалент."
+
+#: ui/templates/settings/welcome.php:30
+msgid "WYSIWYG fields creation"
+msgstr "WYSIWYG създаване на полета"
+
+#: ui/templates/settings/welcome.php:34
+msgid "Starting from the first screen, Ultimate Fields already looks awesome."
+msgstr "Започвайки от първия екран, Ultimate Fields вече изглежда по-добре."
+
+#: ui/templates/settings/welcome.php:35
+msgid ""
+"One of the key visual additions in Ultimate Fields 3 is the new container "
+"edit screen. In addition to the improved location settings, the section with "
+"the fields provides a real preview of the field, allowing you to see how the "
+"fields will look, while making the navigation between fields easier and "
+"visually intuitive."
+msgstr ""
+"Една от главните визуални добавки в Ultimate Fields 3 е новият екран за "
+"редактиране на контейнери. В допълнение към подобрените настройки на "
+"местоположенията, секцията с полетата предоставя изглед на полето в реално "
+"време, позволявайки Ви да придобиете представа как ще изглеждат полетата по "
+"много по бърз и интуитивен начин."
+
+#: ui/templates/settings/welcome.php:43
+msgid "Overhauled UI"
+msgstr "Преработен интерфейс"
+
+#: ui/templates/settings/welcome.php:44
+msgid ""
+"Although in its core, Ultimate Fields is trying to get out of the way from "
+"your users by utilizing the WordPress look and feel, it is all new now. "
+"Starting with simple fields and extending to the administration interface, "
+"version three is completely rewritten and heavily JavaScript-based."
+msgstr ""
+"Въпреки че в ядрото си Ultimate Fields се старае да се възползва от "
+"усещането и изгледа на WordPress, интерфейсът е изцяло нов. Започвайки с най-"
+"простите полета и преминавайки през административния интерфейс, версия три е "
+"изцяло пренаписана и силно наблягаща върху JavaScript."
+
+#: ui/templates/settings/welcome.php:52
+msgid "Improved performance"
+msgstr "Подобрена производилтеност"
+
+#: ui/templates/settings/welcome.php:57
+msgid "Back-end performance"
+msgstr "Производителност в таблото"
+
+#: ui/templates/settings/welcome.php:58
+msgid ""
+"With smarter location rules, fields will not be initialized until they need "
+"to be displayed."
+msgstr ""
+"С по-умни правила за местоположенията, полетата не биват инициализирани до "
+"момента в който са нужни."
+
+#: ui/templates/settings/welcome.php:59
+msgid ""
+"This minifies the impact of Ultimate Fields in the back-end, preventing "
+"fields, which are not needed from slowing down the whole administration area."
+msgstr ""
+"Това намалява влиянието на Ultimate Fields върху производителността в "
+"таблото."
+
+#: ui/templates/settings/welcome.php:63
+msgid "Front-end performance"
+msgstr "Производителност на сайта"
+
+#: ui/templates/settings/welcome.php:64
+msgid ""
+"Version three uses a new approach for loading fields and values in the front "
+"end."
+msgstr ""
+"Версия 3 използва нов подход при зареждането на полетата и техните стойности."
+
+#: ui/templates/settings/welcome.php:65
+msgid ""
+"The appropriate details are cached in an option, which is automatically "
+"loaded during WordPress startup. After that, when retrieving values, the "
+"performance impact of using <code>the_value()</code> and "
+"<code>get_the_value()</code> is zero to none. Now Ultimate Fields is the "
+"fastest in it&apos;s class."
+msgstr ""
+"При извличането на стойности, влиянието върху производителността на "
+"<code>the_value()</code> и<code>get_the_value()</code> е напълно минимално, "
+"правейки Ultimate Fields най-бързото разширение в категорията."
+
+#: ui/templates/settings/welcome.php:73
+msgid "Better fields"
+msgstr "Подобрени полета"
+
+#: ui/templates/settings/welcome.php:77
+msgid "Repeaters"
+msgstr "Повторители"
+
+#: ui/templates/settings/welcome.php:78
+msgid "Repeaters just became way more powerful."
+msgstr "Повторителите вече са много по-мощни."
+
+#: ui/templates/settings/welcome.php:79
+msgid ""
+"They now support tabs, full-screen mode for groups, table layouts, icons, "
+"color customization, minimum/maximum limits and that is not even all!"
+msgstr ""
+"Те вече поддържат табове, пълно-екранен режим, разположение като таблица, "
+"колони, персонализируеми цветове, минимуми, максимуми и това дори не е "
+"всичко!"
+
+#: ui/templates/settings/welcome.php:83
+msgid "Complex Field"
+msgstr "Комплексно поле"
+
+#: ui/templates/settings/welcome.php:84
+msgid ""
+"The new Complex field allows you to add multiple sub-fields to the same "
+"field. Those fields may even be loaded from an existing container, making "
+"reusable fields possible."
+msgstr ""
+"Новото комплексно поле ВИ позволява да добавите множество под-полета в едно "
+"единствено поле. Тези полета могат дори да бъдат заредени от съществуващ "
+"контейнер, правейки ги преизползваеми."
+
+#: ui/templates/settings/welcome.php:88
+msgid "Relational fields"
+msgstr "Релационни полета"
+
+#: ui/templates/settings/welcome.php:89
+msgid ""
+"The new WP Object, WP Objects and Link field allow users to select all types "
+"of content through a JS-driven and intuitive field!"
+msgstr ""
+"Новите полета WP Обект, WP Обекти и Връзка позволяват на потребителите да "
+"избират всякакви видове съдържание през интуитивни JavaScript-базирани "
+"полета."
+
+#: ui/templates/settings/welcome.php:94
+msgid ""
+"Conditional Logic is now supported in the User Interface. Not only that, but "
+"you can actually create multiple groups of rules."
+msgstr ""
+"Условната логика вече е поддържана и в потребителския интерфейс. Не само "
+"това, но вече може да създавате и множество групи от полета!"
+
+#: ui/templates/settings/welcome.php:98
+msgid "Unlimited nesting"
+msgstr "Неограничено влагане"
+
+#: ui/templates/settings/welcome.php:99
+msgid ""
+"Now you can not just create repeaters, but also have fields within a complex "
+"field within a repeater within a layout field. From now on, the sky is the "
+"limit!"
+msgstr ""
+"Вече можете не само да създавате повторители, но и да създадете под-полета в "
+"комплексно поле, в повторител, в поле за разположение. Новата граница е "
+"небето!"
+
+#: ui/templates/settings/welcome.php:103
+msgid "Minor UI Tweaks"
+msgstr "Леки подобрения в интерфейса"
+
+#: ui/templates/settings/welcome.php:104
+msgid ""
+"Most existing fields will now work and look better, thanks to various tweaks "
+"and improvements in the interface."
+msgstr ""
+"Повечето съществуващи полета изглеждат и работят по-добре, благодарение на "
+"множество подобрения в интерфейса."
+
+#: ui/templates/settings/welcome.php:112
+msgid "...and much more"
+msgstr "... и още много"
+
+#: ui/templates/settings/welcome.php:116
+msgid "JSON Import/Export"
+msgstr "Импорт / Експорт чрез JSON"
+
+#: ui/templates/settings/welcome.php:117
+msgid "Reliably export and import fields from the admin as JSON files."
+msgstr "Експортирайте надеждно полетата си от таблото като JSON файлове."
+
+#: ui/templates/settings/welcome.php:122
+msgid "Fields can be automatically saved and synchronized in your theme."
+msgstr ""
+"Полетата могат да бъдат автоматично записани и синхронизирани в темата."
+
+#: ui/templates/settings/welcome.php:126
+msgid "New website & Documentation"
+msgstr "Нов сайт и документация"
+
+#: ui/templates/settings/welcome.php:127
+msgid "The website of the plugin is now live and full of docs."
+msgstr "Сайтът на разширението е онлайн и пълен с документация."
+
+#: ui/templates/settings/welcome.php:131
+msgid "New layout"
+msgstr "Ново разположение"
+
+#: ui/templates/settings/welcome.php:132
+msgid "The new Grid layout allows fields to be added to columns."
+msgstr ""
+"Новото решетъчно разположение позволява полетата да бъдат подреждани в "
+"колони."
+
+#: ui/templates/settings/welcome.php:137
+msgid "Automatically expose fields in the REST API."
+msgstr "Автоматична връзка на полетата с REST API."
+
+#: ui/templates/settings/welcome.php:141
+msgid "Admin columns"
+msgstr "Административни Колони"
+
+#: ui/templates/settings/welcome.php:142
+msgid "Easily display the values of fields as columns in listings."
+msgstr "Лесно показване на стойности в списъците в таблото."
+
+#: ui/templates/settings/welcome.php:152
+msgid "Ultimate Fields Pro"
+msgstr "Ultimate Fields Pro"
+
+#: ui/templates/settings/welcome.php:153
+msgid "More Locations and Fields, Front-end Forms &amp; Faster Support"
+msgstr "Повече местоположения и полета, формуляри в сайта и по-бърза поддръжка"
+
+#: ui/templates/settings/welcome.php:154
+msgid "Read more about it on the official page."
+msgstr "Можете да прочетете повече на официалната му страница."
+
+#: ui/templates/settings/welcome.php:156
+msgid "Read More"
+msgstr "Прочетете повече"
+
+#: ui/templates/settings/welcome.php:165
+msgid "Create your first container"
+msgstr "Създайте първия си контейнер"
 
 #: ui/templates/ui/conditional-logic-empty.php:1
 msgid "There are no fields, which can be used for conditional logic right now."

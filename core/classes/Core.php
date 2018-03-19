@@ -78,12 +78,13 @@ class Core {
 		add_action( 'after_setup_theme', array( $this, 'initialize' ), 999 );
 		add_filter( 'uf.field.class', array( $this, 'generate_field_class' ), 10, 2 );
 
-		# Add some generic filters/actions
+		// Add some generic filters/actions
 		add_filter( 'uf.api.the_value', 'wp_kses_post', 5 );
 
-		// Load translations properly
-		if( 'bg_BG' == get_option( 'WPLANG' ) ) {
-			load_textdomain( 'ultimate-fields', ULTIMATE_FIELDS_DIR . '../languages/ultimate-fields-bg_BG.mo' );
+		// Load translations
+		if( defined( 'ULTIMATE_FIELDS_PLUGIN_FILE' ) ) {
+			$langs = basename( dirname( ULTIMATE_FIELDS_PLUGIN_FILE ) ) . '/languages/';
+			load_plugin_textdomain( 'ultimate-fields', FALSE, $langs );
 		}
 	}
 
