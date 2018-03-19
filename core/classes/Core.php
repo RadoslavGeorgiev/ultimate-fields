@@ -208,9 +208,12 @@ class Core {
 	 * @return string The generated URL.
 	 */
 	public function get_url( $path ) {
-		// In-theme mode
-		if( 0 === strpos( $path, get_theme_root() ) ) {
-			$sub = str_replace( get_theme_root(), '', $path );
+		// Check for in-theme mode
+		$normalized_path = str_replace( '\\', '/', $path );
+		$normalized_root = str_replace( '\\', '/', get_theme_root() );
+
+		if( 0 === strpos( $normalized_path, $normalized_root ) ) {
+			$sub = str_replace( $normalized_root, '', $normalized_path );
 			$url = get_theme_root_uri() . dirname( $sub ) . '/';
 			$url = str_replace( DIRECTORY_SEPARATOR, '/', $url );
 
