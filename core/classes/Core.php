@@ -83,7 +83,7 @@ class Core {
 
 		// Load translations properly
 		if( 'bg_BG' == get_option( 'WPLANG' ) ) {
-			load_textdomain( 'ultimate-fields', ULTIMATE_FIELDS_DIR . 'assets/languages/ultimate-fields-bg_BG.mo' );
+			load_textdomain( 'ultimate-fields', ULTIMATE_FIELDS_DIR . '../languages/ultimate-fields-bg_BG.mo' );
 		}
 	}
 

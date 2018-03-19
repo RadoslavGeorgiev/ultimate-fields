@@ -61,8 +61,9 @@ abstract class Location {
 		$name   = call_user_func( array( get_called_class(), 'get_name' ) );
 		$fields = call_user_func( array( get_called_class(), 'get_fields' ) );
 
-		$group = new Repeater_Group( $type, $name );
+		$group = new Repeater_Group( $type );
 		$group
+			->set_title( $name )
 			->add_fields( $fields )
 			->set_layout( 'rows')
 			->set_description_position( 'label' )
@@ -143,7 +144,7 @@ abstract class Location {
 
 			$column = Admin_Column::create( $raw[ 'field_name' ] );
 
-			if( $raw[ 'sortable' ] ) {
+			if( isset( $raw[ 'sortable' ] ) && $raw[ 'sortable' ] ) {
 				$column->sortable();
 			}
 
