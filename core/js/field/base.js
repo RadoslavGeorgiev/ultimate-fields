@@ -432,7 +432,7 @@
 		/**
 		 * Adjust the classes of the field based on size.
 		 */
-		useLayout( layout ) {
+		useLayout: function( layout ) {
 			if( 'rows' === layout ) {
 				layout = 'row';
 			}
