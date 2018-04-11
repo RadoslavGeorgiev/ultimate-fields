@@ -11,6 +11,7 @@
  * Domain path: /languages
  * Text Domain: ultimate-fields
  * Description: Ultimate Fields is a plugin, that allows you to add custom fields in many places throughout the WordPress administration area, supporting a total of more than 30 field types, including repeaters, layouts and etc.
+ * Requires at least: 4.9
  */
 
 /**
@@ -24,6 +25,8 @@ function load_ultimate_fields() {
 	if( function_exists( 'ultimate_fields' ) ) {
 		return;
 	}
+
+	define( 'ULTIMATE_FIELDS_PLUGIN_FILE', __FILE__ );
 
 	require_once( 'core/ultimate-fields.php' );
 	require_once( 'ui/ultimate-fields-ui.php' );

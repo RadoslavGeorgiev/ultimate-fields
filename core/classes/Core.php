@@ -78,12 +78,13 @@ class Core {
 		add_action( 'after_setup_theme', array( $this, 'initialize' ), 999 );
 		add_filter( 'uf.field.class', array( $this, 'generate_field_class' ), 10, 2 );
 
-		# Add some generic filters/actions
+		// Add some generic filters/actions
 		add_filter( 'uf.api.the_value', 'wp_kses_post', 5 );
 
-		// Load translations properly
-		if( 'bg_BG' == get_option( 'WPLANG' ) ) {
-			load_textdomain( 'ultimate-fields', ULTIMATE_FIELDS_DIR . 'assets/languages/ultimate-fields-bg_BG.mo' );
+		// Load translations
+		if( defined( 'ULTIMATE_FIELDS_PLUGIN_FILE' ) ) {
+			$langs = basename( dirname( ULTIMATE_FIELDS_PLUGIN_FILE ) ) . '/languages/';
+			load_plugin_textdomain( 'ultimate-fields', FALSE, $langs );
 		}
 	}
 
@@ -207,9 +208,12 @@ class Core {
 	 * @return string The generated URL.
 	 */
 	public function get_url( $path ) {
-		// In-theme mode
-		if( 0 === strpos( $path, get_theme_root() ) ) {
-			$sub = str_replace( get_theme_root(), '', $path );
+		// Check for in-theme mode
+		$normalized_path = str_replace( '\\', '/', $path );
+		$normalized_root = str_replace( '\\', '/', get_theme_root() );
+
+		if( 0 === strpos( $normalized_path, $normalized_root ) ) {
+			$sub = str_replace( $normalized_root, '', $normalized_path );
 			$url = get_theme_root_uri() . dirname( $sub ) . '/';
 			$url = str_replace( DIRECTORY_SEPARATOR, '/', $url );
 

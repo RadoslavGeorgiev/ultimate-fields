@@ -497,7 +497,7 @@
 		/**
 		 * Indicates whether the container supports inline tabs.
 		 */
-		allowsInlineTabs() {
+		allowsInlineTabs: function() {
 			return true;
 		}
 	});
