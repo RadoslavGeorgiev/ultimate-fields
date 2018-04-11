@@ -430,9 +430,6 @@ class Post_Type extends Location {
 			}
 		}
 
-		# Export customizable data
-		$this->export_customizable_data( $settings );
-
 		# Export REST data
 		$this->export_rest_data( $settings );
 
