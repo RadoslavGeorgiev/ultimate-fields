@@ -428,10 +428,20 @@ class Post_Type {
 			}
 
 			foreach( $locations as $location ) {
-				$type = $location[ '__type' ];
-				$class_name = ultimate_fields()->generate_class_name( "UI/Location/$type" );
+				$type      = $location[ '__type' ];
+				$the_class = null;
 
-				$names[] = call_user_func( array( $class_name, 'get_name' ) );
+				foreach( Container_Settings::get_location_classes() as $class_name ) {
+					if( $type == call_user_func( array( $class_name, 'get_type' )) ) {
+						$the_class = $class_name;
+					}
+				}
+
+				if( ! $the_class ) {
+					continue;
+				}
+
+				$names[] = call_user_func( array( $the_class, 'get_name' ) );
 			}
 
 			$names = array_unique( $names );

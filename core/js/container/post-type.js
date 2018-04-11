@@ -353,7 +353,7 @@
 				level = level || 'level--1';
 				level = parseInt( level.replace( 'level-', '' ) ) + 2;
 
-				this.checkLevel( level );
+				that.checkLevel( level );
 			}
 
 			// Listen for changes
