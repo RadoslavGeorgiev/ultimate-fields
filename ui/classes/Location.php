@@ -294,7 +294,7 @@ abstract class Location {
 	 * @param mixed[]      $data     The data where values should be stored.
 	 */
 	protected static function import_customizer( $location, & $data ) {
-		if( ! $location->is_shown_in_customizer() )
+		if( ! method_exists( $location, 'is_shown_in_customizer' ) || ! $location->is_shown_in_customizer() )
 			return;
 
 		$data[ 'show_in_customizer' ] = true;
