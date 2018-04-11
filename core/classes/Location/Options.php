@@ -276,9 +276,6 @@ class Options extends Location {
 			$settings[ 'page' ] = $this->page->get_id();
 		}
 
-		# Export customizable data
-		$this->export_customizable_data( $settings );
-
 		# Export REST data
 		$this->export_rest_data( $settings );
 
