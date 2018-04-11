@@ -83,8 +83,7 @@ class Core {
 
 		// Load translations
 		if( defined( 'ULTIMATE_FIELDS_PLUGIN_FILE' ) ) {
-			$langs = basename( dirname( ULTIMATE_FIELDS_PLUGIN_FILE ) ) . '/languages/';
-			load_plugin_textdomain( 'ultimate-fields', FALSE, $langs );
+			load_plugin_textdomain( 'ultimate-fields', FALSE, ULTIMATE_FIELDS_LANGUAGES_DIR );
 		}
 	}
 
