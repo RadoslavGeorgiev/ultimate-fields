@@ -1,12 +1,13 @@
 === Ultimate Fields ===
 Contributors: RadoGeorgiev
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QNZXU5VDH6PNQ
+Donate link: https://www.ultimate-fields.com/pro/
 Tags: custom fields, meta, theme options, repeater, post meta
 Requires at least: 4.9
 Tested up to: 4.9.5
 Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 5.4
 
 Easy and powerful custom fields management: Post Meta, Options Pages, Repeaters and many field types!
 
@@ -14,29 +15,44 @@ Easy and powerful custom fields management: Post Meta, Options Pages, Repeaters 
 
 With Ultimate Fields you can easily create fields in the admin. Those fields can be displayed when you are editing a post or page (any post type actually) or in an options page (ex. Theme Options) anywhere in the admin.
 
+Please visit [https://www.ultimate-fields.com/](https://www.ultimate-fields.com/) for more details.
+
 = Features =
 * Easy to use.
-* Many types of fields.
-* Post Meta containers which display fields on post edit screens.
-* Post Meta containers can only be shown when a specific criteria is met. Criteria may include: Post Type, Specific Category (for posts), Specific custom taxonomy tags, Specific Templates and Specific hierarchy levels.
-* Options Page containers which display options wherever needed. You can specify if you want the page to appear in the main menu or as a sub-page in the Appearance, Tools and Settings menu. Custom icons are also supported.
-* Both Post meta and Options Pages support tabs.
-* Properly styled: Ultimate Fields follows WordPress' built in styles as much as possible and provides a seamless experience. It's even fully responsive.
-* PHP and JSON Exports: You can export your fields to PHP and embed them in your theme or plugin.
-* Output settings: You can change the way each field's value is displayed and then just call get_value( 'field_name' ), without any additional processing.
+* Various field types (listed below)
+* Support for Post Type and Options Page as locations for fields. All locations have advanced placement rules, in order to only show them when needed.
+* WYSIWYG Field Creation
+* Focused on developers: A clean object-oriented API allows you to cleanly define all of your fields through code.
+* Perfected tabs, alignment and styles
+* Import, Export and in-theme JSON Synchronization
+* JavaScript-based interface
+* Unlimited field nesting with the Repeater and Complex fields
+* Conditional Logic between fields in the same container (and ones on upper levels)
+* REST API Support
+* Admin Columns
+* Integration with WordPress SEO for automatic field content ratings
+* Clean styles: Ultimate Fields follows WordPress' built in styles as much as possible and provides a seamless experience. It's even fully responsive.
+* Full-featured interface for data loading
 
 = Fields =
-* Heading Field
-* Text Field
-* Textarea Field
-* Select Field
-* Select Page Field
-* Radio Field
-* Checkbox Field
-* Checkbox Set Field
-* File Field
-* Select Term Field
-* Rich Text Editor (TinyMCE) Field
+* Text
+* Textarea
+* WYSIWYG Editor
+* Password
+* Number
+* Checkbox
+* Select
+* Multiselect
+* Image-Select (a visual select)
+* File
+* Image
+* WP Object (for selection of an object among posts, terms and users)
+* WP Objects (for multiple objects)
+* Link
+* Section
+* Tab
+* Complex
+* Repeater
 
 = Repeaters =
 Repeaters can be used to add repeatable groups of fields. You can combine a text and a file field into a Slide group and allow the user to add as many slides as he needs. The value is saved in a single field!
@@ -46,21 +62,48 @@ Additionally you can add different types of groups into a single repeater. This 
 = Embedding in themes and plugins =
 Ultimate Fields has all the necessary logic built in. Just place it wherever you need and include ultimate-fields.php
 
+
 == Installation ==
 
 1. Upload `ultimate-fields` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. You are ready to create your first container. To do this, choose "Add New" from the "Ultimate Fields" section in the menu.
-4. Output values through get_option(), get_post_meta(), uf() and get_uf().
+4. Output values through get_value(), the_value() and etc.
+
+Please make sure to check out [the documentation on our website](https://www.ultimate-fields.com/docs/).
 
 == Screenshots ==
 
-1. This screenshot shows the main page where you can set a container up.
-2. The second screenshot shows how the Fields interface looks.
-3. You can see an example options page on the third screenshot.
-4. A Post Meta box which contains a couple of fields.
+1. This screenshot shows the main editing screen where containers are set up.
+2. An example Options page
+4. A post meta box with a few simple fields and a repeater
+
+== Upgrade Notice ==
+
+= 3.0 =
+This is a complete rewrite of the plugin with renewed interface and various new functions. After upgrade, you will be required to migrate your containers to the format of the new version. Important: There are no immediate modifications of field values and the old container format will be stored in case you need to revert.
 
 == Changelog ==
+
+= 3.0 =
+3.0 is a complete rewrite of the plugin, which brings a ton of improvements, including but not limited to:
+
+* JavaScript-driven UI
+* WYSIWYG Field Creation
+* New styles and field arrangements
+* Proper PHP exports, as well as JSON exports
+* JSON Synchronization
+* Unlimited field nesting
+* Conditional logic
+* REST API Support
+* Admin columns
+* WordPress SEO Integration
+* Better relational fields
+* A new field type, called "Complex"
+
+As of this version, the website, documentation and PRO version of the plugin are online too.
+
+On June 28, 2017 we announced that the qTranslate support is being eliminated and sadly, it is no longer available. You can read more about that in https://rageorgiev.com/blog/2017/06/28/ultimate-fields-multilingual-support-will-removed/
 
 = 1.2 =
 * Updated visual styles
