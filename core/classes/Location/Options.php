@@ -296,11 +296,5 @@ class Options extends Location {
 		if( isset( $args[ 'page' ] ) ) {
 			$this->page = $this->prepare_page( $args[ 'page' ] );
 		}
-
-		# Check for the customizer
-		$this->import_customizable_data( $args );
-
-		# Check for rest data
-		$this->import_rest_data( $args );
 	}
 }
