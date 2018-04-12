@@ -2,7 +2,7 @@
 /**
  * Plugin name: Ultimate Fields
  * Version:     3.0
- * Plugin URI:  http://ultimate.fields.com/
+ * Plugin URI:  https://www.ultimate-fields.com/
  * Author:      Radoslav Georgiev
  * Author URI:  http://rageorgiev.com/
  * Copyright:   Radoslav Georgiev
