@@ -103,7 +103,7 @@ abstract class Location {
 	 * Creates a new basic location.
 	 *
 	 * @since 3.0
-	 * 
+	 *
 	 * @param array $args Arguments (optional).
 	 */
 	public function __construct( $args ) {
@@ -192,7 +192,6 @@ abstract class Location {
 	 * @param mixed  $value The value to set.
 	 */
 	public function __set( $key, $value ) {
-		$value       = $this->extract_value( $value );
 		$method_name = 'set_' . $key;
 
 		if( method_exists( $this, $method_name ) ) {
@@ -341,6 +340,21 @@ abstract class Location {
 		}
 
 		return $existing;
+	}
+
+	/**
+	 * Converts any type of parameter (single or array, existing or not and etc.)
+	 *
+	 * @since 3.0
+	 *
+	 * @param  mixed    $existing An array of existing rules.
+	 * @param  mixed    $value    The new rules to parse.
+	 * @param  callable $parser   A parser to call for every item once prepared (Optional).
+	 * @return mixed[]            A properly formatted array with visible and hidden sub-arrays.
+	 */
+	protected function handle_value( $existing, $value, $parser = false ) {
+		$rules = $this->extract_value( $value );
+		return $this->process_value( $existing, $rules, $parser );
 	}
 
 	/**

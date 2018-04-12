@@ -195,7 +195,7 @@ class Post_Type extends Location {
 		$taxonomies = get_taxonomies();
 
 		if( in_array( $key, $taxonomies ) ) {
-			$this->set_terms( $this->extract_value( $value ), $key );
+			$this->set_terms( $value, $key );
 		} else {
 			parent::__set( $key, $value );
 		}
@@ -258,7 +258,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_templates( $templates ) {
-		$this->templates = $this->process_value( $this->templates, $templates );
+		$this->templates = $this->handle_value( $this->templates, $templates );
 
 		return $this;
 	}
@@ -279,8 +279,9 @@ class Post_Type extends Location {
 
 		$callback = new Callback( array( Util::class, 'parse_terms' ) );
 		$callback[ 'taxonomy' ] = $taxonomy;
+		$callback = $callback->get_callback();
 
-		$this->terms[ $taxonomy ] = $this->process_value( $this->terms[ $taxonomy ], $terms, $callback->get_callback() );
+		$this->terms[ $taxonomy ] = $this->handle_value( $this->terms[ $taxonomy ], $terms, $callback );
 
 		return $this;
 	}
@@ -294,7 +295,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_levels( $levels ) {
-		$this->levels = $this->process_value( $this->levels, $levels );
+		$this->levels = $this->handle_value( $this->levels, $levels );
 
 		return $this;
 	}
@@ -308,7 +309,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_formats( $formats ) {
-		$this->formats = $this->process_value( $this->formats, $formats );
+		$this->formats = $this->handle_value( $this->formats, $formats );
 		return $this;
 	}
 
@@ -321,7 +322,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_stati( $stati ) {
-		$this->stati = $this->process_value( $this->stati, $stati );
+		$this->stati = $this->handle_value( $this->stati, $stati );
 		return $this;
 	}
 
@@ -334,7 +335,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_ids( $ids ) {
-		$this->ids = $this->process_value( $this->ids, $ids );
+		$this->ids = $this->handle_value( $this->ids, $ids );
 
 		return $this;
 	}
@@ -348,7 +349,7 @@ class Post_Type extends Location {
 	 * @return Ultimate_Fields\Location\Post_Type
 	 */
 	protected function set_parents( $parents ) {
-		$this->parents = $this->process_value( $this->parents, $parents );
+		$this->parents = $this->handle_value( $this->parents, $parents );
 
 		return $this;
 	}
