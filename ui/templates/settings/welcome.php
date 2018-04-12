@@ -146,6 +146,7 @@
 
 	<hr>
 
+	<?php if ( ! defined( 'ULTIMATE_FIELDS_PRO' ) ): ?>
 	<div class="uf-welcome-section">
 		<img src="<?php echo ULTIMATE_FIELDS_UI_URL ?>assets/images/layout-field.png" alt="Repeater Tabs" width="460" class="uf-welcome-image" />
 
@@ -159,12 +160,16 @@
 	</div>
 
 	<hr />
+	<?php endif ?>
 
 	<div class="uf-welcome-section">
 		<p>
 			<a href="<?php echo admin_url( 'post-new.php?post_type=ultimate-fields&demo' ) ?>" class="button button-hero button-primary"><?php _e( 'Create your first container', 'ultimate-fields' ) ?></a>
 			&nbsp;
-			<a href="https://www.ultimate-fields.com/pro/" class="button button-hero button-secondary" target="_blank"><?php _e( 'Get Ultimate Fields Pro', 'ultimate-fields' ) ?></a>
+
+			<?php if ( ! defined( 'ULTIMATE_FIELDS_PRO' ) ): ?>
+				<a href="https://www.ultimate-fields.com/pro/" class="button button-hero button-secondary" target="_blank"><?php _e( 'Get Ultimate Fields Pro', 'ultimate-fields' ) ?></a>
+			<?php endif; ?>
 		</p>
 	</div>
 </div>
