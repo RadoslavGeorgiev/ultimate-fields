@@ -276,9 +276,6 @@ class Options extends Location {
 			$settings[ 'page' ] = $this->page->get_id();
 		}
 
-		# Export customizable data
-		$this->export_customizable_data( $settings );
-
 		# Export REST data
 		$this->export_rest_data( $settings );
 
@@ -296,11 +293,5 @@ class Options extends Location {
 		if( isset( $args[ 'page' ] ) ) {
 			$this->page = $this->prepare_page( $args[ 'page' ] );
 		}
-
-		# Check for the customizer
-		$this->import_customizable_data( $args );
-
-		# Check for rest data
-		$this->import_rest_data( $args );
 	}
 }

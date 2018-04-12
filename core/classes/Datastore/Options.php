@@ -39,7 +39,7 @@ class Options extends Datastore {
 	 * @param mixed $value The value to be saved
 	 */
 	function save_value_in_db( $key, $value ) {
-		return update_option( $key, $value );
+		return update_option( $key, stripslashes( $value ) );
 	}
 
 	/**

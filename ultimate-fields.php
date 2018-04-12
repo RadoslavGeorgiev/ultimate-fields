@@ -2,7 +2,7 @@
 /**
  * Plugin name: Ultimate Fields
  * Version:     3.0
- * Plugin URI:  http://ultimate.fields.com/
+ * Plugin URI:  https://www.ultimate-fields.com/
  * Author:      Radoslav Georgiev
  * Author URI:  http://rageorgiev.com/
  * Copyright:   Radoslav Georgiev
@@ -27,6 +27,7 @@ function load_ultimate_fields() {
 	}
 
 	define( 'ULTIMATE_FIELDS_PLUGIN_FILE', __FILE__ );
+	define( 'ULTIMATE_FIELDS_LANGUAGES_DIR', basename( __DIR__ ) . '/languages/' );
 
 	require_once( 'core/ultimate-fields.php' );
 	require_once( 'ui/ultimate-fields-ui.php' );

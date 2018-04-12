@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Fields 3\n"
-"POT-Creation-Date: 2018-03-19 15:46+0100\n"
-"PO-Revision-Date: 2018-03-19 16:07+0100\n"
+"POT-Creation-Date: 2018-04-11 23:04+0200\n"
+"PO-Revision-Date: 2018-04-11 23:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: Radoslav Georgiev (rageorgiev@gmail.com)\n"
 "Language: bg_BG\n"
@@ -70,19 +70,19 @@ msgstr "Настройките бяха обновени успешно."
 msgid "Failed to update %s."
 msgstr "Провал при обновението на %s."
 
-#: core/classes/Core.php:361
+#: core/classes/Core.php:364
 msgid "Full"
 msgstr "Пълен"
 
-#: core/classes/Core.php:363
+#: core/classes/Core.php:366
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: core/classes/Core.php:365
+#: core/classes/Core.php:368
 msgid "Medium"
 msgstr "Среден"
 
-#: core/classes/Core.php:367
+#: core/classes/Core.php:370
 msgid "Large"
 msgstr "Голям"
 
@@ -2098,43 +2098,43 @@ msgstr "Синхронизация"
 msgid "No locations"
 msgstr "Няма добавени локации"
 
-#: ui/classes/Post_Type.php:444
+#: ui/classes/Post_Type.php:454
 #, php-format
 msgid "%s field"
 msgid_plural "%s fields"
 msgstr[0] "%s поле"
 msgstr[1] "%s полета"
 
-#: ui/classes/Post_Type.php:453
+#: ui/classes/Post_Type.php:463
 msgid "Not exported"
 msgstr "Не е експортиран"
 
-#: ui/classes/Post_Type.php:458 ui/templates/settings/json.php:64
+#: ui/classes/Post_Type.php:468 ui/templates/settings/json.php:64
 msgid "Synchronized"
 msgstr "Синхронизиран"
 
-#: ui/classes/Post_Type.php:461
+#: ui/classes/Post_Type.php:471
 msgid "Out of sync"
 msgstr "Несинхронизиран"
 
-#: ui/classes/Post_Type.php:495 ui/classes/Settings/Screen_JSON_Sync.php:98
+#: ui/classes/Post_Type.php:505 ui/classes/Settings/Screen_JSON_Sync.php:98
 #: ui/classes/Settings/Screen_JSON_Sync.php:153
 #: ui/templates/json-box/should-import.php:9
 msgid "Synchronize"
 msgstr "Синхронизиране"
 
-#: ui/classes/Post_Type.php:517
+#: ui/classes/Post_Type.php:527
 #, php-format
 msgid "%s item was imported."
 msgid_plural "%s items were imported."
 msgstr[0] "%s нещо беше импортирано."
 msgstr[1] "%s неща бяха импортирани."
 
-#: ui/classes/Post_Type.php:532
+#: ui/classes/Post_Type.php:542
 msgid "Publish"
 msgstr "Публикуване"
 
-#: ui/classes/Post_Type.php:634
+#: ui/classes/Post_Type.php:644
 #, php-format
 msgid ""
 "The JSON directory in your theme is not writable, which prevents Ultimate "
@@ -2145,19 +2145,19 @@ msgstr ""
 "Fields да синхронизира контейнерите. Моля, погледнете <a href=\"%s"
 "\">страницата с настройки</a> за повече информация."
 
-#: ui/classes/Post_Type.php:713
+#: ui/classes/Post_Type.php:723
 msgid "The chosen container no longer exists!"
 msgstr "Избраният контейнер вече не съществува!"
 
-#: ui/classes/Post_Type.php:743
+#: ui/classes/Post_Type.php:753
 msgid "The container was saved."
 msgstr "Контейнерът е записан."
 
-#: ui/classes/Post_Type.php:776
+#: ui/classes/Post_Type.php:786
 msgid "Enter a title"
 msgstr "Въведете наименование"
 
-#: ui/classes/Post_Type.php:777
+#: ui/classes/Post_Type.php:787
 msgid ""
 "Enter a title of the container, that will indicate it's purpose, for example "
 "\"Theme Options\"."
@@ -2165,19 +2165,19 @@ msgstr ""
 "Въведете наименованието на контейнера, което ще индикира неговото "
 "предназначение, например \"Theme Options\"."
 
-#: ui/classes/Post_Type.php:785
+#: ui/classes/Post_Type.php:795
 msgid "Add a new field"
 msgstr "Добавете ново поле"
 
-#: ui/classes/Post_Type.php:786
+#: ui/classes/Post_Type.php:796
 msgid "Click here to create your first your first field."
 msgstr "натиснете тук за да създадете първото си поле."
 
-#: ui/classes/Post_Type.php:793
+#: ui/classes/Post_Type.php:803
 msgid "Enter a label"
 msgstr "Въведете етикет"
 
-#: ui/classes/Post_Type.php:794
+#: ui/classes/Post_Type.php:804
 msgid ""
 "The label of the field will be displayed next to it, indicating what it "
 "does. For this exercise, you can enter \"Copyrights Text\" here."
@@ -2185,11 +2185,11 @@ msgstr ""
 "Етикетът на полето ще бъде показан до него, индикирайки целта му. За това "
 "упражнение, моля въведете \"Copyrights Text\" тук."
 
-#: ui/classes/Post_Type.php:801
+#: ui/classes/Post_Type.php:811
 msgid "Enter a custom field name"
 msgstr "Въведете персонализирано име на полето"
 
-#: ui/classes/Post_Type.php:802
+#: ui/classes/Post_Type.php:812
 msgid ""
 "The name is used when saving values in the database and when you retrieve "
 "them.<br />It is automatically populated when you enter a label, but is "
@@ -2200,11 +2200,11 @@ msgstr ""
 "данни. То е автоматично попълнено на база на етикета, но въпреки това може "
 "да бъде променено. Въведете \"copyrights\" за този пример."
 
-#: ui/classes/Post_Type.php:809
+#: ui/classes/Post_Type.php:819
 msgid "Change the field type"
 msgstr "Сменете типа на полето"
 
-#: ui/classes/Post_Type.php:810
+#: ui/classes/Post_Type.php:820
 msgid ""
 "To make settings easier to grasp for you users, you will need different "
 "field types.<br /><br />When the type is changed, you will also be able to "
@@ -2213,21 +2213,21 @@ msgstr ""
 "За да може настройките да бъдат лесни за разбиране, можете да използвате "
 "различни типове полета. Моля, сменете стойността тук на \"Текстов Редактор\"."
 
-#: ui/classes/Post_Type.php:817
+#: ui/classes/Post_Type.php:827
 msgid "Save the field"
 msgstr "Запис на полето"
 
-#: ui/classes/Post_Type.php:818
+#: ui/classes/Post_Type.php:828
 msgid ""
 "When you have entered all needed information about the field, you can save "
 "it."
 msgstr "След като сте въвели всички нужни на полето настройки, запазате ги."
 
-#: ui/classes/Post_Type.php:824
+#: ui/classes/Post_Type.php:834
 msgid "Change the location type"
 msgstr "Сменете типа местонахождение"
 
-#: ui/classes/Post_Type.php:825
+#: ui/classes/Post_Type.php:835
 msgid ""
 "Containers can be displayed in different regions of the admin.<br /><br /"
 ">Select \"Options Page\" to display the container as an options page in the "
@@ -2237,11 +2237,11 @@ msgstr ""
 "><br />Изберете \"Страница с настройки\" за да покажете този контейнер в "
 "главното меню."
 
-#: ui/classes/Post_Type.php:832
+#: ui/classes/Post_Type.php:842
 msgid "Good job!"
 msgstr "Браво!"
 
-#: ui/classes/Post_Type.php:833
+#: ui/classes/Post_Type.php:843
 msgid ""
 "This will save all changes you just made and refresh the page.<br /><br /"
 ">When the page is refreshed, you will see a \"Theme Options\" link in the "
