@@ -53,7 +53,7 @@ class Post_Type extends Controller {
 		}
 
 		add_action( 'add_meta_boxes', array( $this, 'do_ajax' ), 8, 2 );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_post' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -74,9 +74,11 @@ class Post_Type extends Controller {
 	 *
 	 * @since 3.0
 	 */
-	public function add_meta_boxes() {
+	public function add_meta_boxes( $post_type, $post = null ) {
 		foreach( $this->combinations as $combination ) {
-			$this->handle_container( $combination );
+			if( $post || is_a( $post, 'WP_Post' ) ) {
+				$this->handle_container( $combination, $post_type, $post );
+			}
 		}
 	}
 
@@ -87,10 +89,11 @@ class Post_Type extends Controller {
 	 *
 	 * @param mixed[] $combination The processable combination.
 	 */
-	protected function handle_container( $combination ) {
+	protected function handle_container( $combination, $post_type, $post ) {
 		$container  = $combination[ 'container' ];
 		$post_types = array();
 		$ids        = array();
+		$parents    = array();
 		$context    = $default_context  = 'normal';
 		$priority   = $default_priority = 'high';
 
@@ -98,6 +101,7 @@ class Post_Type extends Controller {
 		foreach( $combination[ 'locations' ] as $location ) {
 			$post_types = array_merge( $post_types, $location->get_post_types() );
 			$ids        = array_merge_recursive( $ids, $location->get_ids() );
+			$parents    = array_merge_recursive( $parents, $location->get_parents() );
 
 			if( ( $location_context = $location->get_context() ) != $default_context ) {
 				$context = $location_context;
@@ -112,20 +116,24 @@ class Post_Type extends Controller {
 		$callback = new Callback( array( $this, 'display' ) );
 		$callback[ 'container' ] = $container;
 
-		# If there are no post types assigned, don't add the meta box!
-		if( empty( $post_types ) ) {
-			return;
+		# Check for particular post IDs
+		$id_found = false;
+		if( ! empty( $ids ) ) {
+			if( in_array( $post->ID, $ids[ 'hidden' ] ) ) return;
+			if( ! empty( $ids[ 'visible' ] ) && ! in_array( $post->ID, $ids[ 'visible' ] ) ) return;
+			$id_found = true;
 		}
 
-		# Check for particular post IDs
-		if( ! empty( $ids ) ) {
-			if( ! isset( $_GET[ 'post' ] ) ) {
-				return;
-			}
+		# Check for parent-based logic
+		if( empty( $post_types ) && ! empty( $parents ) ) {
+			$post_types = $post_type;
+		}
 
-			$pid = intval( $_GET[ 'post' ] );
-			if( in_array( $pid, $ids[ 'hidden' ] ) ) return;
-			if( ! empty( $ids[ 'visible' ] ) && ! in_array( $pid, $ids[ 'visible' ] ) ) return;
+		# If there are no post types assigned, don't add the meta box!
+		if( empty( $post_types ) && ! $id_found ) {
+			return;
+		} elseif( $id_found ) {
+			$post_types = $post_type;
 		}
 
 		# Add the meta box

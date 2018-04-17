@@ -183,6 +183,22 @@ class Post_Type extends Location {
 		return $this->ids;
 	}
 
+
+	/**
+	 * Returns particular parent IDs, which the location works with.
+	 *
+	 * @since 3.0
+	 *
+	 * @return mixed[]
+	 */
+	public function get_parents() {
+		if( empty( $this->parents ) && isset( $this->arguments[ 'parents' ] ) )  {
+			$this->set_parents( $this->extract_value( $this->arguments[ 'parents' ] ) );
+		}
+
+		return $this->parents;
+	}
+
 	/**
 	 * Overwrites the __set method in order to allow the usage taxonomies.
 	 *

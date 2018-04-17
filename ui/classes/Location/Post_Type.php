@@ -238,61 +238,75 @@ class Post_Type extends Location {
 	 * @return Core_Location
 	 */
 	public static function export( $data ) {
-		$location = Core_Location::create( 'post_type', isset( $data[ 'post_types' ] ) ? $data[ 'post_types' ] : array( 'post' ) );
+		$location = Core_Location::create( 'post_type' );
 
-		$mappable = array(
-			'templates'    => 'templates',
-			'post_formats' => 'formats',
-			'post_stati'   => 'stati',
-			'parents'      => 'parents'
-		);
+		if( 'post' == $data['location_type'] ) {
+			$item    = $data['item'];
+			$post_id = intval( str_replace( 'post_', '', $item['post'] ) );
 
-		foreach( $mappable as $from => $to ) {
-			if( isset( $data[ $from ] ) && $data[ $from ] ) {
-				$location->$to = $data[ $from ];
+			if( 'parent' == $item['type'] ) {
+				$location->parents = ( 'is' === $item['operator'] ? '' : '-' ) . $post_id;
+			} else {
+				$location->ids = ( 'is' === $item['operator'] ? '' : '-' ) . $post_id;
+			}
+		} else {
+			$location->add_post_type( isset( $data[ 'post_types' ] ) ? $data[ 'post_types' ] : array( 'post' ) );
+
+			$mappable = array(
+				'templates'    => 'templates',
+				'post_formats' => 'formats',
+				'post_stati'   => 'stati',
+				'parents'      => 'parents'
+			);
+
+			foreach( $mappable as $from => $to ) {
+				if( isset( $data[ $from ] ) && $data[ $from ] ) {
+					$location->$to = $data[ $from ];
+				}
+			}
+
+			# Prepare and set the levels if necessary
+			$levels = array(
+				'visible' => array(),
+				'hidden'  => array()
+			);
+
+			if( isset( $data[ 'levels' ] ) && is_array( $data[ 'levels' ] ) ) {
+				if( isset( $data[ 'levels' ][ 'visible' ] ) ) {
+					$levels[ 'visible' ] = Util::string_to_numbers( $data[ 'levels' ][ 'visible' ] );
+				}
+
+				if( isset( $data[ 'levels' ][ 'hidden' ] ) ) {
+					$levels[ 'hidden' ] = Util::string_to_numbers( $data[ 'levels' ][ 'hidden' ] );
+				}
+			}
+
+			# Setup taxonomies
+			foreach( get_taxonomies( array( 'show_ui' => true, 'hierarchical' => true ), 'objects' ) as $slug => $taxonomy ) {
+				if( ! isset( $data[ $slug ] ) ) {
+					continue;
+				}
+
+				$terms = array(
+					'visible' => array(),
+					'hidden'  => array(),
+				);
+
+				if( ! empty( $data[ $slug ][ 'visible' ] ) ) foreach( $data[ $slug ][ 'visible' ] as $term )
+					$terms[ 'visible' ][] = intval( str_replace( 'term_', '', $term ) );
+				if( ! empty( $data[ $slug ][ 'hidden' ] ) ) foreach( $data[ $slug ][ 'hidden' ] as $term )
+					$terms[ 'hidden' ][] = intval( str_replace( 'term_', '', $term ) );
+
+				$location->set_terms( $terms, $slug );
 			}
 		}
 
 		if( $data['context'] ) {
 			$location->set_context( $data[ 'context' ] );
 		}
+
 		if( $data['priority'] ) {
 			$location->set_priority( $data[ 'priority' ] );
-		}
-
-		# Prepare and set the levels if necessary
-		$levels = array(
-			'visible' => array(),
-			'hidden'  => array()
-		);
-
-		if( isset( $data[ 'levels' ] ) && is_array( $data[ 'levels' ] ) ) {
-			if( isset( $data[ 'levels' ][ 'visible' ] ) ) {
-				$levels[ 'visible' ] = Util::string_to_numbers( $data[ 'levels' ][ 'visible' ] );
-			}
-
-			if( isset( $data[ 'levels' ][ 'hidden' ] ) ) {
-				$levels[ 'hidden' ] = Util::string_to_numbers( $data[ 'levels' ][ 'hidden' ] );
-			}
-		}
-
-		# Setup taxonomies
-		foreach( get_taxonomies( array( 'show_ui' => true, 'hierarchical' => true ), 'objects' ) as $slug => $taxonomy ) {
-			if( ! isset( $data[ $slug ] ) ) {
-				continue;
-			}
-
-			$terms = array(
-				'visible' => array(),
-				'hidden'  => array(),
-			);
-
-			if( ! empty( $data[ $slug ][ 'visible' ] ) ) foreach( $data[ $slug ][ 'visible' ] as $term )
-				$terms[ 'visible' ][] = intval( str_replace( 'term_', '', $term ) );
-			if( ! empty( $data[ $slug ][ 'hidden' ] ) ) foreach( $data[ $slug ][ 'hidden' ] as $term )
-				$terms[ 'hidden' ][] = intval( str_replace( 'term_', '', $term ) );
-
-			$location->set_terms( $terms, $slug );
 		}
 
 		# Setup customizer data
