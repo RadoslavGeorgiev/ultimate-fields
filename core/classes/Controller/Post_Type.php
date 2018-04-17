@@ -242,7 +242,7 @@ class Post_Type extends Controller {
 			}
 
 			# Check if the container is being displayed
-			if( ! in_array( $screen_id, $post_types ) ) {
+			if( ! empty( $post_types ) && ! in_array( $screen_id, $post_types ) ) {
 				continue;
 			}
 
