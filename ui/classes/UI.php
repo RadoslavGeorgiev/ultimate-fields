@@ -82,7 +82,7 @@ class UI {
 		# Register the post type
 		Post_Type::instance()->hook_in();
 
-		if( is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		if( is_admin() || isset( $_REQUEST['uf_action'] ) ) {
 			Container_Settings::instance();
 			Settings_Page::instance();
 		}

@@ -46,12 +46,13 @@ class Container_Settings {
 		$post_type = Post_Type::instance();
 
 		$title = __( 'Locations', 'ultimate-fields' );
-		Container::create( $title )
+		Container::create( 'container_locations' )
+			->set_title( $title )
 			->add_location( 'post_type', $post_type->get_slug() )
 			->set_fields_callback( array( $this, 'generate_location_fields' ) );
 
 		$title = __( 'Container', 'ultimate-fields' );
-		Container::create('container_settings' )
+		Container::create( 'container_settings' )
 			->add_location( 'post_type', $post_type->get_slug() )
 			->set_title( $title )
 			->set_description_position( 'label' )

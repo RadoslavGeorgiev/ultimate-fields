@@ -428,6 +428,7 @@
 		   locations.on( 'change:visible', function() {
 			   that[ locations.isVisible() ? 'show' : 'hide' ]();
 			   that.model.set( 'visible', locations.isVisible() );
+			   UltimateFields.ContainerLayout.DOMUpdated();
 		   });
 
 		   that[ locations.isVisible() ? 'show' : 'hide' ]();

@@ -281,6 +281,10 @@ class Post_Type extends Location {
 				}
 			}
 
+			if( ! empty( $levels['visible'] ) || ! empty( $levels['hidden'] ) ) {
+				$location->levels = $levels;
+			}
+
 			# Setup taxonomies
 			foreach( get_taxonomies( array( 'show_ui' => true, 'hierarchical' => true ), 'objects' ) as $slug => $taxonomy ) {
 				if( ! isset( $data[ $slug ] ) ) {

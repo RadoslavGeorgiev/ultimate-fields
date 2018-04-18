@@ -358,11 +358,8 @@ class Container {
 	 * @return Container The instance of the container.
 	 */
 	public function set_fields_callback( $callback ) {
-		if( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST[ 'uf_ajax' ] ) ) {
-			$this->fields = array_merge(
-				$this->fields,
-				call_user_func( $callback )
-			);
+		if( isset( $_REQUEST[ 'uf_action' ] ) ) {
+			$this->fields->merge_with( call_user_func( $callback ) );
 		} else {
 			$this->fields_callback = $callback;
 		}
