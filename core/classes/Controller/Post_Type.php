@@ -319,10 +319,27 @@ class Post_Type extends Controller {
 
 			# Gather all post types
 			foreach( $combination[ 'locations' ] as $location ) {
+				$enqueue = false;
+
 				$post_types = $location->get_post_types();
+				$ids        = $location->get_ids();
+				$parents    = $location->get_parents();
 
 				# Check if the container is being saved
-				if( ! in_array( $post->post_type, $post_types ) ) {
+				if( ! empty( $post_types ) && ! in_array( $post->post_type, $post_types ) ) {
+					continue;
+				}
+
+				# Check for IDs
+				if( empty( $post_types ) && empty( $ids ) && empty( $parents ) ) {
+					continue;
+				}
+
+				if( ! empty( $ids ) && ! $location->check_single_value( $post_id, $ids ) ) {
+					continue;
+				}
+
+				if( ! empty( $parents ) && ! $location->check_single_value( $post_id, $parents ) ) {
 					continue;
 				}
 

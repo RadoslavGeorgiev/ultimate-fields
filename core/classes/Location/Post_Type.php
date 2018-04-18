@@ -531,6 +531,18 @@ class Post_Type extends Location {
 			return false;
 		}
 
+		if( ! empty( $this->ids ) ) {
+			return $this->check_single_value( $post->ID, $this->ids )
+				? $post
+				: false;
+		}
+
+		if( ! empty( $this->parents ) ) {
+			return $this->check_single_value( $post->ID, $this->parents )
+				? $post
+				: false;
+		}
+
 		# Check the post type
 		if( ! in_array( $post->post_type, $this->post_types ) ) {
 			return false;
