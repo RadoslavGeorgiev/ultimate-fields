@@ -32,7 +32,7 @@ class Groups_Iterator_Loop extends Groups_Iterator {
 	 * @return bool
 	 */
     public function valid() {
-        return $this->position < count( $this->groups ) - 1;
+        return count( $this->groups ) > 0  && $this->position < count( $this->groups ) - 1;
     }
 
 	/**

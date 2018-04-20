@@ -337,7 +337,7 @@ class Data_API {
 
 		$this->tree[ $hash ] = $iterator->loop_mode();
 		$this->last_hash = $hash;
-		return true;
+		return $iterator->valid();
 	}
 
 	/**
