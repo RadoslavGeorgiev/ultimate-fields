@@ -526,7 +526,12 @@ class Post_Type extends Controller {
 	 * @param WP_post $post   The post that will be revised.
 	 * @return mixed[]
 	 */
-	public function revision_fields( $revision_fields, $post ) {
+	public function revision_fields( $revision_fields, $post = null ) {
+		// Fix WP-API inconsistencies regarding the particular post
+		if( is_null( $post ) ) {
+			return $revision_fields;
+		}
+
 		# Switch to a proper post
 		if( is_array( $post ) ) {
 			$post = get_post( $post[ 'ID' ] );
