@@ -4,7 +4,7 @@ Donate link: https://www.ultimate-fields.com/pro/
 Tags: custom fields, meta, theme options, repeater, post meta
 Requires at least: 4.9
 Tested up to: 4.9.5
-Stable tag: 3.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.4
@@ -84,6 +84,16 @@ Please make sure to check out [the documentation on our website](https://www.ult
 This is a complete rewrite of the plugin with renewed interface and various new functions. After upgrade, you will be required to migrate your containers to the format of the new version. Important: There are no immediate modifications of field values and the old container format will be stored in case you need to revert.
 
 == Changelog ==
+
+= 3.0 Bugfix Relase =
+
+Fixes:
+
+* A sanitization bug, prevented the options datastore from saving non-scalar values
+* Post-based rules for the `Post_Type` location, both in the UI and in core
+* Even when a repeater was empty, the `while` loop was being entered, which is not the case anymore
+* To improve compatability with "Front-end Editor", revision fields are only provided for existing posts
+
 
 = 3.0 =
 3.0 is a complete rewrite of the plugin, which brings a ton of improvements, including but not limited to:
