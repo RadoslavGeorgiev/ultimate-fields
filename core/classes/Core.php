@@ -296,7 +296,7 @@ class Core {
 		wp_register_script( 'uf-field-multiselect',   $js . 'field/multiselect.js',   array( 'uf-field', 'uf-field-select' ), $v );
 		wp_register_script( 'uf-field-image-select',  $js . 'field/image-select.js',  array( 'uf-field' ), $v );
 		wp_register_script( 'uf-field-wysiwyg',       $js . 'field/wysiwyg.js',       array( 'uf-field', 'uf-field-textarea' ), $v );
-		wp_register_script( 'uf-field-file',          $js . 'field/file.js',          array( 'uf-field', 'media-models' ), $v );
+		wp_register_script( 'uf-field-file',          $js . 'field/file.js',          array( 'uf-field', 'media-models', 'uf-overlay' ), $v );
 		wp_register_script( 'uf-field-image',         $js . 'field/image.js',         array( 'uf-field', 'uf-field-file' ), $v );
 		wp_register_script( 'uf-field-file-uploader', $js . 'field/file-uploader.js', array( 'uf-field', 'uf-field-file', 'wp-plupload', 'plupload' ), $v );
 		wp_register_script( 'uf-field-wp-object',     $js . 'field/wp-object.js',     array( 'uf-field', 'uf-select2' ), $v );

@@ -94,6 +94,8 @@ class File extends Field {
 		} else {
 			wp_enqueue_media();
 			wp_enqueue_script( 'uf-field-file' );
+			Template::add( 'overlay-wrapper', 'overlay-wrapper' );
+			Template::add( 'overlay-alert',   'overlay-alert' );
 		}
 
 		# Localize strings
