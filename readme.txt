@@ -85,7 +85,7 @@ This is a complete rewrite of the plugin with renewed interface and various new 
 
 == Changelog ==
 
-= 3.0 Bugfix Relase =
+= 3.0.1 Bugfix Relase =
 
 Fixes:
 
