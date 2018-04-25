@@ -31,4 +31,5 @@ function load_ultimate_fields() {
 
 	require_once( 'core/ultimate-fields.php' );
 	require_once( 'ui/ultimate-fields-ui.php' );
+	require_once( 'react-env.php' );
 }

@@ -13,7 +13,7 @@ class JS_L10N {
 	 * @since 3.0
 	 * @var string[]
 	 */
-	protected $strings;
+	protected $strings = array();
 
 	/**
 	 * Creates an intance of the class.
@@ -46,7 +46,7 @@ class JS_L10N {
 	 *
 	 * @since 3.0
 	 */
-	public function enqueue( $script = 'uf-initialize' ) {
+	public function enqueue( $script = 'ultimate-fields' ) {
 		/**
 		 * Fires before translations are sent to WordPress's script translation
 		 * functionality, allowing to add some last-minute details.

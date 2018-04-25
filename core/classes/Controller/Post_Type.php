@@ -191,12 +191,13 @@ class Post_Type extends Controller {
 		);
 
         echo sprintf(
-            '<div class="uf-container" data-type="%s">
+            '<div class="uf-container" data-type="%s" id="%s">
 				<script type="text/json">%s</script>
 				' . $this->get_no_js_message() . '
 				<span class="spinner hide-if-no-js"></span>
 			</div>',
             'Post_Type',
+			'uf-' . $container->get_id(),
             json_encode( $json )
         );
 
@@ -212,7 +213,7 @@ class Post_Type extends Controller {
 		# Force-initialize
 		?>
 		<script type="text/javascript">
-		UltimateFields.initializeContainers()
+		UltimateFields.initializeContainerById( 'uf-<?php echo esc_attr( $container->get_id() ) ?>' );
 		</script>
 		<?php
 	}
@@ -262,8 +263,10 @@ class Post_Type extends Controller {
 
 		# Finally, enqueue the scripts
 		foreach( $combos as $combination ) {
-			$combination[ 'container' ]->enqueue_scripts();
+			$combination['container']->enqueue_scripts();
 		}
+		
+		wp_enqueue_script( 'ultimate-fields' );
 
 		# Attach translations
 		ultimate_fields()->l10n()->enqueue();
