@@ -57,11 +57,7 @@
 			}));
 
 			// Add the content to the textarea.
-			if( 'undefined' != typeof switchEditors ) {
-				this.$el.find( 'textarea' ).html( switchEditors._wp_Autop( this.model.getValue() || '' ) );
-			} else {
-				this.$el.find( 'textarea' ).html( this.model.getValue() || '' );
-			}
+			this.$el.find( 'textarea' ).val( this.model.getValue() || '' );
 
 			// Differ the rendering of the editor to another thread
 			setTimeout(function(){
@@ -90,11 +86,19 @@
 			});
 
 			// Setup TinyMCE if available
-			if( 'undefined' != typeof tinymce  ) {
+			if( 'undefined' != typeof tinymce ) {
 				tinyMCEPreInit.mceInit[ id ] = $.extend( {}, mceInit );
 				tinyMCEPreInit.mceInit[ id ].setup = function( editor ) {
 					editor.on( 'change', function( e ) {
-						that.model.setValue( switchEditors.pre_wpautop( editor.getContent() ) );
+						var value = editor.getContent();
+
+						// Fix empty paragraphs before un-wpautop
+						value = value.replace( /<p>(?:<br ?\/?>|\u00a0|\uFEFF| )*<\/p>/g, '<p>&nbsp;</p>' );
+
+						// Remove paragraphs
+						value = switchEditors._wp_Nop( value );
+
+						that.model.setValue( value );
 					});
 				}
 
