@@ -14,6 +14,10 @@ export default class StoreParser {
 
 		for( let key in data ) {
 			if( 'object' === typeof data[ key ] ) {
+				if( ! data[ key ] ) {
+					continue;
+				}
+
 				Object.assign( stores, this.prepareDataForStore(
 					data[ key ],
 					prefix + '_' + key, parseInt( key )

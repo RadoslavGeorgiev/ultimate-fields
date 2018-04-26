@@ -3,7 +3,7 @@ $number-width: 38px;
 
 // The repeater field
 .uf-repeater {
-	&-groups {
+	&__groups {
 		position: relative;
 
 		&-with-placeholder {
@@ -90,7 +90,7 @@ $number-width: 38px;
 		z-index: 3;
 	}
 
-	&-header {
+	&__header {
 		border-bottom: 1px solid $border;
 		position: relative;
 		padding-left: $number-width + 1;
@@ -101,7 +101,7 @@ $number-width: 38px;
 		padding-left: 0;
 	}
 
-	&-number {
+	&__number {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -146,7 +146,7 @@ $number-width: 38px;
 		}
 	}
 
-	&-title {
+	&__title {
 		font-weight: bold;
 		line-height: 35px;
 		height: 35px;
@@ -159,7 +159,7 @@ $number-width: 38px;
 		text-overflow: ellipsis;
 		clear: none;
 
-		.uf-group-header & {
+		.uf-group__header & {
 			font-size: 14px;
 			line-height: 35px; // Twentyseventeen
 		}
@@ -170,7 +170,7 @@ $number-width: 38px;
 		}
 	}
 
-	&-header:hover &-number {
+	&__header:hover &__number {
 		strong {
 			opacity: 0;
 		}
@@ -185,11 +185,11 @@ $number-width: 38px;
 		color: #fff;
 	}
 
-	&-controls {
+	&__controls {
 		float: right;
 	}
 
-	&-control {
+	&__control {
 		box-sizing: border-box;
 		text-decoration: none;
 		float: left;
@@ -209,28 +209,24 @@ $number-width: 38px;
 		}
 	}
 
-	&-control-open {
+	&__control--open {
 		display: none;
 	}
 
-	&-control-remove:hover {
+	&__control--remove:hover {
 		background: #c34040;
 		color: #fff;
 	}
 
-	&-hidden > &-inside {
-		display: none;
-	}
-
-	&-hidden &-control-open {
+	&--hidden &__control--open {
 		display: inline-block;
 	}
 
-	&-hidden &-control-close {
+	&--hidden &__control--close {
 		display: none;
 	}
 
-	&-hidden > &-header {
+	&--hidden > &-header {
 		border-bottom: 0;
 	}
 

@@ -6,18 +6,37 @@ export default class Checkbox extends Field {
 		return false;
 	}
 
+	componentWillMount() {
+		this.focused = false;
+	}
+
 	renderInput() {
-		const { name, onValueChanged } = this.props;
+		const { name, onValueChanged, text, fancy } = this.props;
 
-		return <label>
-			<input
-				id={ this.id }
-				type="checkbox"
-				checked={ !! this.getValue() }
-				onChange={ e => onValueChanged( name, e.target.checked ) }
-			/>
+		const checkbox = <input
+			id={ this.id }
+			type="checkbox"
+			checked={ !! this.getValue() }
+			onChange={ e => onValueChanged( name, e.target.checked ) }
+			onFocus={ e => this.focused = true }
+			onBlur={ e => this.focused = false }
+		/>;
 
-			Yes
-		</label>
+		if( fancy ) {
+			return <label className={ 'uf-checkbox' + ( this.focused ? ' uf-checkbox--focused' : '' ) }>
+				{ checkbox }
+
+				<span className="uf-checkbox__wrap wp-ui-highlight">
+					<span className="uf-checkbox__button" />
+				</span>
+
+				{ text }
+			</label>
+		} else {
+			return <label>
+				{ checkbox }
+				{ text }
+			</label>
+		}
 	}
 }

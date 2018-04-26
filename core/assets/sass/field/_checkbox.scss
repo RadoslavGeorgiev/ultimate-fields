@@ -4,14 +4,12 @@
 }
 
 // Fancy checkboxes
-.uf-fancy-checkbox {
-	label {
-		position: relative;
-		display: inline-block;
-		overflow: hidden;
-		padding: 3px;
-		margin: -3px 0;
-	}
+.uf-checkbox {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	padding: 3px;
+	margin: -3px 0;
 
 	input {
 		position: absolute;
@@ -19,7 +17,7 @@
 		left: -30px;
 	}
 
-	&-wrap {
+	&__wrap {
 		flex: 0 0 44px;
 		display: inline-block;
 		vertical-align: middle;
@@ -32,12 +30,12 @@
 		margin-right: 10px;
 	}
 
-	&-focused &-wrap {
+	&--focused &__wrap {
 		box-shadow: 0 0 2px rgba(0,0,0,0.3);
 	}
 
-	&-wrap:before,
-	&-wrap:after {
+	&__wrap:before,
+	&__wrap:after {
 		position: absolute;
 		z-index: 1;
 		top: 0;
@@ -48,18 +46,18 @@
 		text-align: center;
 	}
 
-	&-wrap:before {
+	&__wrap:before {
 		left: 0;
 		content: 'I';
 	}
 
-	&-wrap:after {
+	&__wrap:after {
 		right: 0;
 		content: 'O';
 		color: #ccc;
 	}
 
-	&-button {
+	&__button {
 		position: absolute;
 		z-index: 2;
 		top: -2px;
@@ -73,11 +71,11 @@
 		background: #fff;
 	}
 
-	input:not(:checked) + &-wrap {
+	input:not(:checked) + &__wrap {
 		background: #f6f6f6;
 	}
 
-	input:checked + &-wrap &-button {
+	input:checked + &__wrap &__button {
 		left: 20px;
 	}
 }

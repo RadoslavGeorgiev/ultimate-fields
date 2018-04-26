@@ -273,8 +273,8 @@ class Core {
 		$v  = ULTIMATE_FIELDS_VERSION;
 
 		// Register vendor scripts and styles
-		// wp_register_script( 'uf-select2', $js . 'select2/select2.min.js', array( 'jquery' ), $v );
-		// wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
+		wp_register_script( 'uf-select2', $js . 'select2/select2.min.js', array( 'jquery' ), $v );
+		wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
 
 		// Register regular scripts
 		wp_register_script( 'ultimate-fields', $js . 'ultimate-fields.js', array(), $v );

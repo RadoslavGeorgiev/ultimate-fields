@@ -8,6 +8,7 @@ import repeaterValidator from './../validators/repeater.js';
 import Field from './../Field.jsx';
 import RepeaterGroup from './../Container/RepeaterGroup.jsx';
 import FullScreenGroup from './../Container/FullScreenGroup.jsx';
+import Button from './../Button.jsx';
 
 import {
 	createContext,
@@ -119,6 +120,7 @@ class Repeater extends Field {
 				index:        index,
 				hidden:       ! visibility[ index ],
 				source:       `${source}_${name}_${index}`,
+				position:     i+1,
 				onDelete:     () => this.deleteGroup( index ),
 				onClone:      () => this.cloneGroup( index ),
 				onFullScreen: () => this.openFullScreen( index, type.type ),
@@ -127,15 +129,15 @@ class Repeater extends Field {
 		});
 
 		const buttons = this.groups.length === 1
-			? <button onClick={ this.addGroupClicked.bind( this ) }>Add entry</button>
-			: this.groups.map( group => React.createElement( 'button', {
+			? <Button onClick={ this.addGroupClicked.bind( this ) }>Add entry</Button>
+			: this.groups.map( group => React.createElement( Button, {
 				key:      group.type,
 				onClick:  e => this.addGroupClicked( e, group.type ),
 				children: 'Add ' + group.title
 			}));
 
-		return <div className="repeater">
-			<div className="repeater__groups" ref={ node => this.groupsNode = node }>
+		return <div className="uf-repeater">
+			<div className="uf-repeater__groups" ref={ node => this.groupsNode = node }>
 				{ entries }
 			</div>
 
@@ -146,7 +148,7 @@ class Repeater extends Field {
 	componentDidMount() {
 		jQuery( this.groupsNode ).sortable({
 			axis:   'y',
-			handle: '.group__header',
+			handle: '.uf-group__header',
 			stop:   this.saveSort.bind( this ),
 			forcePlaceholderSize: true
 		});

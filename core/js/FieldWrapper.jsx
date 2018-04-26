@@ -11,24 +11,42 @@ const mapDispatchToProps = dispatch => ({
 
 class FieldWrapper extends React.Component {
 	render() {
-		const { children, id, label, width, invalidFieldMessage } = this.props;
-		const required = 'required' in this.props;
+		const {
+			children,
+			id,
+			label,
+			width,
+			description,
+			description_position,
+			invalidFieldMessage
+		} = this.props;
 
-		return <div className="field" style={{ width: width !== 100 ? width + '%' : null }}>
-			<div className="field__details">
+		const required = 'required' in this.props;
+		const styles = { width: width !== 100 ? width + '%' : null };
+
+		const descriptionEl = ( description && description.length )
+			? <div className="uf-field__description" dangerouslySetInnerHTML={{ __html: description }} />
+			: null;
+
+		return <div className="uf-field uf-field--grid" style={ styles }>
+			<div className="uf-field__details">
 				<label htmlFor={ id }>
 					{ label }
-					{ required && <span className="field__required">*</span> }
+					{ required && <span className="uf-field__required">*</span> }
 				</label>
+
+				{ 'label' == description_position && descriptionEl }
 			</div>
 
-			<div className="field__inputs">
+			<div className="uf-field__inputs">
 				{ children }
 
 				{
 					invalidFieldMessage &&
-					<div className="field__message">{ invalidFieldMessage }</div>
+					<div className="uf-field__message">{ invalidFieldMessage }</div>
 				}
+
+				{ 'input' == description_position && descriptionEl }
 			</div>
 		</div>
 	}

@@ -309,11 +309,12 @@ class Select extends Field {
 	 */
 	public function enqueue_scripts() {
 		if( $this->use_select2 ) {
-			wp_enqueue_script( 'uf-select2' );
+			if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
+		        $script->deps[] = 'uf-select2';
+			}
+
 			wp_enqueue_style( 'uf-select2-css' );
 		}
-
-		wp_enqueue_script( 'uf-field-select' );
 
 		# If the type is radio, add the template for it.
 		if( 'radio' == $this->input_type ) {

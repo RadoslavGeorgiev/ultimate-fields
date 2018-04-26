@@ -305,7 +305,7 @@ abstract class Field {
 		if( $this->validation_message ) $data[ 'validation_message' ] = $this->validation_message;
 		if( $this->validation_rule )    $data[ 'validation_rule' ]    = $this->validation_rule;
 		if( $this->hide_label )         $data[ 'hide_label' ]         = true;
-		if( $this->field_width != 100 ) $data[ 'field_width' ]        = $this->field_width;
+		if( $this->field_width != 100 ) $data[ 'width' ]              = $this->field_width;
 		if( $this->description )        $data[ 'description' ]        = wpautop( $this->description );
 		if( $this->default_value )      $data[ 'default_value' ]      = $this->default_value;
 		if( $this->html_attributes )    $data[ 'html_attributes' ]    = $this->html_attributes;

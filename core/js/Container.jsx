@@ -23,7 +23,7 @@ class Container extends React.Component {
 		const { children } = this.props;
 
 		return (
-			<div className="fields">
+			<div className="uf-fields uf-fields--inline">
 				{ this.getTabButtons() }
 				{ React.Children.map( children, this.prepareField.bind( this ) ) }
 			</div>
@@ -64,9 +64,10 @@ class Container extends React.Component {
 
 		// Prepare standardized properties
 		const props = Object.assign( {}, field.props, {
-			source:           source,
-			value:            ( values && ( name in values ) ) ? values[ name ] : null,
-			onValueChanged:   ( name, value ) => onChange( name, value, source )
+			source:               source,
+			value:                ( values && ( name in values ) ) ? values[ name ]: null,
+			description_position: 'input',
+			onValueChanged:       ( name, value ) => onChange( name, value, source )
 		});
 
 		// Determine the field class

@@ -2,6 +2,7 @@ import React from 'react';
 import Location from './Location.jsx';
 import Form from './../Form.jsx';
 import Field from './../Field.jsx';
+import RepeaterGroup from './../Container/RepeaterGroup.jsx';
 
 export default class Post_Type extends Location {
 	state: {
@@ -28,30 +29,24 @@ export default class Post_Type extends Location {
 		</React.Fragment>
 	}
 
-	componentDidMount() {
-		// const form = document.getElementById( 'post' );
-		//
-		// this.submissionCallback = e => {
-		// 	const errors = this.form.validate();
-		// 	if( errors.length ) {
-		// 		console.log(errors);
-		// 		e.preventDefault();
-		// 	}
-		// };
-		//
-		// // Add a submission handler
-		// form.addEventListener( 'submit', this.submissionCallback );
-	}
-
-	componentWillUnmount() {
-		document.getElementById( 'post' ).removeEventListener( 'submit', this.submissionCallback );
-	}
-
 	generateFields( raw ) {
 		const fields = raw.map( field => {
+			if( field.type === 'Repeater' ) {
+				field.children = this.prepareRepeaterGroups( field.groups );
+			}
+
 			return <Field {...field} key={ field.name } />
 		});
 
 		return fields;
+	}
+
+	prepareRepeaterGroups( groups ) {
+		return groups.map( group => {
+			return React.createElement( RepeaterGroup, {
+				...group,
+				children: this.generateFields( group.fields )
+			});
+		});
 	}
 }

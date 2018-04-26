@@ -17,8 +17,6 @@ export default class Form extends React.Component {
 		const { children } = this.props;
 
 		return <React.Fragment>
-			{ this.renderValidationErrors() }
-
 			<Provider store={ this.store }>
 				<Container source="__">
 					{ children }

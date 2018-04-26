@@ -10,7 +10,19 @@ export default class Text extends Field {
 			type="text"
 			value={ this.getValue() }
 			onChange={ e => onValueChanged( name, e.target.value ) }
-			className="field__input field__input--text"
+			className="uf-field__input uf-field__input--text"
+			ref="input"
 		/>
+	}
+
+	componentDidMount() {
+		const { input } = this.refs;
+		const { suggestions } = this.props;
+
+		if( suggestions && suggestions.length ) {
+			jQuery( input ).autocomplete({
+				source: suggestions
+			});
+		}
 	}
 }

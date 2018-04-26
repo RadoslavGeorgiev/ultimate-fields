@@ -33,7 +33,7 @@ export default class Post_Type extends Controller {
 		const error = <div className="error uf-error">
 			<p><strong>{ uf_l10n['container-issues'] }</strong></p>
 			<ul>
-				{ errors.map( ( error, i ) => <li key="i" children={ error } /> ) }
+				{ errors.map( ( error, i ) => <li key={ i } children={ error } /> ) }
 			</ul>
 		</div>;
 

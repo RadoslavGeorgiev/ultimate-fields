@@ -8,11 +8,11 @@
 		text-decoration: none;
 	}
 
-	&-select-button {
+	&__select {
 		display: inline-block;
 	}
 
-	&-spinner {
+	&__spinner {
 		float: none;
 		margin: 0 0 3px 10px;
 	}
@@ -215,7 +215,7 @@
 	}
 
 	.select2-container {
-		max-width: 100%;	
+		max-width: 100%;
 	}
 
 	.select2-container--default .select2-selection--multiple {
