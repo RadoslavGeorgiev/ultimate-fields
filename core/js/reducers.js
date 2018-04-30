@@ -98,3 +98,15 @@ export function validation( state, action ) {
 			return state || {};
 	}
 }
+
+export function cache( state, action ) {
+	switch( action.type ) {
+		case 'CACHE_VALUE':
+			const diff = {}
+			diff[ action.name ] = action.value;
+			return Object.assign( {}, state, diff );
+
+		default:
+			return state || {}
+	}
+}

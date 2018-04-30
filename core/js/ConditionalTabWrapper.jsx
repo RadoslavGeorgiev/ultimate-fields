@@ -4,10 +4,16 @@ import Parser from './Logic/Parser.js';
 
 export default class ConditionalTabWrapper extends React.Component {
 	render() {
-		const { children, prepareField } = this.props;
+		const { children, source, prepareField, getFieldValue } = this.props;
+
+		const parser = new Parser({
+			getFieldValue,
+			source,
+			...this.props.logicProps
+		});
 
 		// When hidden, do not render fields at all
-		if( ! ( new Parser( this.props ) ).areRulesSatisfied() ) {
+		if( ! parser.areRulesSatisfied() ) {
 			return null;
 		}
 

@@ -2,16 +2,31 @@ import React from 'react';
 
 export default class Button extends React.Component {
 	render() {
-		const { children, icon, className } = this.props;
+		const { children: text, icon, className, type } = this.props;
 
-		const cssClasses = [
-			'button-primary',
+		let cssClasses = [
+			'button-' + ( type || 'primary' ),
 			'uf-button'
-		].concat( className || '' ).join( ' ' );
+		]
 
-		return <button type="button" { ...this.props } className={ cssClasses }>
+		if( className ) {
+			cssClasses.push( className );
+		}
+
+		if( ! text.length ) {
+			cssClasses.push( 'button--no-text' )
+		}
+
+		cssClasses = cssClasses.join( ' ' );
+
+		return <button type="button" { ...this.props } className={ cssClasses } onClick={ this.onClick.bind( this ) }>
 			{ icon && <span className={ 'uf-button__icon dashicons ' + icon } /> }
-			<span className="uf-button__inside">{ children }</span>
+			<span className="uf-button__inside">{ text }</span>
 		</button>
+	}
+
+	onClick( e ) {
+		e.preventDefault();
+		this.props.onClick();
 	}
 }

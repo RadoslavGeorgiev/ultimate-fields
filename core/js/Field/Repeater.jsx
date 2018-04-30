@@ -132,7 +132,7 @@ class Repeater extends Field {
 			? <Button onClick={ this.addGroupClicked.bind( this ) }>Add entry</Button>
 			: this.groups.map( group => React.createElement( Button, {
 				key:      group.type,
-				onClick:  e => this.addGroupClicked( e, group.type ),
+				onClick:  () => this.addGroupClicked( group.type ),
 				children: 'Add ' + group.title
 			}));
 
@@ -180,8 +180,7 @@ class Repeater extends Field {
 		onAddRepeaterRow( `${source}_${name}`, index );
 	}
 
-	addGroupClicked( e, type ) {
-		e.preventDefault();
+	addGroupClicked( type ) {
 		this.addGroup( type );
 	}
 

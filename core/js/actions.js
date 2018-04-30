@@ -10,3 +10,5 @@ export const cloneContext        = ( from, to, changes ) => ({ type: 'CLONE_CONT
 export const updateRepeaterOrder = ( name, order )       => ({ type: 'UPDATE_REPEATER_ORDER', name, order });
 export const replaceContexts     = contexts              => ({ type: 'REPLACE_CONTEXTS', contexts });
 export const toggleRepeaterGroup = ( name )              => ({ type: 'TOGGLE_REPEATER_GROUP', name });
+
+export const cacheValue = ( name, value ) => ({ type: 'CACHE_VALUE', name, value });

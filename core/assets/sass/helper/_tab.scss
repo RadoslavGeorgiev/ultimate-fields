@@ -1,6 +1,6 @@
 // Tabs
 .uf-tab {
-	&-wrapper {
+	&s {
 		border-bottom: 1px solid #ccc;
 		font-size: 0;
 		width: 100%;
@@ -13,6 +13,12 @@
 		.uf-fields-inline-tabs > & {
 			display: none;
 		}
+	}
+
+	// Change tabs for block containers
+	.uf-fields--rows > &s {
+		margin-left: 0;
+		padding-left: 20%;
 	}
 
 	display: inline-block;
@@ -29,7 +35,7 @@
 	margin-top: 3px;
 	color: #444;
 
-	.uf-boxed-fields & {
+	.uf-fields--boxed & {
 		border-color: #ddd;
 	}
 
@@ -41,17 +47,17 @@
 		color: #222;
 	}
 
-	.uf-boxed-fields > &:hover {
+	.uf-fields--boxed > &:hover {
 		background: #fff;
 	}
 
-	&-active {
+	&--active {
 		color: #000;
 		background: none;
 		border-bottom-color: #f1f1f1;
 	}
 
-	&.disabled {
+	&--disabled {
 		color: #bbb;
 		background: #f9f9f9;
 		cursor: default;
@@ -61,29 +67,29 @@
 		display: none;
 	}
 
-	&-invalid {
+	&--invalid {
 		background: $required;
 		color: #fff;
 	}
 
-	&-invalid.uf-tab-active {
+	&--invalid.uf-tab--active {
 		background: inherit;
 		color: $required;
 	}
 
-	&-text,
-	&-icon {
+	&__text,
+	&__icon {
 		display: inline-block;
 		vertical-align: middle;
 	}
 
-	&-icon {
+	&__icon {
 		margin-right: 5px;
 	}
 }
 
-.uf-boxed-fields .uf-tab {
-	&-wrapper {
+.uf-fields--boxed .uf-tab {
+	&s {
 		background: #eee;
 		border-bottom-color: #ddd;
 		margin-bottom: 0;;
@@ -91,7 +97,7 @@
 
 	border-color: #ddd;
 
-	&-active {
+	&--active {
 		background: #fff;
 		border-bottom-color: #fff;
 	}

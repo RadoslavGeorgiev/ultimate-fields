@@ -3,6 +3,7 @@ import Text from './Field/Text.jsx';
 import Textarea from './Field/Textarea.jsx';
 import Checkbox from './Field/Checkbox.jsx';
 import Select from './Field/Select.jsx';
+import Multiselect from './Field/Multiselect.jsx';
 import WP_Object from './Field/WP_Object.jsx';
 import Repeater from './Field/Repeater.jsx';
 
@@ -18,6 +19,7 @@ export default function getFieldType( field ) {
 		case 'repeater': fieldClass = Repeater; break;
 		case 'checkbox': fieldClass = Checkbox; break;
 		case 'select':   fieldClass = Select; break;
+		case 'multiselect': fieldClass = Multiselect; break;
 		case 'wp_object': fieldClass = WP_Object; break;
 		default:         fieldClass = Text;
 	}

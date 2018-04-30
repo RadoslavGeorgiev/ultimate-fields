@@ -18,7 +18,8 @@ class FieldWrapper extends React.Component {
 			width,
 			description,
 			description_position,
-			invalidFieldMessage
+			invalidFieldMessage,
+			layout
 		} = this.props;
 
 		const required = 'required' in this.props;
@@ -28,7 +29,7 @@ class FieldWrapper extends React.Component {
 			? <div className="uf-field__description" dangerouslySetInnerHTML={{ __html: description }} />
 			: null;
 
-		return <div className="uf-field uf-field--grid" style={ styles }>
+		return <div className={ 'uf-field uf-field--' + layout } style={ styles }>
 			<div className="uf-field__details">
 				<label htmlFor={ id }>
 					{ label }

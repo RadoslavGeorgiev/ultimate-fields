@@ -1,8 +1,7 @@
 import React from 'react';
 import Location from './Location.jsx';
 import Form from './../Form.jsx';
-import Field from './../Field.jsx';
-import RepeaterGroup from './../Container/RepeaterGroup.jsx';
+import Loader from './../Loader.jsx';
 
 export default class Post_Type extends Location {
 	state: {
@@ -16,37 +15,21 @@ export default class Post_Type extends Location {
 
 	render() {
 		const { element, settings, data } = this.props;
-		const { id, fields } = settings;
+		const { id, fields, layout, description_position } = settings;
+
+		const loader = new Loader( fields );
 
 		return <React.Fragment>
 			<Form
 				data={ data }
-				children={ this.generateFields( fields ) }
+				children={ loader.load() }
 				ref={ form => this.form = form }
 				onChange={ data => this.setState({ data }) }
+				className="uf-fields--boxed"
+				layout={ layout }
+				description_position={ description_position }
 			/>
 			{ this.getHiddenField( 'uf_post_type_' + id ) }
 		</React.Fragment>
-	}
-
-	generateFields( raw ) {
-		const fields = raw.map( field => {
-			if( field.type === 'Repeater' ) {
-				field.children = this.prepareRepeaterGroups( field.groups );
-			}
-
-			return <Field {...field} key={ field.name } />
-		});
-
-		return fields;
-	}
-
-	prepareRepeaterGroups( groups ) {
-		return groups.map( group => {
-			return React.createElement( RepeaterGroup, {
-				...group,
-				children: this.generateFields( group.fields )
-			});
-		});
 	}
 }

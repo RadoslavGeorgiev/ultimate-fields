@@ -1,4 +1,4 @@
-<div class="uf-object-preview-body">
+<div class="uf-item__body">
 	<h4>
 		<a href="<?php echo $link ?>" target="_blank">
 			<span class="dashicons dashicons-edit"></span>

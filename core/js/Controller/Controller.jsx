@@ -12,7 +12,7 @@ export default class Controller extends React.Component {
 
 	init({ element, settings, data }) {
 		const FormClass = this.getLocationClass();
-
+		
 		ReactDOM.render(
 			React.createElement( FormClass, {
 				settings,

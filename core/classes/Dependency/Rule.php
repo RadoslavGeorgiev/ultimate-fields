@@ -292,9 +292,9 @@ class Rule {
      */
     public function export() {
         return array(
-            'field'   => $this->field,
-            'value'   => $this->value,
-            'compare' => $this->compare
+            'field'    => $this->field,
+            'value'    => $this->value,
+            'operator' => $this->compare
         );
     }
 }

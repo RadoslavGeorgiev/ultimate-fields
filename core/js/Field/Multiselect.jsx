@@ -1,8 +1,12 @@
 import React from 'react';
-import Field from './../Field.jsx';
+import Select from './Select.jsx';
 import { map } from 'lodash';
 
-export default class Select extends Field {
+export default class Multiselect extends Select {
+	getDefaultValue() {
+		return [];
+	}
+
 	/**
 	 * Prepares the options for the input and renders it according
 	 *
@@ -11,9 +15,9 @@ export default class Select extends Field {
 	renderInput() {
 		const { name, input_type } = this.props;
 
-		return 'radio' === input_type
-			? this.renderRadios( this.getOptions() )
-			: this.renderDropdown( this.getOptions() );
+		return 'checkbox' === input_type
+			? this.renderCheckboxes( this.getOptions() )
+			: this.renderMultiselect( this.getOptions() );
 	}
 
 	/**
@@ -22,7 +26,7 @@ export default class Select extends Field {
 	 * @param  {Object} options  An object with all available options.
 	 * @return {React.Component} A select field.
 	 */
-	renderDropdown( options ) {
+	renderMultiselect( options ) {
 		const children = map( ( label, key ) =>
 			<option key={ key } value={ key }>{ label }</option>
 		);
@@ -43,16 +47,16 @@ export default class Select extends Field {
 	 * @param  {Object} options  An object with all available options.
 	 * @return {React.Component} A select field.
 	 */
-	renderRadios( options ) {
+	renderCheckboxes( options ) {
 		const { orientation } = this.props;
 
 		return <ul className={ 'uf-radio uf-radio--' + orientation }>
 			{ map( options, ( label, key ) => {
-				const checked = this.getValue() === key;
+				const checked = -1 !== this.getValue().indexOf( key );
 
 				return <li key={ key }>
 					<label>
-						<input type="radio" name={ this.id } value={ key } checked={ checked } onChange={ this.radioChanged.bind( this ) } />
+						<input type="checkbox" value={ key } checked={ checked } onChange={ this.checkboxChanged.bind( this ) } />
 						<span dangerouslySetInnerHTML={{ __html: label }} />
 					</label>
 				</li>
@@ -60,44 +64,14 @@ export default class Select extends Field {
 		</ul>
 	}
 
-	radioChanged( e ) {
+	checkboxChanged( e ) {
 		const { name, onValueChanged } = this.props;
+		const current = ( this.getValue() || [] );
 
-		onValueChanged( name, e.target.value );
-	}
-
-	getOptions() {
-		let { options } = this.props;
-
-		if( ! options ) {
-			options = {}
-
-			React.Children.forEach( this.props.children, child => {
-				options[ child.props.key ] = child.props.children;
-			});
-		}
-
-		return options;
-	}
-
-	getDefaultValue() {
-		let value = null;
-
-		map( this.getOptions(), ( label, key ) => {
-			if( null === value ) {
-				value = key;
-			}
-		});
-
-		return value;
-	}
-
-	componentDidMount() {
-		const { input } = this.refs;
-		const { input_type, use_select2 } = this.props;
-
-		if( 'select' == input_type && use_select2 ) {
-			jQuery( input ).select2();
+		if( e.target.checked ) {
+			onValueChanged( name, current.concat( [ e.target.value ] ) )
+		} else {
+			onValueChanged( name, current.filter( value => value !== e.target.value ) )
 		}
 	}
 }

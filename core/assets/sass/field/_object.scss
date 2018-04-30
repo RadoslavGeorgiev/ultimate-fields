@@ -17,49 +17,7 @@
 		margin: 0 0 3px 10px;
 	}
 
-	&-preview {
-		background: #fff;
-
-		&-thumbnail {
-			display: block;
-			background: #eee;
-
-			img {
-				display: block;
-				height: auto;
-				max-width: 150px;
-				margin: 0 auto;
-			}
-		}
-
-		&-body {
-			padding: 10px;
-		}
-
-		h4 {
-			font-size: 15px;
-			margin: 0 0 6px;
-
-			a {
-				text-decoration: none;
-			}
-		}
-
-		p {
-			margin: 0;
-			padding-left: 25px;
-
-			strong {
-				padding: 3px 5px;
-				background: #e6e5e5;
-				border-radius: 3px;
-				margin-right: 5px;
-				font-weight: normal;
-			}
-		}
-	}
-
-	&-buttons {
+	&__buttons {
 		border-top: 1px solid #ddd;
 		padding: 6px;
 
@@ -95,38 +53,38 @@
 		border-color: transparent transparent #eee transparent;
 	}
 
-	&-filter {
+	&__filter {
 		@extend .clearfix;
 		padding: 6px;
+	}
 
-		&-input {
-			float: left;
-			height: 32px;
+	&__input {
+		float: left;
+		height: 32px;
 
-			.uf-field &[type='text'] {
-				width: 49.5%; // Avoid !important
-				margin: 0;
-				font-size: 12px;
-			}
-		}
-
-		&-mini &-input {
-			.uf-field &[type='text'] {
-				width: 100%;
-			}
-		}
-
-		&-type {
-			float: right;
-			width: 49.5%;
-
-			select {
-				width: 100%;
-			}
+		.uf-field &[type='text'] {
+			width: 49.5%; // Avoid !important
+			margin: 0;
+			font-size: 12px;
 		}
 	}
 
-	&-list {
+	&__filter--mini &__input {
+		.uf-field &[type='text'] {
+			width: 100%;
+		}
+	}
+
+	&__type {
+		float: right;
+		width: 49.5%;
+
+		select {
+			width: 100%;
+		}
+	}
+
+	&__list {
 		border: 1px solid #ddd;
 		border-width: 1px 0;
 		background: #fff;
@@ -134,7 +92,7 @@
 		overflow: auto;
 	}
 
-	&-footer {
+	&__footer {
 		padding: 8px;
 
 		.uf-button + .uf-button {
@@ -144,37 +102,6 @@
 
 	&-button-right {
 		float: right;
-	}
-
-	&-item {
-		cursor: default;
-		position: relative;
-
-		&:after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
-
-		& + & {
-			border-top: 1px solid #ddd;
-		}
-
-		&-title {
-			margin: 0;
-		}
-
-		&-selected {
-			background: #dedede;
-
-			.uf-object-preview p strong {
-				background: #666;
-				color: #fff;
-			}
-		}
 	}
 
 	&-preloader {
@@ -188,7 +115,7 @@
 		}
 	}
 
-	.uf-object-preview {
+	.uf-item__preview {
 		background: none;
 
 		.dashicons-edit {
@@ -236,6 +163,86 @@
 	}
 }
 
+.uf-item {
+	position: relative;
+	background: #fff;
+
+	.uf-chooser & {
+		&, a {
+			cursor: default;
+		}
+	}
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	& + & {
+		border-top: 1px solid #ddd;
+	}
+
+	&__preview {
+		position: relative;
+		z-index: 2;
+	}
+
+	&__title {
+		margin: 0;
+	}
+
+	&--selected {
+		background: #dedede;
+
+		.uf-item__preview p strong {
+			background: #666;
+			color: #fff;
+		}
+	}
+
+	&__thumbnail {
+		display: block;
+		background: #eee;
+
+		img {
+			display: block;
+			height: auto;
+			max-width: 150px;
+			margin: 0 auto;
+		}
+	}
+
+	&__body {
+		padding: 10px;
+	}
+
+	h4 {
+		font-size: 15px;
+		margin: 0 0 6px;
+
+		a {
+			text-decoration: none;
+		}
+	}
+
+	p {
+		margin: 0;
+		padding-left: 25px;
+
+		strong {
+			padding: 3px 5px;
+			background: #e6e5e5;
+			border-radius: 3px;
+			margin-right: 5px;
+			font-weight: normal;
+		}
+	}
+}
+
 .uf-objects {
 	background: #eee;
 	border: 1px solid #ddd;
@@ -248,7 +255,7 @@
 	}
 
 	&-buttons {
-		@extend .uf-object-buttons;
+		@extend .uf-object__buttons;
 	}
 }
 

@@ -55,6 +55,7 @@ class Container_Settings {
 		Container::create( 'container_settings' )
 			->add_location( 'post_type', $post_type->get_slug() )
 			->set_title( $title )
+			->set_layout( 'rows' )
 			->set_description_position( 'label' )
 			->set_fields_callback( array( $this, 'generate_settings_fields' ) );
 	}

@@ -22,12 +22,6 @@
 		}
 	}
 
-	&__details &-description {
-		font-style: normal;
-		font-size: 12px;
-		line-height: 1.3em;
-	}
-
 	&__required {
 		color: $required;
 		font-weight: bold;
@@ -61,6 +55,12 @@
 		.uf-field-type-message & {
 			padding-top: 0;
 		}
+	}
+
+	&__details &__description {
+		font-style: normal;
+		font-size: 12px;
+		line-height: 1.3em;
 	}
 
 	// Field validation messages
@@ -117,23 +117,25 @@
 		display: block;
 		width: 100%;
 	}
-}
 
-// Layout of block fields (label on the left, field on the right)
-.uf-field-layout-row {
-	position: relative;
-	display: flex;
-	width: 100% !important;
+	/**
+	 * Rows
+	 */
+	&--rows {
+		position: relative;
+		display: flex;
+		width: 100% !important;
+	}
 
-	> .uf-field-label,
-	> .uf-field-input-wrap {
+	&--rows &__details,
+	&--rows &__inputs {
 		box-sizing: border-box;
 		padding: 15px 12px;
 		position: relative;
 		z-index: 1;
 	}
 
-	> .uf-field-label {
+	&--rows &__details {
 		flex: 0 0 20%;
 
 		label {
@@ -142,85 +144,89 @@
 		}
 	}
 
-	> .uf-field-input-wrap {
+	&--rows &__inputs {
 		flex: 0 0 80%;
 		width: 80%;
 	}
 
-	&.uf-field-no-label {
+	/**
+	 * Boxed && Rows
+	 */
+	.uf-fields--boxed &--rows {
+		border-bottom: 1px solid #eee;
+
 		&:before {
-			display: none;
-		}
-
-		> .uf-field-input-wrap {
-			flex: 0 0 100%;
+			content: '';
+			position: absolute;
+			z-index: 0;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 20%;
+			background: #fafafa;
+			border-right: 1px solid #ddd;
 		}
 	}
-}
 
-// Layout of block fields within boxes
-.uf-boxed-fields .uf-field-layout-row {
-	border-bottom: 1px solid #eee;
-
-	&:before {
-		content: '';
-		position: absolute;
-		z-index: 0;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 20%;
-		background: #fafafa;
-		border-right: 1px solid #ddd;
-	}
-
-	> .uf-field-input-wrap {
+	.uf-fields--boxed &--rows > &__inputs {
 		border-left: 1px solid #ddd;
 	}
 
-	&.uf-field-no-label > .uf-field-input-wrap {
+	/**
+	 * Grid
+	 */
+	&--grid {
+		flex-grow: 1;
+		padding: 10px 15px;
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 150px;
+		max-width: 100%;
+	}
+
+	&--grid &__details {
+		padding-bottom: 6px;
+	}
+
+	/**
+	 * Boxed && Grid
+	 */
+ 	.uf-fields--boxed &--grid {
+ 		background: #fff;
+ 		border-left: 1px solid #ddd;
+ 		border-top: 1px solid #ddd;
+	}
+
+	.uf-fields--boxed &--grid.first-col {
 		border-left: 0;
+	}
+
+	.uf-fields--boxed &--grid.top-row {
+		border-top: 0;
+	}
+
+	.uf-fields--boxed &--grid + .uf-tab-wrapper {
+		border-top: 1px solid #ddd;
+		margin-bottom: -1px;
+ 	}
+
+
+	// Fields without labels
+	.uf-fields--boxed &--no-label > .uf-field__inputs {
+		border-left: 0;
+	}
+
+	.uf-fields--rows &--no-label:before {
+		display: none;
 	}
 }
 
 // Inline fields
-.uf-fields--inline {
+.uf-fields--grid {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.uf-field--grid {
-	flex-grow: 1;
-	padding: 10px 15px;
-	box-sizing: border-box;
-	width: 100%;
-
-    min-width: 150px;
-    max-width: 100%;
-
-	.uf-field__details {
-		padding-bottom: 6px;
-	}
-}
-
-.uf-boxed-fields .uf-field-layout-grid {
-	background: #fff;
-	border-left: 1px solid #ddd;
-	border-top: 1px solid #ddd;
-
-	&.first-col {
-		border-left: 0;
-	}
-
-	&.top-row {
-		border-top: 0;
-	}
-
-	& + .uf-tab-wrapper {
-		border-top: 1px solid #ddd;
-		margin-bottom: -1px;
-	}
-}
 
 // Fixed-width label containers
 .uf-fields-label-200 {
@@ -240,7 +246,7 @@
 	}
 }
 
-.uf-fields-label-200.uf-boxed-fields {
+.uf-fields-label-200.uf-fields--boxed {
 	> .uf-field-layout-row {
 		> .uf-field-label {
 			padding-left: 12px;

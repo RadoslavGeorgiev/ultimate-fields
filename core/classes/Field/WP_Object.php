@@ -147,7 +147,9 @@ class WP_Object extends Field {
 	public function enqueue_scripts() {
 		# Add the basic js
 		wp_enqueue_style( 'uf-select2-css' );
-		wp_enqueue_script( 'uf-field-wp-object' );
+		if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
+			$script->deps[] = 'uf-select2';
+		}
 
 		# Add templates
 		Template::add( 'object-chooser', 'field/object-chooser' );
@@ -239,6 +241,7 @@ class WP_Object extends Field {
 		if( 'get_objects_' . $this->name != $action ) {
 			return;
 		}
+
 
 		$this->ajax_objects();
 	}

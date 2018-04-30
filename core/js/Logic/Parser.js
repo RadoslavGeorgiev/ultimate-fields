@@ -57,7 +57,7 @@ export default class Parser {
 	areRulesSatisfied() {
 		let satisfied = false;
 
-		this.groups.forEach( group => {
+			this.groups.forEach( group => {
 			let groupSatisfied = true;
 
 			group.forEach( rule => {

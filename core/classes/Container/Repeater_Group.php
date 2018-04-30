@@ -99,6 +99,8 @@ class Repeater_Group extends Group {
     public function export_settings() {
     	$settings = parent::export_settings();
 
+		$settings['type'] = $this->id;
+
     	# Locate the title
 		$title = $this->title_template;
 		if( is_null( $title ) ) {

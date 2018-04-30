@@ -91,7 +91,7 @@ class Container {
 	 * @since 3.0
 	 * @var string
 	 */
-	protected $layout = 'rows';
+	protected $layout = 'grid';
 
 	/**
 	 * Holds the style of the container.
@@ -291,12 +291,30 @@ class Container {
 		# Go through each field and prepare it
 		foreach( $this->get_fields() as $field ) {
 			if( is_a( $field, Field\Tab::class ) ) {
-				$tab = $field->get_name();
-			} elseif( $tab ) {
-				$field->set_tab( $tab );
+				if( $tab ) {
+					$subfields = $tab->fields;
+					$exported = $tab->export_field();
+					$exported['children'] = $subfields;
+					$fields[] = $exported;
+				}
+
+				$tab = $field;
+				$tab->fields = array();
+				continue;
 			}
 
-			$fields[] = $field->export_field();
+			if( $tab ) {
+				$tab->fields[] = $field->export_field();
+			} else {
+				$fields[] = $field->export_field();
+			}
+		}
+
+		if( $tab ) {
+			$subfields = $tab->fields;
+			$exported = $tab->export_field();
+			$exported['children'] = $subfields;
+			$fields[] = $exported;
 		}
 
 		return $fields;

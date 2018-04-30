@@ -39,6 +39,9 @@ class Tab extends Field {
 	public function export_field() {
 		$settings = parent::export_field();
 
+		$settings['id'] = $this->name;
+		$settings['title'] = $this->label;
+
 		if( $this->icon ) {
 			$icon = $this->icon;
 

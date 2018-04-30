@@ -3,9 +3,29 @@ use Ultimate_Fields\Container;
 use Ultimate_Fields\Field;
 
 add_action( 'uf.init', function() {
+	Container::create( 'Page Tabbed Stuff' )
+		->add_location( 'post_type', 'page' )
+		->set_layout( 'rows' )
+		->add_fields([
+			Field::create( 'tab', 'tab_1' )
+				->set_icon( 'dashicons-admin-generic' ),
+			Field::create( 'text', 'first_tab_field' )
+				->set_description( 'This field has a description!' )
+				->required(),
+			Field::create( 'checkbox', 'show_second_tab' )->fancy(),
+			Field::create( 'text', 'fake_second_tab' )
+				->add_dependency( 'show_second_tab' ),
+			Field::create( 'tab', 'tab_2' )
+				->add_dependency( 'show_second_tab' ),
+			Field::create( 'checkbox', 'second_tab_field' )->fancy(),
+			Field::create( 'text', 'second_tab_field_2' )
+				->add_dependency( 'second_tab_field' ),
+		]);
+
 	Container::create( 'Page Stuff' )
 		->add_location( 'post_type', 'page' )
 		->add_fields([
+			Field::create( 'wp_object', 'object_test' ),
 			Field::create( 'checkbox', 'checkbox_test' )
 				->set_text( 'Oui' )
 				->fancy()
@@ -27,7 +47,6 @@ add_action( 'uf.init', function() {
 				])
 				->fancy(),
 			Field::create( 'textarea', 'test_3' ),
-			Field::create( 'wp_object', 'object_test' ),
 			Field::create( 'repeater', 'simple_repeater' )
 				->add_group( 'entry', [
 					'title'  => 'A group',
@@ -35,6 +54,17 @@ add_action( 'uf.init', function() {
 						Field::create( 'text', 'repeater_field_a' )
 					],
 					'edit_mode' => 'all'
+				]),
+			Field::create( 'repeater', 'complex_repeater' )
+				->add_group( 'text', [
+					'fields' => [
+						Field::create( 'text', 'title' )
+					]
+				])
+				->add_group( 'image', [
+					'fields' => [
+						Field::create( 'image', 'image' )
+					]
 				])
 		]);
 });

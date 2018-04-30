@@ -13,14 +13,22 @@ export default class StoreParser {
 		};
 
 		for( let key in data ) {
-			if( 'object' === typeof data[ key ] ) {
+			const hasSubContext = data[ key ]
+				&& ( 'object' == typeof data[ key ] )
+				&& (
+					( data[ key ].length && !! data[ key ][0].__type )
+					|| ( data[ key ].__type )
+				);
+
+			if( hasSubContext ) {
 				if( ! data[ key ] ) {
 					continue;
 				}
 
 				Object.assign( stores, this.prepareDataForStore(
 					data[ key ],
-					prefix + '_' + key, parseInt( key )
+					prefix + '_' + key,
+					parseInt( key )
 				));
 
 				if( 'function' == typeof data[ key ].indexOf ) {

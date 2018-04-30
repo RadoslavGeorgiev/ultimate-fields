@@ -265,7 +265,7 @@ class Post_Type extends Controller {
 		foreach( $combos as $combination ) {
 			$combination['container']->enqueue_scripts();
 		}
-		
+
 		wp_enqueue_script( 'ultimate-fields' );
 
 		# Attach translations

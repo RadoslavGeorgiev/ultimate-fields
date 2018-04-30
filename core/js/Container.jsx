@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateValue } from './actions.js';
+import { updateValue, cacheValue } from './actions.js';
 import getFieldType from './fields.js';
 
 import ConditionalLogic from './ConditionalLogic.jsx';
@@ -8,22 +8,36 @@ import Tab from './Tab.jsx';
 import ConditionalTabWrapper from './ConditionalTabWrapper.jsx';
 import TabButton from './TabButton.jsx';
 
-const mapStateToProps = ( { values: state, validation }, ownProps ) => ({
-	values:        state[ ownProps.source || '__' ],
-	validation:    validation[ ownProps.source || '__' ],
-	getFieldValue: ( context, name ) => state[ context ][ name ]
+const mapStateToProps = ( { values: state, cache, validation }, ownProps ) => ({
+	values:         state[ ownProps.source || '__' ],
+	validation:     validation[ ownProps.source || '__' ],
+	getFieldValue:  ( context, name ) => state[ context ][ name ],
+	getContext:     ( context )       => state[ context ],
+	getCachedValue: ( name )          => cache[ name ]
 });
 
 const mapDispatchToProps = dispatch => ({
-	onChange: ( name, value, context ) => dispatch( updateValue( name, value, context ) )
+	onChange: ( name, value, context ) => dispatch( updateValue( name, value, context ) ),
+	cacheValue: ( name, value )        => dispatch( cacheValue( name, value ) )
 });
 
 class Container extends React.Component {
+	static defaultProps = {
+		layout: 'grid',
+		description_position: 'input'
+	}
+
 	render() {
-		const { children } = this.props;
+		const { children, layout, className } = this.props;
+
+		const cssClasses = [
+			'uf-fields',
+			'uf-fields--' + layout,
+			className
+		].filter( className => !! className ).join( ' ' ); // Remove empty classes
 
 		return (
-			<div className="uf-fields uf-fields--inline">
+			<div className={ cssClasses }>
 				{ this.getTabButtons() }
 				{ React.Children.map( children, this.prepareField.bind( this ) ) }
 			</div>
@@ -45,7 +59,7 @@ class Container extends React.Component {
 			return null;
 		}
 
-		const { values, source, onChange } = this.props;
+		const { values, source, layout, description_position, onChange, getContext, getCachedValue, cacheValue } = this.props;
 		const { name, type } = field.props;
 
 		// Handle conditional logic differently
@@ -66,8 +80,12 @@ class Container extends React.Component {
 		const props = Object.assign( {}, field.props, {
 			source:               source,
 			value:                ( values && ( name in values ) ) ? values[ name ]: null,
-			description_position: 'input',
-			onValueChanged:       ( name, value ) => onChange( name, value, source )
+			getContext:           getContext,
+			onValueChanged:       ( name, value ) => onChange( name, value, source ),
+			description_position,
+			layout,
+			getCachedValue,
+			cacheValue
 		});
 
 		// Determine the field class
@@ -108,7 +126,7 @@ class Container extends React.Component {
 			? values.__tab
 			: tabs[0].tab.id;
 
-		return <div className="tabs">{
+		return <div className="uf-tabs">{
 			tabs.map( ( tab, i ) => {
 				const el = React.createElement( TabButton, {
 					...tab.tab,
@@ -123,7 +141,7 @@ class Container extends React.Component {
 
 				return React.createElement( ConditionalTabWrapper, {
 					...this.getConditionalLogicProps(),
-					...tab.logic.props,
+					logicProps: tab.logic.props,
 					key: i,
 					children: el,
 				});

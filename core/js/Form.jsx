@@ -14,11 +14,11 @@ export default class Form extends React.Component {
 	state = { errors: [] }
 
 	render() {
-		const { children } = this.props;
+		const { children, className, layout, description_position } = this.props;
 
 		return <React.Fragment>
 			<Provider store={ this.store }>
-				<Container source="__">
+				<Container source="__" className={ className } layout={ layout } description_position={ description_position }>
 					{ children }
 				</Container>
 			</Provider>

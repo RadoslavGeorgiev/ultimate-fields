@@ -30,7 +30,7 @@ export default class Field extends React.Component {
 
 	seed() {
 		const { name, value, onValueChanged } = this.props;
-
+		
 		if( null === value ) {
 			onValueChanged( name, this.getDefaultValue() );
 		}
