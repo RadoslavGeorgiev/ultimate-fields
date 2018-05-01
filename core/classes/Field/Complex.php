@@ -288,7 +288,10 @@ class Complex extends Field {
 		$datastore = $this->get_internal_datastore();
 
 		# Go through fields and gather values
-		$data = array();
+		$data = array(
+			'__type' => 'complex'
+		);
+		
 		foreach( $this->group->get_fields() as $field ) {
 			$field->set_datastore( $datastore );
 			$data = array_merge( $data, $field->export_data() );

@@ -29,7 +29,7 @@ export default function repeaterValidator( store, field, source ) {
 	const { name, label }   = field.props;
 	const { values: state } = store.getState();
 
-	state[ source + '_' + name ].forEach( index => {
+	( state[ source + '_' + name ] || [] ).forEach( index => {
 		const values = state[ `${source}_${name}_${index}` ];
 		const type   = values.__type || DEFAULT_REPEATER_GROUP_TYPE;
 		const group  = groups[ type ];

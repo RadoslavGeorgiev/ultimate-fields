@@ -2,7 +2,7 @@ import React from 'react';
 import Field from './../Field.jsx';
 
 export default class Checkbox extends Field {
-	getDefaultValue() {
+	static getDefaultValue( props ) {
 		return false;
 	}
 

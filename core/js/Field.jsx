@@ -14,7 +14,6 @@ export default class Field extends React.Component {
 
 	componentWillMount() {
 		this.id = 'field-' + getFieldID();
-		this.seed();
 	}
 
 	render() {
@@ -28,20 +27,16 @@ export default class Field extends React.Component {
 		</FieldWrapper>
 	}
 
-	seed() {
-		const { name, value, onValueChanged } = this.props;
-		
-		if( null === value ) {
-			onValueChanged( name, this.getDefaultValue() );
-		}
-	}
-
 	getValue() {
 		const { value } = this.props;
-		return null === value ? this.getDefaultValue() : value;
+		// return null === value ? this.getDefaultValue() : value;
+		if( null === value ) {
+			console.log('Something is wrong with ' + this.props.name);
+		}
+		return value;
 	}
 
-	getDefaultValue() {
+	static getDefaultValue() {
 		return '';
 	}
 

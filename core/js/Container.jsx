@@ -1,32 +1,53 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { map } from 'lodash';
 import { updateValue, cacheValue } from './actions.js';
 import getFieldType from './fields.js';
-
 import ConditionalLogic from './ConditionalLogic.jsx';
 import Tab from './Tab.jsx';
 import ConditionalTabWrapper from './ConditionalTabWrapper.jsx';
 import TabButton from './TabButton.jsx';
 
 const mapStateToProps = ( { values: state, cache, validation }, ownProps ) => ({
+	// Locate the values for the current source
 	values:         state[ ownProps.source || '__' ],
+
+	// Locate the validation state of the current context
 	validation:     validation[ ownProps.source || '__' ],
+
+	// Returns the value of a field from a given context
 	getFieldValue:  ( context, name ) => state[ context ][ name ],
+
+	// Returns a whole context
 	getContext:     ( context )       => state[ context ],
+
+	// Returns a cached value
 	getCachedValue: ( name )          => cache[ name ]
 });
 
 const mapDispatchToProps = dispatch => ({
+	// Handles generic value changes
 	onChange: ( name, value, context ) => dispatch( updateValue( name, value, context ) ),
+
+	// Allows values to be cached globally
 	cacheValue: ( name, value )        => dispatch( cacheValue( name, value ) )
 });
 
+/**
+ * Containers are objects, which contain fields, as well as conditional logic, tabs and etc.
+ * They are used within top-level forms, as well as within repeaters, popups and etc.
+ */
 class Container extends React.Component {
 	static defaultProps = {
 		layout: 'grid',
 		description_position: 'input'
 	}
 
+	/**
+	 * Renders the basic list of fields.
+	 *
+	 * @return {React.Component} A fields DIV.
+	 */
 	render() {
 		const { children, layout, className } = this.props;
 
@@ -44,6 +65,11 @@ class Container extends React.Component {
 		);
 	}
 
+	/**
+	 * Returns universal properties, used for conditional logic
+	 *
+	 * @return {Object}
+	 */
 	getConditionalLogicProps() {
 		const { source, getFieldValue } = this.props;
 
@@ -54,20 +80,26 @@ class Container extends React.Component {
 		};
 	}
 
+	/**
+	 * Converts a basic element into a real field, conditional logic or tabs.
+	 *
+	 * @param  {React.Component} field A component, which belongs in a container.
+	 * @return {React.Component}
+	 */
 	prepareField( field ) {
-		if( ! field ) {
-			return null;
-		}
+		const {
+			values, source, layout, description_position,
+			onChange, getContext, getCachedValue, cacheValue
+		} = this.props;
 
-		const { values, source, layout, description_position, onChange, getContext, getCachedValue, cacheValue } = this.props;
 		const { name, type } = field.props;
 
-		// Handle conditional logic differently
+		// Get some additional props for the conditional logic and let it do the job.
 		if( field.type === ConditionalLogic ) {
 			return React.cloneElement( field, this.getConditionalLogicProps() );
 		}
 
-		// Handle tabs differently
+		// Add some additional params to tabs and let them do the rest.
 		if( field.type === Tab ) {
 			return React.cloneElement( field, {
 				prepareField: this.prepareField.bind( this ),
@@ -76,16 +108,12 @@ class Container extends React.Component {
 			});
 		}
 
-		// Prepare standardized properties
+		// Prepare all standardized props
 		const props = Object.assign( {}, field.props, {
-			source:               source,
 			value:                ( values && ( name in values ) ) ? values[ name ]: null,
-			getContext:           getContext,
 			onValueChanged:       ( name, value ) => onChange( name, value, source ),
-			description_position,
-			layout,
-			getCachedValue,
-			cacheValue
+
+			source, getContext, description_position, layout, getCachedValue, cacheValue
 		});
 
 		// Determine the field class
@@ -95,28 +123,30 @@ class Container extends React.Component {
 		return React.createElement( fieldClass, props );
 	}
 
+	/**
+	 * Generates a div with all tabs.
+	 *
+	 * @return {React.Component}
+	 */
 	getTabButtons() {
 		const { children, values, source, onChange } = this.props;
 		const tabs = [];
 
-		const prepareTab = ( tab, logic ) => {
-			tabs.push({ tab, logic });
-		}
-
-		React.Children.map( children, child => {
-			if( child.type == Tab ) {
-				prepareTab( child.props );
-			}
-
-			if( child.type === ConditionalLogic ) {
-				React.Children.map( child.props.children, subChild => {
-					if( subChild.type === Tab ) {
-						prepareTab( subChild.props, child );
-					}
-				})
+		// Extract all tabs
+		React.Children.forEach( children, child => {
+			if( Tab === child.type ) {
+				tabs.push({ tab: child.props });
+			} else if( ConditionalLogic === child.type ) {
+				React.Children.forEach( child.props.children, subChild => {
+					if( subChild.type === Tab ) tabs.push({
+						tab: subChild.props,
+						logic: child
+					});
+				});
 			}
 		});
 
+		// Do not generate anything if there are no tabs
 		if( ! tabs.length ) {
 			return null;
 		}
@@ -126,6 +156,7 @@ class Container extends React.Component {
 			? values.__tab
 			: tabs[0].tab.id;
 
+		// Generate the wrapper
 		return <div className="uf-tabs">{
 			tabs.map( ( tab, i ) => {
 				const el = React.createElement( TabButton, {
@@ -135,16 +166,14 @@ class Container extends React.Component {
 					onClick: () => onChange( '__tab', tab.tab.id, source )
 				});
 
-				if( ! tab.logic ) {
-					return el;
-				}
-
-				return React.createElement( ConditionalTabWrapper, {
-					...this.getConditionalLogicProps(),
-					logicProps: tab.logic.props,
-					key: i,
-					children: el,
-				});
+				return ! tab.logic
+					? el
+					: React.createElement( ConditionalTabWrapper, {
+						...this.getConditionalLogicProps(),
+						logicProps: tab.logic.props,
+						key: i,
+						children: el,
+					});
 			})
 		}</div>
 	}

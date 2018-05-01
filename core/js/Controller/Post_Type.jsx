@@ -48,7 +48,12 @@ export default class Post_Type extends Controller {
 			errorWrapper.className = 'uf-errors';
 
 			const slugBox = document.getElementById( 'edit-slug-box' );
-			slugBox.parentNode.insertBefore( errorWrapper, slugBox.nextSibling );
+			if( slugBox ) {
+				slugBox.parentNode.insertBefore( errorWrapper, slugBox.nextSibling );
+			} else {
+				const titleDiv = document.getElementById( 'titlediv' );
+				titleDiv.parentNode.insertBefore( errorWrapper, titleDiv.nextSibling );
+			}
 		}
 
 		ReactDOM.render(

@@ -170,11 +170,16 @@ class Repeater extends Field {
 		// Get a new index for the group
 		const index = value.length ? Math.max( ...value ) + 1 : 0;
 
+		// Pregenrate the defaults
+		const parser = new StoreParser;
+		const group = this.groups.find( group => group.type == type );
+		const defaults = parser.prefillData( {}, group.children );
+
 		// Create a new context
-		onCreateContext( `${source}_${name}_${index}`, {
+		onCreateContext( `${source}_${name}_${index}`, Object.assign({
 			__index: index,
 			__type:  type || DEFAULT_REPEATER_GROUP_TYPE
-		});
+		}, defaults ));
 
 		// Update the value of the field
 		onAddRepeaterRow( `${source}_${name}`, index );
@@ -184,7 +189,7 @@ class Repeater extends Field {
 		this.addGroup( type );
 	}
 
-	getDefaultValue() {
+	static getDefaultValue() {
 		return [];
 	}
 

@@ -6,6 +6,7 @@ import Select from './Field/Select.jsx';
 import Multiselect from './Field/Multiselect.jsx';
 import WP_Object from './Field/WP_Object.jsx';
 import Repeater from './Field/Repeater.jsx';
+import Complex from './Field/Complex.jsx';
 
 export default function getFieldType( field ) {
 	let fieldClass;
@@ -15,13 +16,18 @@ export default function getFieldType( field ) {
 	}
 
 	switch( field.props.type.toLowerCase() ) {
-		case 'textarea': fieldClass = Textarea; break;
 		case 'repeater': fieldClass = Repeater; break;
+		case 'complex':  fieldClass = Complex; break;
+		case 'textarea': fieldClass = Textarea; break;
 		case 'checkbox': fieldClass = Checkbox; break;
 		case 'select':   fieldClass = Select; break;
 		case 'multiselect': fieldClass = Multiselect; break;
 		case 'wp_object': fieldClass = WP_Object; break;
-		default:         fieldClass = Text;
+		case 'text':      fieldClass = Text; break;
+		default:         {
+			console.warn( 'Unknown field type: ' + field.props.type );
+			fieldClass = Text;
+		}
 	}
 
 	return fieldClass;

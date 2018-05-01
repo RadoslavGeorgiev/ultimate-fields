@@ -15,6 +15,11 @@ add_action( 'uf.init', function() {
 			Field::create( 'checkbox', 'show_second_tab' )->fancy(),
 			Field::create( 'text', 'fake_second_tab' )
 				->add_dependency( 'show_second_tab' ),
+			Field::create( 'complex', 'complex_parent' )
+				->add_fields([
+					Field::create( 'text', 'complex_child' )
+				]),
+
 			Field::create( 'tab', 'tab_2' )
 				->add_dependency( 'show_second_tab' ),
 			Field::create( 'checkbox', 'second_tab_field' )->fancy(),

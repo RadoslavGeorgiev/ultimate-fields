@@ -1,3 +1,10 @@
+import React from 'react';
+import getFieldType from './fields.js';
+import ConditionalLogic from './ConditionalLogic.jsx';
+import Tab from './Tab.jsx';
+import Field from './Field.jsx';
+import Container from './Container.jsx';
+
 export default class StoreParser {
 	prepareDataForStore( data, prefix, index ) {
 		const stores = {}
@@ -112,5 +119,49 @@ export default class StoreParser {
 		const parsed = this.extractDataFromState( prepared, '__' );
 
 		console.log( isEqual( demoData, parsed ), demoData, parsed );
+	}
+
+	prefillData( data, children ) {
+		let diff = {};
+
+		StoreParser.getAllFields( children ).forEach( field => {
+			const { name } = field.props;
+			const value = data[ name ];
+
+			if( ( null === value ) || ( 'undefined' == typeof value ) ) {
+				const parsed = getFieldType( field ).getDefaultValue( field.props );
+
+				if( null !== parsed ) {
+					diff[ name ] = parsed;
+				}
+			} else if( ( 'object' == typeof value ) && value.__type === 'complex' ) {
+				diff[ name ] = this.prefillData( value, field.props.group.children );
+			}
+		});
+
+		return Object.assign( {}, data, diff );
+	}
+
+	/**
+	 * Returns all fields, which are direct or indirect children of the container.
+	 *
+	 * @return <Array.React.Component>
+	 */
+	static getAllFields( children ) {
+		let fields = [];
+
+		React.Children.forEach( children, child => {
+			switch( child.type ) {
+				case Tab:
+				case ConditionalLogic:
+					fields = fields.concat( this.getAllFields( child.props.children ) );
+					break;
+
+				case Field:
+					fields.push( child );
+			}
+		});
+
+		return fields;
 	}
 }

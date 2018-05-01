@@ -66,8 +66,8 @@ export default class Select extends Field {
 		onValueChanged( name, e.target.value );
 	}
 
-	getOptions() {
-		let { options } = this.props;
+	static getOptions( props ) {
+		let { options } = props;
 
 		if( ! options ) {
 			options = {}
@@ -80,10 +80,14 @@ export default class Select extends Field {
 		return options;
 	}
 
-	getDefaultValue() {
+	getOptions() {
+		return Select.getOptions( this.props );
+	}
+
+	static getDefaultValue( props ) {
 		let value = null;
 
-		map( this.getOptions(), ( label, key ) => {
+		map( Select.getOptions( props ), ( label, key ) => {
 			if( null === value ) {
 				value = key;
 			}

@@ -26,18 +26,19 @@ export default class Form extends React.Component {
 	}
 
 	componentWillMount() {
-		const { data } = this.props;
+		const { data, children } = this.props;
 		const parser = new StoreParser;
 
 		const store = this.store = window.theLastForm = createStore(
 			combineReducers( reducers ),
 			{
-				values: Object.assign( parser.prepareDataForStore( data, '__' ) )
+				values: parser.prepareDataForStore( parser.prefillData( data, children ), '__' )
 			}
 		);
 
 		this.unsubscribe = store.subscribe( () => {
 			const extracted = parser.extractDataFromState( store.getState().values, '__' );
+			console.log(store.getState().values.___complex_parent, extracted);
 			this.props.onChange( extracted );
 		});
 	}

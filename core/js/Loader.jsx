@@ -59,6 +59,8 @@ export default class Loader {
 					children: ( new Loader( group.fields ) ).load()
 				});
 			});
+		} else if( 'Complex' === field.type ) {
+			field.group.children = ( new Loader( field.group.fields ) ).load();
 		}
 
 		return this.wrapFieldInConditionalLogic(
