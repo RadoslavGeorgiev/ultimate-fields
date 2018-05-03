@@ -402,7 +402,13 @@ class Options extends Controller {
 		# Gether all options
 		foreach( $this->get_rest_fields() as $combo ) {
 			foreach( $combo[ 'fields' ] as $field => $access ) {
-				$options[ $field ] = $api->get_value( $field, 'option' );
+				$value = $api->get_value( $field, 'option' );
+
+				if( is_object( $value ) && method_exists( $value, 'export' ) ) {
+					$value = $value->export();
+				}
+
+				$options[ $field ] = $value;
 			}
 		}
 

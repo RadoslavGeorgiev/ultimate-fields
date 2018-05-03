@@ -152,7 +152,9 @@ class Field_Editor {
 
 		$this->fields();
 		foreach( $this->enqueue_callbacks as $callback ) {
-			call_user_func( $callback );
+			if( is_callable( $callback ) ) {
+				call_user_func( $callback );
+			}
 		}
 	}
 
