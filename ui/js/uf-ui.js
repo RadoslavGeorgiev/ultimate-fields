@@ -172,12 +172,18 @@
 				},
 
 				getOptions: function() {
-					var levels, level, options = {};
+					var levels, level, types, options = {};
 
 					levels = UltimateFields.UI.Context.get();
 					level  = levels[ levels.length - 1 ];
 
+					types = this.get( 'types' );
+
 					level.get( 'fields' ).each(function( field ) {
+						if( types.length && -1 == types.indexOf( field.datastore.get( 'type' ) ) ) {
+							return;
+						}
+
 						options[ field.datastore.get( 'name' ) ] = '%s (%s)'
 							.replace( '%s', field.datastore.get( 'label' ) )
 							.replace( '%s', field.datastore.get( 'name' ) );

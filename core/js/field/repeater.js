@@ -231,6 +231,23 @@
 	 * Displays and handles the view of the repeater.
 	 */
 	repeater.View = field.View.extend({
+		initialize: function() {
+			var that = this;
+
+			// Do the standard initialization
+			field.View.prototype.initialize.apply( this, arguments );
+
+			// Listen for replacements
+			this.model.datastore.on( 'value-replaced', function( name ) {
+				if( name != that.model.get( 'name' ) ) {
+					return;
+				}
+
+				that.model.rows.reset([]);
+				that.render();
+			})
+		},
+
 		render: function() {
 			var that    = this,
 				m       = this.model,

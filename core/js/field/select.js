@@ -89,6 +89,8 @@
 				current = this.model.getValue(),
 				$input;
 
+			this.$el.empty();
+
 			// Create a basic select and add options to it
 			$input = $( '<select></select>' );
 
