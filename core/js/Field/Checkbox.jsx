@@ -6,6 +6,10 @@ export default class Checkbox extends Field {
 		return false;
 	}
 
+	static prepareValue( value ) {
+		return !! value;
+	}
+
 	componentWillMount() {
 		this.focused = false;
 	}

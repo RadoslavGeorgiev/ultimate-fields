@@ -11,7 +11,7 @@ import FullScreenGroup from './../Container/FullScreenGroup.jsx';
 import Button from './../Button.jsx';
 
 import {
-	createContext,
+	createContexts,
 	addRepeaterRow,
 	deleteRepeaterRow,
 	destroyContext,
@@ -44,7 +44,7 @@ const mapStateToProps = ( { values: state }, ownProps ) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	onCreateContext:        ( name, data )        => dispatch( createContext( name, data ) ),
+	onCreateContexts:       ( data )              => dispatch( createContexts( data ) ),
 	onDestroyContext:       ( name )              => dispatch( destroyContext( name ) ),
 	onAddRepeaterRow:       ( name, index )       => dispatch( addRepeaterRow( name, index ) ),
 	onDeleteRepeaterRow:    ( name, index )       => dispatch( deleteRepeaterRow( name, index ) ),
@@ -165,28 +165,31 @@ class Repeater extends Field {
 	}
 
 	addGroup( type ) {
-		const { name, value, source, onAddRepeaterRow, onCreateContext } = this.props;
+		const { name, value, source, onAddRepeaterRow, onCreateContexts } = this.props;
 
 		// Get a new index for the group
-		const index = value.length ? Math.max( ...value ) + 1 : 0;
+		const index  = value.length ? Math.max( ...value ) + 1 : 0;
+		const prefix = `${source}_${name}_${index}`;
 
 		// Pregenrate the defaults
 		const parser = new StoreParser;
 		const group = this.groups.find( group => group.type == type );
-		const defaults = parser.prefillData( {}, group.children );
 
-		// Create a new context
-		onCreateContext( `${source}_${name}_${index}`, Object.assign({
+		const stores = parser.prepareDataForStore( {}, group.children, prefix );
+		stores[ prefix ] = Object.assign( stores[ prefix ] || {}, {
 			__index: index,
-			__type:  type || DEFAULT_REPEATER_GROUP_TYPE
-		}, defaults ));
+			__type:  type
+		});
+
+		// Push the new contexts
+		onCreateContexts( stores );
 
 		// Update the value of the field
 		onAddRepeaterRow( `${source}_${name}`, index );
 	}
 
 	addGroupClicked( type ) {
-		this.addGroup( type );
+		this.addGroup( type || DEFAULT_REPEATER_GROUP_TYPE );
 	}
 
 	static getDefaultValue() {
@@ -262,6 +265,93 @@ class Repeater extends Field {
 	onToggle( index ) {
 		const { name, source, onToggleGroup } = this.props;
 		onToggleGroup( `${source}_${name}_${index}` );
+	}
+
+	static getGroups( field ) {
+		const { children } = field.props;
+		const groups = {};
+		const generic = [];
+
+		React.Children.forEach( children, child => {
+			if( RepeaterGroup === child.type ) {
+				groups[ child.props.type ] = child.props.children.map
+					? child.props.children.map( el => el )
+					: React.Children.map( child.props.children, el => el );
+			} else {
+				generic.push( child );
+			}
+		});
+
+		if( generic.length > 0 ) {
+			groups[ DEFAULT_REPEATER_GROUP_TYPE ] = generic;
+		}
+
+		return groups;
+	}
+
+	static getStores( type, field, data, source ) {
+		const indexi  = [];
+		const stores  = {};
+		const { name } = field.props;
+		const groups   = Repeater.getGroups( field );
+
+		// Make a place for all indexi
+		stores[ source + '_' + name ] = indexi;
+
+		// Go through the values
+		const value = ( name in data )
+			? data[ name ]
+			: [];
+
+		value.forEach( ( row, index ) => {
+			const rowType = ( row && row.__type && ( row.__type in groups ) )
+				? row.__type
+				: DEFAULT_REPEATER_GROUP_TYPE;
+
+			const group  = groups[ rowType ];
+			const parser = new StoreParser;
+			const prefix = `${source}_${name}_${index}`;
+
+			Object.assign( stores, parser.prepareDataForStore( row, group, prefix ) );
+
+			stores[ prefix ] = Object.assign( stores[ prefix ] || {}, {
+				__type:   rowType,
+				__hidden: !! row.__hidden,
+				__index:  index
+			});
+
+			indexi.push( index );
+		});
+
+		return stores;
+	}
+
+	static getDataFromState( stores, type, field, source ) {
+		const { name } = field.props;
+		const data     = {};
+		const rows     = [];
+		const groups   = Repeater.getGroups( field );
+
+		const indexi = stores[ source + '_' + name ] || [];
+		indexi.forEach( index => {
+			const prefix = `${source}_${name}_${index}`;
+			const type   = stores[ prefix ].__type;
+			const group  = groups[ type ];
+			const parser = new StoreParser;
+
+			const row  = Object.assign(
+				parser.extractDataFromState( stores, group, prefix ),
+				{
+					__type:   stores[ prefix ].__type,
+					__hidden: stores[ prefix ].__hidden
+				}
+			);
+
+			rows.push( row );
+		});
+
+		data[ name ] = rows;
+		return data;
 	}
 
 	static getValidator() {

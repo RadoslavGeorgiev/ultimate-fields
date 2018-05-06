@@ -291,7 +291,7 @@ class Complex extends Field {
 		$data = array(
 			'__type' => 'complex'
 		);
-		
+
 		foreach( $this->group->get_fields() as $field ) {
 			$field->set_datastore( $datastore );
 			$data = array_merge( $data, $field->export_data() );

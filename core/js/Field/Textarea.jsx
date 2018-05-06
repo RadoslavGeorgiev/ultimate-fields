@@ -13,4 +13,10 @@ export default class Textarea extends Field {
 			className="field__input field__input--textarea"
 		/>
 	}
+
+	static prepareValue( value, field ) {
+		return ( 'string' == typeof value )
+			? value
+			: '';
+	}
 }

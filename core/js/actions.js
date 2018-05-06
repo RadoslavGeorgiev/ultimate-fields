@@ -1,7 +1,8 @@
 export const updateValue   = ( name, value, context ) => ({ type: 'UPDATE_VALUE', name, value, context })
 
-export const createContext = ( name, data )  => ({ type: 'CREATE_CONTEXT', name, data })
-export const destroyContext = ( name ) => ({ type: 'DESTROY_CONTEXT', name });
+export const createContext  = ( name, data )  => ({ type: 'CREATE_CONTEXT', name, data })
+export const createContexts = ( data )        => ({ type: 'CREATE_CONTEXTS', data })
+export const destroyContext = ( name )        => ({ type: 'DESTROY_CONTEXT', name });
 
 export const addRepeaterRow    = ( name, index ) => ({ type: 'ADD_REPEATER_ROW', name, index })
 export const deleteRepeaterRow = ( name, index ) => ({ type: 'DELETE_REPEATER_ROW', name, index });

@@ -32,13 +32,12 @@ export default class Form extends React.Component {
 		const store = this.store = window.theLastForm = createStore(
 			combineReducers( reducers ),
 			{
-				values: parser.prepareDataForStore( parser.prefillData( data, children ), '__' )
+				values: parser.prepareDataForStore( data, children, '__' )
 			}
 		);
 
 		this.unsubscribe = store.subscribe( () => {
-			const extracted = parser.extractDataFromState( store.getState().values, '__' );
-			console.log(store.getState().values.___complex_parent, extracted);
+			const extracted = parser.extractDataFromState( store.getState().values, children, '__' );
 			this.props.onChange( extracted );
 		});
 	}

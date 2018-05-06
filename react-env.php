@@ -1,10 +1,14 @@
 <?php
 use Ultimate_Fields\Container;
 use Ultimate_Fields\Field;
+use Ultimate_Fields\Options_Page;
 
 add_action( 'uf.init', function() {
+	$page = Options_Page::create( 'react-env' );
+
 	Container::create( 'Page Tabbed Stuff' )
 		->add_location( 'post_type', 'page' )
+		->add_location( 'options', $page )
 		->set_layout( 'rows' )
 		->add_fields([
 			Field::create( 'tab', 'tab_1' )
@@ -29,6 +33,7 @@ add_action( 'uf.init', function() {
 
 	Container::create( 'Page Stuff' )
 		->add_location( 'post_type', 'page' )
+		->add_location( 'options', $page )
 		->add_fields([
 			Field::create( 'wp_object', 'object_test' ),
 			Field::create( 'checkbox', 'checkbox_test' )
@@ -50,7 +55,8 @@ add_action( 'uf.init', function() {
 					'option_b' => 'Option B',
 					'option_c' => 'Option C',
 				])
-				->fancy(),
+				// ->fancy()
+				,
 			Field::create( 'textarea', 'test_3' ),
 			Field::create( 'repeater', 'simple_repeater' )
 				->add_group( 'entry', [

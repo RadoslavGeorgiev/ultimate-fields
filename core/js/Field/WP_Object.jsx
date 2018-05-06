@@ -26,6 +26,19 @@ export default class WP_Object extends Field {
 		context[ name + '_prepared' ].forEach( item => cacheValue( 'object_' + item.id, item ) )
 	}
 
+	static getStores( type, field, data, source ) {
+		const { name } = field.props;
+
+		const stores = Field.getStores( type, field, data, source );
+		const prepared = name + '_prepared';
+
+		if( prepared in data ) {
+			stores[ source ][ prepared ] = data[ prepared ];
+		}
+
+		return stores;
+	}
+
 	renderInput() {
 		const { name, source, button_text, getContext, getCachedValue } = this.props;
 		const { loading, chooserOpen } = this.state;

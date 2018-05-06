@@ -14,6 +14,9 @@ export function values( state, action ) {
 			context[ action.name ] = action.data || {};
 			return Object.assign( {}, state, context );
 
+		case 'CREATE_CONTEXTS':
+			return Object.assign( {}, state, action.data );
+
 		case 'DESTROY_CONTEXT': {
 			const newState = Object.assign( {}, state );
 			delete newState[ action.name ];

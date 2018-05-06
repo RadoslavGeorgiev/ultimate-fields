@@ -15,6 +15,12 @@ export default class Text extends Field {
 		/>
 	}
 
+	static prepareValue( value, field ) {
+		return ( 'string' == typeof value )
+			? value
+			: '';
+	}
+
 	componentDidMount() {
 		const { input } = this.refs;
 		const { suggestions } = this.props;

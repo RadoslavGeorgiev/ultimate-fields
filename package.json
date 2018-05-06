@@ -28,9 +28,9 @@
 	},
 	"scripts": {
 		"build": "gulp",
-		"watch": "gulp watch",
-		"build-react": "webpack",
-		"watch-react": "webpack --watch"
+		"watch": "gulp watch --mode=development",
+		"build-react": "webpack --mode development",
+		"watch-react": "webpack --watch --mode development"
 	},
 	"repository": {
 		"type": "git",

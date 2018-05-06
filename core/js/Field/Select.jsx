@@ -9,7 +9,7 @@ export default class Select extends Field {
 	 * @return {React.Component} A component with the fields' input.
 	 */
 	renderInput() {
-		const { name, input_type } = this.props;
+		const { input_type } = this.props;
 
 		return 'radio' === input_type
 			? this.renderRadios( this.getOptions() )
@@ -23,7 +23,9 @@ export default class Select extends Field {
 	 * @return {React.Component} A select field.
 	 */
 	renderDropdown( options ) {
-		const children = map( ( label, key ) =>
+		const { name, onValueChanged } = this.props;
+
+		const children = map( options, ( label, key ) =>
 			<option key={ key } value={ key }>{ label }</option>
 		);
 
