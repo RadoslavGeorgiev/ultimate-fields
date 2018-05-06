@@ -6,36 +6,14 @@ use Ultimate_Fields\Options_Page;
 add_action( 'uf.init', function() {
 	$page = Options_Page::create( 'react-env' );
 
-	Container::create( 'Page Tabbed Stuff' )
-		->add_location( 'post_type', 'page' )
-		->add_location( 'options', $page )
-		->set_layout( 'rows' )
-		->add_fields([
-			Field::create( 'tab', 'tab_1' )
-				->set_icon( 'dashicons-admin-generic' ),
-			Field::create( 'text', 'first_tab_field' )
-				->set_description( 'This field has a description!' )
-				->required(),
-			Field::create( 'checkbox', 'show_second_tab' )->fancy(),
-			Field::create( 'text', 'fake_second_tab' )
-				->add_dependency( 'show_second_tab' ),
-			Field::create( 'complex', 'complex_parent' )
-				->add_fields([
-					Field::create( 'text', 'complex_child' )
-				]),
-
-			Field::create( 'tab', 'tab_2' )
-				->add_dependency( 'show_second_tab' ),
-			Field::create( 'checkbox', 'second_tab_field' )->fancy(),
-			Field::create( 'text', 'second_tab_field_2' )
-				->add_dependency( 'second_tab_field' ),
-		]);
-
 	Container::create( 'Page Stuff' )
 		->add_location( 'post_type', 'page' )
 		->add_location( 'options', $page )
 		->add_fields([
-			Field::create( 'wp_object', 'object_test' ),
+			Field::create( 'wp_object', 'object_test' )
+				->set_width( 50 ),
+			Field::create( 'file', 'file_test' )
+				->set_width( 50 ),
 			Field::create( 'checkbox', 'checkbox_test' )
 				->set_text( 'Oui' )
 				->fancy()
@@ -77,6 +55,31 @@ add_action( 'uf.init', function() {
 						Field::create( 'image', 'image' )
 					]
 				])
+		]);
+
+	Container::create( 'Page Tabbed Stuff' )
+		->add_location( 'post_type', 'page' )
+		->add_location( 'options', $page )
+		->set_layout( 'rows' )
+		->add_fields([
+			Field::create( 'tab', 'tab_1' )
+				->set_icon( 'dashicons-admin-generic' ),
+			Field::create( 'text', 'first_tab_field' )
+				->set_description( 'This field has a description!' )
+				->required(),
+			Field::create( 'checkbox', 'show_second_tab' )->fancy(),
+			Field::create( 'text', 'fake_second_tab' )
+				->add_dependency( 'show_second_tab' ),
+			Field::create( 'complex', 'complex_parent' )
+				->add_fields([
+					Field::create( 'text', 'complex_child' )
+				]),
+
+			Field::create( 'tab', 'tab_2' )
+				->add_dependency( 'show_second_tab' ),
+			Field::create( 'checkbox', 'second_tab_field' )->fancy(),
+			Field::create( 'text', 'second_tab_field_2' )
+				->add_dependency( 'second_tab_field' ),
 		]);
 });
 

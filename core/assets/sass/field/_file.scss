@@ -6,7 +6,7 @@
 	max-width: 100%;
 	box-sizing: border-box;
 
-	&-preview {
+	&__preview {
 		display: block;
 		border-bottom: 1px solid #ccc;
 		background: #fff;
@@ -34,7 +34,7 @@
 		}
 	}
 
-	&-buttons {
+	&__buttons {
 		display: block;
 		text-align: center;
 		padding: 8px;

@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class Button extends React.Component {
+	static defaultProps = {
+		children: ''
+	}
+	
 	render() {
 		const { children: text, icon, className, type } = this.props;
 

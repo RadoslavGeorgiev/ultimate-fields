@@ -75,6 +75,14 @@ export default class Multiselect extends Select {
 		}
 	}
 
+	static prepareValue( value, field ) {
+		if( 'object' == typeof value ) {
+			return value;
+		} else {
+			return field.props.default_value || []
+		}
+	}
+
 	static getValidator() {
 		return ( store, field, source ) => {
 			const { name, label, required } = field.props;
