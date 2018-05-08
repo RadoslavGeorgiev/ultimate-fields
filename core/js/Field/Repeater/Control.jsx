@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class GroupControl extends React.Component {
+export default class Control extends React.Component {
 	render() {
 		const { icon, type, handler } = this.props;
 

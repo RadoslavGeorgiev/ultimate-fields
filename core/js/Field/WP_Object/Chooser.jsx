@@ -1,7 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
-import Button from './../Button.jsx';
-import Item from './../WP_Object/Item.jsx';
+import Button from './../../Button.jsx';
+import Item from './Item.jsx';
 
 export default class Chooser extends React.Component {
 	state = {

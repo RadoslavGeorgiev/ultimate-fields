@@ -1,7 +1,7 @@
 import React from 'react';
 import Location from './Location.jsx';
 import Form from './../Form.jsx';
-import Loader from './../Loader.jsx';
+import Loader from './../PHP/Loader.jsx';
 
 export default class Post_Type extends Location {
 	state: {

@@ -4,7 +4,7 @@ export default class Button extends React.Component {
 	static defaultProps = {
 		children: ''
 	}
-	
+
 	render() {
 		const { children: text, icon, className, type } = this.props;
 
@@ -18,7 +18,7 @@ export default class Button extends React.Component {
 		}
 
 		if( ! text.length ) {
-			cssClasses.push( 'button--no-text' )
+			cssClasses.push( 'uf-button--no-text' )
 		}
 
 		cssClasses = cssClasses.join( ' ' );

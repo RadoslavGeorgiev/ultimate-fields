@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from './../Container.jsx';
-import Control from './../GroupControl.jsx';
+import Container from './../../Container.jsx';
+import Control from './Control.jsx';
 
-class RepeaterGroup extends React.Component {
+export default class Group extends React.Component {
 	render() {
 		const { title, index, hidden, icon, edit_mode, position } = this.props;
 
@@ -70,5 +70,3 @@ class RepeaterGroup extends React.Component {
 		this.props.onToggle();
 	}
 }
-
-export default RepeaterGroup;

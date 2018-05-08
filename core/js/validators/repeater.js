@@ -1,5 +1,5 @@
 import React from 'react';
-import RepeaterGroup from './../Container/RepeaterGroup.jsx';
+import Group from './../Field/Repeater/Group.jsx';
 import validateField from './validateField.js';
 
 const DEFAULT_REPEATER_GROUP_TYPE = 'entry';
@@ -11,7 +11,7 @@ export default function repeaterValidator( store, field, source ) {
 
 	// Prepare the groups for validation
 	React.Children.forEach( field.props.children, child => {
-		if( RepeaterGroup === child.type ) {
+		if( Group === child.type ) {
 
 			groups[ child.props.type ] = child.props.children.map
 				? child.props.children.map( el => el )

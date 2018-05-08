@@ -1,9 +1,9 @@
 import React from 'react';
 import Field from './../Field.jsx';
 import Button from './../Button.jsx';
-import Chooser from './../WP_Object/Chooser.jsx';
-import Item from './../WP_Object/Item.jsx';
-import request from './../request.js';
+import Chooser from './WP_Object/Chooser.jsx';
+import Item from './WP_Object/Item.jsx';
+import request from './../PHP/request.js';
 
 export default class WP_Object extends Field {
 	state = {

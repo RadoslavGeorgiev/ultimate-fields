@@ -2,25 +2,23 @@
  * The overlay.
  */
 .uf-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 160010;
+
+	.wp-customizer & {
+		z-index: 500001;
+	}
+
 	&-open {
 		// Applies to the body element
 		overflow: hidden;
 	}
 
-	&-wrapper {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 160010;
-
-		.wp-customizer & {
-			z-index: 500001;
-		}
-	}
-
-	&-background {
+	&__background {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -29,28 +27,22 @@
 		background: rgba(0,0,0,0.5);
 	}
 
-	&-box {
+	&__box {
 		position: absolute;
 		top: 30px;
-		left: 30px;
-		right: 30px;
+		left: 50%;
+		right: auto;
 		bottom: 30px;
 		background: #fff;
 		border: 1px solid #ddd;
-		overflow: hidden;
-	}
-
-	// Limited width tests
-	&-box {
-		left: 50%;
-		right: auto;
 		width: 1200px;
+		overflow: hidden;
 		max-width: calc(100% - 40px);
 		transform: translate(-50%, 0);
 	}
 
-	&-header,
-	&-footer {
+	&__header,
+	&__footer {
 		background: #f8f8f8;
 		position: absolute;
 		left: 0;
@@ -59,7 +51,7 @@
 		z-index: 3;
 	}
 
-	&-header {
+	&__header {
 		top: 0;
 		border-bottom: 1px solid #ddd;
 		transition: padding-bottom .4s ease;
@@ -92,7 +84,7 @@
 		}
 	}
 
-	&-title {
+	&__title {
 		padding: 0 16px;
 		font-size: 22px;
 		line-height: 50px;
@@ -120,7 +112,7 @@
 		}
 	}
 
-	&-close {
+	&__close {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -168,7 +160,7 @@
 		}
 	}
 
-	&-footer {
+	&__footer {
 		bottom: 0;
 		border-top: 1px solid #ddd;
 		padding: 10px 5px;
@@ -179,15 +171,15 @@
 		}
 	}
 
-	&-body,
-	&-screen {
+	&__body,
+	&__screen {
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 	}
 
-	&-body {
+	&__body {
 		top: 51px;
 		bottom: 49px;
 		width: auto;
@@ -196,7 +188,7 @@
 		z-index: 5;
 	}
 
-	&-screen {
+	&__screen {
 		overflow: auto;
 		background: #fff;
 		height: 100%;
@@ -227,6 +219,16 @@
 
 	.form-table {
 		margin: 10px 30px;
+	}
+}
+
+.uf-overlay__body > .uf-fields-and-tabs {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	> .uf-fields {
+		overflow: auto;
 	}
 }
 

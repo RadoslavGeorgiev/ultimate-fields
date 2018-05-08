@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { connect, Provider } from 'react-redux';
+import _ from 'lodash';
 import * as reducers from './../reducers.js'
 import StoreParser from './../StoreParser.js';
 import repeaterValidator from './../validators/repeater.js';
+import Container from './../Container.jsx';
 import Field from './../Field.jsx';
-import RepeaterGroup from './../Container/RepeaterGroup.jsx';
-import FullScreenGroup from './../Container/FullScreenGroup.jsx';
+import Group from './Repeater/Group.jsx';
+import FullScreenGroup from './Repeater/FullScreenGroup.jsx';
 import Button from './../Button.jsx';
+import Overlay from './../Overlay.jsx';
 
 import {
 	createContexts,
@@ -39,7 +42,7 @@ const mapStateToProps = ( { values: state }, ownProps ) => {
 		value,
 		types,
 		visibility,
-		getGroupData: prefix => ( new StoreParser ).extractDataFromState( state, prefix )
+		getGroupData: ( prefix, children ) => ( new StoreParser ).extractDataFromState( state, children, prefix )
 	}
 }
 
@@ -64,7 +67,7 @@ class Repeater extends Field {
 		this.groups = [];
 
 		React.Children.map( children, child => {
-			if( RepeaterGroup === child.type ) {
+			if( Group === child.type ) {
 				this.groups.push({ ...child.props });
 			} else {
 				this.getGenericGroup().children.push( child );
@@ -113,7 +116,7 @@ class Repeater extends Field {
 		const entries = value.map( ( index, i ) => {
 			const type = this.groups.find( group => group.type == types[ i ] ) || this.getDefaultGroup();
 
-			return React.createElement( RepeaterGroup, {
+			return React.createElement( Group, {
 				...type,
 
 				key:          index,
@@ -199,11 +202,11 @@ class Repeater extends Field {
 	deleteGroup( index ) {
 		const { name, source, onDeleteRepeaterRow, onDestroyContext } = this.props;
 
-		// Destroy the context
-		onDestroyContext( `${source}_${name}_${index}` );
-
 		// Remove the repeater row
 		onDeleteRepeaterRow( `${source}_${name}`, index );
+
+		// Destroy the context
+		onDestroyContext( `${source}_${name}_${index}` );
 	}
 
 	cloneGroup( sourceIndex ) {
@@ -225,24 +228,57 @@ class Repeater extends Field {
 	openFullScreen( index, type ) {
 		const { name, source, children, getGroupData, onReplaceContexts } = this.props;
 		const parser = new StoreParser;
+		const group = this.groups.find( group => group.type === type );
+		const prefix = `${source}_${name}_${index}`;
 
-		const domNode = document.createElement( 'div' );
-		document.body.appendChild( domNode );
+		const rawData = getGroupData( prefix, group.children );
+		const values = parser.prepareDataForStore( rawData, group.children, '__' );
 
-		const store = createStore(
-			combineReducers( reducers ),
-			{
-				values: parser.prepareDataForStore( getGroupData( `${source}_${name}_${index}` ), '__' )
-			}
-		);
+		const store = createStore( combineReducers( reducers ), { values } );
+
+		let stateSaved = false;
 
 		const saveState = () => {
 			// Extract the data from the store and convert it to the proper format
-			const extracted = parser.extractDataFromState( store.getState().values, '__' );
-			const converted = parser.prepareDataForStore( extracted, `${source}_${name}_${index}` );
+			const extracted = parser.extractDataFromState( store.getState().values, group.children, '__' );
+			const converted = parser.prepareDataForStore( extracted, group.children, prefix );
+
+			converted[ prefix ] = Object.assign( converted[ prefix ] || {}, {
+				__type:   group.type,
+				__hidden: !! rawData.__hidden
+			});
 
 			onReplaceContexts( converted );
+			stateSaved = true;
+
+			Overlay.remove();
 		}
+
+		const checkForChanges = () => {
+			if( stateSaved || _.isEqual( values, store.getState().values ) ) {
+				return false;
+			} else {
+				return 'Changes have been made. Are you sure you want to go back?';
+			}
+		}
+
+		Overlay.show(
+			<React.Fragment>
+				<Overlay.Title>{ group.title }</Overlay.Title>
+
+				<Overlay.Footer>
+					<Button onClick={ saveState }>Save</Button>
+					<Button onClick={ Overlay.remove }>Close</Button>
+				</Overlay.Footer>
+
+				<Provider store={ store } key={ Math.random() } onLeave={ checkForChanges }>
+					<FullScreenGroup { ...group } source="__">
+					</FullScreenGroup>
+				</Provider>
+			</React.Fragment>
+		);
+
+		return;
 
 		const destroy = () => {
 			ReactDOM.unmountComponentAtNode( domNode );
@@ -252,7 +288,7 @@ class Repeater extends Field {
 		ReactDOM.render(
 			<Provider store={ store }>
 				<FullScreenGroup
-					{ ...this.groups.find( group => group.type === type ) }
+					{ ...group }
 					source="__"
 					onClose={ () => destroy() }
 					onSave={ () => { saveState(); destroy() } }
@@ -273,7 +309,7 @@ class Repeater extends Field {
 		const generic = [];
 
 		React.Children.forEach( children, child => {
-			if( RepeaterGroup === child.type ) {
+			if( Group === child.type ) {
 				groups[ child.props.type ] = child.props.children.map
 					? child.props.children.map( el => el )
 					: React.Children.map( child.props.children, el => el );

@@ -113,7 +113,8 @@
 	}
 
 	textarea,
-	input[type='text'] {
+	input[type='text'],
+	input[type='password'] {
 		display: block;
 		width: 100%;
 	}

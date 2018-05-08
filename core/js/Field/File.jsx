@@ -1,6 +1,8 @@
 import React from 'react';
 import Field from './../Field.jsx';
 import Button from './../Button.jsx';
+import Overlay from './../Overlay.jsx';
+import Popup from './File/Popup.jsx';
 
 export default class File extends Field {
 	static defaultProps = Object.assign({
@@ -28,9 +30,11 @@ export default class File extends Field {
 		const { cacheValue, getContext, source, name } = this.props;
 		const context = getContext( source );
 
-		context[ name + '_prepared' ].forEach( item => {
-			cacheValue( 'attachment-' + item.id, item );
-		});
+		if( context[ name + '_prepared' ] ) {
+			context[ name + '_prepared' ].forEach( item => {
+				cacheValue( 'attachment-' + item.id, item );
+			});
+		}
 	}
 
 	renderInput() {
@@ -136,22 +140,14 @@ export default class File extends Field {
 			this.changeSelection( frame );
 		});
 
-		// Open the popup
-		frame.modal.open();
-
-		// @todo: Restore the overlay
-		// var overlay = UltimateFields.Overlay.show({
-		// 	view: frame.modal,
-		// 	title: 'Select file',
-		// 	buttons: [],
-		// 	media: true
-		// });
-
-		frame.open();
-
-		frame.modal.on( 'close', function() {
-			// overlay.removeScreen();
-		})
+		Overlay.show(
+			<React.Fragment>
+				<Overlay.Title>Select file</Overlay.Title>
+				<Popup
+					frame={ frame }
+				/>
+			</React.Fragment>
+		);
 	}
 
 	/**

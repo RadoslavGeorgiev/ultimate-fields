@@ -8,7 +8,9 @@ import Tab from './Tab.jsx';
 import ConditionalTabWrapper from './ConditionalTabWrapper.jsx';
 import TabButton from './TabButton.jsx';
 
-const mapStateToProps = ( { values: state, cache, validation }, ownProps ) => ({
+var cache = {};
+
+const mapStateToProps = ( { values: state, validation }, ownProps ) => ({
 	// Locate the values for the current source
 	values:         state[ ownProps.source || '__' ],
 
@@ -30,7 +32,8 @@ const mapDispatchToProps = dispatch => ({
 	onChange: ( name, value, context ) => dispatch( updateValue( name, value, context ) ),
 
 	// Allows values to be cached globally
-	cacheValue: ( name, value )        => dispatch( cacheValue( name, value ) )
+	// cacheValue: ( name, value )        => dispatch( cacheValue( name, value ) )
+	cacheValue: ( name, value )        => cache[ name ] = value
 });
 
 /**
@@ -40,7 +43,9 @@ const mapDispatchToProps = dispatch => ({
 class Container extends React.Component {
 	static defaultProps = {
 		layout: 'grid',
-		description_position: 'input'
+		description_position: 'input',
+		display_tabs: true,
+		display_tabs_wrapper: false
 	}
 
 	/**
@@ -49,7 +54,9 @@ class Container extends React.Component {
 	 * @return {React.Component} A fields DIV.
 	 */
 	render() {
-		const { children, layout, className } = this.props;
+		const { children, layout, display_tabs, display_tabs_wrapper, className } = this.props;
+
+		const tabs = this.getTabButtons();
 
 		const cssClasses = [
 			'uf-fields',
@@ -57,12 +64,25 @@ class Container extends React.Component {
 			className
 		].filter( className => !! className ).join( ' ' ); // Remove empty classes
 
-		return (
-			<div className={ cssClasses }>
-				{ this.getTabButtons() }
+		if( display_tabs_wrapper && display_tabs && tabs ) {
+
+			// A special structure for overlays
+			return <div className="uf-fields-and-tabs">
+				{ tabs }
+				<div className={ cssClasses }>{
+					React.Children.map( children, this.prepareField.bind( this ) )
+				}</div>
+			</div>
+
+		} else {
+
+			// Generic tabs within fields
+			return <div className={ cssClasses }>
+				{ tabs ? tabs : null }
 				{ React.Children.map( children, this.prepareField.bind( this ) ) }
 			</div>
-		);
+			
+		}
 	}
 
 	/**

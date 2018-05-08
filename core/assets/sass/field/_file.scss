@@ -117,7 +117,15 @@
 	overflow: visible;
 }
 
-.uf-overlay-body {
+.uf-overlay__media {
+	&, & > div {
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	}
+
 	.media-modal-backdrop {
 		display: none;
 	}
