@@ -19,6 +19,12 @@ export default class StoreParser {
 		const fields = this.constructor.getAllFields( children );
 		const stores = {};
 
+		if( '__' === source && ( '__tab' in data ) ) {
+			stores[ source ] = {
+				__tab: data.__tab
+			}
+		}
+
 		fields.forEach( field => {
 			const type = getFieldType( field );
 
@@ -36,6 +42,10 @@ export default class StoreParser {
 
 	extractDataFromState( state, children, source ) {
 		const data = {};
+
+		if( state[ source ] && state[ source ].__tab ) {
+			data.__tab = state[ source ].__tab;
+		}
 
 		this.constructor.getAllFields( children ).forEach( field => {
 			const type = getFieldType( field );

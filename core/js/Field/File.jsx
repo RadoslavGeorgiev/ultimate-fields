@@ -13,8 +13,8 @@ export default class File extends Field {
 		const { name } = field.props;
 
 		const stores = Field.getStores( type, field, data, source );
-		const prepared = name + '_prepared';
 
+		const prepared = name + '_prepared';
 		if( prepared in data ) {
 			stores[ source ][ prepared ] = data[ prepared ];
 		}
@@ -55,11 +55,17 @@ export default class File extends Field {
 			return null;
 		}
 
-		const thumb = attachment.sizes[ preview_size ];
+		let thumb;
+		if( attachment.sizes ) {
+			const image = attachment.sizes[ preview_size ];
+			thumb = <img src={ image.url } alt="" width={ image.width } height={ image.height } />
+		} else {
+			thumb = <img src={ attachment.icon } alt="" className="icon" />
+		}
 
 		return <div className="uf-file">
 			<span className="uf-file__preview">
-				<img src={ thumb.url } alt="" width={ thumb.width } height={ thumb.height } />
+				{ thumb }
 			</span>
 
 			<span className="uf-file__buttons">
@@ -200,5 +206,9 @@ export default class File extends Field {
 			// Save the value
 			onValueChanged( name, attachment.get( 'id' ) );
 		}
+	}
+
+	static prepareValue( value, field ) {
+		return value ? parseInt( value ) : null;
 	}
 }

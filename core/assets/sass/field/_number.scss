@@ -23,7 +23,7 @@
 		border-radius: 50%;
 	}
 
-	&-indicator {
+	&__indicator {
 		float: left;
 		width: 50px;
 		border: 1px solid #ccc;
@@ -31,7 +31,6 @@
 		height: 20px;
 		line-height: 20px;
 		text-align: center;
-		margin-top: -9px;
 	}
 }
 

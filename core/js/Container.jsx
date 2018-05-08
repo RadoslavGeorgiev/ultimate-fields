@@ -81,7 +81,7 @@ class Container extends React.Component {
 				{ tabs ? tabs : null }
 				{ React.Children.map( children, this.prepareField.bind( this ) ) }
 			</div>
-			
+
 		}
 	}
 

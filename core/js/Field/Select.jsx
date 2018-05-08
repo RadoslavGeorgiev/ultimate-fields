@@ -29,14 +29,14 @@ export default class Select extends Field {
 			<option key={ key } value={ key }>{ label }</option>
 		);
 
-		return <select
-			id={ this.id }
-			value={ this.getValue() }
-			children={ children }
-			onChange={ e => onValueChanged( name, e.target.value ) }
-			className="field__input field__input--select"
-			ref="input"
-		/>
+		return React.createElement( 'select', {
+			id:        this.id,
+			value:     this.getValue(),
+			children:  children,
+			className: 'field__input field__input--select',
+			ref:       'input',
+			onChange:  e => onValueChanged( name, e.target.value )
+		});
 	}
 
 	/**
@@ -86,10 +86,15 @@ export default class Select extends Field {
 		return Select.getOptions( this.props );
 	}
 
-	static getDefaultValue( props ) {
-		let value = null;
+	static prepareValue( value, field ) {
+		const options = Select.getOptions( field.props, true );
 
-		map( Select.getOptions( props ), ( label, key ) => {
+		if( value in options ) {
+			return value;
+		}
+
+		value = null;
+		map( options, ( label, key ) => {
 			if( null === value ) {
 				value = key;
 			}

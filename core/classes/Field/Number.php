@@ -48,7 +48,9 @@ class Number extends Field {
 	 */
 	public function enqueue_scripts() {
 		if( $this->slider_enabled ) {
-			wp_enqueue_script( 'jquery-ui-slider' );
+			if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
+		        $script->deps[] = 'jquery-ui-slider';
+			}
 		}
 
 		wp_enqueue_script( 'uf-field-number' );

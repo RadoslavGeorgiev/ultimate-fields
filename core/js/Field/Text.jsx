@@ -18,10 +18,6 @@ export default class Text extends Field {
 	wrapInput( input ) {
 		const { prefix, suffix } = this.props;
 
-		if( ! prefix && ! suffix ) {
-			return input;
-		}
-
 		return <div className="uf-basic-input">
 			{ prefix && <span className="uf-field-prefix" children={ prefix } /> }
 			{ input }

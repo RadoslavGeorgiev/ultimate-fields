@@ -51,29 +51,19 @@ export default class WYSIWYG extends Field {
 
 		// Setup TinyMCE if available
 		if( 'undefined' != typeof tinymce ) {
-			tinyMCEPreInit.mceInit[ id ] = $.extend( {}, mceInit );
-			tinyMCEPreInit.mceInit[ id ].setup = editor => {
-				editor.on( 'change', function( e ) {
-					var value = editor.getContent();
+			tinyMCEPreInit.mceInit[ id ] = Object.assign( {}, mceInit );
 
-					// Fix empty paragraphs before un-wpautop
-					value = value.replace( /<p>(?:<br ?\/?>|\u00a0|\uFEFF| )*<\/p>/g, '<p>&nbsp;</p>' );
-
-					// Remove paragraphs
-					value = switchEditors._wp_Nop( value );
-
-					onValueChanged( name, value );
-				});
-			}
+			// Add a setup callback, which will start listening for changes
+			tinyMCEPreInit.mceInit[ id ].setup = editor => this.setupEditor( editor );
 
 			tinymce.init( tinyMCEPreInit.mceInit[ id ] );
 		}
 
 		// Setup quicktags
-		var qtInit = $.extend( {}, tinyMCEPreInit.qtInit[ 'uf_dummy_editor_id' ], {
+		tinyMCEPreInit.qtInit[ id ] = Object.assign( {}, tinyMCEPreInit.qtInit.uf_dummy_editor_id, {
 			id: id
 		});
-		tinyMCEPreInit.qtInit[ id ] = $.extend( {}, qtInit );
+
 		quicktags( tinyMCEPreInit.qtInit[ id ] );
 
 		// Init QuickTags
@@ -83,5 +73,23 @@ export default class WYSIWYG extends Field {
 		if ( ! window.wpActiveEditor ) {
 			window.wpActiveEditor = this.id;
 		}
+	}
+
+	setupEditor( editor ) {
+		editor.on( 'change', e => this.onEditorChanged( e, editor ) );
+	}
+
+	onEditorChanged( e, editor ) {
+		const { name, onValueChanged } = this.props;
+
+		let value = editor.getContent();
+
+		// Fix empty paragraphs before un-wpautop
+		value = value.replace( /<p>(?:<br ?\/?>|\u00a0|\uFEFF| )*<\/p>/g, '<p>&nbsp;</p>' );
+
+		// Remove paragraphs
+		value = switchEditors._wp_Nop( value );
+
+		onValueChanged( name, value );
 	}
 }

@@ -62,7 +62,10 @@ class Multiselect extends Select {
 		if( 'checkbox' == $this->input_type ) {
 			Template::add( 'multiselect-checkboxes', 'field/checkboxes' );
 		} else {
-			wp_enqueue_script( 'uf-select2' );
+			if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
+		        $script->deps[] = 'uf-select2';
+			}
+			
 			wp_enqueue_style( 'uf-select2-css' );
 		}
 

@@ -29,7 +29,7 @@
 	"scripts": {
 		"build": "gulp",
 		"watch": "gulp watch --mode=development",
-		"build-react": "webpack --mode development",
+		"build-react": "webpack --mode production",
 		"watch-react": "webpack --watch --mode development"
 	},
 	"repository": {
