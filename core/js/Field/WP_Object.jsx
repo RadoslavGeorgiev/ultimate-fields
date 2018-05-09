@@ -64,13 +64,14 @@ export default class WP_Object extends Field {
 	}
 
 	openChooser() {
-		const { name, nonce, multiple, value, cacheValue } = this.props;
+		const { name, nonce, multiple, cacheValue } = this.props;
 
 		this.setState({
 			loading: true
 		});
 
 		let filters = false, mode = false, page = false;
+		const value = this.getValue();
 
 		const body = {
 			uf_action: 'get_objects_' + name,
@@ -98,12 +99,12 @@ export default class WP_Object extends Field {
 	}
 
 	getChooser() {
-		const { name, show_filters, onValueChanged } = this.props;
+		const { show_filters, multiple, max } = this.props;
 		const { filters, items } = this.state.data;
 
 		return React.createElement( Chooser, {
-			show_filters, filters, items,
-			preselected: this.getValue(),
+			show_filters, filters, items, multiple, max,
+			preselected: multiple ? this.getValue() : [ this.getValue() ],
 			onClose: () => {
 				this.setState({
 					chooserOpen: false
@@ -114,19 +115,26 @@ export default class WP_Object extends Field {
 					chooserOpen: false
 				});
 
-				onValueChanged( name, selected );
+				this.updateItem( selected );
 			}
 		});
 	}
 
+	updateItem( item ) {
+		const { name, onValueChanged } = this.props;
+		onValueChanged( name, item );
+	}
+
 	getPreview( item ) {
+		const { loading, chooserOpen } = this.state;
+
 		return <div className="uf-object">
 			<Item { ...item } />
 
 			<div className="uf-object__buttons">
 				<Button
 					children=""
-					icon="dashicons-arrow-down"
+					icon={ 'dashicons-arrow-' + ( chooserOpen ? 'up' : 'down' ) }
 					type="secondary"
 					onClick={ () => this.toggleChooser() }
 				/>
@@ -138,7 +146,10 @@ export default class WP_Object extends Field {
 					onClick={ () => this.clearValue() }
 				/>
 
-				<span className="spinner uf-object__spinner" />
+				{ loading
+					 ? <span className="spinner is-active uf-object__spinner" />
+					 : <span className="spinner uf-object__spinner" />
+				}
 			</div>
 		</div>
 	}
@@ -154,20 +165,6 @@ export default class WP_Object extends Field {
 			} else {
 				this.openChooser();
 			}
-		}
-	}
-
-	adadsa() {
-		// @todo
-		if( that.chooser ) {
-			that.chooser.remove();
-		} else {
-			$spinner.addClass( 'is-active' );
-
-			that.choose(function() {
-				$spinner.removeClass( 'is-active' );
-				toggleButton.model.set( 'icon', 'dashicons-arrow-up' );
-			});
 		}
 	}
 

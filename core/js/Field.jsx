@@ -30,9 +30,6 @@ export default class Field extends React.Component {
 	getValue() {
 		const { value } = this.props;
 		// return null === value ? this.getDefaultValue() : value;
-		if( null === value ) {
-			console.log('Something is wrong with ' + this.props.name);
-		}
 		return value;
 	}
 

@@ -170,7 +170,7 @@ class Options_Page extends Location {
 
 		if( class_exists( Field\Number::class ) ) {
 			$position_field = Field::create( 'number', 'menu_position', __( 'Menu Position', 'ultimate-fields' ) )
-				->enable_slider( 1, 200 );
+				->enable_slider( 0, 200 );
 		} else {
 			$position_field = Field::create( 'text', 'menu_position', __( 'Menu Position', 'ultimate-fields' ) );
 		}

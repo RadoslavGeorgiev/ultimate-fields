@@ -206,9 +206,10 @@ add_action( 'uf.init', function() {
 			Field::create( 'tab', 'demo_relational_fields', 'Relational Fields' )
 				->set_icon( 'dashicons-randomize' ),
 			Field::create( 'wp_object', 'demo_object_field', 'Object Field' ),
-			// Field::create( 'wp_objects', 'demo_objects_field', 'Objects Field' )
-			// 	->set_max( 5 ),
-			// Field::create( 'link', 'demo_link_field', 'Link Field' ),
+			Field::create( 'wp_objects', 'demo_objects_field', 'Objects Field' )
+				->set_max( 2 ),
+			Field::create( 'link', 'demo_link_field', 'Link Field' )
+				->required(),
 		]);
 });
 

@@ -13,9 +13,12 @@ import Select from './Field/Select.jsx';
 import Multiselect from './Field/Multiselect.jsx';
 import Image_Select from './Field/Image_Select.jsx';
 
+import WP_Object from './Field/WP_Object.jsx';
+import WP_Objects from './Field/WP_Objects.jsx';
+import Link from './Field/Link.jsx';
+
 import File from './Field/File.jsx';
 import Image from './Field/Image.jsx';
-import WP_Object from './Field/WP_Object.jsx';
 import Repeater from './Field/Repeater.jsx';
 import Complex from './Field/Complex.jsx';
 
@@ -44,9 +47,12 @@ export default function getFieldType( field ) {
 		case 'file':        fieldClass = File; break;
 		case 'image':       fieldClass = Image; break;
 
+		case 'wp_object':    fieldClass = WP_Object; break;
+		case 'wp_objects':   fieldClass = WP_Objects; break;
+		case 'link':         fieldClass = Link; break;
+
 		case 'repeater':    fieldClass = Repeater; break;
 		case 'complex':     fieldClass = Complex; break;
-		case 'wp_object':   fieldClass = WP_Object; break;
 		default:         {
 			console.warn( 'Unknown field type: ' + field.props.type );
 			fieldClass = Text;

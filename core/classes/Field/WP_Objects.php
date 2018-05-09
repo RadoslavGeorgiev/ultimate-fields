@@ -96,7 +96,9 @@ class WP_Objects extends WP_Object {
 		parent::enqueue_scripts();
 
 		# Add objectS-specific JS
-		wp_enqueue_script( 'uf-field-wp-objects' );
+		if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
+			$script->deps[] = 'jquery-ui-sortable';
+		}
 
 		# Add templates
 		Template::add( 'objects-preview', 'field/objects-preview' );

@@ -5,7 +5,7 @@ import Item from './Item.jsx';
 
 export default class Chooser extends React.Component {
 	state = {
-		selected: this.props.preselected || false
+		selected: this.props.preselected || []
 	}
 
 	render() {
@@ -33,7 +33,7 @@ export default class Chooser extends React.Component {
 				<div className="uf-chooser__list">
 					{ items.map( item => <Item
 						key={ item.id } { ...item }
-						selected={ item.id == selected }
+						selected={ -1 != selected.indexOf( item.id ) }
 						onSelected={ this.selectItem.bind( this ) }
 						disableClicks={ true }
 					/> ) }
@@ -41,7 +41,7 @@ export default class Chooser extends React.Component {
 
 				<div className="uf-chooser__footer">
 					<Button
-						disabled={ ! selected }
+						disabled={ ! selected.length }
 						icon="dashicons-yes"
 						onClick={ () => onSelect( selected ) }
 						children={ uf_l10n['select'] }
@@ -70,8 +70,28 @@ export default class Chooser extends React.Component {
 	}
 
 	selectItem( id ) {
-		this.setState({
-			selected: id
-		});
+		const { multiple, max } = this.props;
+		const { selected } = this.state;
+		const state = {};
+
+		if( multiple ) {
+			if( -1 === selected.indexOf( id ) ) {
+				// adding
+
+				if( max && selected.length == max ) {
+					alert( 'You have reached the maximum amount of items.' );
+					return;
+				}
+
+				state.selected = selected.concat([ id ]);
+			} else {
+				// removing
+				state.selected = selected.filter( item => id !== item );
+			}
+		} else {
+			state.selected = id;
+		}
+
+		this.setState( state );
 	}
 }

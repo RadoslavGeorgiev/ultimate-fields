@@ -270,8 +270,8 @@ class WP_Object extends Field {
 			? 'initial'
 			: 'search';
 
-		$selected = isset( $_POST[ 'selected' ] ) && is_array( $_POST['selected' ] )
-			? $_POST[ 'selected' ]
+		$selected = isset( $_POST['selected'] )
+			? ( is_array( $_POST['selected'] ) ? $_POST['selected'] : explode( ',', $_POST['selected'] ) )
 			: array();
 
 		$filters = array(

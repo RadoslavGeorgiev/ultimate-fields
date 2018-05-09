@@ -21,6 +21,7 @@ export default class Item extends React.Component {
 		if( disableClicks ) {
 			e.preventDefault();
 			e.stopPropagation();
+			e.target.blur();
 			onSelected( id );
 		}
 	}

@@ -25,7 +25,8 @@ export default class Complex extends Field {
 
 		return React.createElement( Container, {
 			...group,
-			source: source + '_' + name
+			source: source + '_' + name,
+			className: 'uf-complex-fields'
 		});
 	}
 }

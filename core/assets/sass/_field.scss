@@ -183,7 +183,13 @@
 		width: 100%;
 		min-width: 150px;
 		max-width: 100%;
+
 	}
+
+    &--rows &--grid {
+        // @todo
+        padding: 0;
+    }
 
 	&--grid &__details {
 		padding-bottom: 6px;

@@ -19,7 +19,8 @@ class FieldWrapper extends React.Component {
 			description,
 			description_position,
 			invalidFieldMessage,
-			layout
+			layout,
+			type
 		} = this.props;
 
 		const required = 'required' in this.props;
@@ -39,7 +40,7 @@ class FieldWrapper extends React.Component {
 				{ 'label' == description_position && descriptionEl }
 			</div>
 
-			<div className="uf-field__inputs">
+			<div className={ 'uf-field__inputs uf-field--' + type.toLowerCase() }>
 				{ children }
 
 				{
