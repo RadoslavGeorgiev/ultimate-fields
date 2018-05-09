@@ -26,7 +26,9 @@ export default class Select extends Field {
 		const { name, onValueChanged } = this.props;
 
 		const children = map( options, ( label, key ) =>
-			<option key={ key } value={ key }>{ label }</option>
+			'object' === typeof label
+				? this.renderGroup( key, label )
+				: this.renderOption( key, label )
 		);
 
 		return React.createElement( 'select', {
@@ -37,6 +39,16 @@ export default class Select extends Field {
 			ref:       'input',
 			onChange:  e => onValueChanged( name, e.target.value )
 		});
+	}
+
+	renderOption( key, label ) {
+		return <option key={ key } value={ key }>{ label }</option>
+	}
+
+	renderGroup( label, options ) {
+		return <optgroup label={ label } key={label}>
+			{ map( options, ( label, key ) => this.renderOption( key, label ) ) }
+		</optgroup>
 	}
 
 	/**

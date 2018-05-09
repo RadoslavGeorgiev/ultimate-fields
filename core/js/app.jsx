@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import getController from './Controller/getController.js';
+import UI from './UI/UI.jsx';
 
 const UltimateFields = window.UltimateFields = {
 	initializeContainerById( id ) {
@@ -10,5 +11,9 @@ const UltimateFields = window.UltimateFields = {
 		const controller = getController( type );
 
 		controller.init({ element, settings, data });
+	},
+
+	startFieldsBox() {
+		new UI( document.querySelector('.uf-fields-box-wrapper') );
 	}
 }
