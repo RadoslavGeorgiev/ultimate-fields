@@ -193,6 +193,18 @@
 	}
 }
 
+.uf-preview-loader {
+	padding: 6px 10px;
+	text-align: center;
+
+	&__icon {
+		float: none;
+		display: inline-block;
+		vertical-align: middle;
+		margin-top: 0;
+	}
+}
+
 .uf-fields-field {
 	border: 1px solid #ccc;
 

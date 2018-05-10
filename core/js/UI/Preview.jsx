@@ -1,5 +1,6 @@
 import React from 'react';
 import PreviewButton from './PreviewButton.jsx';
+import TextField from './../Field/Text.jsx';
 
 export default class Preview extends React.Component {
 	render() {
@@ -63,5 +64,24 @@ export default class Preview extends React.Component {
 	}
 
 	onDelete() {
+	}
+
+	static getComparators() {
+		return [
+			{
+				compare: 'NOT_NULL',
+				label:   'equals true',
+				operand: false
+			},
+			{
+				compare: 'NULL',
+				label:   'equals false',
+				operand: false
+			}
+		]
+	}
+
+	static getOperand() {
+		return <TextField useWrapper={ false } />
 	}
 }

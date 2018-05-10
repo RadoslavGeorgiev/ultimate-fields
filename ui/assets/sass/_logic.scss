@@ -112,16 +112,19 @@
 }
 
 .uf-rule {
-	overflow: hidden;
-	position: relative;
+	display: flex;
+	align-items: center;
+
+	&__element {
+		margin-right: 3px;
+
+		p {
+			margin: 0;
+		}
+	}
 
 	& + & {
 		margin-top: 4px;
-	}
-
-	&__element {
-		display: inline-block;
-		vertical-align: top;
 	}
 
 	.input, select {

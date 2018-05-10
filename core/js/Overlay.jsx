@@ -117,6 +117,11 @@ export default class Overlay extends React.Component {
 
         layers.pop();
 
+		const callback = Overlay.currentOverlay.refs.body.props.onRemove;
+		if( 'function' == typeof callback ) {
+			callback();
+		}
+
         if( layers.length ) {
             Overlay.render();
         } else {

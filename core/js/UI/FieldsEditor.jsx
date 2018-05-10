@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import _ from 'lodash';
 import Overlay from './../Overlay.jsx';
 import Button from './../Button.jsx';
 import Preview from './Preview.jsx';
@@ -9,6 +10,7 @@ import StoreParser from './../StoreParser.js';
 import * as reducers from './../reducers.js';
 
 import TextPreview from './Preview/Text.jsx';
+import SelectPreview from './Preview/Select.jsx';
 
 export default class FieldsEditor extends React.Component {
 	static contexts = [];
@@ -26,14 +28,19 @@ export default class FieldsEditor extends React.Component {
         </div>;
     }
 
-	getFieldPreview( field ) {
+	static getFieldPreviewClass( field ) {
 		let previewClass = Preview;
 
 		switch( field.type ) {
-			case 'Text':
-				previewClass = TextPreview;
-				break;
+			case 'Text': previewClass = TextPreview; break;
+			case 'Select': previewClass = SelectPreview; break;
 		}
+
+		return previewClass;
+	}
+
+	getFieldPreview( field ) {
+		const previewClass = FieldsEditor.getFieldPreviewClass( field );
 
 		return React.createElement( previewClass, {
 			field,
@@ -46,6 +53,18 @@ export default class FieldsEditor extends React.Component {
 		});
 	}
 
+	componentDidMount() {
+		// @todo: Cleanup
+		return;
+		setTimeout(()=>{
+			const field = Object.assign({}, this.props.fields[1], {
+				__tab: 'conditional_logic_tab'
+			})
+
+			this.onEdit( field );
+		}, 100 )
+	}
+
 	openOverlay( field, args ) {
 		const editorFields = UltimateFields.ui.getFields();
 		const parser = new StoreParser;
@@ -53,24 +72,30 @@ export default class FieldsEditor extends React.Component {
 
 		this.prepareContexts( field );
 
-		const store = createStore(
-			combineReducers( reducers ),
-			{
-				values: parser.prepareDataForStore( field, editorFields, '__' )
-			}
-		);
+		const initialValues = parser.prepareDataForStore( field, editorFields, '__' );
+		const store = createStore( combineReducers( reducers ), {
+			values: initialValues
+		});
 
 		const unsubscribe = store.subscribe( () => {
 		});
 
-		const closeOverlay = () => {
+		const cleanup = () => {
 			unsubscribe();
 			FieldsEditor.contexts.pop();
+		}
+
+		const closeOverlay = () => {
+			cleanup();
 			Overlay.remove();
 		}
 
+		const getExtractedData = () => {
+			return parser.extractDataFromState( store.getState().values, editorFields, '__' )
+		};
+
 		const onSave = () => {
-			const extracted = parser.extractDataFromState( store.getState().values, editorFields, '__' );
+			const extracted = getExtractedData();
 			args.onSave( extracted );
 			closeOverlay();
 		}
@@ -84,7 +109,7 @@ export default class FieldsEditor extends React.Component {
 					<Button onClick={ closeOverlay }>Close</Button>
 				</Overlay.Footer>
 
-				<Provider store={ store }>
+				<Provider store={ store } onRemove={ cleanup }>
 					<Container children={ editorFields } source="__" layout="rows" description_position="label" className="uf-fields--boxed" display_tabs_wrapper={ true } />
 				</Provider>
 			</React.Fragment>
@@ -94,7 +119,7 @@ export default class FieldsEditor extends React.Component {
 	prepareContexts( field ) {
 		const contexts = FieldsEditor.contexts;
 		const { fields } = this.props;
-		const context = { fields }
+		const context = { fields, field }
 
 		if( contexts.length ) {
 			context.name = contexts[ contexts.length - 1 ].field.label;

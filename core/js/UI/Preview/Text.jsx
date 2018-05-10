@@ -11,4 +11,29 @@ export default class Text extends Preview {
 			default_value: default_value_text
 		});
 	}
+
+	static getComparators() {
+		return [
+			{
+				compare: 'NOT_NULL',
+				label:   'equals true',
+				operand: false
+			},
+			{
+				compare: 'NULL',
+				label:   'equals false',
+				operand: false
+			},
+			{
+				compare: '=',
+				label:   'is equal to',
+				operand: true
+			},
+			{
+				compare: '!=',
+				label:   'is not equal to',
+				operand: true
+			}
+		];
+	}
 }

@@ -2,12 +2,19 @@ import React from 'react';
 import Field from './../Field.jsx';
 import Button from './../Button.jsx';
 import Group from './ConditionalLogic/Group.jsx';
+import Rule from './ConditionalLogic/Rule.jsx';
 
 // @todo: Move to the UI
 
 export default class ConditionalLogic extends Field {
 	renderInput() {
 		const value = this.getValue();
+
+		Rule.clearCache();
+
+		if( ! Rule.getSelectors().length ) {
+			return <p>There are no fields, which can be used for conditional logic right now.</p>
+		}
 
 		return <div className="uf-logic">
 			{ value.length
@@ -24,7 +31,10 @@ export default class ConditionalLogic extends Field {
 	}
 
 	renderGroup( group, i ) {
+		const { rules } = group;
+
 		return React.createElement( Group, {
+			rules,
 			key: i,
 			onUpdate: updated => this.updateGroup( group, updated ),
 			onDelete: () => this.removeGroup( group )
@@ -47,13 +57,19 @@ export default class ConditionalLogic extends Field {
 	}
 
 	addGroup() {
-		this.updateValue( this.getValue().concat( [ [] ] ) );
+		const group = {
+			rules: [ Rule.getDefaultRule() ]
+		}
+
+		this.updateValue( this.getValue().concat( [ group ] ) );
 	}
 
 	updateGroup( group, updated ) {
-		this.updateValue( this.getValue().map( existing => {
+		const newValue = this.getValue().map( existing => {
 			return existing === group ? updated : existing
-		}));
+		});
+
+		this.updateValue( newValue );
 	}
 
 	removeGroup( group ) {

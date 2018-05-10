@@ -167,9 +167,6 @@ class UI {
 			return;
 		}
 
-		// @todo: Remove
-		return;
-
 		$containers = get_posts(array(
 			'post_type'      => Post_Type::instance()->get_slug(),
 			'posts_per_page' => -1,

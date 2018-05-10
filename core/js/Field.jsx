@@ -7,9 +7,10 @@ let lastFieldID = 1;
 const getFieldID = () => ++lastFieldID;
 
 export default class Field extends React.Component {
-	defaultProps: {
+	static defaultProps = {
 		description: '',
 		width: 100,
+		useWrapper: true,
 		useConnectedWrapper: true
 	}
 
@@ -18,12 +19,18 @@ export default class Field extends React.Component {
 	}
 
 	render() {
+		const { useWrapper, useConnectedWrapper } = this.props;
+
+		if( ! useWrapper ) {
+			return this.renderInput();
+		}
+
 		const wrapperProps = {
 			...this.props,
 			id: this.id
 		}
 
-		const WrapperClass = this.props.useConnectedWrapper
+		const WrapperClass = useConnectedWrapper
 			? ConnectedFieldWrapper
 			: FieldWrapper;
 
