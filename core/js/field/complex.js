@@ -71,8 +71,29 @@
 
 	// Define the view for the complex
 	complex.View = field.View.extend({
+		initialize: function() {
+			var that = this;
+
+			// Do the standard initialization
+			field.View.prototype.initialize.apply( this, arguments );
+
+			// Listen for replacements
+			this.model.datastore.on( 'value-replaced', function( name ) {
+				if( name != that.model.get( 'name' ) ) {
+					return;
+				}
+
+				that.model.get( 'groupModel' ).datastore.set( that.model.getValue() );
+				that.render();
+				$( window ).trigger( 'resize' );
+			})
+		},
+
 		render: function() {
 			var that = this, model, datastore, view;
+
+			// Cleanup first
+			this.$el.empty();
 
 			// Create a group model
 			model = this.model.get( 'groupModel' );
