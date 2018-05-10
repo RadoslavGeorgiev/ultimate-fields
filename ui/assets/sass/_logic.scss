@@ -1,133 +1,12 @@
 .uf-logic {
 	overflow: hidden;
 
-	&-group {
-		float: left;
-		background: #f8f8f8;
-		border: 1px solid #d7d7d7;
-		clear: left;
-		position: relative;
-	}
-
-	&-group + &-group {
-		margin-top: 40px;
-
-		&:before {
-			content: 'or';
-			position: absolute;
-			top: -36px;
-			left: 50%;
-			margin-left: -15px;
-			width: 30px;
-			height: 30px;
-			background: #e0e0e0;
-			text-align: center;
-			line-height: 30px;
-			font-size: 11px;
-			border-radius: 50%;
-		}
-	}
-
-	&-group {
-		&-body {
-			padding: 7px;
-		}
-
-		&-rules {
-			position: relative;
-			padding-left: 40px;
-			margin-bottom: 8px;
-		}
-
-		&-and {
-			position: absolute;
-			left: 0;
-			border-radius: 50%;
-			border: 1px solid #ccc;
-			background: #f8f8f8;
-			z-index: 2;
-			top: 50%;
-			margin-top: -16px;
-
-			strong {
-				display: block;
-				font-weight: normal;
-				line-height: 30px;
-				width: 30px;
-				text-align: center;
-				font-size: 11px;
-			}
-		}
-
-		&-add-rule {
-			&, .wp-core-ui & {
-				margin-left: 41px;
-			}
-		}
-
-		&-footer {
-			text-align: center;
-			background: #eae9e9;
-			border-top: 1px solid #d7d7d7;
-			margin-top: 5px;
-			padding: 7px;
-		}
-
-		&-single-rule {
-			.uf-logic-group-and {
-				display: none;
-			}
-
-			.uf-logic-group-rules {
-				padding-left: 0;
-			}
-
-			.uf-logic-group-add-rule {
-				&, .wp-core-ui & {
-					margin-left: 0;
-				}
-			}
-		}
-	}
-
-
-	&-add-group {
-		float: left;
-		clear: both;
-	}
-
-
-	&-rule {
-		overflow: hidden;
-		position: relative;
-
-		& + & {
-			margin-top: 4px;
-		}
-
-		&-element {
-			display: inline-block;
-			vertical-align: top;
-		}
-
-		.input, select {
-			display: inline-block;
-			width: auto;
-			vertical-align: top;
-		}
-
-		&-remove {
-			display: inline-block;
-		}
-	}
-
-	&-groups {
-		display: none;
+	&__groups {
 		margin-bottom: 13px;
 		overflow: hidden;
 	}
 
-	&-message {
+	&__message {
 		display: block;
 		margin-bottom: 13px;
 		background: #eee;
@@ -140,11 +19,118 @@
 		}
 	}
 
-	.has-groups &-groups {
-		display: block;
+	&__add-group {
+		float: left;
+		clear: both;
+	}
+}
+
+.uf-rules {
+	float: left;
+	background: #f8f8f8;
+	border: 1px solid #d7d7d7;
+	clear: left;
+	position: relative;
+
+	& + & {
+		margin-top: 40px;
 	}
 
-	.has-groups &-message {
+	& + &:before {
+		content: 'or';
+		position: absolute;
+		top: -36px;
+		left: 50%;
+		margin-left: -15px;
+		width: 30px;
+		height: 30px;
+		background: #e0e0e0;
+		text-align: center;
+		line-height: 30px;
+		font-size: 11px;
+		border-radius: 50%;
+	}
+
+	&__body {
+		padding: 7px;
+	}
+
+	&__rules {
+		position: relative;
+		padding-left: 40px;
+		margin-bottom: 8px;
+	}
+
+	&__and {
+		position: absolute;
+		left: 0;
+		border-radius: 50%;
+		border: 1px solid #ccc;
+		background: #f8f8f8;
+		z-index: 2;
+		top: 50%;
+		margin-top: -16px;
+
+		strong {
+			display: block;
+			font-weight: normal;
+			line-height: 30px;
+			width: 30px;
+			text-align: center;
+			font-size: 11px;
+		}
+	}
+
+	&__add {
+		&, .wp-core-ui & {
+			margin-left: 41px;
+		}
+	}
+
+	&__footer {
+		text-align: center;
+		background: #eae9e9;
+		border-top: 1px solid #d7d7d7;
+		margin-top: 5px;
+		padding: 7px;
+	}
+
+
+	&--single &__and {
 		display: none;
+	}
+
+	&--single &__rules {
+		padding-left: 0;
+	}
+
+	&--single &__add-rule {
+		&, .wp-core-ui & {
+			margin-left: 0;
+		}
+	}
+}
+
+.uf-rule {
+	overflow: hidden;
+	position: relative;
+
+	& + & {
+		margin-top: 4px;
+	}
+
+	&__element {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.input, select {
+		display: inline-block;
+		width: auto;
+		vertical-align: top;
+	}
+
+	&__remove {
+		display: inline-block;
 	}
 }

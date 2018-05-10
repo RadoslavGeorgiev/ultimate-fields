@@ -22,6 +22,8 @@ import Image from './Field/Image.jsx';
 import Repeater from './Field/Repeater.jsx';
 import Complex from './Field/Complex.jsx';
 
+import ConditionalLogic from './Field/ConditionalLogic.jsx';
+
 export default function getFieldType( field ) {
 	let fieldClass;
 
@@ -53,6 +55,10 @@ export default function getFieldType( field ) {
 
 		case 'repeater':    fieldClass = Repeater; break;
 		case 'complex':     fieldClass = Complex; break;
+
+		// ui
+		case 'conditional_logic': fieldClass = ConditionalLogic; break;
+		
 		default:         {
 			console.warn( 'Unknown field type: ' + field.props.type );
 			fieldClass = Text;

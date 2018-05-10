@@ -14,9 +14,8 @@
 			display: none;
 		}
 	}
-
 	// Change tabs for block containers
-	.uf-fields--rows > &s {
+	&s--rows {
 		margin-left: 0;
 		padding-left: 20%;
 	}

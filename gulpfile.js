@@ -47,7 +47,7 @@ gulp.task( 'default', dirs, function () {
 // Monitors
 gulp.task( 'watch', function () {
 	webpackWatch = true;
-	prepareScript( 'core' );
+	// prepareScript( 'core' );
 
 	// Available as "npm run watch"
 	dirs.forEach( path => {

@@ -149,7 +149,7 @@ class Container extends React.Component {
 	 * @return {React.Component}
 	 */
 	getTabButtons() {
-		const { children, values, source, onChange } = this.props;
+		const { children, values, layout, className, source, onChange } = this.props;
 		const tabs = [];
 
 		// Extract all tabs
@@ -176,8 +176,15 @@ class Container extends React.Component {
 			? values.__tab
 			: tabs[0].tab.id;
 
+		// Prepare all needed CSS classes
+		const cssClass = [
+			'uf-tabs',
+			'uf-tabs--' + layout,
+			( className && -1 !== className.indexOf( 'boxed' ) ) ? 'uf-tabs--boxed' : null
+		].filter( cssClass => !! cssClass ).join( ' ' );
+
 		// Generate the wrapper
-		return <div className="uf-tabs">{
+		return <div className={ cssClass }>{
 			tabs.map( ( tab, i ) => {
 				const el = React.createElement( TabButton, {
 					...tab.tab,

@@ -14,6 +14,6 @@ const UltimateFields = window.UltimateFields = {
 	},
 
 	startFieldsBox() {
-		new UI( document.querySelector('.uf-fields-box-wrapper') );
+		UltimateFields.ui = new UI( document.querySelector('.uf-fields-box-wrapper') );
 	}
 }

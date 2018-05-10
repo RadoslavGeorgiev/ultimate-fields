@@ -1,3 +1,7 @@
+.uf-missing-preview {
+	text-align: center;
+}
+
 .uf-fields {
 	&-box {
 		margin-bottom: 0;
@@ -58,10 +62,9 @@
 	}
 }
 
-.uf-field-preview {
+.uf-preview {
 	width: 100%;
 	box-sizing: border-box;
-	padding: 10px;
 	background: #fff;
 	position: relative;
 	font-size: 13px;
@@ -90,7 +93,7 @@
 		border: 0;
 	}
 
-	&-overlay {
+	&__overlay {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -99,7 +102,7 @@
 		z-index: 10;
 	}
 
-	&-toolbar {
+	&__toolbar {
 		border: 1px solid #a0a5aa;
 		border-radius: 2px;
 		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.15 );
@@ -109,14 +112,16 @@
 		left: 50%;
 		user-select: none;
 		max-width: 98%;
-		min-width: 173px;
+		min-width: 169px;
 		z-index: 20;
 		background: #f5f5f5;
-		padding: 4px 3px 5px;
+		padding: 4px 6px 5px;
 		transform: translate(-50%, -6px);
 		visibility: hidden;
 		opacity: 0;
 		transition: all .2s ease;
+		display: flex;
+		justify-content: space-between;
 
 		&:before,
 		&:after {
@@ -145,12 +150,12 @@
 		}
 	}
 
-	&-button {
+	&__button {
 		display: inline-block;
 		color: #666;
 		padding: 2px;
 		text-decoration: none;
-		margin: 1px 2px;
+		margin: 1px 0;
 		border: 1px solid transparent;
 	    border-radius: 2px;
 		transition: all .25s ease;
@@ -164,22 +169,22 @@
 			box-shadow: inset 0 2px 5px -3px rgba( 0, 0, 0, 0.3 );
 		}
 
-		&-red:hover {
+		&--red:hover {
 			color: darkred;
 		}
 	}
 
-	&:hover &-toolbar {
+	&:hover &__toolbar {
 		opacity: 1;
 		visibility: visible;
 		transform: translate(-50%, 0);
 	}
 
-	&.ui-sortable-helper &-toolbar {
+	&.ui-sortable-helper &__toolbar {
 		opacity: 0;
 	}
 
-	&-complex {
+	&--complex {
 		padding: 0;
 	}
 

@@ -123,6 +123,7 @@ export default class Overlay extends React.Component {
             ReactDOM.unmountComponentAtNode( domNode );
             domNode.parentNode.removeChild( domNode );
             domNode = null;
+			document.body.classList.remove( 'uf-overlay-open' );
         }
     }
 
@@ -135,6 +136,7 @@ export default class Overlay extends React.Component {
         if( ! domNode ) {
             domNode = document.createElement( 'div' );
             document.body.appendChild( domNode );
+			document.body.classList.add( 'uf-overlay-open' );
         }
 
         ReactDOM.render(

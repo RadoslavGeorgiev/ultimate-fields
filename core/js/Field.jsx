@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import FieldWrapper from './FieldWrapper.jsx';
+import ConnectedFieldWrapper from './ConnectedFieldWrapper.jsx';
 import genericValidator from './validators/generic.js';
 
 let lastFieldID = 1;
@@ -9,7 +9,8 @@ const getFieldID = () => ++lastFieldID;
 export default class Field extends React.Component {
 	defaultProps: {
 		description: '',
-		width: 100
+		width: 100,
+		useConnectedWrapper: true
 	}
 
 	componentWillMount() {
@@ -22,15 +23,25 @@ export default class Field extends React.Component {
 			id: this.id
 		}
 
-		return <FieldWrapper { ...wrapperProps }>
+		const WrapperClass = this.props.useConnectedWrapper
+			? ConnectedFieldWrapper
+			: FieldWrapper;
+
+		return <WrapperClass { ...wrapperProps }>
 			{ this.renderInput() }
-		</FieldWrapper>
+		</WrapperClass>
 	}
 
 	getValue() {
 		const { value } = this.props;
 		// return null === value ? this.getDefaultValue() : value;
 		return value;
+	}
+
+	updateValue( value ) {
+		const { name, onValueChanged } = this.props;
+
+		onValueChanged( name, value );
 	}
 
 	renderInput() {

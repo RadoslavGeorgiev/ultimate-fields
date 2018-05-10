@@ -1,15 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const mapStateToProps = ({ validation }, ownProps ) => ({
-	invalidFieldMessage: validation[ ownProps.source + '_' + ownProps.name ]
-});
+export default class FieldWrapper extends React.Component {
+	static defaultProps = {
+		invalidFieldMessage: false
+	}
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-class FieldWrapper extends React.Component {
 	render() {
 		const {
 			children,
@@ -53,5 +48,3 @@ class FieldWrapper extends React.Component {
 		</div>
 	}
 }
-
-export default connect( mapStateToProps, mapDispatchToProps )( FieldWrapper );
