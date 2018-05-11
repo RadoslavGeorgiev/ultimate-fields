@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux';
-import { connect, Provider } from 'react-redux';
 import _ from 'lodash';
-import * as reducers from './../reducers.js'
-import StoreParser from './../StoreParser.js';
 import repeaterValidator from './../validators/repeater.js';
 import Container from './../Container.jsx';
 import Field from './../Field.jsx';
@@ -12,52 +8,11 @@ import Group from './Repeater/Group.jsx';
 import FullScreenGroup from './Repeater/FullScreenGroup.jsx';
 import Button from './../Button.jsx';
 import Overlay from './../Overlay.jsx';
+import StoreParser from './../StoreParser.js';
 
-import {
-	createContexts,
-	addRepeaterRow,
-	deleteRepeaterRow,
-	destroyContext,
-	cloneContext,
-	updateRepeaterOrder,
-	replaceContexts,
-	toggleRepeaterGroup
-} from './../actions.js';
+export default class Repeater extends Field {
+	static DEFAULT_REPEATER_GROUP_TYPE = 'entry';
 
-const DEFAULT_REPEATER_GROUP_TYPE = 'entry';
-
-const mapStateToProps = ( { values: state }, ownProps ) => {
-	const prefix = ownProps.source + '_' + ownProps.name;
-	const value  = state[ prefix ] || [];
-
-	const types = value.map( index => {
-		return state[ prefix + '_' + index ].__type || DEFAULT_REPEATER_GROUP_TYPE;
-	});
-
-	const visibility = value.map( index => {
-		return ! state[ prefix + '_' + index ].__hidden
-	});
-
-	return {
-		value,
-		types,
-		visibility,
-		getGroupData: ( prefix, children ) => ( new StoreParser ).extractDataFromState( state, children, prefix )
-	}
-}
-
-const mapDispatchToProps = dispatch => ({
-	onCreateContexts:       ( data )              => dispatch( createContexts( data ) ),
-	onDestroyContext:       ( name )              => dispatch( destroyContext( name ) ),
-	onAddRepeaterRow:       ( name, index )       => dispatch( addRepeaterRow( name, index ) ),
-	onDeleteRepeaterRow:    ( name, index )       => dispatch( deleteRepeaterRow( name, index ) ),
-	onCloneContext:         ( from, to, changes ) => dispatch( cloneContext( from, to, changes ) ),
-	onReplaceContexts:      ( contexts )          => dispatch( replaceContexts( contexts ) ),
-	onUpdatedRepeaterOrder: ( name, order )       => dispatch( updateRepeaterOrder( name, order ) ),
-	onToggleGroup:          ( name )              => dispatch( toggleRepeaterGroup( name ) )
-});
-
-class Repeater extends Field {
 	/**
 	 * Collects all group types before mounting the component.
 	 */
@@ -111,9 +66,9 @@ class Repeater extends Field {
 	 * @return <React.Component>
 	 */
 	renderInput() {
-		const { name, types, visibility, value, children, source } = this.props;
+		const { name, types, visibility, children, source } = this.props;
 
-		const entries = value.map( ( index, i ) => {
+		const entries = ( this.getValue() || [] ).map( ( index, i ) => {
 			const type = this.groups.find( group => group.type == types[ i ] ) || this.getDefaultGroup();
 
 			return React.createElement( Group, {
@@ -192,7 +147,13 @@ class Repeater extends Field {
 	}
 
 	addGroupClicked( type ) {
-		this.addGroup( type || DEFAULT_REPEATER_GROUP_TYPE );
+		let defaultType;
+
+		_.forEach( this.groups, group => {
+			defaultType = defaultType || group.type
+		});
+
+		this.addGroup( type || defaultType || Repeater.DEFAULT_REPEATER_GROUP_TYPE );
 	}
 
 	static getDefaultValue() {
@@ -394,5 +355,3 @@ class Repeater extends Field {
 		return repeaterValidator;
 	}
 }
-
-export default connect( mapStateToProps, mapDispatchToProps )( Repeater );

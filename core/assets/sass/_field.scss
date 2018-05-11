@@ -136,7 +136,7 @@
 		z-index: 1;
 	}
 
-	&--rows &__details {
+	&--rows > &__details {
 		flex: 0 0 20%;
 
 		label {
@@ -145,7 +145,7 @@
 		}
 	}
 
-	&--rows &__inputs {
+	&--rows > &__inputs {
 		flex: 0 0 80%;
 		width: 80%;
 	}

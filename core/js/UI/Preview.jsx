@@ -32,7 +32,7 @@ export default class Preview extends React.Component {
 	}
 
 	getPreviewArgs() {
-		const { type, name, label, description } = this.props.field;
+		const { type, name, label, description, field_width: width } = this.props.field;
 
 		return {
 			// Field-specific data
@@ -44,7 +44,8 @@ export default class Preview extends React.Component {
 			// Generic preview args
 			description_position: 'field',
 			useConnectedWrapper: false,
-			layout: 'grid'
+			layout: 'grid',
+			width: width || 100
 		}
 	}
 

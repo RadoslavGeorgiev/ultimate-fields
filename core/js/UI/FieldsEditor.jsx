@@ -9,10 +9,11 @@ import Container from './../Container.jsx';
 import StoreParser from './../StoreParser.js';
 import reducers from './reducers.js';
 
+import TabPreview from './Preview/Tab.jsx';
 import TextPreview from './Preview/Text.jsx';
 import SelectPreview from './Preview/Select.jsx';
 import WPObjectPreview from './Preview/WP_Object.jsx';
-import TabPreview from './Preview/Tab.jsx';
+import RepeaterPreview from './Preview/Repeater.jsx';
 
 export default class FieldsEditor extends React.Component {
 	static contexts = [];
@@ -34,10 +35,11 @@ export default class FieldsEditor extends React.Component {
 		let previewClass = Preview;
 
 		switch( field.type ) {
-			case 'Tab': previewClass = TabPreview; break;
-			case 'Text': previewClass = TextPreview; break;
-			case 'Select': previewClass = SelectPreview; break;
+			case 'Tab':       previewClass = TabPreview;      break;
+			case 'Text':      previewClass = TextPreview;     break;
+			case 'Select':    previewClass = SelectPreview;   break;
 			case 'WP_Object': previewClass = WPObjectPreview; break;
+			case 'Repeater':  previewClass = RepeaterPreview; break;
 		}
 
 		return previewClass;
@@ -109,7 +111,7 @@ export default class FieldsEditor extends React.Component {
 		});
 
 		const unsubscribe = store.subscribe( () => {
-			
+
 		});
 
 		const cleanup = () => {
@@ -141,7 +143,7 @@ export default class FieldsEditor extends React.Component {
 					<Button onClick={ closeOverlay }>Close</Button>
 				</Overlay.Footer>
 
-				<Provider store={ store } onRemove={ cleanup }>
+				<Provider store={ store } onRemove={ cleanup } key={ new Date() }>
 					<Container children={ editorFields } source="__" layout="rows" description_position="label" className="uf-fields--boxed" display_tabs_wrapper={ true } />
 				</Provider>
 			</React.Fragment>

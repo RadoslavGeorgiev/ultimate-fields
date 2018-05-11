@@ -19,10 +19,11 @@ import Link from './Field/Link.jsx';
 
 import File from './Field/File.jsx';
 import Image from './Field/Image.jsx';
-import Repeater from './Field/Repeater.jsx';
+import Repeater from './Field/ConnectedRepeater.jsx';
 import Complex from './Field/Complex.jsx';
 
 import ConditionalLogic from './Field/ConditionalLogic.jsx';
+import Fields from './Field/Fields.jsx';
 
 export default function getFieldType( field ) {
 	let fieldClass;
@@ -58,7 +59,8 @@ export default function getFieldType( field ) {
 
 		// ui
 		case 'conditional_logic': fieldClass = ConditionalLogic; break;
-		
+		case 'fields': fieldClass = Fields; break;
+
 		default:         {
 			console.warn( 'Unknown field type: ' + field.props.type );
 			fieldClass = Text;
