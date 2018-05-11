@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
-import { updateValue, cacheValue } from './actions.js';
+import { updateValue, cacheValue, fieldBlurred } from './actions.js';
 import getFieldType from './fields.js';
 import ConditionalLogic from './ConditionalLogic.jsx';
 import Tab from './Tab.jsx';
@@ -33,7 +33,10 @@ const mapDispatchToProps = dispatch => ({
 
 	// Allows values to be cached globally
 	// cacheValue: ( name, value )        => dispatch( cacheValue( name, value ) )
-	cacheValue: ( name, value )        => cache[ name ] = value
+	cacheValue: ( name, value )        => cache[ name ] = value,
+
+	// Indicates that a field has been blurred
+	onBlur: ( name, context ) => dispatch( fieldBlurred( name, context ) )
 });
 
 /**
@@ -109,7 +112,7 @@ class Container extends React.Component {
 	prepareField( field ) {
 		const {
 			values, source, layout, description_position,
-			onChange, getContext, getCachedValue, cacheValue
+			onChange, onBlur, getContext, getCachedValue, cacheValue
 		} = this.props;
 
 		const { name, type } = field.props;
@@ -132,6 +135,7 @@ class Container extends React.Component {
 		const props = Object.assign( {}, field.props, {
 			value:                ( values && ( name in values ) ) ? values[ name ]: null,
 			onValueChanged:       ( name, value ) => onChange( name, value, source ),
+			onBlur:               name => onBlur( name, source ),
 
 			source, getContext, description_position, layout, getCachedValue, cacheValue
 		});

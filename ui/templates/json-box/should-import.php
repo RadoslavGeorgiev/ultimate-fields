@@ -9,7 +9,7 @@
 	<?php _e( 'Synchronize', 'ultimate-fields' ) ?>
 </a>
 
-<a href="https://www.google.com" target="_blank" class="button-secondary uf-button">
-	<span class="dashicons dashicons-admin-site uf-button-icon"></span>
+<a href="https://www.ultimate-fields.com/docs/features/json-synchronization/" target="_blank" class="button-secondary uf-button">
+	<span class="dashicons dashicons-admin-site uf-button__icon"></span>
 	<?php _e( 'Learn more', 'ultimate-fields' ) ?>
 </a>

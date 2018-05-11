@@ -7,7 +7,7 @@ import Button from './../Button.jsx';
 import Preview from './Preview.jsx';
 import Container from './../Container.jsx';
 import StoreParser from './../StoreParser.js';
-import * as reducers from './../reducers.js';
+import reducers from './reducers.js';
 
 import TextPreview from './Preview/Text.jsx';
 import SelectPreview from './Preview/Select.jsx';
@@ -109,6 +109,7 @@ export default class FieldsEditor extends React.Component {
 		});
 
 		const unsubscribe = store.subscribe( () => {
+			
 		});
 
 		const cleanup = () => {

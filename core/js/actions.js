@@ -1,4 +1,5 @@
 export const updateValue   = ( name, value, context ) => ({ type: 'UPDATE_VALUE', name, value, context })
+export const fieldBlurred   = ( name, context ) => ({ type: 'FIELD_BLURRED', name, context })
 
 export const createContext  = ( name, data )  => ({ type: 'CREATE_CONTEXT', name, data })
 export const createContexts = ( data )        => ({ type: 'CREATE_CONTEXTS', data })
