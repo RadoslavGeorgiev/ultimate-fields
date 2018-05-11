@@ -40,8 +40,7 @@ export default class Field extends React.Component {
 	}
 
 	getValue() {
-		const { value } = this.props;
-		// return null === value ? this.getDefaultValue() : value;
+		const { value, default_value } = this.props;
 		return value;
 	}
 
@@ -63,7 +62,8 @@ export default class Field extends React.Component {
 			value = data[ field.props.name ];
 		}
 
-		if( null === value ) {
+
+		if( null === value || 'undefined' == typeof value ) {
 			value = type.getDefaultValue( field );
 		}
 

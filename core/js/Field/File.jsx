@@ -57,7 +57,7 @@ export default class File extends Field {
 
 		let thumb;
 		if( attachment.sizes ) {
-			const image = attachment.sizes[ preview_size ];
+			const image = attachment.sizes[ ( 'preview_size' in attachment.sizes ) ? preview_size : 'full' ];
 			thumb = <img src={ image.url } alt="" width={ image.width } height={ image.height } />
 		} else {
 			thumb = <img src={ attachment.icon } alt="" className="icon" />

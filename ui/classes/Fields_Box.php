@@ -67,7 +67,7 @@ class Fields_Box {
 
 		?>
 		<script type="text/javascript">
-		jQuery( document ).trigger( 'uf-ui-init-editor' );
+		UltimateFields.startFieldsBox()
 		</script>
 		<?php
 	}

@@ -58,6 +58,7 @@ export default class Rule extends React.Component {
 		const selectors  = Rule.getComparators( selector );
 		const comparator = selectors.find( comparator => comparator.compare == compare );
 
+		// @todo: This breaks when operands are not in place
 		if( ! comparator.operand ) {
 			return null;
 		}

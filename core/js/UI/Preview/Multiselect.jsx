@@ -1,15 +1,12 @@
 import React from 'react';
 import request from './../../PHP/request.js';
-import Preview from './../Preview.jsx';
+import Select from './Select.jsx';
 import SelectField from './../../Field/Select.jsx';
+import MultiselectField from './../../Field/Multiselect.jsx';
 
-export default class Select extends Preview {
-	state = {
-		optionsLoaded: false
-	}
-
+export default class Multiselect extends Select {
 	renderPreview() {
-		const { select_input_type, select_orientation, select_type, use_select2 } = this.props.field;
+		const { multiselect_input_type, select_orientation, select_type } = this.props.field;
 
 		const options = this.state.optionsLoaded
 		 	? this.state.optionsLoaded
@@ -28,59 +25,13 @@ export default class Select extends Preview {
 			</p>;
 		}
 
-		return React.createElement( SelectField, {
+		return React.createElement( MultiselectField, {
 			...this.getPreviewArgs(),
 
 			options:     options,
-			input_type:  select_input_type,
+			input_type:  multiselect_input_type,
 			orientation: select_orientation,
-			use_select2: ( 'dropdown' == select_type ) && use_select2
-		});
-	}
-
-	/**
-	 * Extracts manual options from a fields' data.
-	 */
-	static extractOptions( raw ) {
-		var options = {};
-
-		// Parse options
-		_.each( ( raw || '' ).split( "\n" ), function( option ) {
-			var parts;
-
-			if( '' === option ) {
-				return;
-			}
-
-			option = option.trim();
-
-			if( -1 == option.indexOf( '::' ) ) {
-				options[ option ] = option;
-			} else {
-				parts = option.split( '::' );
-				options[ parts[ 0 ].trim() ] = parts[ 1 ].trim();
-			}
-		});
-
-		return options;
-	}
-
-	/**
-	 * Adds options to a field based on it's settings.
-	 */
-	static loadOptions( field ) {
-		const { select_options_type, select_options, select_post_type } = field;
-
-		if( 'posts' != select_options_type ) {
-			return Select.extractOptions( select_options );
-		}
-
-		return request({
-			body: {
-				uf_ajax:   true,
-				uf_action: 'select_ui_options',
-				post_type: select_post_type
-			}
+			value:       []
 		});
 	}
 
@@ -90,13 +41,23 @@ export default class Select extends Preview {
 	static getComparators() {
 		return [
 			{
-				compare: '=',
-				label:   'equals',
+				compare: 'NOT_NULL',
+				label:   'has a checked value',
+				operand: false
+			},
+			{
+				compare: 'NULL',
+				label:   'does not have a checked value',
+				operand: false
+			},
+			{
+				compare: 'CONTAINS',
+				label:   'contains',
 				operand: true
 			},
 			{
-				compare: '!=',
-				label:   'is not equal to',
+				compare: 'DOES_NOT_CONTAIN',
+				label:   'does not contain',
 				operand: true
 			}
 		];
@@ -111,7 +72,7 @@ export default class Select extends Preview {
 		if( options instanceof Promise ) {
 			return <GeneratedSelect promised={ options } useWrapper={ false } />
 		} else {
-			return <SelectField options={ options } />;
+			return <SelectField options={ options } useWrapper={ false } />;
 		}
 	}
 }

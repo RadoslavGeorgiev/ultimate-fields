@@ -10,7 +10,7 @@ export default class Section extends Field {
     render() {
         const { label, description, color, icon } =this.props;
 
-        return <div className={ 'uf-section' + ( color ? 'uf-section--' + color : '' ) }>
+        return <div className={ 'uf-section' + ( color ? ' uf-section--' + color : '' ) }>
             <h4>
                 { icon && <span className={ icon }></span> }
                 { label }

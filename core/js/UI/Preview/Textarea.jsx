@@ -1,18 +1,16 @@
 import React from 'react';
 import Preview from './../Preview.jsx';
-import TextField from './../../Field/Text.jsx';
+import TextareaField from './../../Field/Textarea.jsx';
 
-export default class Text extends Preview {
+export default class Textarea extends Preview {
 	renderPreview() {
-		const { default_value_text, text_attributes: atts } = this.props.field;
+		const { default_value_textarea, rows } = this.props.field;
 
-		return React.createElement( TextField, {
+		return React.createElement( TextareaField, {
 			...this.getPreviewArgs(),
 
-			value:       default_value_text,
-			placeholder: atts.text_placeholder,
-			prefix:      atts.prefix,
-			suffix:      atts.suffix
+			value: default_value_textarea,
+			rows
 		});
 	}
 

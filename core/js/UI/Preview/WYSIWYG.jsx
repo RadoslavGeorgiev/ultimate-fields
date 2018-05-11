@@ -1,18 +1,15 @@
 import React from 'react';
 import Preview from './../Preview.jsx';
-import TextField from './../../Field/Text.jsx';
+import WYSIWYGField from './../../Field/WYSIWYG.jsx';
 
-export default class Text extends Preview {
+export default class WYSIWYG extends Preview {
 	renderPreview() {
-		const { default_value_text, text_attributes: atts } = this.props.field;
+		const { default_value_wysiwyg } = this.props.field;
 
-		return React.createElement( TextField, {
+		return React.createElement( WYSIWYGField, {
 			...this.getPreviewArgs(),
 
-			value:       default_value_text,
-			placeholder: atts.text_placeholder,
-			prefix:      atts.prefix,
-			suffix:      atts.suffix
+			value: default_value_wysiwyg
 		});
 	}
 

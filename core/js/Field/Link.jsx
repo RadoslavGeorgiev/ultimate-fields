@@ -106,4 +106,11 @@ export default class Link extends WP_Object {
         	return message ? [ message ] : [];
         }
     }
+
+	static getDefaultValue( field ) {
+		return {
+			link: false,
+			new_tab: false
+		}
+	}
 }

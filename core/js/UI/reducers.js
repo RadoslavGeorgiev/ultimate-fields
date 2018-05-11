@@ -17,7 +17,7 @@ reducers.values = function( state, action ) {
 			const context = state[ action.context ];
 			const { name, label } = context;
 
-			if( name.length ) {
+			if( name && name.length ) {
 				return defaultHandler();
 			}
 

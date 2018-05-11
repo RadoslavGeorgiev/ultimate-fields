@@ -1,18 +1,18 @@
 import React from 'react';
 import Preview from './../Preview.jsx';
-import TextField from './../../Field/Text.jsx';
+import PasswordField from './../../Field/Password.jsx';
 
-export default class Text extends Preview {
+export default class Password extends Preview {
 	renderPreview() {
-		const { default_value_text, text_attributes: atts } = this.props.field;
+		const { default_value_password, password_attributes: atts } = this.props.field;
 
-		return React.createElement( TextField, {
+		return React.createElement( PasswordField, {
 			...this.getPreviewArgs(),
 
-			value:       default_value_text,
-			placeholder: atts.text_placeholder,
-			prefix:      atts.prefix,
-			suffix:      atts.suffix
+			value:       default_value_password,
+			placeholder: atts.password_placeholder,
+			prefix:      atts.password_prefix,
+			suffix:      atts.password_suffix
 		});
 	}
 

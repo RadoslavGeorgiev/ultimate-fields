@@ -3,12 +3,13 @@ import Field from './../Field.jsx';
 
 export default class Text extends Field {
 	renderInput() {
-		const { name, value, onValueChanged, onBlur } = this.props;
+		const { name, value, placeholder, onValueChanged, onBlur } = this.props;
 
 		return this.wrapInput( <input
 			id={ this.id }
 			type="text"
 			value={ this.getValue() }
+			placeholder={ placeholder }
 			onChange={ e => onValueChanged( name, e.target.value ) }
 			onBlur={ e => onBlur( name ) }
 			className="uf-field__input uf-field__input--text"

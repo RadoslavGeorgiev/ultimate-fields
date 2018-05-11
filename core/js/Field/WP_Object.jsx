@@ -22,9 +22,16 @@ export default class WP_Object extends Field {
 		}
 
 		const { cacheValue, getContext, source, name } = this.props;
+
+		if( ! getContext ) {
+			return;
+		}
+
 		const context = getContext( source );
 
-		context[ name + '_prepared' ].forEach( item => cacheValue( 'object_' + item.id, item ) )
+		if( context[ name + '_prepared' ] ) {
+			context[ name + '_prepared' ].forEach( item => cacheValue( 'object_' + item.id, item ) )
+		}
 	}
 
 	static getStores( type, field, data, source ) {

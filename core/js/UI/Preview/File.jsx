@@ -1,18 +1,17 @@
 import React from 'react';
 import Preview from './../Preview.jsx';
-import TextField from './../../Field/Text.jsx';
+import FileField from './../../Field/File.jsx';
 
-export default class Text extends Preview {
+export default class File extends Preview {
 	renderPreview() {
-		const { default_value_text, text_attributes: atts } = this.props.field;
+		const { default_value_file } = this.props.field;
 
-		return React.createElement( TextField, {
+		// @todo: Cache the default value properly
+
+		return React.createElement( FileField, {
 			...this.getPreviewArgs(),
 
-			value:       default_value_text,
-			placeholder: atts.text_placeholder,
-			prefix:      atts.prefix,
-			suffix:      atts.suffix
+			value: default_value_file
 		});
 	}
 
@@ -39,5 +38,10 @@ export default class Text extends Preview {
 				operand: true
 			}
 		];
+	}
+
+	static getOperand() {
+		// @todo: Provide caching
+		return <FileField useWrapper={ false } />
 	}
 }

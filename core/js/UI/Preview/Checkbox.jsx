@@ -11,7 +11,7 @@ export default class Checkbox extends Preview {
 
 			text: checkbox_text || '',
 			fancy: fancy_checkbox || false,
-			default_value: default_value_checkbox
+			value: default_value_checkbox
 		});
 	}
 

@@ -10,10 +10,26 @@ import StoreParser from './../StoreParser.js';
 import reducers from './reducers.js';
 
 import TabPreview from './Preview/Tab.jsx';
+import SectionPreview from './Preview/Section.jsx';
+
 import TextPreview from './Preview/Text.jsx';
+import PasswordPreview from './Preview/Password.jsx';
+import NumberPreview from './Preview/Number.jsx';
+import TextareaPreview from './Preview/Textarea.jsx';
+import WYSIWYGPreview from './Preview/WYSIWYG.jsx';
+
 import CheckboxPreview from './Preview/Checkbox.jsx';
 import SelectPreview from './Preview/Select.jsx';
+import MultiselectPreview from './Preview/Multiselect.jsx';
+import ImageSelectPreview from './Preview/Image_Select.jsx';
+
+import FilePreview from './Preview/File.jsx';
+import ImagePreview from './Preview/Image.jsx';
+
 import WPObjectPreview from './Preview/WP_Object.jsx';
+import WPObjectsPreview from './Preview/WP_Objects.jsx';
+import LinkPreview from './Preview/Link.jsx';
+
 import RepeaterPreview from './Preview/Repeater.jsx';
 
 export default class FieldsEditor extends React.Component {
@@ -36,12 +52,28 @@ export default class FieldsEditor extends React.Component {
 		let previewClass = Preview;
 
 		switch( field.type ) {
-			case 'Tab':       previewClass = TabPreview;      break;
-			case 'Text':      previewClass = TextPreview;     break;
-			case 'Checkbox':  previewClass = CheckboxPreview;   break;
-			case 'Select':    previewClass = SelectPreview;   break;
-			case 'WP_Object': previewClass = WPObjectPreview; break;
-			case 'Repeater':  previewClass = RepeaterPreview; break;
+			case 'Tab':         previewClass = TabPreview;      break;
+			case 'Section':     previewClass = SectionPreview;  break;
+
+			case 'Text':        previewClass = TextPreview;     break;
+			case 'Password':    previewClass = PasswordPreview; break;
+			case 'Number':      previewClass = NumberPreview;   break;
+			case 'Textarea':    previewClass = TextareaPreview; break;
+			case 'WYSIWYG':     previewClass = WYSIWYGPreview;  break;
+
+			case 'Checkbox':    previewClass = CheckboxPreview;    break;
+			case 'Select':      previewClass = SelectPreview;      break;
+			case 'Multiselect': previewClass = MultiselectPreview; break;
+			case 'Image_Select': previewClass = ImageSelectPreview; break;
+
+			case 'File':  previewClass = FilePreview;  break;
+			case 'Image': previewClass = ImagePreview; break;
+
+			case 'WP_Object':  previewClass = WPObjectPreview;  break;
+			case 'WP_Objects': previewClass = WPObjectsPreview; break;
+			case 'Link':       previewClass = LinkPreview;      break;
+
+			case 'Repeater':    previewClass = RepeaterPreview; break;
 		}
 
 		return previewClass;
