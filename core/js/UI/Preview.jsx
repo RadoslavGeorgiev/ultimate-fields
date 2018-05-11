@@ -54,16 +54,8 @@ export default class Preview extends React.Component {
 		editField( manager );
 	}
 
-	onAddBefore() {
-	}
-
-	onClone() {
-	}
-
-	onGetId() {
-	}
-
-	onDelete() {
+	static canBeUsedForConditionalLogic() {
+		return true;
 	}
 
 	static getComparators() {

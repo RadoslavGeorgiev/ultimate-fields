@@ -12,6 +12,7 @@ import * as reducers from './../reducers.js';
 import TextPreview from './Preview/Text.jsx';
 import SelectPreview from './Preview/Select.jsx';
 import WPObjectPreview from './Preview/WP_Object.jsx';
+import TabPreview from './Preview/Tab.jsx';
 
 export default class FieldsEditor extends React.Component {
 	static contexts = [];
@@ -33,6 +34,7 @@ export default class FieldsEditor extends React.Component {
 		let previewClass = Preview;
 
 		switch( field.type ) {
+			case 'Tab': previewClass = TabPreview; break;
 			case 'Text': previewClass = TextPreview; break;
 			case 'Select': previewClass = SelectPreview; break;
 			case 'WP_Object': previewClass = WPObjectPreview; break;
@@ -186,15 +188,50 @@ export default class FieldsEditor extends React.Component {
     }
 
 	onAddBefore( field ) {
+		this.openOverlay( {}, {
+			title:  'New Field',
+			onSave: newField => {
+				const { fields, onChange } = this.props;
 
+				const updatedFields = [];
+				fields.forEach( existing => {
+					if( existing.name === field.name ) {
+						updatedFields.push( newField );
+					}
+
+					updatedFields.push( existing );
+				});
+
+				onChange( updatedFields );
+			}
+		})
 	}
 
 	onClone( field ) {
+		const cloned = Object.assign( {}, field );
+		cloned.name += '_clone';
 
+		this.openOverlay( cloned, {
+			title: 'New Field',
+			onSave: newField => {
+				const { fields, onChange } = this.props;
+
+				const updatedFields = [];
+				fields.forEach( existing => {
+					updatedFields.push( existing );
+
+					if( existing.name === field.name ) {
+						updatedFields.push( newField );
+					}
+				})
+
+				onChange( updatedFields );
+			}
+		});
 	}
 
 	onGetId( field ) {
-
+		prompt( 'Field name:', field.name );
 	}
 
 	onDelete( field ) {

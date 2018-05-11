@@ -122,6 +122,12 @@ export default class Rule extends React.Component {
 					return;
 				}
 
+				const PreviewClass = Rule.getPreviewClass( name );
+
+				if( ! PreviewClass.canBeUsedForConditionalLogic() ) {
+					return;
+				}
+
 				options.push({
 					label,
 					name: prefix + name
