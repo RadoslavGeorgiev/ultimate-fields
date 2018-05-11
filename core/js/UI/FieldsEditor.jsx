@@ -11,6 +11,7 @@ import reducers from './reducers.js';
 
 import TabPreview from './Preview/Tab.jsx';
 import TextPreview from './Preview/Text.jsx';
+import CheckboxPreview from './Preview/Checkbox.jsx';
 import SelectPreview from './Preview/Select.jsx';
 import WPObjectPreview from './Preview/WP_Object.jsx';
 import RepeaterPreview from './Preview/Repeater.jsx';
@@ -37,6 +38,7 @@ export default class FieldsEditor extends React.Component {
 		switch( field.type ) {
 			case 'Tab':       previewClass = TabPreview;      break;
 			case 'Text':      previewClass = TextPreview;     break;
+			case 'Checkbox':  previewClass = CheckboxPreview;   break;
 			case 'Select':    previewClass = SelectPreview;   break;
 			case 'WP_Object': previewClass = WPObjectPreview; break;
 			case 'Repeater':  previewClass = RepeaterPreview; break;

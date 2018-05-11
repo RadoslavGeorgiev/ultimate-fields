@@ -113,7 +113,7 @@ export default class Rule extends React.Component {
 		for( let i = contexts.length - 1; i >= 0; i-- ) {
 			const context = contexts[ i ];
 			const options = [];
-			const prefix  = '../'.repeat( i );
+			const prefix  = '../'.repeat( contexts.length - 1 - i );
 
 			context.fields.forEach( field => {
 				const { name, label } = field;
@@ -122,9 +122,9 @@ export default class Rule extends React.Component {
 					return;
 				}
 
-				const PreviewClass = Rule.getPreviewClass( name );
+				const PreviewClass = Rule.getPreviewClass( prefix + name );
 
-				if( ! PreviewClass.canBeUsedForConditionalLogic() ) {
+				if( ! PreviewClass || ! PreviewClass.canBeUsedForConditionalLogic() ) {
 					return;
 				}
 
@@ -146,8 +146,11 @@ export default class Rule extends React.Component {
 	}
 
 	static getSelectorData( name ) {
-		const context = FieldsEditor.contexts[ FieldsEditor.contexts.length - 1 ];
-		return context.fields.find( field => field.name == name );
+		const depth = ( name.match( /..\//g ) || [] ).length + 1;
+		const pure  = name.replace( /..\//g, '' );
+
+		const context = FieldsEditor.contexts[ FieldsEditor.contexts.length - depth ];
+		return context.fields.find( field => field.name == pure );
 	}
 
 	static getPreviewClass( name ) {

@@ -19,8 +19,9 @@ export default class Tab extends Preview {
 			const { name, title, description, title_style, edit_mode, icon } = group;
 
 			return React.createElement( Group, {
-				key: name,
-				id:  name,
+				key:  name,
+				id:   name,
+				type: name,
 
 				title, description, icon
 			});
