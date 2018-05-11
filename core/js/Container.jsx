@@ -206,4 +206,7 @@ class Container extends React.Component {
 	}
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( Container );
+// @todo: Definitely change this
+const connected = connect( mapStateToProps, mapDispatchToProps )( Container );
+connected.cache = cache;
+export default connected;

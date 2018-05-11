@@ -68,7 +68,7 @@ export default class Rule extends React.Component {
 
 		// Add the necessary handlers
 		return React.cloneElement( operand, {
-			value: value,
+			value: value || false,
 			onValueChanged: ( name, value ) => {
 				this.updateProp( 'value', value )
 			}
@@ -146,6 +146,11 @@ export default class Rule extends React.Component {
 
 	static getPreviewClass( name ) {
 		const data = Rule.getSelectorData( name );
+
+		if( ! data ) {
+			return false;
+		}
+
 		return FieldsEditor.getFieldPreviewClass( data );
 	}
 

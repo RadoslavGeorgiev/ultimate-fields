@@ -4,10 +4,10 @@ import TextField from './../Field/Text.jsx';
 
 export default class Preview extends React.Component {
 	render() {
-		const { field_width } = this.props.field;
+		const { name, field_width } = this.props.field;
 		const { onEdit, onAddBefore, onClone, onGetId, onDelete } = this.props;
 
-		return <div className="uf-preview" style={{ width: ( field_width || 100 ) + '%' }}>
+		return <div className="uf-preview" style={{ width: ( field_width || 100 ) + '%' }} data-for={ name }>
 			<div className="uf-preview__overlay" onClick={ onEdit } />
 
 			<div className="uf-preview__toolbar">

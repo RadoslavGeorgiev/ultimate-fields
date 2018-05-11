@@ -18,13 +18,23 @@ export default class UI {
         );
     }
 
+	getRawFields() {
+		if( this.rawFields ) {
+            return this.rawFields;
+        }
+
+        const json = document.querySelector( '.uf-field-settings' ).innerHTML;
+        const data = JSON.parse( json );
+
+		return this.rawFields = data;
+	}
+
     getFields() {
         if( this.cachedFields ) {
             return this.cachedFields;
         }
 
-        const json = document.querySelector( '.uf-field-settings' ).innerHTML;
-        const data = JSON.parse( json );
+        const data = this.getRawFields();
         const loader = new Loader( data.fields );
 
         return this.cachedFields = loader.load();

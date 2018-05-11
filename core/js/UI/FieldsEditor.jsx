@@ -11,6 +11,7 @@ import * as reducers from './../reducers.js';
 
 import TextPreview from './Preview/Text.jsx';
 import SelectPreview from './Preview/Select.jsx';
+import WPObjectPreview from './Preview/WP_Object.jsx';
 
 export default class FieldsEditor extends React.Component {
 	static contexts = [];
@@ -19,7 +20,7 @@ export default class FieldsEditor extends React.Component {
 		const { fields } = this.props;
 
         return <div className="wp-ui-highlight uf-fields-editor-wrapper">
-            <div className="uf-fields-editor">
+            <div className="uf-fields-editor" ref="fields">
 				{ fields.length
 					? fields.map( this.getFieldPreview.bind( this ) )
 					: <p className="uf-fields-loading">Your fields will appear here once you create them. You can start with the "Add Field" button below.</p>
@@ -34,6 +35,7 @@ export default class FieldsEditor extends React.Component {
 		switch( field.type ) {
 			case 'Text': previewClass = TextPreview; break;
 			case 'Select': previewClass = SelectPreview; break;
+			case 'WP_Object': previewClass = WPObjectPreview; break;
 		}
 
 		return previewClass;
@@ -55,14 +57,41 @@ export default class FieldsEditor extends React.Component {
 
 	componentDidMount() {
 		// @todo: Cleanup
-		return;
-		setTimeout(()=>{
+		if( false ) setTimeout(()=>{
 			const field = Object.assign({}, this.props.fields[1], {
 				__tab: 'conditional_logic_tab'
 			})
 
 			this.onEdit( field );
 		}, 100 )
+
+		// Start jQuery UI sortable
+		const $fields = jQuery( this.refs.fields );
+
+		$fields.sortable({
+			items:  '.uf-preview',
+			tolerance: 'pointer',
+
+			// Ensures the size of the placeholder is the same as the field
+			start: function( e, ui ) {
+				ui.placeholder.css({
+					width: parseInt( ui.helper.data( 'width' ) ) + '%',
+					height: ui.helper.outerHeight()
+				});
+			},
+
+			// When sorting has ended, save the sort
+			stop: this.saveSort.bind( this )
+		});
+	}
+
+	saveSort() {
+		const { fields, onChange } = this.props;
+
+		const names = _.map( this.refs.fields.children, child => child.dataset.for );
+		const sorted = names.map( name => fields.find( field => field.name === name ) );
+
+		onChange( sorted );
 	}
 
 	openOverlay( field, args ) {

@@ -12,6 +12,7 @@ export default class WP_Object extends Field {
 	}
 
 	static defaultProps = {
+		...Field.defaultProps,
 		show_filters: true
 	}
 

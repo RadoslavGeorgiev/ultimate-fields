@@ -133,8 +133,8 @@ class Fields_Box {
 		foreach( $logic as $group ) {
 			foreach( $group[ 'rules' ] as $rule ) {
 				if( preg_match( '~^(post|term|user)_(\d+)$~', $rule[ 'value' ], $matches ) ) {
-					$prepared = $container->get_fields()[ 'default_value_object' ]->export_objects( array( $rule[ 'value' ] ) );
-					$existing = $settings[ 'default_value_object_prepared' ];
+					$prepared = $container->get_fields()[ 'default_value_wp_object' ]->export_objects( array( $rule[ 'value' ] ) );
+					$existing = $settings[ 'default_value_wp_object_prepared' ];
 					if( ! $existing )
 						$existing = array();
 
@@ -142,7 +142,7 @@ class Fields_Box {
 						$existing[] = $item;
 					}
 
-					$settings[ 'default_value_object_prepared' ] = $existing;
+					$settings[ 'default_value_wp_object_prepared' ] = $existing;
 				}
 			}
 		}
