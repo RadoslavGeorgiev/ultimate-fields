@@ -4,7 +4,8 @@ import TextField from './../../Field/Text.jsx';
 
 export default class Text extends Preview {
 	renderPreview() {
-		const { default_value_text, text_attributes: atts } = this.props.field;
+		const { default_value_text, text_attributes } = this.props.field;
+		const atts = text_attributes || {}
 
 		return React.createElement( TextField, {
 			...this.getPreviewArgs(),

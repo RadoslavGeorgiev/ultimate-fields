@@ -13,7 +13,7 @@ export default class Number extends Text {
 			id:        this.id,
 			ref:       'input',
 			type:      "number",
-			value:     this.getValue(),
+			value:     this.getValue() || 0,
 			className: "uf-field__input uf-field__input--text",
 			onChange:  e => onValueChanged( name, e.target.value )
 		}

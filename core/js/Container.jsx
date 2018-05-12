@@ -7,6 +7,7 @@ import ConditionalLogic from './ConditionalLogic.jsx';
 import Tab from './Tab.jsx';
 import ConditionalTabWrapper from './ConditionalTabWrapper.jsx';
 import TabButton from './TabButton.jsx';
+import Grid from './Grid.js';
 
 var cache = {};
 
@@ -72,7 +73,7 @@ class Container extends React.Component {
 			// A special structure for overlays
 			return <div className="uf-fields-and-tabs">
 				{ tabs }
-				<div className={ cssClasses }>{
+				<div className={ cssClasses } ref="fields">{
 					React.Children.map( children, this.prepareField.bind( this ) )
 				}</div>
 			</div>
@@ -80,7 +81,7 @@ class Container extends React.Component {
 		} else {
 
 			// Generic tabs within fields
-			return <div className={ cssClasses }>
+			return <div className={ cssClasses } ref="fields">
 				{ tabs ? tabs : null }
 				{ React.Children.map( children, this.prepareField.bind( this ) ) }
 			</div>
@@ -207,6 +208,20 @@ class Container extends React.Component {
 					});
 			})
 		}</div>
+	}
+
+	componentDidMount() {
+		const { layout } = this.props;
+
+		if( 'grid' === layout ) {
+			this.grid = new Grid( this.refs.fields );
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if( this.grid ) {
+			this.grid.resize();
+		}
 	}
 }
 

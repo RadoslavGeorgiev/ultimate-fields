@@ -9,7 +9,7 @@ export default class Textarea extends Preview {
 		return React.createElement( TextareaField, {
 			...this.getPreviewArgs(),
 
-			value: default_value_textarea,
+			value: default_value_textarea || '',
 			rows
 		});
 	}

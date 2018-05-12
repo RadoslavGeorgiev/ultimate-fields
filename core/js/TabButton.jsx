@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from './Grid.js';
 
 export default class TabButton extends React.Component {
 	render() {

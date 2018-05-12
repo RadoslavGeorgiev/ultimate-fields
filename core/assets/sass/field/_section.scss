@@ -6,11 +6,11 @@
 	position: relative;
 	z-index: 1;
 
-	.uf-boxed-fields & {
+	.uf-fields--boxed > & {
 		background: #fff;
 	}
 
-	.uf-fields-layout-grid & {
+	.uf-fields--grid > & {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
@@ -28,7 +28,7 @@
 		border-top: 0;
 	}
 
-	.uf-boxed-fields.uf-fields-layout-grid > & {
+	.uf-fields--boxed.uf-fields--grid > & {
 		border-top: 1px solid #ddd;
 
 		&.top-row {
@@ -36,7 +36,7 @@
 		}
 	}
 
-	.uf-fields-layout-rows > & {
+	.uf-fields--rows > & {
 		border-bottom: 1px solid #eee;
 	}
 

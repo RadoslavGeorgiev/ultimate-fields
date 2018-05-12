@@ -3,11 +3,18 @@ use Ultimate_Fields\Container;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Options_Page;
 
-add_action( 'uf.init', function() {
-	$page = Options_Page::create( 'react-env' );
-	$ovrs = Options_Page::create( 'react-overlays' );
+define( 'ENV_PAGE_STUFF', false );
+define( 'ENV_PAGE_TABBED_STUFF', false );
+define( 'ENV_STUFF', false );
+define( 'ENV_ALL_REACT_FIELDS', false );
+define( 'ENV_REPEATERS_PAGE', true );
 
-	Container::create( 'Page Stuff' )
+add_action( 'uf.init', function() {
+	if( ENV_PAGE_STUFF || ENV_PAGE_TABBED_STUFF ) {
+		$page = Options_Page::create( 'react-env' );
+	}
+
+	if( ENV_PAGE_STUFF ) Container::create( 'Page Stuff' )
 		->add_location( 'post_type', 'page' )
 		->add_location( 'options', $page )
 		->add_fields([
@@ -63,7 +70,7 @@ add_action( 'uf.init', function() {
 				])
 		]);
 
-	Container::create( 'Page Tabbed Stuff' )
+	if( ENV_PAGE_TABBED_STUFF ) Container::create( 'Page Tabbed Stuff' )
 		->add_location( 'post_type', 'page' )
 		->add_location( 'options', $page )
 		->set_layout( 'rows' )
@@ -90,7 +97,7 @@ add_action( 'uf.init', function() {
 				->add_dependency( 'second_tab_field' ),
 		]);
 
-	Container::create( 'Stuff' )
+	if( ENV_STUFF ) Container::create( 'Stuff' )
 		->add_location( 'options', $ovrs )
 		->add_fields([
 			Field::create( 'repeater', 'overlay_repeater' )
@@ -146,7 +153,7 @@ add_action( 'uf.init', function() {
 		);
 	}
 
-	Container::create( 'All React Fields' )
+	if( ENV_ALL_REACT_FIELDS ) Container::create( 'All React Fields' )
 		->add_location( 'options' )
 		->set_layout( 'rows' )
 		->add_fields([
@@ -175,6 +182,16 @@ add_action( 'uf.init', function() {
 			Field::create( 'section', 'demo_select_fields', 'Select Fields' ),
 			Field::create( 'select', 'demo_select_field', 'Select Field' )
 				->add_options( $select_options ),
+			Field::create( 'select', 'select_w_groups' )
+				->add_options([
+					'Group One' => [
+						'Option 1',
+						'Option 2'
+					],
+					'Group Two' => [
+						'Option 3'
+					]
+				]),
 			Field::create( 'select', 'demo_select_field_2', 'Fancy Select Field' )
 				->fancy()
 				->add_options( $select_options ),
@@ -210,6 +227,12 @@ add_action( 'uf.init', function() {
 				->set_max( 2 ),
 			Field::create( 'link', 'demo_link_field', 'Link Field' )
 				->required(),
+		]);
+
+	if( ENV_REPEATERS_PAGE ) Container::create( 'new-repeater' )
+		->add_location( 'options' )
+		->add_fields([
+			Field::create( 'repeater', 'new_repeater' )
 		]);
 });
 

@@ -208,13 +208,13 @@ class Field_Editor {
 		# Prepare the types dropdown
 		$types = array();
 		foreach( $this->groups as $group_id => $group_name ) {
-			// $group_fields = array();
+			$group_fields = array();
 
 			foreach( $this->types as $field_type => $field_data )
 				if( $field_data[ 'group' ] == $group_id )
-					$types[ $field_type ] = call_user_func( array( $field_data[ 'class_name' ], 'get_title' ) );
+					$group_fields[ $field_type ] = call_user_func( array( $field_data[ 'class_name' ], 'get_title' ) );
 
-			// $types[ $group_name ] = $group_fields;
+			$types[ $group_name ] = $group_fields;
 		}
 		$type_field->add_options( $types );
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Field from './../Field.jsx';
-import { map } from 'lodash';
+import _ from 'lodash';
 
 export default class Select extends Field {
 	/**
@@ -10,6 +10,12 @@ export default class Select extends Field {
 	 */
 	renderInput() {
 		const { input_type } = this.props;
+		const options = this.getOptions();
+		const basic = Select.getBasicOptions( options );
+
+		if( _.isEmpty( basic ) ) {
+			return <p>This field has no options.</p>
+		}
 
 		return 'radio' === input_type
 			? this.renderRadios( this.getOptions() )
@@ -25,7 +31,7 @@ export default class Select extends Field {
 	renderDropdown( options ) {
 		const { name, onValueChanged } = this.props;
 
-		const children = map( options, ( label, key ) =>
+		const children = _.map( options, ( label, key ) =>
 			'object' === typeof label
 				? this.renderGroup( key, label )
 				: this.renderOption( key, label )
@@ -47,7 +53,7 @@ export default class Select extends Field {
 
 	renderGroup( label, options ) {
 		return <optgroup label={ label } key={label}>
-			{ map( options, ( label, key ) => this.renderOption( key, label ) ) }
+			{ _.map( options, ( label, key ) => this.renderOption( key, label ) ) }
 		</optgroup>
 	}
 
@@ -61,7 +67,7 @@ export default class Select extends Field {
 		const { orientation } = this.props;
 
 		return <ul className={ 'uf-radio uf-radio--' + orientation }>
-			{ map( options, ( label, key ) => {
+			{ _.map( options, ( label, key ) => {
 				const checked = this.getValue() === key;
 
 				return <li key={ key }>
@@ -98,15 +104,32 @@ export default class Select extends Field {
 		return Select.getOptions( this.props );
 	}
 
+	static getBasicOptions( options ) {
+		const basic = [];
+
+		_.forEach( options, ( label, key ) => {
+			if( 'object' === typeof label ) {
+				_.forEach( label, ( sublabel, key ) => {
+					basic.push( key );
+				});
+			} else {
+				basic.push( key );
+			}
+		});
+
+		return basic;
+	}
+
 	static prepareValue( value, field ) {
 		const options = Select.getOptions( field.props, true );
+		const basic = Select.getBasicOptions( options );
 
-		if( value in options ) {
+		if( -1 != basic.indexOf( value ) ) {
 			return value;
 		}
 
 		value = null;
-		map( options, ( label, key ) => {
+		_.map( basic, key => {
 			if( null === value ) {
 				value = key;
 			}
