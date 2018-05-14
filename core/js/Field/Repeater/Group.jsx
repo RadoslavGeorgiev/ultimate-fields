@@ -4,13 +4,10 @@ import Control from './Control.jsx';
 
 export default class Group extends React.Component {
 	render() {
-		const { title, index, hidden, icon, edit_mode, position } = this.props;
-
-		// Callbacks
-		const onClone          = this.clone.bind( this );
-		const onDelete         = this.delete.bind( this );
-		const onEditFullScreen = this.editFullScreen.bind( this );
-		const onToggle         = this.toggle.bind( this );
+		const {
+			title, index, hidden, icon, edit_mode, position,
+			onDelete, onToggle, onClone, onEditFullScreen
+		} = this.props;
 
 		const popupIcon = 'popup' == edit_mode ? 'edit' : 'editor-expand';
 
@@ -28,12 +25,12 @@ export default class Group extends React.Component {
 				) }
 		</div>;
 
-		return <div className="uf-group" data-index={ index }>
+		return <div className={ 'uf-group' + ( hidden ? ' uf-group--hidden' : '' ) } data-index={ index }>
 			<header className="uf-group__header">
 				<div className="uf-group__number">
 					{ icon
-						? <strong className="dashicons { icon }"></strong>
-						: <strong className="uf-group-number-inside">{ position }</strong>
+						? <span className="dashicons { icon }"></span>
+						: <strong className="uf-group__number-inside">{ position }</strong>
 					}
 
 					<span className="dashicons dashicons-sort"></span>
@@ -48,25 +45,5 @@ export default class Group extends React.Component {
 				<Container { ... this.props } />
 			</div> }
 		</div>
-	}
-
-	delete( e ) {
-		e.preventDefault();
-		this.props.onDelete();
-	}
-
-	clone( e ) {
-		e.preventDefault();
-		this.props.onClone();
-	}
-
-	editFullScreen( e ) {
-		e.preventDefault();
-		this.props.onFullScreen();
-	}
-
-	toggle( e ) {
-		e.preventDefault();
-		this.props.onToggle();
 	}
 }

@@ -6,10 +6,6 @@ $number-width: 38px;
 	&__groups {
 		position: relative;
 
-		&-with-placeholder {
-			min-height: 50px;
-		}
-
 		.ui-sortable-placeholder {
 			visibility: visible !important;
 			background: #fcfcfc;
@@ -19,7 +15,11 @@ $number-width: 38px;
 		}
 	}
 
-	&-placeholder {
+	&__groups--empty {
+		min-height: 50px;
+	}
+
+	&__placeholder {
 		display: none;
 		position: absolute;
 		top: 0;
@@ -40,40 +40,19 @@ $number-width: 38px;
 		}
 	}
 
-	&-groups-empty &-placeholder {
+	&__groups--empty &__placeholder {
 		display: block;
 	}
 
-	&-prototypes {
-		overflow: hidden;
-
-		p {
-			margin: .4em 5px 0;
-		}
-
-		&-column {
-			display: inline-block;
-			vertical-align: top;
-			width: 260px;
-			max-width: 100%;
-			margin-top: 10px;
-			margin-left: 10px;
-
-			&.top-row {
-				margin-top: 0;
-			}
-
-			&.first-col {
-				margin-left: 0;;
-			}
-		}
-	}
-
-	&-groups-empty .uf-group {
+	&__groups--empty > .uf-group {
 		margin-bottom: 0;
 	}
 
-	&-dropdown {
+	&__prototypes {
+		overflow: hidden;
+	}
+
+	&__dropdown {
 		.uf-button {
 			vertical-align: middle;
 		}
@@ -86,7 +65,7 @@ $number-width: 38px;
 	background: #fff;
 
 	&.ui-sortable-helper,
-	&.ui-draggable-dragging {
+	&--dragging {
 		z-index: 3;
 	}
 
@@ -121,11 +100,13 @@ $number-width: 38px;
 			display: inline-block;
 		}
 
+		em,
 		strong,
 		span {
 			transition: opacity .2s ease;
 		}
 
+		em,
 		strong {
 			font-weight: bold;
 			display: inline-block;
@@ -226,7 +207,7 @@ $number-width: 38px;
 		display: none;
 	}
 
-	&--hidden > &-header {
+	&--hidden &__header {
 		border-bottom: 0;
 	}
 
@@ -396,6 +377,38 @@ $number-width: 38px;
 		border-top: 1px solid #ddd;
 		background: #fafafa;
 		padding: 15px;
+	}
+}
+
+
+
+.uf-prototype {
+	display: inline-block;
+	vertical-align: top;
+	width: 260px;
+	max-width: 100%;
+	margin-top: 10px;
+	margin-left: 10px;
+
+	&__group {
+		border-bottom: none;
+		margin-bottom: 0;
+	}
+
+	&__header {
+		cursor: pointer;
+	}
+
+	&__description p {
+		margin: .4em 5px 0;
+	}
+
+	&.top-row {
+		margin-top: 0;
+	}
+
+	&.first-col {
+		margin-left: 0;;
 	}
 }
 

@@ -1,51 +1,105 @@
-
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, bindActionCreators } from 'redux';
 import { connect, Provider } from 'react-redux';
 import _ from 'lodash';
-import Repeater from './Repeater.jsx';
+
 import * as reducers from './../reducers.js'
+import * as repeaterActions from './Repeater/actions.jsx';
+import Repeater from './Repeater.jsx';
 import StoreParser from './../StoreParser.js';
 
-import {
-	createContexts,
-	addRepeaterRow,
-	deleteRepeaterRow,
-	destroyContext,
-	cloneContext,
-	updateRepeaterOrder,
-	replaceContexts,
-	toggleRepeaterGroup
-} from './../actions.js';
-
-const mapStateToProps = ( { values: state }, ownProps ) => {
-	const prefix = ownProps.source + '_' + ownProps.name;
-	const value  = state[ prefix ] || [];
-
-	const types = value.map( index => {
-		return state[ prefix + '_' + index ].__type || Repeater.DEFAULT_REPEATER_GROUP_TYPE;
-	});
-
-	const visibility = value.map( index => {
-		return ! state[ prefix + '_' + index ].__hidden
-	});
-
-	return {
-		value,
-		types,
-		visibility,
-		getGroupData: ( prefix, children ) => ( new StoreParser ).extractDataFromState( state, children, prefix )
-	}
+const mapStateToProps = ( state, ownProps ) => {
+    return {
+        value: state.values[ ownProps.source ][ ownProps.name ] || []
+    }
 }
 
-const mapDispatchToProps = dispatch => ({
-	onCreateContexts:       ( data )              => dispatch( createContexts( data ) ),
-	onDestroyContext:       ( name )              => dispatch( destroyContext( name ) ),
-	onAddRepeaterRow:       ( name, index )       => dispatch( addRepeaterRow( name, index ) ),
-	onDeleteRepeaterRow:    ( name, index )       => dispatch( deleteRepeaterRow( name, index ) ),
-	onCloneContext:         ( from, to, changes ) => dispatch( cloneContext( from, to, changes ) ),
-	onReplaceContexts:      ( contexts )          => dispatch( replaceContexts( contexts ) ),
-	onUpdatedRepeaterOrder: ( name, order )       => dispatch( updateRepeaterOrder( name, order ) ),
-	onToggleGroup:          ( name )              => dispatch( toggleRepeaterGroup( name ) )
-});
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators( repeaterActions, dispatch );
+}
 
-export default connect( mapStateToProps, mapDispatchToProps )( Repeater );
+const Connected = connect( mapStateToProps, mapDispatchToProps )( Repeater );
+
+export default class ConnectedRepeater extends Connected {
+    /**
+     * Returns all contexts (sub-stores) for the repeater field.
+     *
+     * @param  {Class}         type   The class of the field.
+     * @param  {React.Element} field  The descriptor of the field.
+     * @param  {Array}         data   The data for the field.
+     * @param  {string}        source The context of the field.
+     * @return {Object}
+     */
+    static getStores( type, field, data, source ) {
+        const { name } = field.props;
+
+        // Prepare all context data
+        const groups = Repeater.getGroups( field );
+        const rows   = data[ name ] || [];
+        const parser = new StoreParser;
+        const value  = [];
+        const stores = {};
+
+		// Map each row to a store
+		rows.forEach( ( row, index ) => {
+            const type   = row.__type || Repeater.DEFAULT_GROUP_TYPE;
+            const group  = groups.find( group => group.type === type );
+            const prefix = `${source}_${name}_${index}`;
+
+            Object.assign(
+                stores,
+                parser.prepareDataForStore( row, group.children, prefix )
+            );
+
+            value.push({
+                type,
+                index,
+                hidden: !! row.__hidden
+            });
+        });
+
+        // Save the value
+        stores[ source ] = stores[ source ] || {}
+        stores[ source ][ name ] = value;
+
+		return stores;
+	}
+
+    /**
+     * Extracts the data from a store as an object, which will be send to PHP.
+     *
+     * @param  {Object}        state  The current state of the store.
+     * @param  {Class}         type   The type class of the field.
+     * @param  {React.Element} field  The descriptor of the field.
+     * @param  {string}        source A context for the value.
+     * @return {Array}
+     */
+    static getDataFromState( state, type, field, source ) {
+		const { name } = field.props;
+
+        // Prepare all context data
+		const groups = Repeater.getGroups( field );
+        const value  = state[ source ][ name ] || [];
+        const parser = new StoreParser;
+
+        // Transform each individual row
+		const rows = value.map( row => {
+            const { index, type, hidden } = row;
+
+            const group     = groups.find( group => group.type == type );
+            const prefix    = `${source}_${name}_${index}`;
+            const extracted = parser.extractDataFromState( state, group.children, prefix );
+
+			Object.assign( extracted, {
+				__type:   type,
+				__hidden: hidden
+			});
+
+            return extracted;
+		});
+
+        // Create the proper object and return it
+        const data = {};
+		data[ name ] = rows;
+		return data;
+	}
+}

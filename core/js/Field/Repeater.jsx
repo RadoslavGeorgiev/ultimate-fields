@@ -1,357 +1,271 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import _ from 'lodash';
-import repeaterValidator from './../validators/repeater.js';
-import Container from './../Container.jsx';
+
 import Field from './../Field.jsx';
-import Group from './Repeater/Group.jsx';
-import FullScreenGroup from './Repeater/FullScreenGroup.jsx';
 import Button from './../Button.jsx';
-import Overlay from './../Overlay.jsx';
-import StoreParser from './../StoreParser.js';
+import Group from './Repeater/Group.jsx';
+import Prototype from './Repeater/Prototype.jsx';
 
 export default class Repeater extends Field {
-	static DEFAULT_REPEATER_GROUP_TYPE = 'entry';
+    static DEFAULT_GROUP_TYPE = 'entry';
 
-	/**
-	 * Collects all group types before mounting the component.
+    static strings = {
+        noGroups: 'This field does not contain any groups.',
+        addGenericGroup: 'Add entry'
+    };
+
+    /**
+	 * Before rendering the component, all groups have to be loaded.
 	 */
-	componentWillMount() {
-		const { children } = this.props;
+    componentWillMount() {
+        this.groups = Repeater.getGroups( this );
+ 	}
 
-		this.groups = [];
+    /**
+     * Returns all groups, which belong to a specific field.
+     *
+     * @param {React.Element} field The field whose groups will be loaded.
+     * @return {Array.Object}
+     */
+    static getGroups( field ) {
+        const { children } = field.props;
+ 		const groups = [];
 
-		React.Children.map( children, child => {
-			if( Group === child.type ) {
-				this.groups.push({ ...child.props });
-			} else {
-				this.getGenericGroup().children.push( child );
-			}
-		});
-	}
+        // The generic group will receive immediate children which are not other groups
+        const genericFields = [];
 
-	/**
-	 * Generates a generic group for when there are no specific groups defined.
-	 *
-	 * @return <Object>
-	 */
-	getGenericGroup() {
-		if( this.genericGroup ) {
-			return this.genericGroup;
-		}
+        // Distribute all child elements
+ 		React.Children.map( children, child => {
+ 			if( Group === child.type ) {
+ 				groups.push({ ...child.props });
+ 			} else {
+ 				genericFields.push( child );
+ 			}
+ 		});
 
-		this.genericGroup = {
-			type: 'entry',
-			title: 'Entry',
-			children: []
-		}
+        // Add the default group to the mix if needed
+        if( genericFields.length ) {
+            groups.unshift({
+                type:     Repeater.DEFAULT_GROUP_TYPE,
+    			title:    'Entry',
+                children: genericFields
+            });
+        }
 
-		this.groups.push( this.genericGroup );
+        return groups;
+    }
 
-		return this.genericGroup;
-	}
+    /**
+     * Renders the top-level input of the Repeater field.
+     *
+     * @return {React.Element}
+     */
+    renderInput() {
+        const { noGroups } = Repeater.strings;
+        const { chooser_type } = this.props;
+        const groups = this.groups;
 
-	/**
-	 * Returns a group, which should be used by default.
-	 *
-	 * @return <Object>
-	 */
-	getDefaultGroup() {
-		return this.groups.find( () => true );
-	}
+        // If there are no groups, nothing will be displayed
+        if( ! groups.length ) {
+            return <p>{ noGroups }</p>
+        }
 
-	/**
-	 * Renders the input of the field.
-	 *
-	 * @return <React.Component>
-	 */
-	renderInput() {
-		const { name, types, visibility, children, source } = this.props;
+        else if( 1 === groups.length ) {
+            return this.renderSingleGroup( groups[0] );
+        }
 
-		const entries = ( this.getValue() || [] ).map( ( index, i ) => {
-			const type = this.groups.find( group => group.type == types[ i ] ) || this.getDefaultGroup();
+        // Multiple groups mode
 
-			return React.createElement( Group, {
-				...type,
+        else if( 'dropdown' === chooser_type ) {
 
-				key:          index,
-				index:        index,
-				hidden:       ! visibility[ index ],
-				source:       `${source}_${name}_${index}`,
-				position:     i+1,
-				onDelete:     () => this.deleteGroup( index ),
-				onClone:      () => this.cloneGroup( index ),
-				onFullScreen: () => this.openFullScreen( index, type.type ),
-				onToggle:     () => this.onToggle( index )
-			});
-		});
+        }
 
-		const buttons = this.groups.length === 1
-			? <Button onClick={ this.addGroupClicked.bind( this ) }>Add entry</Button>
-			: this.groups.map( group => React.createElement( Button, {
-				key:      group.type,
-				onClick:  () => this.addGroupClicked( group.type ),
-				children: 'Add ' + group.title
-			}));
+        else if( 'tags' === chooser_type ) {
 
-		return <div className="uf-repeater">
-			<div className="uf-repeater__groups" ref={ node => this.groupsNode = node }>
-				{ entries }
-			</div>
+        }
 
-			{ buttons }
-		</div>
-	}
+        else {
+            return this.renderMultipleGroups( groups );
+        }
+    }
 
-	componentDidMount() {
-		jQuery( this.groupsNode ).sortable({
-			axis:   'y',
+    /**
+     * Renders the layout for when a single group type is present.
+     *
+     * @param  {Object} group The group to use.
+     * @return {React.Element}
+     */
+    renderSingleGroup( group ) {
+        const { addGenericGroup } = Repeater.strings;
+        const { type } = group;
+
+        // Prepare the add group button
+        const button = react.createElement( Button, {
+            children: addGenericGroup,
+            icon:     'dashicons-plus',
+            onClick:  () => this.addGroup( type )
+        });
+
+        // Output the structure
+        const entries = this.renderEntries();
+
+        if( 0 === entries.length ) {
+            return button;
+        }
+
+        return <div className="uf-repeater">
+            <div className="uf-repeater__groups" ref="groups">{ entries }</div>
+            { button }
+        </div>
+    }
+
+    /**
+     * Renders the skeleton of the field when multiple groups are available.
+     *
+     * @param  {Array.Object} groups Basic definitions of all groups.
+     * @return {React.Element}
+     */
+    renderMultipleGroups( groups ) {
+        const { placeholder_text } = this.props;
+        const entries = this.renderEntries();
+
+        const prototypes = groups.map( group => {
+            const { type, title, description } = group;
+
+            return React.createElement( Prototype, {
+                key: type,
+                title,
+                description,
+                type,
+
+                onClick: () => this.addGroup( type )
+            });
+        });
+
+        const groupsClass = [ 'uf-repeater__groups' ];
+        if( ! entries.length ) groupsClass.push( 'uf-repeater__groups--empty' );
+
+        return <div className="uf-repeater">
+            <div className={ groupsClass.join( ' ' ) } ref="groups">
+                { entries.length
+                    ? entries
+                    : <div className="uf-repeater__placeholder">
+                        { placeholder_text }
+                    </div> }
+            </div>
+            <div className="uf-repeater__prototypes" ref="prototypes">{ prototypes }</div>
+        </div>
+    }
+
+    /**
+     * Renders all existing entries.
+     *
+     * @return {Array.React.Element}
+     */
+    renderEntries() {
+        const {
+            source, name,
+            onDelete, onToggle, onClone
+        } = this.props;
+
+        return this.getValue().map( ( row, i ) => {
+            const { index, hidden, type } = row;
+
+            const group = this.groups.find( group => group.type === type );
+
+            return React.createElement( Group, {
+                ...group,
+
+                key:     index,
+                source: `${source}_${name}_${index}`,
+                position: i + 1,
+                index:    index,
+                hidden:   hidden,
+
+                onDelete: () => onDelete( name, source, index ),
+                onToggle: () => onToggle( name, source, index ),
+                onClone:  () => onClone( name, source, index, group ),
+
+                // onEditFullScreen
+            });
+        })
+    }
+
+    /**
+     * Once the entries have been rendered, start jQuery UI's sortable.
+     */
+    componentDidMount() {
+        const { chooser_type } = this.props;
+        const { groups, prototypes } = this.refs;
+
+        const $sortable = jQuery( groups ).sortable({
+            axis:   'y',
 			handle: '.uf-group__header',
 			stop:   this.saveSort.bind( this ),
 			forcePlaceholderSize: true
-		});
-	}
+        });
 
-	saveSort() {
-		const { source, name, onUpdatedRepeaterOrder } = this.props;
+        // In widgets mode, allow prototypes to be dragged
+        if( 'widgets' != chooser_type || ! Repeater.getGroups( this ).length ) {
+            return;
+        }
 
-		const order = Array.from( this.groupsNode.children ).map( group => {
-			return parseInt( group.dataset.index );
-		});
+        var $prototypes = jQuery( prototypes ).find( '.uf-group' );
 
-		onUpdatedRepeaterOrder( `${source}_${name}`, order );
-	}
-
-	addGroup( type ) {
-		const { name, value, source, onAddRepeaterRow, onCreateContexts } = this.props;
-
-		// Get a new index for the group
-		const index  = value.length ? Math.max( ...value ) + 1 : 0;
-		const prefix = `${source}_${name}_${index}`;
-
-		// Pregenrate the defaults
-		const parser = new StoreParser;
-		const group = this.groups.find( group => group.type == type );
-
-		const stores = parser.prepareDataForStore( {}, group.children, prefix );
-		stores[ prefix ] = Object.assign( stores[ prefix ] || {}, {
-			__index: index,
-			__type:  type
-		});
-
-		// Push the new contexts
-		onCreateContexts( stores );
-
-		// Update the value of the field
-		onAddRepeaterRow( `${source}_${name}`, index );
-	}
-
-	addGroupClicked( type ) {
-		let defaultType;
-
-		_.forEach( this.groups, group => {
-			defaultType = defaultType || group.type
-		});
-
-		this.addGroup( type || defaultType || Repeater.DEFAULT_REPEATER_GROUP_TYPE );
-	}
-
-	static getDefaultValue() {
-		return [];
-	}
-
-	deleteGroup( index ) {
-		const { name, source, onDeleteRepeaterRow, onDestroyContext } = this.props;
-
-		// Remove the repeater row
-		onDeleteRepeaterRow( `${source}_${name}`, index );
-
-		// Destroy the context
-		onDestroyContext( `${source}_${name}_${index}` );
-	}
-
-	cloneGroup( sourceIndex ) {
-		const { name, value, source, onCloneContext, onUpdatedRepeaterOrder, onValueChanged } = this.props;
-
-		// Get a new index for the group
-		const index   = value.length ? Math.max( ...value ) + 1 : 0;
-		const ordered = value.splice( 0, value.indexOf( sourceIndex ) ) // Beginning
-			.concat([ index ]) // Injected
-			.concat( value ); // Older
-
-		// Clone the existing context
-		onCloneContext( `${source}_${name}_${sourceIndex}`, `${source}_${name}_${index}` );
-
-		// Sort the stores
-		onUpdatedRepeaterOrder( `${source}_${name}`, ordered );
-	}
-
-	openFullScreen( index, type ) {
-		const { name, source, children, getGroupData, onReplaceContexts } = this.props;
-		const parser = new StoreParser;
-		const group = this.groups.find( group => group.type === type );
-		const prefix = `${source}_${name}_${index}`;
-
-		const rawData = getGroupData( prefix, group.children );
-		const values = parser.prepareDataForStore( rawData, group.children, '__' );
-
-		const store = createStore( combineReducers( reducers ), { values } );
-
-		let stateSaved = false;
-
-		const saveState = () => {
-			// Extract the data from the store and convert it to the proper format
-			const extracted = parser.extractDataFromState( store.getState().values, group.children, '__' );
-			const converted = parser.prepareDataForStore( extracted, group.children, prefix );
-
-			converted[ prefix ] = Object.assign( converted[ prefix ] || {}, {
-				__type:   group.type,
-				__hidden: !! rawData.__hidden
-			});
-
-			onReplaceContexts( converted );
-			stateSaved = true;
-
-			Overlay.remove();
-		}
-
-		const checkForChanges = () => {
-			if( stateSaved || _.isEqual( values, store.getState().values ) ) {
-				return false;
-			} else {
-				return 'Changes have been made. Are you sure you want to go back?';
-			}
-		}
-
-		Overlay.show(
-			<React.Fragment>
-				<Overlay.Title>{ group.title }</Overlay.Title>
-
-				<Overlay.Footer>
-					<Button onClick={ saveState }>Save</Button>
-					<Button onClick={ Overlay.remove }>Close</Button>
-				</Overlay.Footer>
-
-				<Provider store={ store } key={ Math.random() } onLeave={ checkForChanges }>
-					<FullScreenGroup { ...group } source="__">
-					</FullScreenGroup>
-				</Provider>
-			</React.Fragment>
-		);
-
-		return;
-
-		const destroy = () => {
-			ReactDOM.unmountComponentAtNode( domNode );
-			document.body.removeChild( domNode );
-		}
-
-		ReactDOM.render(
-			<Provider store={ store }>
-				<FullScreenGroup
-					{ ...group }
-					source="__"
-					onClose={ () => destroy() }
-					onSave={ () => { saveState(); destroy() } }
-				/>
-			</Provider>,
-			domNode
-		);
-	}
-
-	onToggle( index ) {
-		const { name, source, onToggleGroup } = this.props;
-		onToggleGroup( `${source}_${name}_${index}` );
-	}
-
-	static getGroups( field ) {
-		const { children } = field.props;
-		const groups = {};
-		const generic = [];
-
-		React.Children.forEach( children, child => {
-			if( Group === child.type ) {
-				groups[ child.props.type ] = child.props.children.map
-					? child.props.children.map( el => el )
-					: React.Children.map( child.props.children, el => el );
-			} else {
-				generic.push( child );
+		$prototypes.draggable({
+			connectToSortable: $sortable,
+			helper: 'clone',
+			revert: 'invalid',
+			containment: $sortable.closest( '.uf-field__inputs' ),
+			start: function( e, ui ) {
+				ui.helper.addClass( 'uf-group--dragging' );
+			},
+			stop: function( e, ui ) {
+				// setTimeout(function() {
+				// 	ui.helper.removeClass( 'uf-group--dragging' );
+				// }, 30 );
+                ui.helper.remove();
 			}
 		});
+    }
 
-		if( generic.length > 0 ) {
-			groups[ DEFAULT_REPEATER_GROUP_TYPE ] = generic;
-		}
+    /**
+     * Saves the order of the groups once they have been rendered.
+     */
+    saveSort() {
+        const { name, source, populatePlaceholders } = this.props;
+        const existing = this.getValue();
+        let populate = false;
 
-		return groups;
-	}
+        const value = Array.from( this.refs.groups.children ).map( child => {
+            if( 'type' in child.dataset ) {
+                populate = true;
 
-	static getStores( type, field, data, source ) {
-		const indexi  = [];
-		const stores  = {};
-		const { name } = field.props;
-		const groups   = Repeater.getGroups( field );
+                // An item was dropped
+                return {
+                    index:  null,
+                    type:   child.dataset.type,
+                    hidden: false
+                }
+            } else {
+                const index = parseInt( child.dataset.index );
+                return existing.find( group => index === group.index );
+            }
+        });
 
-		// Make a place for all indexi
-		stores[ source + '_' + name ] = indexi;
+        if( populate ) {
+            populatePlaceholders( name, source, value, Repeater.getGroups( this ) );
+        } else {
+            this.updateValue( value );
+        }
+    }
 
-		// Go through the values
-		const value = ( name in data )
-			? data[ name ]
-			: [];
+    /**
+     * Adds a new group to the list of entries.
+     */
+    addGroup( type ) {
+        const { name, value, source, addRow } = this.props;
+        const group = this.groups.find( group => group.type === type );
 
-		value.forEach( ( row, index ) => {
-			const rowType = ( row && row.__type && ( row.__type in groups ) )
-				? row.__type
-				: DEFAULT_REPEATER_GROUP_TYPE;
-
-			const group  = groups[ rowType ];
-			const parser = new StoreParser;
-			const prefix = `${source}_${name}_${index}`;
-
-			Object.assign( stores, parser.prepareDataForStore( row, group, prefix ) );
-
-			stores[ prefix ] = Object.assign( stores[ prefix ] || {}, {
-				__type:   rowType,
-				__hidden: !! row.__hidden,
-				__index:  index
-			});
-
-			indexi.push( index );
-		});
-
-		return stores;
-	}
-
-	static getDataFromState( stores, type, field, source ) {
-		const { name } = field.props;
-		const data     = {};
-		const rows     = [];
-		const groups   = Repeater.getGroups( field );
-
-		const indexi = stores[ source + '_' + name ] || [];
-		indexi.forEach( index => {
-			const prefix = `${source}_${name}_${index}`;
-			const type   = stores[ prefix ].__type;
-			const group  = groups[ type ];
-			const parser = new StoreParser;
-
-			const row  = Object.assign(
-				parser.extractDataFromState( stores, group, prefix ),
-				{
-					__type:   stores[ prefix ].__type,
-					__hidden: stores[ prefix ].__hidden
-				}
-			);
-
-			rows.push( row );
-		});
-
-		data[ name ] = rows;
-		return data;
-	}
-
-	static getValidator() {
-		return repeaterValidator;
-	}
+        addRow( name, source, group );
+    }
 }

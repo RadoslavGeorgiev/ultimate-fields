@@ -231,8 +231,21 @@ add_action( 'uf.init', function() {
 
 	if( ENV_REPEATERS_PAGE ) Container::create( 'new-repeater' )
 		->add_location( 'options' )
+		->set_layout( 'rows' )
 		->add_fields([
 			Field::create( 'repeater', 'new_repeater' )
+				->add_group( 'text_group', [
+					'title' => 'Text Group'	,
+					'fields' => [
+						Field::create( 'text', 'title' )
+					],
+					'description' => 'A text group that is somewhere around here.'
+				])
+				->add_group( 'image', [
+					'fields' => [
+						Field::create( 'image', 'image' )
+					]
+				])
 		]);
 });
 

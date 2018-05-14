@@ -279,6 +279,7 @@ class Repeater extends Field {
 	public function enqueue_scripts() {
 	    if( $script = $GLOBALS['wp_scripts']->query( 'ultimate-fields', 'registered' ) ) {
 	        $script->deps[] = 'jquery-ui-sortable';
+	        $script->deps[] = 'jquery-ui-draggable';
 		}
 
 		wp_enqueue_script( 'uf-field-repeater' );
