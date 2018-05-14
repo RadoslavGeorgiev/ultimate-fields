@@ -6,7 +6,7 @@ import StoreParser from './StoreParser.js';
 import * as reducers from './reducers.js';
 import getFieldType from './fields.js';
 import { isEqual } from 'lodash';
-import validateField from './validators/validateField.js';
+import validateFields from './validators/validateFields.js';
 
 window.react = React;
 
@@ -48,16 +48,11 @@ export default class Form extends React.Component {
 
 	validate() {
 		const { children } = this.props;
-		let errors = [];
-
-		React.Children.forEach( children, child => {
-			const state = validateField( child, this.store, '__' );
-			errors = errors.concat( state );
-		});
+		const errors = validateFields( this.store, children );
 
 		this.setState({
-			errors: errors
-		});
+	        errors: errors
+	    });
 
 		return errors;
 	}

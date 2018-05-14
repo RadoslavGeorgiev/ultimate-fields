@@ -3,6 +3,7 @@ import { connect, Provider } from 'react-redux';
 import _ from 'lodash';
 
 import * as reducers from './../reducers.js'
+import { replaceContexts } from './../actions.js';
 import * as repeaterActions from './Repeater/actions.jsx';
 import Repeater from './Repeater.jsx';
 import StoreParser from './../StoreParser.js';
@@ -12,14 +13,43 @@ const mapStateToProps = ( state, ownProps ) => {
         return ( state.values[ context ] || {} )[ name ];
     }
 
+    const getContexts = prefix => {
+        const data = {};
+
+        _.forEach( state.values, ( values, context ) => {
+            if( 0 === context.indexOf( prefix ) ) {
+                data[ context ] = values;
+            }
+        });
+
+        return data;
+    }
+
+    const getGroupErrors = source => {
+        const errors = [];
+
+        _.forEach( state.validation, ( message, prefix ) => {
+            if( 0 === prefix.indexOf( source ) ) {
+                errors.push( message );
+            }
+        });
+
+        return errors;
+    }
+
     return {
         value: state.values[ ownProps.source ][ ownProps.name ] || [],
-        getValueFromContext
+        getContexts,
+        getValueFromContext,
+        getGroupErrors
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators( repeaterActions, dispatch );
+    return {
+        ...bindActionCreators( repeaterActions, dispatch ),
+        replaceContexts: contexts => dispatch( replaceContexts( contexts ) )
+    }
 }
 
 const Connected = connect( mapStateToProps, mapDispatchToProps )( Repeater );

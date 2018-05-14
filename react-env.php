@@ -234,19 +234,36 @@ add_action( 'uf.init', function() {
 		->set_layout( 'rows' )
 		->add_fields([
 			Field::create( 'repeater', 'new_repeater' )
+				->set_minimum( 1 )
+				->set_maximum( 10 )
+
 				->add_group( 'text_group', [
 					'title' => 'Text Group'	,
 					'fields' => [
-						Field::create( 'text', 'title' ),
-						Field::create( 'text', 'other_field' )
+						Field::create( 'tab', 'content' ),
+						Field::create( 'text', 'title' )->required(),
+						Field::create( 'text', 'other_field' ),
+						Field::create( 'tab', 'appearance' ),
+						Field::create( 'text', 'appearance_field' ),
 					],
-					'description' => 'A text group that is somewhere around here.'
+					'description' => 'A text group that is somewhere around here.',
+
+					'minimum' => 1,
+					'maximum' => 3,
+					// 'border_color' => 'blue',
+					// 'title_color' => 'white',
+					// 'title_background' => 'red',
+
+					'edit_mode' => 'both'
 				])
 				->add_group( 'image', [
 					'fields' => [
 						Field::create( 'image', 'image' )
-					]
+					],
+					'edit_mode' => 'popup'
 				])
+
+				// ->set_chooser_type( 'tags' )
 		]);
 });
 

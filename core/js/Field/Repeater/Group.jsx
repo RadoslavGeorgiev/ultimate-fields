@@ -7,15 +7,18 @@ import getFieldType from './../../fields.js';
 export default class Group extends React.Component {
 	render() {
 		const {
-			title, index, hidden, icon, edit_mode, position,
+			title, icon, index, hidden, edit_mode, position, canBeDeleted, canBeCloned, invalid,
+			title_background, title_color, border_color,
 			onDelete, onToggle, onClone, onEditFullScreen
 		} = this.props;
 
 		const popupIcon = 'popup' == edit_mode ? 'edit' : 'editor-expand';
 
+		// Prepare the controls
 		const controls = <div className="uf-group__controls">
-			<Control type="clone" icon="admin-page" handler={ onClone } />
-			<Control type="remove" icon="trash" handler={ onDelete } />
+			{ canBeCloned ? <Control type="clone" icon="admin-page" handler={ onClone } /> : null }
+
+			{ canBeDeleted ? <Control type="remove" icon="trash" handler={ onDelete } /> : null }
 
 			{ 'inline' != edit_mode &&
 				<Control type="popup" icon={ popupIcon } handler={ onEditFullScreen } /> }
@@ -27,7 +30,22 @@ export default class Group extends React.Component {
 				) }
 		</div>;
 
-		return <div className={ 'uf-group' + ( hidden ? ' uf-group--hidden' : '' ) } data-index={ index }>
+		// Prepare the styles and classes
+		const groupClass = [
+			'uf-group',
+			hidden               && 'uf-group--hidden',
+			invalid              && 'uf-group--invalid',
+			'popup' == edit_mode && 'uf-group--popup-only'
+		].filter( className => !! className ).join( ' ' );
+
+		const titleStyles = {};
+		if( title_background ) titleStyles.background = title_background;
+		if( title_color )      titleStyles.color      = title_color;
+
+		const boxStyles = {};
+		if( border_color ) boxStyles.borderColor = border_color;
+
+		return <div className={ groupClass } data-index={ index } style={ boxStyles }>
 			<header className="uf-group__header">
 				<div className="uf-group__number">
 					{ icon
@@ -40,13 +58,13 @@ export default class Group extends React.Component {
 
 				{ controls }
 
-				<h3 className="uf-group__title" onClick={ onToggle }>
+				<h3 className="uf-group__title" onClick={ onToggle } style={ titleStyles }>
 					{ title }
 					{ this.getPreviewText() }
 				</h3>
 			</header>
 
-			{ ! hidden && <div className="uf-group__body">
+			{ ! hidden && 'popup' != edit_mode && <div className="uf-group__body">
 				<Container { ... this.props } />
 			</div> }
 		</div>

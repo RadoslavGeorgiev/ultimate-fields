@@ -1,9 +1,19 @@
 import React from 'react';
+import _ from 'lodash';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
 
+import * as reducers from './../reducers.js';
+import validateFields from './../validators/validateFields.js';
 import Field from './../Field.jsx';
 import Button from './../Button.jsx';
+import Overlay from './../Overlay.jsx';
 import Group from './Repeater/Group.jsx';
+import FullScreenGroup from './Repeater/FullScreenGroup.jsx';
 import Prototype from './Repeater/Prototype.jsx';
+import Tag from './Repeater/Tag.jsx';
+import StoreParser from './../StoreParser.js';
+import repeaterValidator from './Repeater/validator.js';
 
 export default class Repeater extends Field {
     static DEFAULT_GROUP_TYPE = 'entry';
@@ -76,11 +86,11 @@ export default class Repeater extends Field {
         // Multiple groups mode
 
         else if( 'dropdown' === chooser_type ) {
-
+            return this.renderDropdown( groups );
         }
 
         else if( 'tags' === chooser_type ) {
-
+            return this.renderTags( groups );
         }
 
         else {
@@ -127,6 +137,7 @@ export default class Repeater extends Field {
     renderMultipleGroups( groups ) {
         const { placeholder_text } = this.props;
         const entries = this.renderEntries();
+        const limits  = this.getLimits();
 
         const prototypes = groups.map( group => {
             const { type, title, description } = group;
@@ -136,6 +147,7 @@ export default class Repeater extends Field {
                 title,
                 description,
                 type,
+                disabled: limits.groups[ type ],
 
                 onClick: () => this.addGroup( type )
             });
@@ -157,6 +169,74 @@ export default class Repeater extends Field {
     }
 
     /**
+     * Renders the skeleton of the field when multiple groups are available as tags.
+     *
+     * @param  {Array.Object} groups Basic definitions of all groups.
+     * @return {React.Element}
+     */
+    renderTags( groups ) {
+        const { add_text: text } = this.props;
+        const entries = this.renderEntries();
+        const limits  = this.getLimits();
+
+        const tags = groups.map( group => {
+            const { type, title, description } = group;
+
+            return React.createElement( Tag, {
+                key: type,
+                title,
+                description,
+                type,
+                disabled: limits.groups[ type ],
+
+                onClick: () => this.addGroup( type )
+            });
+        });
+
+        return <div className="uf-repeater">
+            <div className="uf-repeater__groups" ref="groups">{ entries }</div>
+            <div className="uf-tags">
+            	<h4 className="uf-tags__text">{ text }</h4>
+            	<div className="uf-tags__options">{ tags }</div>
+            </div>
+        </div>
+    }
+
+    /**
+     * Renders the skeleton of the field when multiple groups are available as a dropdown.
+     *
+     * @param  {Array.Object} groups Basic definitions of all groups.
+     * @return {React.Element}
+     */
+    renderDropdown( groups ) {
+        const { add_text: text } = this.props;
+
+        const entries = this.renderEntries();
+
+        const options = groups.map( group => {
+            const { type, title } = group;
+
+            let disabled = false;
+
+            if( ! disabled ) {
+                return <option value={ group.type } key={ group.type }>{ title }</option>;
+            }
+        });
+
+        // The callback to add a new group
+        const addGroup = () => this.addGroup( this.refs.dropdownSelect.value );
+
+        return <div className="uf-repeater">
+            <div className="uf-repeater__groups" ref="groups">{ entries }</div>
+
+            <div className="uf-repeater__dropdown">
+            	<select ref="dropdownSelect">{ options }</select>
+                <Button icon="dashicons-plus" onClick={ addGroup }>{ text }</Button>
+            </div>
+        </div>
+    }
+
+    /**
      * Renders all existing entries.
      *
      * @return {Array.React.Element}
@@ -164,30 +244,37 @@ export default class Repeater extends Field {
     renderEntries() {
         const {
             source, name,
-            getValueFromContext, onDelete, onToggle, onClone
+            getGroupErrors, getValueFromContext, onDelete, onToggle, onClone
         } = this.props;
+
+        const limits = this.getLimits();
 
         return this.getValue().map( ( row, i ) => {
             const { index, hidden, type } = row;
 
-            const group = this.groups.find( group => group.type === type );
+            const group       = this.groups.find( group => group.type === type );
+            const groupSource = `${source}_${name}_${index}`;
 
             return React.createElement( Group, {
                 ...group,
 
                 key:     index,
-                source: `${source}_${name}_${index}`,
+                source:  groupSource,
                 position: i + 1,
                 index:    index,
                 hidden:   hidden,
+                invalid:  getGroupErrors( groupSource ).length > 0,
 
-                onDelete: () => onDelete( name, source, index ),
-                onToggle: () => onToggle( name, source, index ),
-                onClone:  () => onClone( name, source, index, group ),
+                canBeDeleted: ! limits.min,
+                canBeCloned:  ! limits.max && ! limits.groups[ type ],
+
+                onDelete:         () => onDelete( name, source, index ),
+                onToggle:         () => onToggle( name, source, index ),
+                onClone:          () => onClone( name, source, index, group ),
+                onEditFullScreen: () => this.openFullScreen( row ),
 
                 getValueFromContext
 
-                // onEditFullScreen
             });
         })
     }
@@ -222,12 +309,23 @@ export default class Repeater extends Field {
 				ui.helper.addClass( 'uf-group--dragging' );
 			},
 			stop: function( e, ui ) {
-				// setTimeout(function() {
-				// 	ui.helper.removeClass( 'uf-group--dragging' );
-				// }, 30 );
                 ui.helper.remove();
 			}
 		});
+
+        this.componentDidUpdate();
+    }
+
+    componentDidUpdate() {
+        const limits = this.getLimits();
+
+        jQuery( this.refs.prototypes ).children().each(function() {
+            if( this.classList.contains( 'uf-prototype--disabled' ) ) {
+                jQuery( this.children[0] ).draggable( 'disable' );
+            } else {
+                jQuery( this.children[0] ).draggable( 'enable' );
+            }
+        });
     }
 
     /**
@@ -266,8 +364,125 @@ export default class Repeater extends Field {
      */
     addGroup( type ) {
         const { name, value, source, addRow } = this.props;
-        const group = this.groups.find( group => group.type === type );
+        const group  = this.groups.find( group => group.type === type );
+        const limits = this.getLimits();
+
+        if( limits.groups[ type ] ) {
+            return;
+        }
 
         addRow( name, source, group );
+    }
+
+    /**
+     * Returns the limits for minimum and maximum of the whole field, as well as individual groups.
+     */
+    getLimits() {
+        const { maximum, minimum } = this.props;
+
+        const limits = {
+            min:    false,
+            max:    false,
+            groups: {}
+        }
+
+        const usedGroups = {};
+        const entries = this.getValue();
+
+        entries.forEach( entry => {
+            usedGroups[ entry.type ] = usedGroups[ entry.type ] || 0;
+            usedGroups[ entry.type ]++;
+        });
+
+        // Calculate
+        if( minimum && entries.length <= minimum ) {
+            limits.min = true;
+        }
+
+        if( maximum && entries.length >= maximum ) {
+            limits.max = true;
+        }
+
+        _.forEach( usedGroups, ( count, type ) => {
+            const group = this.groups.find( group => group.type === type );
+
+            if( group.maximum && group.maximum <= usedGroups[ type ] ) {
+                limits.groups[ type ] = true;
+            } else {
+                limits.groups[ type ] = false;
+            }
+        });
+
+        return limits;
+    }
+
+    /**
+     * Opens a group in full screen.
+     *
+     * @param {Object} row The row, which the group is associated with.
+     */
+    openFullScreen( row ) {
+        const { name, source, getContexts, replaceContexts } = this.props;
+        const { index, type } = row;
+
+        const group = this.groups.find( group => group.type === type );
+
+        // Prepare a store
+        const prefix    = `${source}_${name}_${index}`;
+        const parser    = new StoreParser;
+        const extracted = parser.extractDataFromState( getContexts( prefix ), group.children, prefix );
+        const values    = parser.prepareDataForStore( extracted, group.children, '__' );
+        const store     = createStore( combineReducers( reducers ), { values } );
+
+        // Callbacks
+        let stateSaved = false;
+
+        const saveState = () => {
+            // Start with validation
+            if( validateFields( store, group.children ).length ) {
+                return;
+            }
+
+            // Extract the data from the store and convert it to the proper format
+            const extracted = parser.extractDataFromState( store.getState().values, group.children, '__' );
+            const converted = parser.prepareDataForStore( extracted, group.children, prefix );
+
+            // Save
+            replaceContexts( converted );
+            stateSaved = true;
+
+            Overlay.remove();
+        }
+
+        const checkForChanges = () => {
+            if( stateSaved || _.isEqual( values, store.getState().values ) ) {
+                return false;
+            } else {
+                return 'Changes have been made. Are you sure you want to go back?';
+            }
+        }
+
+        Overlay.show(
+            <React.Fragment>
+                <Overlay.Title>{ 'Edit ' + group.title }</Overlay.Title>
+
+                <Overlay.Footer>
+                    <Button onClick={ saveState }>Save</Button>
+                    <Button onClick={ Overlay.remove }>Close</Button>
+                </Overlay.Footer>
+
+                <Provider store={ store } key={ Math.random() } onLeave={ checkForChanges }>
+                    <FullScreenGroup { ...group } source="__">
+                    </FullScreenGroup>
+                </Provider>
+            </React.Fragment>
+        );
+    }
+
+    /**
+     * Returns a validator for the field.
+     */
+    static getValidator() {
+        return repeaterValidator;
     }
 }

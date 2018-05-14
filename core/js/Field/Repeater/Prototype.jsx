@@ -2,9 +2,9 @@ import React from 'react';
 
 export default class Prototype extends React.Component {
     render() {
-        const { type, title, description, onClick } = this.props;
+        const { type, title, description, disabled, onClick } = this.props;
 
-        return <div className="uf-prototype">
+        return <div className={ 'uf-prototype' + ( disabled ? ' uf-prototype--disabled' : '' ) }>
             <div className="uf-group uf-prototype__group" data-type={ type }>
                 <div className="uf-group__header uf-prototype__header" onClick={ onClick }>
                     <div className="uf-group__number">
