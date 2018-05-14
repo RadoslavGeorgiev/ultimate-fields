@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Button from './Button.jsx';
 
 /**
  * The current overlay is kept within this file in order to ensure that only one can be shown.
@@ -10,6 +11,10 @@ let domNode;
 
 export default class Overlay extends React.Component {
     static currentOverlay;
+
+	state = {
+		alert: null
+	}
 
     componentWillMount() {
         this.keyup = this.keyup.bind( this );
@@ -29,6 +34,14 @@ export default class Overlay extends React.Component {
         const body = React.cloneElement( layer.body, {
             ref: 'body'
         });
+
+		const alert = this.state.alert
+			? React.cloneElement( this.state.alert, {
+				onClose: () => {
+					this.setState({ alert: null })
+				}
+			})
+			: null;
 
         return <div className="wp-core-ui uf-overlay">
             <div className="uf-overlay__background"></div>
@@ -50,6 +63,8 @@ export default class Overlay extends React.Component {
             	<footer className="uf-overlay__footer">
                     { layer.footer }
                 </footer>
+
+				{ alert }
             </div>
         </div>
     }
@@ -133,8 +148,14 @@ export default class Overlay extends React.Component {
     }
 
     static show( layer ) {
-        layers.push( layer );
-        Overlay.render();
+		if( layer.type === Alert ) {
+			Overlay.currentOverlay.setState({
+				alert: layer
+			});
+		} else {
+			layers.push( layer );
+			Overlay.render();
+		}
     }
 
     static render() {
@@ -163,5 +184,44 @@ class Footer extends React.Component {
     }
 }
 
-Overlay.Title = Title;
-Overlay.Footer = Footer;
+class Alert extends React.Component {
+	static defaultProps = {
+		title: 'Alert'
+	}
+
+	render() {
+		const { title, children } = this.props;
+
+		return <div className="uf-confirmation" ref="body">
+			<div className="uf-confirmation__background"></div>
+
+			<div className="uf-confirmation__box">
+				<h2 className="uf-confirmation__title">{ title }</h2>
+
+				<div className="uf-confirmation__body">
+					{ children }
+				</div>
+
+				<div className="uf-confirmation__footer">
+					<Button onClick={ this.close.bind( this ) }>OK</Button>
+				</div>
+			</div>
+		</div>
+	}
+
+	componentDidMount() {
+		this.refs.body.classList.add( 'uf-confirmation--visible' );
+	}
+
+	close() {
+		const { body } = this.refs;
+		const { onClose } = this.props;
+
+		body.classList.remove( 'uf-confirmation--visible' );
+		setTimeout( onClose, 300 );
+	}
+}
+
+Overlay.Title        = Title;
+Overlay.Footer       = Footer;
+Overlay.Alert = Alert;

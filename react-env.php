@@ -242,7 +242,7 @@ add_action( 'uf.init', function() {
 					'fields' => [
 						Field::create( 'tab', 'content' ),
 						Field::create( 'text', 'title' )->required(),
-						Field::create( 'text', 'other_field' ),
+						Field::create( 'text', 'other_field' )->required(),
 						Field::create( 'tab', 'appearance' ),
 						Field::create( 'text', 'appearance_field' ),
 					],

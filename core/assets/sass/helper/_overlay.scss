@@ -235,7 +235,7 @@
 /**
  * The alert in the overlay.
  */
-.uf-overlay-alert {
+.uf-confirmation {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -243,7 +243,7 @@
 	height: 100%;
 	z-index: 30;
 
-	.background {
+	&__background {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -254,7 +254,7 @@
 		transition: all .3s ease;
 	}
 
-	.box {
+	&__box {
 		position: absolute;
 		top: 0;
 		background: #fff;
@@ -271,29 +271,27 @@
 		overflow: hidden;
 	}
 
-	&.visible {
-		.background {
-			opacity: .2;
-		}
-
-		.box {
-			transform: translate(-50%, 0);
-		}
+	&--visible &__background {
+		opacity: .2;
 	}
 
-	h2,
-	&-body,
-	&-footer {
+	&--visible &__box {
+		transform: translate(-50%, 0);
+	}
+
+	&__title,
+	&__body,
+	&__footer {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
 
-	h2 {
+	&__ {
 		margin: 0;
 		padding-top: 10px;
 	}
 
-	&-footer {
+	&__footer {
 		text-align: center;
 		padding-top: 10px;
 		padding-bottom: 10px;

@@ -1,19 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
 
-import * as reducers from './../reducers.js';
-import validateFields from './../validators/validateFields.js';
 import Field from './../Field.jsx';
 import Button from './../Button.jsx';
-import Overlay from './../Overlay.jsx';
 import Group from './Repeater/Group.jsx';
-import FullScreenGroup from './Repeater/FullScreenGroup.jsx';
 import Prototype from './Repeater/Prototype.jsx';
 import Tag from './Repeater/Tag.jsx';
-import StoreParser from './../StoreParser.js';
 import repeaterValidator from './Repeater/validator.js';
+import FullScreenController from './Repeater/FullScreenController.jsx';
 
 export default class Repeater extends Field {
     static DEFAULT_GROUP_TYPE = 'entry';
@@ -422,61 +416,7 @@ export default class Repeater extends Field {
      * @param {Object} row The row, which the group is associated with.
      */
     openFullScreen( row ) {
-        const { name, source, getContexts, replaceContexts } = this.props;
-        const { index, type } = row;
-
-        const group = this.groups.find( group => group.type === type );
-
-        // Prepare a store
-        const prefix    = `${source}_${name}_${index}`;
-        const parser    = new StoreParser;
-        const extracted = parser.extractDataFromState( getContexts( prefix ), group.children, prefix );
-        const values    = parser.prepareDataForStore( extracted, group.children, '__' );
-        const store     = createStore( combineReducers( reducers ), { values } );
-
-        // Callbacks
-        let stateSaved = false;
-
-        const saveState = () => {
-            // Start with validation
-            if( validateFields( store, group.children ).length ) {
-                return;
-            }
-
-            // Extract the data from the store and convert it to the proper format
-            const extracted = parser.extractDataFromState( store.getState().values, group.children, '__' );
-            const converted = parser.prepareDataForStore( extracted, group.children, prefix );
-
-            // Save
-            replaceContexts( converted );
-            stateSaved = true;
-
-            Overlay.remove();
-        }
-
-        const checkForChanges = () => {
-            if( stateSaved || _.isEqual( values, store.getState().values ) ) {
-                return false;
-            } else {
-                return 'Changes have been made. Are you sure you want to go back?';
-            }
-        }
-
-        Overlay.show(
-            <React.Fragment>
-                <Overlay.Title>{ 'Edit ' + group.title }</Overlay.Title>
-
-                <Overlay.Footer>
-                    <Button onClick={ saveState }>Save</Button>
-                    <Button onClick={ Overlay.remove }>Close</Button>
-                </Overlay.Footer>
-
-                <Provider store={ store } key={ Math.random() } onLeave={ checkForChanges }>
-                    <FullScreenGroup { ...group } source="__">
-                    </FullScreenGroup>
-                </Provider>
-            </React.Fragment>
-        );
+		new FullScreenController( row, this.props, this.groups );
     }
 
     /**
