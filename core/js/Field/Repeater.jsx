@@ -429,4 +429,13 @@ export default class Repeater extends Field {
     static getValidator() {
         return repeaterValidator;
     }
+
+    /**
+     * Returns the default value of the field.
+     *
+     * @return {Array}
+     */
+    static getDefaultValue() {
+        return [];
+    }
 }

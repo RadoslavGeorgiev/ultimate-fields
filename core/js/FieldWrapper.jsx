@@ -25,7 +25,7 @@ export default class FieldWrapper extends React.Component {
 			? <div className="uf-field__description" dangerouslySetInnerHTML={{ __html: description }} />
 			: null;
 
-		return <div className={ 'uf-field uf-field--' + layout } style={ styles }>
+		return <div className={ 'uf-field uf-field--' + layout + ' uf-field--' + type.toLowerCase() } style={ styles }>
 			<div className="uf-field__details">
 				<label htmlFor={ id }>
 					{ label }

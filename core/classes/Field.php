@@ -465,7 +465,6 @@ abstract class Field {
 		$value = $this->sanitize( $value );
 
 		// Finally, save it
-		var_dump( $this->name, $value );
 		$this->datastore->set( $this->name, $value );
 	}
 

@@ -2,6 +2,11 @@
 	&, .uf-field--rows & {
 		padding: 0;
 	}
+
+	&.uf-field--grid > .uf-field__details {
+		border-bottom: 1px solid #ddd;
+		padding: 10px 15px;
+	}
 }
 // // The complex field
 // .uf-field--complex {

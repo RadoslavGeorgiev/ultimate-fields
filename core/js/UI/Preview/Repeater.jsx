@@ -31,6 +31,7 @@ export default class Tab extends Preview {
         return React.createElement( RepeaterField, {
             ...this.getPreviewArgs(),
 
+			value:            [],
 			children:         groups,
 			background:       background,
 			add_text:         labels.repeater_add_text || 'Add',

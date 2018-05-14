@@ -127,7 +127,7 @@ export default class Overlay extends React.Component {
 
     static remove() {
         if( ! Overlay.currentOverlay.canLayerBePopped() ) {
-            return;
+            return false;
         }
 
         layers.pop();
@@ -145,6 +145,8 @@ export default class Overlay extends React.Component {
             domNode = null;
 			document.body.classList.remove( 'uf-overlay-open' );
         }
+
+        return true;
     }
 
     static show( layer ) {

@@ -7,7 +7,8 @@ define( 'ENV_PAGE_STUFF', false );
 define( 'ENV_PAGE_TABBED_STUFF', false );
 define( 'ENV_STUFF', false );
 define( 'ENV_ALL_REACT_FIELDS', false );
-define( 'ENV_REPEATERS_PAGE', true );
+define( 'ENV_REPEATERS_PAGE', false );
+define( 'ENV_COMPLEX_PAGE', true );
 
 add_action( 'uf.init', function() {
 	if( ENV_PAGE_STUFF || ENV_PAGE_TABBED_STUFF ) {
@@ -264,6 +265,17 @@ add_action( 'uf.init', function() {
 				])
 
 				// ->set_chooser_type( 'tags' )
+		]);
+
+	if( ENV_COMPLEX_PAGE ) Container::create( 'complex-tests' )
+		->add_location( 'options' )
+		->add_fields([
+			Field::create( 'complex', 'complex_field_2' )
+				->add_fields([
+					Field::create( 'text', 'complex_subfield_1' )->set_width( 50 )->required(),
+					Field::create( 'text', 'complex_subfield_2' )->set_width( 50 ),
+					Field::create( 'text', 'complex_subfield_3' )
+				])
 		]);
 });
 

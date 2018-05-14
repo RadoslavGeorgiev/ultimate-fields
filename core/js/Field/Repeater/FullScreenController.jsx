@@ -41,8 +41,8 @@ export default class FullScreenController {
 			<Overlay.Title>{ 'Edit ' + title }</Overlay.Title>
 
 			<Overlay.Footer>
-				<Button onClick={ this.saveState.bind( this ) }>Save</Button>
-				<Button onClick={ Overlay.remove }>Close</Button>
+				<Button onClick={ this.saveState.bind( this ) } icon="dashicons dashicons-category">{ 'Save ' + title }</Button>
+				<Button onClick={ this.deleteGroup.bind( this ) } type="secondary" icon="dashicons-trash">{ 'Delete ' + title }</Button>
 			</Overlay.Footer>
 
 			<Provider store={ this.store } key={ Math.random() } onLeave={ check }>
@@ -117,5 +117,17 @@ export default class FullScreenController {
 			<ul>{ messages }</ul>
 			<p>{ message }</p>
 		</Overlay.Alert> );
+	}
+
+	deleteGroup() {
+		const { source, name, onDelete } = this.props;
+		const { index } = this.row;
+
+		if( ! Overlay.remove() ) {
+			return;
+		}
+
+		// Delete the normal group
+		onDelete( name, source, index );
 	}
 }
