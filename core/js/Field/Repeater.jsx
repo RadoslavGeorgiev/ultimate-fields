@@ -398,6 +398,10 @@ export default class Repeater extends Field {
         }
 
         _.forEach( usedGroups, ( count, type ) => {
+			if( limits.max ) {
+				return limits.groups[ type ] = true;
+			}
+
             const group = this.groups.find( group => group.type === type );
 
             if( group.maximum && group.maximum <= usedGroups[ type ] ) {
