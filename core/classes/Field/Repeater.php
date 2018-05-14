@@ -551,8 +551,11 @@ class Repeater extends Field {
 				}
 
 				$group = $this->groups[ $row[ '__type' ] ];
+
+				$datastore = new Group_Datastore;
+				$group->set_datastore( $datastore );
 				$group->save( $row );
-				$value[] = $group->get_datastore()->get_values();
+				$value[] = $datastore->get_values();
 			}
 		}
 

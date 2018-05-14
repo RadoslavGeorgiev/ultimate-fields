@@ -144,11 +144,11 @@ $number-width: 38px;
 			font-size: 14px;
 			line-height: 35px; // Twentyseventeen
 		}
+	}
 
-		em {
-			font-weight: normal;
-			opacity: .8;
-		}
+	&__preview {
+		font-weight: normal;
+		opacity: .8;
 	}
 
 	&__header:hover &__number {

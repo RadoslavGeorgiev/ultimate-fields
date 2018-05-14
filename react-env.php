@@ -237,7 +237,8 @@ add_action( 'uf.init', function() {
 				->add_group( 'text_group', [
 					'title' => 'Text Group'	,
 					'fields' => [
-						Field::create( 'text', 'title' )
+						Field::create( 'text', 'title' ),
+						Field::create( 'text', 'other_field' )
 					],
 					'description' => 'A text group that is somewhere around here.'
 				])

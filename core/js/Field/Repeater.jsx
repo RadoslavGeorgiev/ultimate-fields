@@ -164,7 +164,7 @@ export default class Repeater extends Field {
     renderEntries() {
         const {
             source, name,
-            onDelete, onToggle, onClone
+            getValueFromContext, onDelete, onToggle, onClone
         } = this.props;
 
         return this.getValue().map( ( row, i ) => {
@@ -184,6 +184,8 @@ export default class Repeater extends Field {
                 onDelete: () => onDelete( name, source, index ),
                 onToggle: () => onToggle( name, source, index ),
                 onClone:  () => onClone( name, source, index, group ),
+
+                getValueFromContext
 
                 // onEditFullScreen
             });

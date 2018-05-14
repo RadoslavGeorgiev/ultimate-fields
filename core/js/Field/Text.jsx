@@ -43,4 +43,9 @@ export default class Text extends Field {
 			});
 		}
 	}
+
+	static getPreview( field, context, getValueFromContext ) {
+		const { name } = field.props;
+		return getValueFromContext( context, name )
+	}
 }

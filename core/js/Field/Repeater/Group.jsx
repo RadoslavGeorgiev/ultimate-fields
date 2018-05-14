@@ -1,6 +1,8 @@
 import React from 'react';
 import Container from './../../Container.jsx';
 import Control from './Control.jsx';
+import StoreParser from './../../StoreParser.js';
+import getFieldType from './../../fields.js';
 
 export default class Group extends React.Component {
 	render() {
@@ -38,12 +40,38 @@ export default class Group extends React.Component {
 
 				{ controls }
 
-				<h3 className="uf-group__title">{ title }</h3>
+				<h3 className="uf-group__title" onClick={ onToggle }>
+					{ title }
+					{ this.getPreviewText() }
+				</h3>
 			</header>
 
 			{ ! hidden && <div className="uf-group__body">
 				<Container { ... this.props } />
 			</div> }
 		</div>
+	}
+
+	getPreviewText() {
+		const { source, children, getValueFromContext } = this.props;
+
+		let text = null;
+
+		StoreParser.getAllFields( children ).some( field => {
+			const type = getFieldType( field );
+
+			if( 'function' !== typeof type.getPreview ) {
+				return;
+			}
+
+			text = type.getPreview( field, source, getValueFromContext );
+			return true;
+		});
+
+		if( text && text.length ) {
+			return <span className="uf-group__preview">{ ': ' + text }</span>
+		} else {
+			return null;
+		}
 	}
 }

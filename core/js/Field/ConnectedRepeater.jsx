@@ -8,8 +8,13 @@ import Repeater from './Repeater.jsx';
 import StoreParser from './../StoreParser.js';
 
 const mapStateToProps = ( state, ownProps ) => {
+    const getValueFromContext = ( context, name ) =>  {
+        return ( state.values[ context ] || {} )[ name ];
+    }
+
     return {
-        value: state.values[ ownProps.source ][ ownProps.name ] || []
+        value: state.values[ ownProps.source ][ ownProps.name ] || [],
+        getValueFromContext
     }
 }
 

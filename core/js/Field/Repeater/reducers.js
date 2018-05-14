@@ -82,6 +82,7 @@ export default function repeaterReducer( state, action ) {
             const parser    = new StoreParser();
             const namespace = `${source}_${field}_${index}`;
             const data      = parser.extractDataFromState( state, group.children, namespace );
+            const oldGroup  = state[ source ][ field ].find( row => row.index === index );
 
             // Create a new index
             const value = ( state[ source ] || {} )[ field ].concat([]) || [];
@@ -100,7 +101,7 @@ export default function repeaterReducer( state, action ) {
                 if( row.index === index ) {
                     newValue.push({
                         type:   group.type,
-                        hidden: false,
+                        hidden: oldGroup.hidden,
                         index:  newIndex
                     });
                 }
