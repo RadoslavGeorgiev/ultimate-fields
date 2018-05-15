@@ -253,8 +253,7 @@ class WP_Object extends Field {
 	 */
 	public function ajax_objects() {
 		if(
-			! isset( $_POST[ 'filters' ] )
-			|| ! isset( $_POST[ 'nonce' ] )
+			! isset( $_POST[ 'nonce' ] )
 			|| ! wp_verify_nonce( $_POST[ 'nonce' ], $this->get_nonce_action() )
 		) {
 			exit;
@@ -266,42 +265,26 @@ class WP_Object extends Field {
 		);
 
 		# Prepare some flags/modes
-		$mode = isset( $_POST[ 'mode' ] ) && 'initial' == $_POST[ 'mode' ]
-			? 'initial'
-			: 'search';
-
-		$selected = isset( $_POST['selected'] ) && is_array( $_POST['selected'])
-			? $_POST['selected']
-			: array();
-
-		$filters = array(
-			'filters' => array(),
-			'search'  => ''
-		);
-
-		if( isset( $_POST[ 'filters' ] ) && is_array( $_POST[ 'filters' ] ) && isset( $_POST[ 'filters' ][ 'filter' ] ) ) {
-			$raw = $_POST[ 'filters' ];
-
-			if( isset( $raw['search'] ) ) {
-				$filters['search'] = $raw['search'];
-			}
-
-			if( isset( $raw['filters'] ) ) foreach( $raw['filters'] as $filter ) {
-				list( $name, $value ) = explode( ':', $filter );
-
-				if( ! isset( $filters['filters'][ $name ] ) ) {
-					$filters['filters'][ $name ] = array();
-				}
-
-				$filters['filters'][ $name ][] = $value;
-			}
-		}
-
+		$mode     = isset( $_POST[ 'mode' ] ) ? $_POST[ 'mode' ] : 'search';
+		$selected = $_POST['selected'];
+		$filters  = array();
+		$search   = isset( $_POST['searchText'] ) ? $_POST['searchText'] : '';
 		$page    = isset( $_POST[ 'page' ] ) ? $_POST[ 'page' ] : 1;
 		$max     = 20;
 		$exclude = array();
 
-		# Prepare the selected items
+		// Parse the filters
+		if( ! empty( $_POST['filters'] ) ) foreach( $_POST['filters'] as $filter ) {
+			list( $name, $value ) = explode( ':', $filter );
+
+			if( ! isset( $filters[ $name ] ) ) {
+				$filters[ $name ] = array();
+			}
+
+			$filters[ $name ][] = $value;
+		}
+
+		// Prepare the selected items
 		if( 'initial' == $mode && ! empty( $selected ) && 1 == $page ) {
 			$items = $this->export_objects( $selected );
 
@@ -320,9 +303,12 @@ class WP_Object extends Field {
 			}
 		}
 
-		# Load and apply filters
+		// Combine the filters for hooks && types
+		$combined_filters = compact( 'filters', 'search' );
+
+		// Load and apply filters
 		foreach( $this->get_types() as $type ) {
-			$type->apply_filters( $filters );
+			$type->apply_filters( $combined_filters );
 			$args = $type->get_args();
 
 			/**
@@ -336,40 +322,42 @@ class WP_Object extends Field {
 			* @param Ultimate_Fields\Helper\Object\Type $type      The type of items that is being loaded.
 			* @return mixed[]
 			*/
-			$args = apply_filters( 'uf.object.type_args', $args, $this, $filters, $type );
-			$args = apply_filters( 'uf.object.' . $type->get_slug() . '.args', $args, $this, $filters, $type );
+			$args = apply_filters( 'uf.object.type_args', $args, $this, $combined_filters, $type );
+			$args = apply_filters( 'uf.object.' . $type->get_slug() . '.args', $args, $this, $combined_filters, $type );
 			$type->set_args( $args );
 		}
 
-		$result[ 'filters' ] = $this->get_filters();
+		if( 'initial' == $mode ) {
+			$result[ 'filters' ] = $this->get_filters();
+		}
 
-		# Let types load their counts in order to be able to paginate later
+		// Let types load their counts in order to be able to paginate later
 		$offset    = $max * ( $page - 1 );
 		$needed    = $max;
 		$fetched   = 0;
 		$available = 0;
 
-		# Load data
+		// Load data
 		foreach( $this->get_types() as $type_slug => $type ) {
-			# If there are invalid filers, don't use the type
+			// If there are invalid filers, don't use the type
 			if( $type->impossible )  {
 				continue;
 			}
 
-			# Make sure existing items are excluded
+			// Make sure existing items are excluded
 			if( isset( $exclude[ $type_slug ] ) ) {
 				$type->exclude( $exclude[ $type_slug ] );
 			}
 
-			# Calculate what to load
+			// Calculate what to load
 			$next_page = $page;
 			$next_page -= ceil( $fetched / $max );
 
-			# Load counts & prepare
+			// Load counts & prepare
 			$total = $type->load_counts( $max, $next_page );
 			$available += $total;
 
-			# Get as many items as needed
+			// Get as many items as needed
 			if( $needed > 0 ) {
 				foreach( $type->load() as $item ) {
 					$result[ 'items' ][] = $item;

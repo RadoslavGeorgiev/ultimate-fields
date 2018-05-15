@@ -5,11 +5,12 @@ import Item from './Item.jsx';
 
 export default class Chooser extends React.Component {
 	state = {
-		items:      this.props.items || [],
+		items:      this.props.initialData.items || [],
 		selected:   this.props.preselected || [],
 		searchText: '',
 		filters:    [],
-		loading:    false
+		loading:    false,
+		data:       this.props.initialData || {}
 	}
 
 	constructor() {
@@ -20,7 +21,7 @@ export default class Chooser extends React.Component {
 
 	render() {
 		const { show_filters, preselected, onClose, onSelect } = this.props;
-		const { items, selected, searchText } = this.state;
+		const { items, selected, searchText, loading } = this.state;
 
 		// Pre-render the filters
 		let filtersClass = 'uf-chooser__filter';
@@ -31,7 +32,7 @@ export default class Chooser extends React.Component {
 		</div>
 
 		// Pre-render the items
-		const itemsList = <div className="uf-chooser__list">
+		const itemsList = <div className="uf-chooser__list" onScroll={ this.onScroll.bind( this ) }>
 			{ items.map( item => <Item
 				key={ item.id } { ...item }
 				selected={ -1 != selected.indexOf( item.id ) }
@@ -63,7 +64,7 @@ export default class Chooser extends React.Component {
 
 				<div className="uf-chooser__footer">
 					{ selectButton }
-					<span className="spinner uf-object__spinner" />
+					{ loading && <span className="spinner is-active uf-object__spinner" /> }
 					{ cancelButton }
 				</div>
 			</div>
@@ -71,7 +72,7 @@ export default class Chooser extends React.Component {
 	}
 
 	renderFilters() {
-		const { show_filters, filters } = this.props;
+		const { show_filters, initialData: { filters } } = this.props;
 		const { filters: active } = this.state;
 
 		if( ! this.props.show_filters ) {
@@ -120,14 +121,9 @@ export default class Chooser extends React.Component {
 			filters:    filters,
 			searchText: searchText
 		}).then( data => {
-			// items,
-			// more,
-			// offset,
-			// page,
-			// total
-
 			this.setState({
 				loading: false,
+				data:    data,
 				items:   data.items
 			});
 		});
@@ -171,5 +167,44 @@ export default class Chooser extends React.Component {
 		}
 
 		this.setState( state );
+	}
+
+	onScroll( e ) {
+		const { loadObjects, filters, searchText } = this.props;
+		const { loading, data: { page, more, items } } = this.state;
+
+		if( loading ) {
+			return;
+		}
+
+		const list     = e.target;
+		const height   = list.offsetHeight;
+		const full     = list.scrollHeight;
+		const scrolled = list.scrollTop;
+
+		if( 120 < full - height - scrolled ) {
+			return;
+		}
+
+		if( ! more ) {
+			return;
+		}
+
+		this.setState({
+			loading: true
+		});
+
+		loadObjects({
+			mode:       'search',
+			filters:    filters,
+			searchText: searchText,
+			page:       parseInt( page ) + 1
+		}).then( data => {
+			this.setState({
+				loading: false,
+				items:   items.concat( data.items ),
+				data:    data
+			});
+		});
 	}
 }

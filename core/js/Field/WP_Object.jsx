@@ -75,8 +75,6 @@ export default class WP_Object extends Field {
 			selected:   []
 		}, args );
 
-		body.filters.filter = true;
-
 		return new Promise( resolve => {
 			request({ body })
 				.catch( request => {
@@ -120,10 +118,10 @@ export default class WP_Object extends Field {
 
 	renderChooser() {
 		const { show_filters, multiple, max } = this.props;
-		const { filters, items } = this.state.initialData;
+		const { initialData } = this.state;
 
 		return React.createElement( Chooser, {
-			show_filters, filters, items, multiple, max,
+			show_filters, multiple, max, initialData,
 			preselected: multiple ? this.getValue() : [ this.getValue().id ],
 			onClose: () => {
 				this.setState({
