@@ -62,7 +62,7 @@ export default class WP_Object extends Field {
 	}
 
 	loadObjects( args ) {
-		const { name, nonce } = this.props;
+		const { name, nonce, multiple } = this.props;
 
 		const body = Object.assign( {
 			uf_action:  'get_objects_' + name,
@@ -73,7 +73,13 @@ export default class WP_Object extends Field {
 			filters:    {},
 			searchText: '',
 			selected:   []
-		}, args );
+		}, args || {} );
+
+		// Add the selected items
+		const value = this.getValue();
+		if( ( ! multiple && value ) || ( multiple && value.length ) ) {
+			body.selected = multiple ? value.map( item => item.id ) : [ value.id ];
+		}
 
 		return new Promise( resolve => {
 			request({ body })
@@ -100,14 +106,8 @@ export default class WP_Object extends Field {
 			loading: true
 		});
 
-		// Prepare the initial args
-		const value = this.getValue();
-		const args = {
-			selected: multiple ? value.map( item => item.id ) : [ value.id ]
-		};
-
 		// Load the objects
-		this.loadObjects( args ).then( data => {
+		this.loadObjects().then( data => {
 			this.setState({
 				loading:     false,
 				chooserOpen: true,
@@ -116,13 +116,24 @@ export default class WP_Object extends Field {
 		});
 	}
 
+	getPreselectedItems() {
+		const value = this.getValue();
+
+		if( value ) {
+			return [ value.id ];
+		} else {
+			return [];
+		}
+	}
+
 	renderChooser() {
 		const { show_filters, multiple, max } = this.props;
 		const { initialData } = this.state;
 
+		const preselected = this.getPreselectedItems();
+
 		return React.createElement( Chooser, {
-			show_filters, multiple, max, initialData,
-			preselected: multiple ? this.getValue() : [ this.getValue().id ],
+			show_filters, multiple, max, initialData, preselected,
 			onClose: () => {
 				this.setState({
 					chooserOpen: false

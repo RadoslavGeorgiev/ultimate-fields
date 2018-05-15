@@ -1,4 +1,5 @@
 import React from 'react';
+import Field from './../Field.jsx';
 import WP_Object from './WP_Object.jsx';
 import Button from './../Button.jsx';
 import ObjectsItem from './WP_Object/ObjectsItem.jsx';
@@ -9,14 +10,29 @@ export default class WP_Objects extends WP_Object {
 		return [];
 	}
 
+	getValue() {
+		// Load the standard value
+		const value = Field.prototype.getValue.apply( this );
+		if( ! value || ! value.length ) {
+			return [];
+		}
+
+		// Check if there is a cache match
+		return value.map( item => cache.get( 'object_' + item ) );
+	}
+
+	getPreselectedItems() {
+		return this.getValue();
+	}
+
 	renderInput() {
 		const { name, source, button_text, getContext } = this.props;
 		const { loading, chooserOpen } = this.state;
-		const prepared = ( this.getValue() || [] ).map( item => cache.get( 'object_' + item ) );
+		const value = this.getValue() || [];
 
 		return <React.Fragment>
-			{ prepared.length
-				? this.getPreview( prepared )
+			{ value.length
+				? this.renderPreview( value )
 				: <React.Fragment>
 					<Button
 						onClick={ this.openChooser.bind( this ) }
@@ -29,11 +45,11 @@ export default class WP_Objects extends WP_Object {
 				</React.Fragment>
 			}
 
-			{ chooserOpen && this.getChooser() }
+			{ chooserOpen && this.renderChooser() }
 		</React.Fragment>
 	}
 
-	getPreview( items ) {
+	renderPreview( items ) {
 		const { max } = this.props;
 		const { loading } = this.state;
 
@@ -73,6 +89,10 @@ export default class WP_Objects extends WP_Object {
 		</div>
 	}
 
+	componentDidUpdate() {
+		this.componentDidMount();
+	}
+
 	componentDidMount() {
 		const { name, onValueChanged } = this.props;
 		const list = this.refs.list;
@@ -101,7 +121,7 @@ export default class WP_Objects extends WP_Object {
 	removeItem( item ) {
 		const { name, onValueChanged } = this.props;
 
-		const value = this.getValue().filter( selected => selected != item.id );
+		const value = this.getValue().filter( v => v.id != item.id ).map( item => item.id );
 		onValueChanged( name, value );
 	}
 }

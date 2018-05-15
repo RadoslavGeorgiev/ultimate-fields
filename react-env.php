@@ -284,10 +284,10 @@ add_action( 'uf.init', function() {
 		->set_layout( 'rows' )
 		->add_fields([
 			Field::create( 'wp_object', 'demo_object_field', 'Object Field' ),
-			// Field::create( 'wp_objects', 'demo_objects_field', 'Objects Field' )
-			// 	->set_max( 2 ),
-			// Field::create( 'link', 'demo_link_field', 'Link Field' )
-			// 	->required()
+			Field::create( 'wp_objects', 'demo_objects_field', 'Objects Field' )
+				->set_max( 2 ),
+			Field::create( 'link', 'demo_link_field', 'Link Field' )
+				->required()
 		]);
 });
 

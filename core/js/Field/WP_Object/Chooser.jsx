@@ -6,7 +6,7 @@ import Item from './Item.jsx';
 export default class Chooser extends React.Component {
 	state = {
 		items:      this.props.initialData.items || [],
-		selected:   this.props.preselected || [],
+		selected:   this.props.preselected.map( item => item.id || item ) || [],
 		searchText: '',
 		filters:    [],
 		loading:    false,
@@ -20,7 +20,7 @@ export default class Chooser extends React.Component {
 	}
 
 	render() {
-		const { show_filters, preselected, onClose, onSelect } = this.props;
+		const { show_filters, max, onClose, onSelect } = this.props;
 		const { items, selected, searchText, loading } = this.state;
 
 		// Pre-render the filters
@@ -33,12 +33,18 @@ export default class Chooser extends React.Component {
 
 		// Pre-render the items
 		const itemsList = <div className="uf-chooser__list" onScroll={ this.onScroll.bind( this ) }>
-			{ items.map( item => <Item
-				key={ item.id } { ...item }
-				selected={ -1 != selected.indexOf( item.id ) }
-				onSelected={ this.selectItem.bind( this ) }
-				disableClicks={ true }
-			/> ) }
+			{ items.map( item => {
+				const isSelected = -1 != selected.indexOf( item.id );
+				const isDisabled = max && ! isSelected && selected.length >= max;
+
+				return <Item
+					key={ item.id } { ...item }
+					selected={ isSelected }
+					disabled={ isDisabled }
+					onSelected={ this.selectItem.bind( this ) }
+					disableClicks={ true }
+				/>;
+			}) }
 		</div>
 
 		// Pre-render the buttons
@@ -80,7 +86,7 @@ export default class Chooser extends React.Component {
 		}
 
 		return <div className="uf-chooser__type">
-			<select multiple="multiple" size="1" ref="filterSelect" value={ active } onChange={ this.setFilters.bind( this ) }>
+			<select multiple="multiple" size="1" ref="filterSelect" value={ active || [] } onChange={ this.setFilters.bind( this ) }>
 				{ _.map( filters, ( options, label ) =>
 					<optgroup label={ label } key={ label }>
 						{ _.map( options, ( text, value ) =>
@@ -145,7 +151,7 @@ export default class Chooser extends React.Component {
 
 	selectItem( id ) {
 		const { multiple, max } = this.props;
-		const { selected } = this.state;
+		const { selected, items } = this.state;
 		const state = {};
 
 		if( multiple ) {

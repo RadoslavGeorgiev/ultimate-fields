@@ -266,7 +266,7 @@ class WP_Object extends Field {
 
 		# Prepare some flags/modes
 		$mode     = isset( $_POST[ 'mode' ] ) ? $_POST[ 'mode' ] : 'search';
-		$selected = $_POST['selected'];
+		$selected = isset( $_POST['selected'] ) ? $_POST['selected'] : array();
 		$filters  = array();
 		$search   = isset( $_POST['searchText'] ) ? $_POST['searchText'] : '';
 		$page    = isset( $_POST[ 'page' ] ) ? $_POST[ 'page' ] : 1;

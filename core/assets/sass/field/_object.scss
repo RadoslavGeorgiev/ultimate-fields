@@ -242,6 +242,11 @@
 			font-weight: normal;
 		}
 	}
+
+	&--disabled,
+	&--disabled a {
+		color: #999 !important;
+	}
 }
 
 .uf-objects {

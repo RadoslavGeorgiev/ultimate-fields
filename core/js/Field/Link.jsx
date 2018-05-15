@@ -1,8 +1,15 @@
 import React from 'react';
+import Field from './../Field.jsx';
 import WP_Object from './WP_Object.jsx';
 import Button from './../Button.jsx';
+import cache from './../Cache.js';
 
 export default class Link extends WP_Object {
+	getValue() {
+		// Load the standard value
+		return Field.prototype.getValue.apply( this );
+	}
+
     isObject( item ) {
         if( ! item ) {
             return false;
@@ -17,8 +24,8 @@ export default class Link extends WP_Object {
         let { link } = this.getValue();
         let top;
 
-        if( link && this.isObject( link ) && getCachedValue( 'object_' + link ) ) {
-            top = this.getPreview( getCachedValue( 'object_' + link ) );
+        if( link && this.isObject( link ) && cache.get( 'object_' + link ) ) {
+            top = this.renderPreview( cache.get( 'object_' + link ) );
         } else {
             link = link || '';
 
@@ -47,9 +54,20 @@ export default class Link extends WP_Object {
                 { top }
             </div>
 
-            { chooserOpen ? this.getChooser() : this.getTargetCheckbox() }
+            { chooserOpen ? this.renderChooser() : this.getTargetCheckbox() }
         </div>
     }
+
+	getPreselectedItems() {
+		const items = [];
+
+		const value = this.getValue();
+		if( this.isObject( value.link ) ) {
+			items.push( value.link );
+		}
+
+		return items;
+	}
 
     getTargetCheckbox() {
         const { new_tab } = this.getValue();
