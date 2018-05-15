@@ -2,6 +2,7 @@ import React from 'react';
 import WP_Object from './WP_Object.jsx';
 import Button from './../Button.jsx';
 import ObjectsItem from './WP_Object/ObjectsItem.jsx';
+import cache from './../Cache.js';
 
 export default class WP_Objects extends WP_Object {
 	static getDefaultValue() {
@@ -9,9 +10,9 @@ export default class WP_Objects extends WP_Object {
 	}
 
 	renderInput() {
-		const { name, source, button_text, getContext, getCachedValue } = this.props;
+		const { name, source, button_text, getContext } = this.props;
 		const { loading, chooserOpen } = this.state;
-		const prepared = ( this.getValue() || [] ).map( item => getCachedValue( 'object_' + item ) );
+		const prepared = ( this.getValue() || [] ).map( item => cache.get( 'object_' + item ) );
 
 		return <React.Fragment>
 			{ prepared.length

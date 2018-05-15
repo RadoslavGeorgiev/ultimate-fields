@@ -4,6 +4,7 @@ import Button from './../Button.jsx';
 import Chooser from './WP_Object/Chooser.jsx';
 import Item from './WP_Object/Item.jsx';
 import request from './../PHP/request.js';
+import cache from './../Cache.js';
 
 export default class WP_Object extends Field {
 	state = {
@@ -16,103 +17,114 @@ export default class WP_Object extends Field {
 		show_filters: true
 	}
 
-	componentWillMount() {
-		if( ! this.getValue() ) {
-			return;
-		}
+	static getStores( type, field, data, source ) {
+		const name = field.props.name + '_prepared';
 
-		const { cacheValue, getContext, source, name } = this.props;
+		( data[ name ] || [] ).forEach( item => {
+			cache.set( 'object_' + item.id, item );
+		});
 
-		if( ! getContext ) {
-			return;
-		}
-
-		const context = getContext( source );
-
-		if( context[ name + '_prepared' ] ) {
-			context[ name + '_prepared' ].forEach( item => cacheValue( 'object_' + item.id, item ) )
-		}
+		return Field.getStores( type, field, data, source );
 	}
 
-	static getStores( type, field, data, source ) {
-		const { name } = field.props;
-
-		const stores = Field.getStores( type, field, data, source );
-		const prepared = name + '_prepared';
-
-		if( prepared in data ) {
-			stores[ source ][ prepared ] = data[ prepared ];
+	getValue() {
+		// Load the standard value
+		const value = Field.prototype.getValue.apply( this );
+		if( ! value ) {
+			return null;
 		}
 
-		return stores;
+		// Check if there is a cache match
+		return cache.get( 'object_' + value );
 	}
 
 	renderInput() {
-		const { name, source, button_text, getContext, getCachedValue } = this.props;
+		const { name, source, button_text } = this.props;
 		const { loading, chooserOpen } = this.state;
-		const prepared = this.getValue() && getCachedValue( 'object_' + this.getValue() );
+
+		const value = this.getValue();
+		const open  = this.openChooser.bind( this );
 
 		return <React.Fragment>
-			{ prepared
-				? this.getPreview( prepared )
+			{ value
+				? this.renderPreview( value )
 				: <React.Fragment>
-					<Button
-						onClick={ this.openChooser.bind( this ) }
-						icon="dashicons-search"
-						className="uf-object__select"
-						children={ button_text || uf_l10n['select-item'] }
-					/>
+					<Button onClick={ open } icon="dashicons-search">
+						{ button_text || uf_l10n['select-item'] }
+					</Button>
 
 					{ loading && <span className="spinner is-active uf-object__spinner" /> }
 				</React.Fragment>
 			}
 
-			{ chooserOpen && this.getChooser() }
+			{ chooserOpen && this.renderChooser() }
 		</React.Fragment>
 	}
 
-	openChooser() {
-		const { name, nonce, multiple, cacheValue } = this.props;
+	loadObjects( args ) {
+		const { name, nonce } = this.props;
 
+		const body = Object.assign( {
+			uf_action:  'get_objects_' + name,
+			uf_ajax:    true,
+			nonce:      nonce,
+			mode:       'initial',
+			page:       1,
+			filters:    {},
+			searchText: '',
+			selected:   []
+		}, args );
+
+		body.filters.filter = true;
+
+		return new Promise( resolve => {
+			request({ body })
+				.catch( request => {
+					this.setState({
+						loading: false
+					});
+				})
+				.then( response => {
+					response.items.map( item => {
+						cache.set( 'object_' + item.id, item );
+					});
+
+					resolve( response );
+				});
+		});
+	}
+
+	openChooser() {
+		const { multiple } = this.props;
+
+		// Indicate that something is happening
 		this.setState({
 			loading: true
 		});
 
-		let filters = false, mode = false, page = false;
+		// Prepare the initial args
 		const value = this.getValue();
-
-		const body = {
-			uf_action: 'get_objects_' + name,
-			nonce:     nonce,
-			filters:   Object.assign( { filter: true }, filters || {} ),
-			selected:  multiple ? value : [ value ],
-			mode:      'search' == mode ? 'search' : 'initial',
-			page:      page || 1,
-			uf_ajax:   true
+		const args = {
+			selected: multiple ? value.map( item => item.id ) : [ value.id ]
 		};
 
-		request({ body })
-			.catch( request => this.setState({ loading: false }) )
-			.then( response => {
-				this.setState({
-					loading: false,
-					chooserOpen: true,
-					data: response
-				});
-
-				response.items.map( item => {
-					cacheValue( 'object_' + item.id, item );
-				});
+		// Load the objects
+		this.loadObjects( args ).then( data => {
+			this.setState({
+				loading:     false,
+				chooserOpen: true,
+				initialData: data
 			});
+		});
 	}
 
-	getChooser() {
+	renderChooser() {
 		const { show_filters, multiple, max } = this.props;
-		const { filters, items } = this.state.data;
+		const { filters, items } = this.state.initialData;
 
 		return React.createElement( Chooser, {
 			show_filters, filters, items, multiple, max,
-			preselected: multiple ? this.getValue() : [ this.getValue() ],
+			preselected: multiple ? this.getValue() : [ this.getValue().id ],
 			onClose: () => {
 				this.setState({
 					chooserOpen: false
@@ -124,7 +136,8 @@ export default class WP_Object extends Field {
 				});
 
 				this.updateItem( selected );
-			}
+			},
+			loadObjects: this.loadObjects.bind( this )
 		});
 	}
 
@@ -133,7 +146,7 @@ export default class WP_Object extends Field {
 		onValueChanged( name, item );
 	}
 
-	getPreview( item ) {
+	renderPreview( item ) {
 		const { loading, chooserOpen } = this.state;
 
 		return <div className="uf-object">
@@ -163,16 +176,12 @@ export default class WP_Object extends Field {
 	}
 
 	toggleChooser() {
-		const { chooserOpen, data } = this.state;
+		const { chooserOpen } = this.state;
 
 		if( chooserOpen ) {
 			this.setState({ chooserOpen: false });
 		} else {
-			if( data ) {
-				this.setState({ chooserOpen: true });
-			} else {
-				this.openChooser();
-			}
+			this.openChooser();
 		}
 	}
 

@@ -8,7 +8,8 @@ define( 'ENV_PAGE_TABBED_STUFF', false );
 define( 'ENV_STUFF', false );
 define( 'ENV_ALL_REACT_FIELDS', false );
 define( 'ENV_REPEATERS_PAGE', false );
-define( 'ENV_COMPLEX_PAGE', true );
+define( 'ENV_COMPLEX_PAGE', false );
+define( 'ENV_RELATIONAL_PAGE', true );
 
 add_action( 'uf.init', function() {
 	if( ENV_PAGE_STUFF || ENV_PAGE_TABBED_STUFF ) {
@@ -276,6 +277,17 @@ add_action( 'uf.init', function() {
 					Field::create( 'text', 'complex_subfield_2' )->set_width( 50 ),
 					Field::create( 'text', 'complex_subfield_3' )
 				])
+		]);
+
+	if( ENV_RELATIONAL_PAGE ) Container::create( 'relational-fields' )
+		->add_location( 'options' )
+		->set_layout( 'rows' )
+		->add_fields([
+			Field::create( 'wp_object', 'demo_object_field', 'Object Field' ),
+			// Field::create( 'wp_objects', 'demo_objects_field', 'Objects Field' )
+			// 	->set_max( 2 ),
+			// Field::create( 'link', 'demo_link_field', 'Link Field' )
+			// 	->required()
 		]);
 });
 
