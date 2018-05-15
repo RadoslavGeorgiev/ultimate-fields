@@ -29,7 +29,13 @@ export default class Overlay extends React.Component {
         const layers = this.props.layers.map( layer => this.decomposeLayer( layer ) );
         const layer = layers[ layers.length - 1 ];
 
-        const title = layers.map( layer => layer.title ).join( ' / ' );
+        let title = layers.map( layer => layer.title.text ).join( ' / ' );
+        if( layer.title.icon ) {
+            title = <React.Fragment>
+                <span className={ 'dashicons ' + layer.title.icon } />
+                { title }
+            </React.Fragment>
+        }
 
         const body = React.cloneElement( layer.body, {
             ref: 'body'
@@ -85,7 +91,10 @@ export default class Overlay extends React.Component {
         React.Children.forEach( root.props.children, child => {
             switch( child.type ) {
                 case Overlay.Title:
-                    parts.title = child.props.children;
+                    parts.title = {
+                        icon: child.props.icon,
+                        text: child.props.children
+                    };
                     break;
 
                 case Overlay.Footer:

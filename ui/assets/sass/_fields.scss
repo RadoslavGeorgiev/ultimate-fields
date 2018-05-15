@@ -73,6 +73,10 @@
 	cursor: pointer;
 	z-index: 2;
 
+	.uf-preview & {
+		background: none;
+	}
+
 	&:hover {
 		&,
 		.uf-fields .uf-tab-active {
@@ -147,6 +151,10 @@
 			border-top-color: #f5f5f5;
 			border-width: 8px 8px 0;
 			margin-left: -8px;
+		}
+
+		.uf-fields & {
+			display: none;
 		}
 	}
 

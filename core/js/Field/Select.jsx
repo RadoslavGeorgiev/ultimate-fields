@@ -11,7 +11,7 @@ export default class Select extends Field {
 	renderInput() {
 		const { input_type } = this.props;
 		const options = this.getOptions();
-		const basic = Select.getBasicOptions( options );
+		const basic = this.constructor.getBasicOptions( options );
 
 		if( _.isEmpty( basic ) ) {
 			return <p>This field has no options.</p>
@@ -101,7 +101,7 @@ export default class Select extends Field {
 	}
 
 	getOptions() {
-		return Select.getOptions( this.props );
+		return this.constructor.getOptions( this.props );
 	}
 
 	static getBasicOptions( options ) {

@@ -10,23 +10,23 @@
 	</header>
 
 	<form class="uf-group" action="<?php echo $screen->url ?>" method="post">
-		<div class="uf-group-header">
-			<div class="uf-group-number">
-				<span class="dashicons dashicons-download"></span>
+		<div class="uf-group__header">
+			<div class="uf-group__number">
+				<span class="dashicons dashicons-download uf-group__icon"></span>
 			</div>
 
-			<h3 class="uf-group-title"><?php _e( 'Export', 'ultimate-fields' ) ?></h3>
+			<h3 class="uf-group__title"><?php _e( 'Export', 'ultimate-fields' ) ?></h3>
 		</div>
 
-		<div class="uf-group-inside">
-			<div class="uf-fields uf-fields-layout-rows uf-boxed-fields uf-fields-label-200">
+		<div class="uf-group__inside">
+			<div class="uf-fields uf-fields---rows uf-fields--boxed uf-fields--200">
 				<?php if( ! empty( $groups ) ): ?>
 					<?php foreach( $groups as $group ): ?>
-					<div class="uf-field uf-field-layout-row uf-export-containers">
-						<div class="uf-field-label">
+					<div class="uf-field uf-field--rows uf-export-containers">
+						<div class="uf-field__details">
 							<label><?php echo $group[ 'label' ] ?></label>
 						</div>
-						<div class="uf-field-input-wrap">
+						<div class="uf-field__inputs">
 							<ul class="uf-radio">
 								<?php foreach( $group[ 'options' ] as $id => $title ): ?>
 									<li>
@@ -47,23 +47,23 @@
 					</div>
 					<?php endforeach ?>
 				<?php else: ?>
-				<div class="uf-field uf-field-layout-row uf-export-container">
-					<div class="uf-field-label">
+				<div class="uf-field uf-field--rows uf-export-container">
+					<div class="uf-field__details">
 						<label><?php _e( 'Containers', 'ultimate-fields' ) ?></label>
 					</div>
 
-					<div class="uf-field-input-wrap">
+					<div class="uf-field__inputs">
 						<?php _e( 'There are no containers to export.', 'ultimate-fields' ) ?>
 					</div>
 				</div>
 				<?php endif ?>
 
-				<div class="uf-field uf-field-layout-row">
-					<div class="uf-field-label">
+				<div class="uf-field uf-field--rows">
+					<div class="uf-field__details">
 						<label><?php _e( 'Export type', 'ultimate-fields' ) ?></label>
 					</div>
 
-					<div class="uf-field-input-wrap">
+					<div class="uf-field__inputs">
 						<ul class="uf-radio">
 							<li>
 								<label>
@@ -82,13 +82,13 @@
 					</div>
 				</div>
 
-				<div class="uf-field uf-field-layout-row">
-					<div class="uf-field-label">
+				<div class="uf-field uf-field--rows">
+					<div class="uf-field__details">
 						<label><?php _e( 'Textdomain', 'ultimate-fields' ) ?></label>
-						<div class="uf-field-description"><?php _e( 'Optional. Allows the exported files to be translated.', 'ultimate-fields' ) ?></div>
+						<div class="uf-field__description"><?php _e( 'Optional. Allows the exported files to be translated.', 'ultimate-fields' ) ?></div>
 					</div>
 
-					<div class="uf-field-input-wrap">
+					<div class="uf-field__inputs">
 						<input type="text" name="uf_export_textdomain" />
 					</div>
 				</div>
@@ -103,15 +103,15 @@
 	</form>
 
 	<form class="uf-group" action="<?php echo $screen->url ?>" method="post">
-		<div class="uf-group-header">
-			<div class="uf-group-number">
-				<span class="dashicons dashicons-upload"></span>
+		<div class="uf-group__header">
+			<div class="uf-group__number">
+				<span class="dashicons dashicons-upload uf-group__icon"></span>
 			</div>
 
-			<h3 class="uf-group-title"><?php _e( 'Import', 'ultimate-fields' ) ?></h3>
+			<h3 class="uf-group__title"><?php _e( 'Import', 'ultimate-fields' ) ?></h3>
 		</div>
 
-		<div class="uf-group-inside">
+		<div class="uf-group__inside">
 			<div class="notice error uf-import-error"></div>
 
 			<div class="uf-import">

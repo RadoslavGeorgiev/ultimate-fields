@@ -65,7 +65,7 @@ export default class Group extends React.Component {
 			</header>
 
 			{ ! hidden && 'popup' != edit_mode && <div className="uf-group__body">
-				<Container { ... this.props } />
+				<Container { ... this.props } className="uf-fields--boxed" />
 			</div> }
 		</div>
 	}

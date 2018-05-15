@@ -24,6 +24,7 @@ import Complex from './Field/Complex.jsx';
 
 import ConditionalLogic from './Field/ConditionalLogic.jsx';
 import Fields from './Field/Fields.jsx';
+import Field_Selector from './Field/Field_Selector.jsx';
 
 export default function getFieldType( field ) {
 	let fieldClass;
@@ -60,6 +61,7 @@ export default function getFieldType( field ) {
 		// ui
 		case 'conditional_logic': fieldClass = ConditionalLogic; break;
 		case 'fields': fieldClass = Fields; break;
+		case 'field_selector': fieldClass = Field_Selector; break;
 
 		default:         {
 			console.warn( 'Unknown field type: ' + field.props.type );

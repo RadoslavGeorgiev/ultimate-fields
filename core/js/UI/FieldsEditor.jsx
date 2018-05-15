@@ -31,6 +31,7 @@ import WPObjectsPreview from './Preview/WP_Objects.jsx';
 import LinkPreview from './Preview/Link.jsx';
 
 import RepeaterPreview from './Preview/Repeater.jsx';
+import ComplexPreview from './Preview/Complex.jsx';
 
 export default class FieldsEditor extends React.Component {
 	static contexts = [];
@@ -74,6 +75,7 @@ export default class FieldsEditor extends React.Component {
 			case 'Link':       previewClass = LinkPreview;      break;
 
 			case 'Repeater':    previewClass = RepeaterPreview; break;
+			case 'Complex':     previewClass = ComplexPreview; break;
 		}
 
 		return previewClass;
@@ -121,6 +123,13 @@ export default class FieldsEditor extends React.Component {
 			// When sorting has ended, save the sort
 			stop: this.saveSort.bind( this )
 		});
+
+		if( ! FieldsEditor.contexts.length ) {
+			this.isTopLevel = true;
+			this.prepareContexts();
+		} else {
+			this.isTopLevel = false;
+		}
 	}
 
 	saveSort() {
@@ -135,9 +144,10 @@ export default class FieldsEditor extends React.Component {
 	openOverlay( field, args ) {
 		const editorFields = UltimateFields.ui.getFields();
 		const parser = new StoreParser;
-		const title = args.title || 'New Field';
 
-		this.prepareContexts( field );
+		if( ! this.isTopLevel ) {
+			this.prepareContexts( field );
+		}
 
 		const initialValues = parser.prepareDataForStore( field, editorFields, '__' );
 		const store = createStore( combineReducers( reducers ), {
@@ -168,13 +178,30 @@ export default class FieldsEditor extends React.Component {
 			closeOverlay();
 		}
 
+		let closeButton;
+		let icon;
+		const title = args.title || 'New Field';
+
+		if( ! _.isEmpty( field ) ) {
+			const onDelete = () => {
+				this.onDelete( field );
+				closeOverlay();
+			}
+
+			closeButton = <Button onClick={ onDelete } type="secondary" icon="dashicons-no">Delete field</Button>
+			icon = 'dashicons dashicons-edit';
+		} else {
+			closeButton = <Button onClick={ closeOverlay } type="secondary" icon="dashicons-no">Cancel</Button>
+			icon = 'dashicons dashicons-plus';
+		}
+
 		Overlay.show(
 			<React.Fragment>
-				<Overlay.Title>{ title }</Overlay.Title>
+				<Overlay.Title icon={ icon }>{ title }</Overlay.Title>
 
 				<Overlay.Footer>
-					<Button onClick={ onSave }>Save</Button>
-					<Button onClick={ closeOverlay }>Close</Button>
+					<Button onClick={ onSave } icon="dashicons-category">Save</Button>
+					{ closeButton }
 				</Overlay.Footer>
 
 				<Provider store={ store } onRemove={ cleanup } key={ new Date() }>
