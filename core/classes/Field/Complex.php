@@ -513,6 +513,8 @@ class Complex extends Field {
 	 * @param mixed  $item   The item that is being edited.
 	 */
 	public function perform_ajax( $action, $item ) {
-		$this->get_group()->perform_ajax( $item, $action );
+		if( $this->get_group() ) {
+			$this->get_group()->perform_ajax( $item, $action );			
+		}
 	}
 }

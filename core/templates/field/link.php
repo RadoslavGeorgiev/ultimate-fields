@@ -15,8 +15,10 @@
 		</div>
 	</div>
 
+	<% if( target_control ) { %>
 	<label class="uf-link-new-tab">
 		<input type="checkbox" class="uf-link-new-tab-input" />
 		<span><?php _e( 'Open link in a new tab' ) ?></span>
 	</label>
+	<% } %>
 </div>

@@ -451,6 +451,12 @@
 	field.Helper.Link = field.Helper.Object.extend({
 		setupPreview: function( args ) {
 			args.model.set( 'button_text', args.data.get( 'object_text' ) );
+
+			var tc = args.data.get( 'link_target_control' );
+			if( ( 'undefined' != typeof tc ) && ! tc ) {
+				args.model.set( 'target_control', false );
+			}
+
 			this.cacheValue( args );
 		},
 

@@ -48,7 +48,11 @@ class Link extends Field_Helper {
 			->add_dependency( 'type', 'Link' );
 
 		$fields = array(
-			Field::create( 'link', 'default_value_link', __( 'Default value', 'ultimate-fields' ) )
+			Field::create( 'link', 'default_value_link', __( 'Default value', 'ultimate-fields' ) ),
+			Field::create( 'checkbox', 'link_target_control', __( 'Target Control', 'ultimate-fields' ) )
+				->fancy()
+				->set_default_value( true )
+				->set_text( __( 'Enable the "New Tab" checkbox', 'ultimate-fields' ) )
 		);
 
 		$output = array(
