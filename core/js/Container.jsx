@@ -8,6 +8,7 @@ import Tab from './Tab.jsx';
 import ConditionalTabWrapper from './ConditionalTabWrapper.jsx';
 import TabButton from './TabButton.jsx';
 import Grid from './Grid.js';
+import FieldErrorBoundary from './FieldErrorBoundary.jsx';
 
 var cache = {};
 
@@ -145,7 +146,9 @@ class Container extends React.Component {
 		const fieldClass = getFieldType( field );
 
 		// Create and return the element
-		return React.createElement( fieldClass, props );
+		const fieldEl = React.createElement( fieldClass, props );
+
+		return <FieldErrorBoundary fieldProps={ props }>{ fieldEl }</FieldErrorBoundary>
 	}
 
 	/**

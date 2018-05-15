@@ -38,6 +38,15 @@
 		z-index: 2;
 	}
 
+    &__error {
+        margin: 0;
+        color: $required;
+        display: inline-block;
+        background: #eee;
+        padding: 10px;
+        border-radius: 3px;
+    }
+
 	&__description {
 		font-style: italic;
 		opacity: .75;

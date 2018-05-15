@@ -7,15 +7,8 @@ export default class FieldWrapper extends React.Component {
 
 	render() {
 		const {
-			children,
-			id,
-			label,
-			width,
-			description,
-			description_position,
-			invalidFieldMessage,
-			layout,
-			type
+			children, id, label, width, description, description_position,
+			invalidFieldMessage, layout, type
 		} = this.props;
 
 		const required = 'required' in this.props;
