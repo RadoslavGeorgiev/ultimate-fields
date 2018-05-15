@@ -367,6 +367,10 @@ abstract class Field {
 	}
 
 	public function set_dependencies( $raw ) {
+		if( empty( $raw ) ) {
+			return;
+		}
+
 		$dependencies = new Dependency_Set;
 
 		foreach( $raw as $raw_group ) {
