@@ -35,3 +35,11 @@
         display: block;
     }
 }
+
+.uf-overlay-open .mce-menu {
+	z-index: 160011 !important; // Because of inline styles
+}
+
+.uf-overlay-open .media-modal {
+	z-index: 160011 !important; // Because of inline styles
+}

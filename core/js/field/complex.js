@@ -27,11 +27,15 @@
 			});
 
 			// Generate the model
-			model = new UltimateFields.Container.Group.Model( this.get( 'group' ) );
-			model.setDatastore( this.values );
+			if( this.get( 'group' ) ) {
+				model = new UltimateFields.Container.Group.Model( this.get( 'group' ) );
+				model.setDatastore( this.values );
 
-			// Save a handle
-			this.set( 'groupModel', model );
+				// Save a handle
+				this.set( 'groupModel', model );
+			} else {
+				this.set( 'groupModel', false );
+			}
 		},
 
 		/**
@@ -39,6 +43,11 @@
 		 */
 		validate: function() {
 			var errors, message;
+
+			// Check for a model
+			if( ! this.get( 'groupModel' ) ) {
+				return;
+			}
 
 			if( ! ( errors = this.get( 'groupModel' ).validate() ) ) {
 				return;
@@ -56,6 +65,10 @@
 		getSEOValue: function() {
 			var values = [],
 				group = this.get( 'groupModel' );
+
+			if( ! group ) {
+				return '';
+			}
 
 			group.get( 'fields' ).each(function( field ) {
 				var value = field.getSEOValue();
@@ -77,6 +90,10 @@
 			// Do the standard initialization
 			field.View.prototype.initialize.apply( this, arguments );
 
+			if( ! this.model.get( 'groupModel' ) ) {
+				return;
+			}
+
 			// Listen for replacements
 			this.model.datastore.on( 'value-replaced', function( name ) {
 				if( name != that.model.get( 'name' ) ) {
@@ -97,6 +114,14 @@
 
 			// Create a group model
 			model = this.model.get( 'groupModel' );
+
+			if( ! model ) {
+				var $p = $( '<p />' );
+				$p.addClass( 'uf-complex-group-missing' );
+				$p.text( UltimateFields.L10N.localize( 'complex-no-group' ) );
+				this.$el.append( $p );
+				return;
+			}
 
 			// Create a view for the group and get the fields
 			view = new UltimateFields.Container.Group.ComplexView({

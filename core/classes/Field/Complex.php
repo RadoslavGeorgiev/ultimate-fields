@@ -182,8 +182,11 @@ class Complex extends Field {
 			$group = new Complex_Group( 'complex_group' );
 		}
 
-		$group->set_layout( $this->layout );
+		if( ! $group ) {
+			return $this->group = false;
+		}
 
+		$group->set_layout( $this->layout );
 		return $this->group = $group;
 	}
 
@@ -196,7 +199,13 @@ class Complex extends Field {
 	 */
 	public function export_field() {
 		$settings = parent::export_field();
-		$settings[ 'group' ] = $this->get_group()->export_settings();
+
+		$group = $this->get_group();
+		if( $group ) {
+			$settings[ 'group' ] = $group->export_settings();
+		} else {
+			$settings[ 'group' ] = false;
+		}
 
 		return $settings;
 	}
@@ -268,9 +277,11 @@ class Complex extends Field {
 		$datastore = $this->get_internal_datastore();
 
 		# Put the values into a datastore
-		foreach( $this->get_group()->get_fields() as $field ) {
-			$field->set_datastore( $datastore );
-			$field->save( $source );
+		if( $this->get_group() ) {
+			foreach( $this->get_group()->get_fields() as $field ) {
+				$field->set_datastore( $datastore );
+				$field->save( $source );
+			}
 		}
 
 		# Save
@@ -289,9 +300,12 @@ class Complex extends Field {
 
 		# Go through fields and gather values
 		$data = array();
-		foreach( $this->group->get_fields() as $field ) {
-			$field->set_datastore( $datastore );
-			$data = array_merge( $data, $field->export_data() );
+
+		if( $this->group ) {
+			foreach( $this->group->get_fields() as $field ) {
+				$field->set_datastore( $datastore );
+				$data = array_merge( $data, $field->export_data() );
+			}
 		}
 
 		return array(
@@ -366,7 +380,12 @@ class Complex extends Field {
 	 * @since 3.0
 	 */
 	public function enqueue_scripts() {
-		$this->get_group()->enqueue_scripts();
+		if( $this->get_group() ) {
+			$this->get_group()->enqueue_scripts();
+		} else {
+			ultimate_fields()->localize( 'complex-no-group', __( 'The group with the sub-fields of this field is missing.', 'ultimate-fields' ) );
+		}
+
 		wp_enqueue_script( 'uf-field-complex' );
 	}
 
