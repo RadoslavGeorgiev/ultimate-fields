@@ -3,13 +3,13 @@ use Ultimate_Fields\Container;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Options_Page;
 
-define( 'ENV_PAGE_STUFF', false );
+define( 'ENV_PAGE_STUFF', true );
 define( 'ENV_PAGE_TABBED_STUFF', false );
 define( 'ENV_STUFF', false );
 define( 'ENV_ALL_REACT_FIELDS', false );
 define( 'ENV_REPEATERS_PAGE', false );
 define( 'ENV_COMPLEX_PAGE', false );
-define( 'ENV_RELATIONAL_PAGE', true );
+define( 'ENV_RELATIONAL_PAGE', false );
 
 add_action( 'uf.init', function() {
 	if( ENV_PAGE_STUFF || ENV_PAGE_TABBED_STUFF ) {
