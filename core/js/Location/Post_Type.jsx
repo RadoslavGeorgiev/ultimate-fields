@@ -1,35 +1,34 @@
 import React from 'react';
 import Location from './Location.jsx';
-import Form from './../Form.jsx';
-import Loader from './../PHP/Loader.jsx';
 
 export default class Post_Type extends Location {
-	state: {
-		data: {}
-	}
-
-	componentWillMount() {
-		const { data } = this.props;
-		this.setState({ data });
-	}
+	box = false;
 
 	render() {
-		const { element, settings, data } = this.props;
-		const { id, fields, layout, description_position } = settings;
+		const { id } = this.props.settings;
 
-		const loader = new Loader( fields );
+		const props = {
+			className: 'uf-fields--boxed'
+		}
 
 		return <React.Fragment>
-			<Form
-				data={ data }
-				children={ loader.load() }
-				ref={ form => this.form = form }
-				onChange={ data => this.setState({ data }) }
-				className="uf-fields--boxed"
-				layout={ layout }
-				description_position={ description_position }
-			/>
+			{ this.renderForm( props ) }
 			{ this.getHiddenField( 'uf_post_type_' + id ) }
 		</React.Fragment>
+	}
+
+	associateWithBox( box ) {
+		this.box = box.parentNode.parentNode;
+		this.checkRules();
+	}
+
+	componentDidUpdate() {
+		this.checkRules();
+	}
+
+	checkRules() {
+		const hidden = false;
+
+		this.box.style.display = hidden ? 'none' : null;
 	}
 }
