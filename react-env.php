@@ -293,4 +293,22 @@ add_action( 'uf.init', function() {
 
 add_action( 'init', function() {
 	remove_post_type_support( 'page', 'editor' );
+
+	register_taxonomy( 'patka', 'post', array(
+		'hierarchical' => true,
+		'show_ui' => true,
+		'labels' => [
+			'name'              => _x( 'Patici', 'taxonomy general name', 'textdomain' ),
+		'singular_name'     => _x( 'Patka', 'taxonomy singular name', 'textdomain' ),
+		'search_items'      => __( 'Search Patici', 'textdomain' ),
+		'all_items'         => __( 'All Patici', 'textdomain' ),
+		'parent_item'       => __( 'Parent Patka', 'textdomain' ),
+		'parent_item_colon' => __( 'Parent Patka:', 'textdomain' ),
+		'edit_item'         => __( 'Edit Patka', 'textdomain' ),
+		'update_item'       => __( 'Update Patka', 'textdomain' ),
+		'add_new_item'      => __( 'Add New Patka', 'textdomain' ),
+		'new_item_name'     => __( 'New Patka Name', 'textdomain' ),
+		'menu_name'         => __( 'Patka', 'textdomain' ),
+			]
+	));
 });
