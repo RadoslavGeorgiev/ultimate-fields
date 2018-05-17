@@ -25,13 +25,22 @@ export default class Location extends React.Component {
 		const { id, fields, layout, description_position } = settings;
 
 		const props = Object.assign( {}, {
+			ref:                  'form',
 			data:                 data,
 			children:             fields,
 			layout:               layout,
 			description_position: description_position,
-			onChange:             data => this.setState({ data })
+			onChange:             this.setData.bind( this )
 		}, extraProps || {} )
 
 		return React.createElement( Form, props );
+	}
+
+	validate() {
+		return this.refs.form.validate();
+	}
+
+	setData( data ) {
+		this.setState({ data });
 	}
 }

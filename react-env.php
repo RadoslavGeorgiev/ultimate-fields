@@ -17,7 +17,11 @@ add_action( 'uf.init', function() {
 	}
 
 	if( ENV_PAGE_STUFF ) Container::create( 'Page Stuff' )
-		->add_location( 'post_type', 'page' )
+		// ->add_location( 'post_type', 'page' )
+		->add_location( 'post_type', 'post', [
+			'category' => 1,
+			'patka' => 3
+		])
 		->add_location( 'options', $page )
 		->add_fields([
 			Field::create( 'section', 'test_section' )

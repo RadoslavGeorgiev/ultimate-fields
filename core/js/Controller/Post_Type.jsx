@@ -36,30 +36,7 @@ export default class Post_Type extends Controller {
 		Controller.prototype.locationDidMount.apply( this, arguments );
 
 		form.associateWithBox( root );
-	}
-
-	/**
-	 * Checks if the submission of the #post form should be prevented because of validation.
-	 *
-	 * @param {Event} e The event that just happened.
-	 */
-	onSubmit( e ) {
-		// Collect all errors
-		const reducer = ( errors, location ) => errors.concat( location.form.validate() )
-		const errors  = this.locations.reduce( reducer, [] )
-
-		if( errors.length ) {
-
-			// Display the errors and prevent the submission if any
-			e.preventDefault();
-			this.displayErrors( errors );
-
-		} else {
-
-			// Clear existing errors in order not to confuse the user while waiting
-			this.clearErrors();
-
-		}
+		form.setEnvironment( this.env );
 	}
 
 	/**
@@ -90,27 +67,15 @@ export default class Post_Type extends Controller {
 	}
 
 	/**
-	 * Clears all errors, which have already been displayed.
-	 */
-	clearErrors() {
-		const wrap = document.querySelector( '.uf-errors' );
-
-		if( ! wrap ) {
-			return;
-		}
-
-		ReactDOM.unmountComponentAtNode( wrap );
-		wrap.parentNode.removeChild( wrap );
-	}
-
-	/**
 	 * Adds all necessary listners and loads the initial environment.
 	 */
 	initializeEnvironment() {
 		const update = this.updateEnvironment.bind( this );
 
 		const listen = ( selector, eventName ) => {
-			Array.from( document.querySelectorAll( selector ) ).forEach( el => {
+			const elements = Array.from( document.querySelectorAll( selector ) );
+
+			elements.forEach( el => {
 				el.addEventListener( eventName, update );
 			});
 		}
@@ -128,28 +93,37 @@ export default class Post_Type extends Controller {
 	 * Updates all environmental vars.
 	 */
 	updateEnvironment() {
+		this.collectEnvironment();
+		this.locations.forEach( location => location.setEnvironment( this.env ) );
+	}
+
+	/**
+	 * Collects all environmental vars.
+	 */
+	collectEnvironment() {
 		this.env = Object.assign( {}, this.env );
 
 		// Small shortcut
-		const all = ( selector, callback ) => {
-			Array.from( document.querySelectorAll( selector ) ).forEach( callback );
+		const all = ( selector, callback, container ) => {
+			if( ! container ) container = document;
+			Array.from( container.querySelectorAll( selector ) ).forEach( callback );
 		}
 
 		// Check templates
 		all( '#page_template', select => {
-			this.env.templates = select.value;
+			this.env.template = select.value;
 		});
 
 		// Check formats
 		all( '#post-formats-select input', input => {
 			if( 'radio' == input.type && input.checked ) {
-				this.env.formats = input.value;
+				this.env.format = input.value;
 			}
 		});
 
 		// Check the status of the post
 		all( '#post_status', select => {
-			this.env.stati = select.value;
+			this.env.status = select.value;
 		});
 
 		// Check for a post parent
@@ -159,17 +133,30 @@ export default class Post_Type extends Controller {
 
 				const stringLevel = option.className.replace('level-', '');
 				if( stringLevel.match( /^\d+$/ ) ) {
-					this.env.levels = parseInt( stringLevel ) + 2;
+					this.env.level = parseInt( stringLevel ) + 2;
 				} else {
-					this.env.levels = 1;
+					this.env.level = 1;
 				}
 			});
 
-			this.env.parents = select.value ? parseInt( select.value ) : false;
+			this.env.parent = select.value ? parseInt( select.value ) : false;
 		});
 
-		// do terms here
+		all( '.categorychecklist', list => {
+			if( list.id.match( /-pop$/ ) ) {
+				return;
+			}
 
-		console.log(this.env);
+			const tax   = list.dataset.wpLists.replace( /^list:/, '' );
+			const terms = [];
+
+			all( 'input', input => {
+				if( input.checked ) {
+					terms.push( parseInt( input.value ) );
+				}
+			}, list );
+
+			this.env[ 'tax_' + tax ] = terms;
+		});
 	}
 }

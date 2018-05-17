@@ -1,61 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Controller from './Controller.jsx';
-import Location from './../Location/Options.jsx';
+import OptionsLocation from './../Location/Options.jsx';
 
 export default class Options extends Controller {
 	getLocationClass() {
-		return Location;
+		return OptionsLocation;
 	}
 
 	constructor() {
 		super();
 
-		const form = document.getElementById( 'poststuff' );
-
 		// Add a submission handler
+		const form = document.getElementById( 'poststuff' );
 		form.addEventListener( 'submit', this.onSubmit.bind( this ) );
 	}
 
-	onSubmit( e ) {
-		const reducer = ( errors, location ) => errors.concat( location.form.validate() )
-		const errors  = this.locations.reduce( reducer, [] )
-
-		if( errors.length ) {
-			e.preventDefault();
-			this.displayErrors( errors );
-		} else {
-			this.clearErrors();
-		}
-	}
-
 	displayErrors( errors ) {
-		const error = <div className="error uf-error">
-			<p><strong>{ uf_l10n['container-issues'] }</strong></p>
-			<ul>
-				{ errors.map( ( error, i ) => <li key={ i } children={ error } /> ) }
-			</ul>
-		</div>;
+		const notice = this.generateErrorNotice( errors );
 
-		// Create the div and render it
-		let errorWrapper = document.querySelector( '.uf-errors' );
-		if( ! errorWrapper ) {
-			errorWrapper = document.createElement( 'div' );
-			errorWrapper.className = 'uf-errors';
+		// Cleanup all success messages and existing UF errors.
+		const existing = document.querySelectorAll( '.notice-success, .uf-error' );
+		Array.from( existing ).forEach( message => message.parentNode.removeChild( message ) );
 
-			const titleBox = document.querySelector( 'h1' );
-			titleBox.parentNode.insertBefore( errorWrapper, titleBox.nextSibling );
-		}
+		// Create React root element in order to allow rendering
+		const wrap = document.createElement( 'div' );
+		wrap.classList.add( 'uf-errors' );
+
+		// Put the root element in the right place
+		const titleBox = document.querySelector( 'h1' );
+		titleBox.parentNode.insertBefore( wrap, titleBox.nextSibling );
 
 		ReactDOM.render(
-			error,
-			errorWrapper
+			notice,
+			wrap
 		);
-	}
-
-	clearErrors() {
-		Array.from( document.querySelectorAll( '.uf-errors > *' ) ).forEach( child => {
-			child.parentNode.removeChild( child );
-		})
 	}
 }
