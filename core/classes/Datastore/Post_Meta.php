@@ -28,6 +28,33 @@ class Post_Meta extends Datastore {
 	}
 
 	/**
+	 * Adds slashes deeply into an array.
+	 *
+	 * @since 3.0.3
+	 *
+	 * @param array $value The value to add slashes to.
+	 * @return array
+	 */
+	public function addslashes_deep( $value ) {
+		if( ! is_array( $value ) ) {
+			return $value;
+		}
+
+		$added = array();
+		foreach( $value as $key => $item ) {
+			if( is_string( $item ) ) {
+				$item = addslashes( $item );
+			} elseif( is_array( $item ) ) {
+				$item = $this->addslashes_deep( $item );
+			}
+
+			$added[ $key ] = $item;
+		}
+
+		return $added;
+	}
+
+	/**
 	 * Saves values in the dabase. Might as well update existing ones
 	 *
 	 * @since 2.0
@@ -36,6 +63,12 @@ class Post_Meta extends Datastore {
 	 * @param mixed $value The value to be saved
 	 */
 	function save_value_in_db( $key, $value ) {
+		if( is_string( $value ) ) {
+			$value = addslashes( $value );
+		} elseif( is_array( $value ) ) {
+			$value = $this->addslashes_deep( $value );
+		}
+
 		return update_post_meta( $this->post_id, $key, $value );
 	}
 

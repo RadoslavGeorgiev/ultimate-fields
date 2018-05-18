@@ -20,7 +20,6 @@ class Options extends Datastore {
 	function get_value_from_db( $key ) {
         $all = wp_load_alloptions();
 
-
         if( ! isset( $all[ $key ] ) ) {
             return null;
         }
@@ -39,7 +38,7 @@ class Options extends Datastore {
 	 * @param mixed $value The value to be saved
 	 */
 	function save_value_in_db( $key, $value ) {
-		return update_option( $key, is_string( $value ) ? stripslashes( $value ) : $value );
+		return update_option( $key, $value );
 	}
 
 	/**

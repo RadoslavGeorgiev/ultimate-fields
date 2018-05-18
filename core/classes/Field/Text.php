@@ -286,17 +286,4 @@ class Text extends Field {
 
 		return $settings;
 	}
-
-	/**
-	 * Sanititizes values before saving.
-	 *
-	 * @since 3.0
-	 *
-	 * @param string $value The value that is being saved.
-	 * @return string
-	 */
-	 protected function sanitize_value( $value ) {
-		 // WordPress likes to strip slashes, so we are escaping them here
- 		return addslashes( $value );
- 	}
 }
