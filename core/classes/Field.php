@@ -880,7 +880,9 @@ abstract class Field {
 		$settings = array(
 			'name'  => $this->name,
 			'label' => $this->label,
-			'type' => ultimate_fields()->basename( $this )
+			'type' => method_exists( $this, 'get_type' )
+				? $this->get_type()
+				: ultimate_fields()->basename( $this )
 		);
 
 		$this->export_properties( $settings, array(
