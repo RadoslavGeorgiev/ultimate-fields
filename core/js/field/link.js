@@ -8,6 +8,10 @@
 	 * Add an extended model.
 	 */
 	linkField.Model = objectField.Model.extend({
+		defaults: _.extend( {}, objectField.Model.prototype.defaults, {
+			target_control: true
+		}),
+		
 		/**
 		 * Extracts data from the selected items in order to generate a correct value,
 		 * mainly when something is selected in the chooser.
@@ -107,7 +111,8 @@
 				$tab, button;
 
 			this.$el.html( tmpl({
-				value: value
+				value: value,
+				target_control: this.model.get( 'target_control' )
 			}));
 
 			// Locate elements

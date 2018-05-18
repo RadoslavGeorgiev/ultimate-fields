@@ -4,7 +4,7 @@ Donate link: https://www.ultimate-fields.com/pro/
 Tags: custom fields, meta, theme options, repeater, post meta
 Requires at least: 4.9
 Tested up to: 4.9.5
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.4
@@ -84,6 +84,19 @@ Please make sure to check out [the documentation on our website](https://www.ult
 This is a complete rewrite of the plugin with renewed interface and various new functions. After upgrade, you will be required to migrate your containers to the format of the new version. Important: There are no immediate modifications of field values and the old container format will be stored in case you need to revert.
 
 == Changelog ==
+
+= 3.0.2 Bugfix Release with a couple of small features =
+
+[FIX] Limiting preview image sizes to 100% to ensure that if `thumbnail` is not available as an image size, images are not overflowing.
+[FIX] Enqueueing overlays properly for files: The File fields were expecting the Overlay JS class to be available, but it was not enqueued.
+[FIX] Values are now properly saved and loaded for WYSIWYG editors, including empty paragraphs and etc.
+[FIX] Improved handling of repeater values in the REST API: The iterator format of the repeater field was not playing nicely with the REST API.
+[UPDATE] Minor adjustments of the UI and complex fields in order to allow https://github.com/RadoslavGeorgiev/ultimate-fields-layout-control to work.
+[FIX] Messages are not saving values anymore.
+[FIX][W2422] Conditional logic is not used if unchecked
+[FIX][W2439] Complex fields can now handle missing containers.
+[FEATURE][W2440] Adding a target_control setting to the link field
+[FIX][W2444] Empty dependency sets in array mode are ignored now.
 
 = 3.0.1 Bugfix Relase =
 

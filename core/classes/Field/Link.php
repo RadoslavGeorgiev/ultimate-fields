@@ -10,6 +10,13 @@ use Ultimate_Fields\Template;
  */
 class Link extends WP_Object {
 	/**
+	 * Indicates whether the new tab control should be displayed or not.
+	 *
+	 * @since 3.0.2
+	 */
+	protected $target_control = true;
+
+	/**
 	 * Enqueues the scripts for the field.
 	 *
 	 * @since 3.0
@@ -20,6 +27,19 @@ class Link extends WP_Object {
 		wp_enqueue_script( 'uf-field-link' );
 
 		Template::add( 'link', 'field/link');
+	}
+
+	/**
+	 * Adds additional data for JavaScript.
+	 *
+	 * @since 3.0
+	 *
+	 * @return mixed[]
+	 */
+	public function export_field() {
+		$data = parent::export_field();
+		$data['target_control'] = $this->target_control;
+		return $data;
 	}
 
 	/**
@@ -140,5 +160,61 @@ class Link extends WP_Object {
 			# Just get the link
 			return $value[ 'link' ];
 		}
+	}
+
+	/**
+	 * Enables the target control.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @return Link
+	 */
+	public function show_target_control() {
+		$this->target_control = true;
+		return $this;
+	}
+
+	/**
+	 * Disables the target control.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @return Link
+	 */
+	public function hide_target_control() {
+		$this->target_control = false;
+		return $this;
+	}
+
+	/**
+	 * Imports the field.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @param mixed[] $data The data for the field.
+	 */
+	public function import( $data ) {
+		parent::import( $data );
+
+		if( isset( $data[ 'link_target_control' ] ) && ! $data[ 'link_target_control' ] ) {
+			$this->hide_target_control();
+		}
+	}
+
+	/**
+	 * Generates the data for file exports.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @return mixed[]
+	 */
+	public function export() {
+		$settings = parent::export();
+
+		if( ! $this->target_control ) {
+			$settings['link_target_control'] = false;
+		}
+
+		return $settings;
 	}
 }

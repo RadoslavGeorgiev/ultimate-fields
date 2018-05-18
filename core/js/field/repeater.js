@@ -656,7 +656,7 @@
 
 	 			// Hide the show prototypes
 		 		if( 1 == this.model.get( 'groups' ).length ) {
-					this.addButton.$el[ method ? 'show' : 'hide' ]();
+					this.theAddButton.$el[ method ? 'show' : 'hide' ]();
 				} else {
 					if( 'widgets' == this.model.get( 'chooser_type' ) ) {
 						this.$prototypes[ method ]();
@@ -674,7 +674,7 @@
 			var that = this,
 				button;
 
-			button = this.addButton = new UltimateFields.Button({
+			button = this.theAddButton = new UltimateFields.Button({
 				text:     this.model.get( 'add_text' ) || UltimateFields.L10N.localize( 'repeater-add' ),
 				icon:     'dashicons-plus',
 				type:     'primary',

@@ -198,7 +198,11 @@ class Field_Helper {
 	 * @param Ultimate_Fields\Field $field The field that is being set up.
 	 */
 	protected function setup_dependencies( $data, $field ) {
-		if( ! isset( $data[ 'conditional_logic' ] ) || ! $data[ 'conditional_logic' ] ) {
+		if( ! isset( $data[ 'enable_conditional_logic' ] ) || ! $data[ 'enable_conditional_logic' ] ) {
+			return;
+		}
+
+		if( ! isset( $data[ 'conditional_logic' ] ) || empty( $data[ 'conditional_logic' ] ) ) {
 			return;
 		}
 

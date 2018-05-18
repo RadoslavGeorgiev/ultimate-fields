@@ -11,10 +11,6 @@ class Tab extends Field {
 		return array();
 	}
 
-	public function save( $source ) {
-		// Nothing to save
-	}
-
 	/**
 	 * Changes the icon of the tab.
 	 *
@@ -88,5 +84,16 @@ class Tab extends Field {
 		));
 
 		return $settings;
+	}
+
+	/**
+	 * Ensures that unlike normal fields, no values are saved for tabs.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @param mixed[] $source The source which the value of the field would be available in.
+	 */
+	public function save( $source ) {
+		// Nothing to do here really...
 	}
 }
