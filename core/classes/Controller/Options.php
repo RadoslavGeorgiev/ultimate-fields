@@ -149,8 +149,6 @@ class Options extends Controller {
 		}
 
 		# Register the neccessary templates
-		Template::add( 'options', 'container/options' );
-		Template::add( 'container-error', 'container/error' );
 		Template::instance()->output_templates();
 
 		# Force-initialize

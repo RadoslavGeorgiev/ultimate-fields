@@ -277,36 +277,7 @@ class Core {
 		wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
 
 		// Register regular scripts
-		wp_register_script( 'uf-core',                $js . 'uf.js',                  array( 'jquery', 'underscore', 'backbone' ), $v );
-		wp_register_script( 'uf-datastore',           $js . 'datastore.js',           array( 'uf-core' ), $v );
-		wp_register_script( 'uf-dependencies',        $js . 'dependencies.js',        array( 'uf-core' ), $v );
-		wp_register_script( 'uf-overlay',             $js . 'overlay.js',             array( 'uf-core' ), $v );
-		wp_register_script( 'uf-container-layout',    $js . 'container-layout.js',    array( 'uf-core' ), $v );
-		wp_register_script( 'uf-container',           $js . 'container/base.js',      array( 'uf-core', 'uf-datastore', 'uf-container-layout' ), $v );
-		wp_register_script( 'uf-container-group',     $js . 'container/group.js',     array( 'uf-container', 'uf-overlay' ), $v );
-		wp_register_script( 'uf-container-post-type', $js . 'container/post-type.js', array( 'uf-container' ), $v );
-		wp_register_script( 'uf-container-options',   $js . 'container/options.js',   array( 'uf-container' ), $v );
-		wp_register_script( 'uf-field',               $js . 'field/base.js',          array( 'uf-core', 'uf-dependencies', 'jquery-ui-sortable' ), $v );
-		wp_register_script( 'uf-field-message',       $js . 'field/message.js',       array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-text',          $js . 'field/text.js',          array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-password',      $js . 'field/password.js',      array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-textarea',      $js . 'field/textarea.js',      array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-checkbox',      $js . 'field/checkbox.js',      array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-select',        $js . 'field/select.js',        array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-multiselect',   $js . 'field/multiselect.js',   array( 'uf-field', 'uf-field-select' ), $v );
-		wp_register_script( 'uf-field-image-select',  $js . 'field/image-select.js',  array( 'uf-field' ), $v );
-		wp_register_script( 'uf-field-wysiwyg',       $js . 'field/wysiwyg.js',       array( 'uf-field', 'uf-field-textarea' ), $v );
-		wp_register_script( 'uf-field-file',          $js . 'field/file.js',          array( 'uf-field', 'media-models', 'uf-overlay' ), $v );
-		wp_register_script( 'uf-field-image',         $js . 'field/image.js',         array( 'uf-field', 'uf-field-file' ), $v );
-		wp_register_script( 'uf-field-file-uploader', $js . 'field/file-uploader.js', array( 'uf-field', 'uf-field-file', 'wp-plupload', 'plupload' ), $v );
-		wp_register_script( 'uf-field-wp-object',     $js . 'field/wp-object.js',     array( 'uf-field', 'uf-select2' ), $v );
-		wp_register_script( 'uf-field-wp-objects',    $js . 'field/wp-objects.js',    array( 'uf-field', 'uf-field-wp-object' ), $v );
-		wp_register_script( 'uf-field-link',          $js . 'field/link.js',          array( 'uf-field', 'uf-field-wp-object' ), $v );
-		wp_register_script( 'uf-field-number',        $js . 'field/number.js',        array( 'uf-field', 'jquery-ui-slider' ), $v );
-		wp_register_script( 'uf-field-repeater',      $js . 'field/repeater.js',      array( 'uf-field', 'uf-container-group', 'jquery-ui-sortable', 'jquery-ui-draggable', 'uf-overlay' ), $v );
-		wp_register_script( 'uf-field-complex',       $js . 'field/complex.js',       array( 'uf-field', 'uf-container-group' ), $v );
-		wp_register_script( 'uf-tab',                 $js . 'tab.js',                 array( 'uf-field' ), $v );
-		wp_register_script( 'uf-initialize',          $js . 'initialize.js',          array( 'uf-core', 'uf-container', 'uf-field' ), $v );
+		wp_register_script( 'ultimate-fields', $js . 'ultimate-fields.js', array(), $v );
 
 		// The admin-menu dependency is needed in the backend, in order to enqueue new styles after those of WordPress.
 		wp_register_style( 'ultimate-fields-css', ULTIMATE_FIELDS_URL . 'assets/css/ultimate-fields.css', array( 'admin-menu' ), ULTIMATE_FIELDS_VERSION );

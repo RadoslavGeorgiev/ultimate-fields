@@ -2,7 +2,6 @@
 namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
-use Ultimate_Fields\Template;
 
 /**
  * Handles the object field.
@@ -148,12 +147,6 @@ class WP_Object extends Field {
 		# Add the basic js
 		wp_enqueue_style( 'uf-select2-css' );
 		wp_enqueue_script( 'uf-field-wp-object' );
-
-		# Add templates
-		Template::add( 'object-chooser', 'field/object-chooser' );
-		Template::add( 'object-item', 'field/object-item' );
-		Template::add( 'object-preview', 'field/object-preview' );
-		Template::add( 'object-chooser-empty', 'field/object-chooser-empty' );
 
 		# Localize
 		ultimate_fields()

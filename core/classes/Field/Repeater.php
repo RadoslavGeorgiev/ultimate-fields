@@ -4,7 +4,6 @@ namespace Ultimate_Fields\Field;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Container\Repeater_Group;
 use Ultimate_Fields\Datastore\Group as Group_Datastore;
-use Ultimate_Fields\Template;
 use Ultimate_Fields\Helper\Group_Values;
 use Ultimate_Fields\Helper\Groups_Iterator;
 use ReflectionClass;
@@ -240,35 +239,6 @@ class Repeater extends Field {
 		return array(
 			$this->name => $value
 		);
-	}
-
-	/**
-	 * Adds the templates of the field to the queue.
-	 *
-	 * @since 3.0
-	 */
-	public function templates() {
-		if( 'table' == $this->layout ) {
-			Template::add( 'field-repeater-table', 'field/repeater/table' );
-			Template::add( 'repeater-heading', 'field/repeater/heading' );
-			Template::add( 'table-row', 'field/repeater/table-row' );
-			Template::add( 'cell-wrap', 'field/wrap/cell' );
-		} else {
-			Template::add( 'field-repeater', 'field/repeater/base' );
-
-			if( 'dropdown' == $this->chooser_type ) {
-				Template::add( 'repeater-dropdown',  'field/repeater/dropdown' );
-			} else if( 'tags' == $this->chooser_type ) {
-				Template::add( 'repeater-tags', 'field/repeater/tags' );
-			} else {
-				Template::add( 'repeater-prototype', 'field/repeater/prototype' );
-			}
-		}
-
-		Template::add( 'repeater-group',  'field/repeater/group' );
-		Template::add( 'popup-group',     'field/repeater/popup-group' );
-		Template::add( 'overlay-wrapper', 'overlay-wrapper' );
-		Template::add( 'overlay-alert',   'overlay-alert' );
 	}
 
 	/**

@@ -2,7 +2,6 @@
 namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
-use Ultimate_Fields\Template;
 
 /**
  * Handles the inputs for file fields.
@@ -90,12 +89,9 @@ class File extends Field {
 		if( $this->basic ) {
 			wp_enqueue_script( 'uf-field-file-uploader' );
 			wp_plupload_default_settings();
-			Template::add( 'file-uploader', 'field/file-uploader' );
 		} else {
 			wp_enqueue_media();
 			wp_enqueue_script( 'uf-field-file' );
-			Template::add( 'overlay-wrapper', 'overlay-wrapper' );
-			Template::add( 'overlay-alert',   'overlay-alert' );
 		}
 
 		# Localize strings
@@ -106,9 +102,6 @@ class File extends Field {
 			->localize( 'file-remove',        __( 'Remove', 'ultimate-fields' ) )
 			->localize( 'file-save',          __( 'Save & Use', 'ultimate-fields' ) )
 			->localize( 'file-or',            __( 'OR', 'ultimate-fields' ) );
-
-		# Add the necessary templates
-		Template::add( 'file', 'field/file' );
 	}
 
 	/**

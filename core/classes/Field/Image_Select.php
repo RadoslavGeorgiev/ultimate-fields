@@ -2,7 +2,6 @@
 namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
-use Ultimate_Fields\Template;
 
 class Image_Select extends Field {
 	/**
@@ -91,9 +90,6 @@ class Image_Select extends Field {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'uf-field-image-select' );
-
-		# Add the basic template
-		Template::add( 'image-select', 'field/image-select' );
 	}
 
 	/**

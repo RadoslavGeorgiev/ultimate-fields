@@ -205,8 +205,6 @@ class Post_Type extends Controller {
 		}
 
 		# Register the neccessary templates
-		Template::add( 'post-type', 'container/post-type' );
-		Template::add( 'container-error', 'container/error' );
 		Template::instance()->output_templates();
 
 		# Force-initialize

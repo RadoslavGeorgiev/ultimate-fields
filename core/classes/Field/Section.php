@@ -2,7 +2,6 @@
 namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
-use Ultimate_Fields\Template;
 
 class Section extends Field {
 	protected $icon = '';
@@ -76,8 +75,6 @@ class Section extends Field {
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'uf-section' );
-
-		Template::add( 'section', 'section' );
 	}
 
 	/**

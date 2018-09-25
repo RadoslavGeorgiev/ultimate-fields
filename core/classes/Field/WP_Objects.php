@@ -1,8 +1,6 @@
 <?php
 namespace Ultimate_Fields\Field;
 
-use Ultimate_Fields\Template;
-
 /**
  * Extends the object field by allowing the selection of multiple objects within the same field.
  *
@@ -97,10 +95,6 @@ class WP_Objects extends WP_Object {
 
 		# Add objectS-specific JS
 		wp_enqueue_script( 'uf-field-wp-objects' );
-
-		# Add templates
-		Template::add( 'objects-preview', 'field/objects-preview' );
-		Template::add( 'objects-item-preview', 'field/objects-item-preview' );
 
 		# Add translations
 		ultimate_fields()->localize( 'objects-max', __( 'Maximum amount of %d items has already been reached!', 'ultimate-fields'  ) );

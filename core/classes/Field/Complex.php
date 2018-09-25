@@ -7,7 +7,6 @@ use Ultimate_Fields\Container\Complex_Group;
 use Ultimate_Fields\Datastore;
 use Ultimate_Fields\Datastore\Group as Group_Datastore;
 use Ultimate_Fields\Datastore\Complex as Complex_Datastore;
-use Ultimate_Fields\Template;
 use Ultimate_Fields\Helper\Complex_Values;
 
 /**
@@ -314,15 +313,6 @@ class Complex extends Field {
 	}
 
 	/**
-	 * Enqueues the templates for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function templates() {
-		Template::add( 'complex-group', 'field/complex-group' );
-	}
-
-	/**
 	 * Instruct the field to use grid layout.
 	 *
 	 * @since 3.0
@@ -514,7 +504,7 @@ class Complex extends Field {
 	 */
 	public function perform_ajax( $action, $item ) {
 		if( $this->get_group() ) {
-			$this->get_group()->perform_ajax( $item, $action );			
+			$this->get_group()->perform_ajax( $item, $action );
 		}
 	}
 }

@@ -1,8 +1,6 @@
 <?php
 namespace Ultimate_Fields\Field;
 
-use Ultimate_Fields\Template;
-
 /**
  * Handles links based on objects or manually entered ones.
  *
@@ -25,8 +23,6 @@ class Link extends WP_Object {
 		parent::enqueue_scripts();
 
 		wp_enqueue_script( 'uf-field-link' );
-
-		Template::add( 'link', 'field/link');
 	}
 
 	/**

@@ -6,7 +6,6 @@ namespace Ultimate_Fields\Field;
  */
 
 use Ultimate_Fields\Field;
-use Ultimate_Fields\Template;
 
 class Select extends Field {
 	/**
@@ -314,11 +313,6 @@ class Select extends Field {
 		}
 
 		wp_enqueue_script( 'uf-field-select' );
-
-		# If the type is radio, add the template for it.
-		if( 'radio' == $this->input_type ) {
-			Template::add( 'select-radios', 'field/radio' );
-		}
 
 		$message = __( 'There are no options available for this field.', 'ultimate-fields' );
 		ultimate_fields()->localize( 'select-no-options', $message );

@@ -1,7 +1,6 @@
 <?php
 namespace Ultimate_Fields;
 
-use Ultimate_Fields\Template;
 use Ultimate_Fields\Helper\Exportable;
 use Ultimate_Fields\Helper\Importable;
 use Ultimate_Fields\Dependency\Set as Dependency_Set;
@@ -313,8 +312,6 @@ abstract class Field {
 		if( ! empty( $this->dependencies ) ) {
 			$data[ 'dependencies' ] = $this->export_dependencies();
 		}
-
-		Template::add( 'field-wrap', 'field/wrap/normal' );
 
 		if( method_exists( $this, 'templates' ) ) {
 			$this->templates();
