@@ -194,7 +194,7 @@ class Post_Type extends Controller {
             '<div class="uf-container" data-type="%s">
 				<script type="text/json">%s</script>
 				' . $this->get_no_js_message() . '
-				<span class="spinner hide-if-no-js"></span>
+				<span class="spinner is-active hide-if-no-js"></span>
 			</div>',
             'Post_Type',
             json_encode( $json )

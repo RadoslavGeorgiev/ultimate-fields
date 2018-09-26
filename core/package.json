@@ -2,20 +2,29 @@
 	"name": "ultimate-fields",
 	"version": "3.0.0",
 	"description": "A plugin for custom fields in WordPres",
-	"dependencies": {
-
-	},
-	"scripts": {
-
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/RadoslavGeorgiev/ultimate-fields.git"
-	},
 	"author": "Radoslav Georgiev <rageorgiev@gmail.com>",
-	"license": "GPL-3.0",
-	"bugs": {
-		"url": "https://github.com/RadoslavGeorgiev/ultimate-fields/issues"
+	"scripts": {
+		"build": "webpack --mode production",
+		"watch": "webpack --watch --mode development"
 	},
-	"homepage": "https://www.ultimate-fields.com/"
+	"dependencies": {
+		"@babel/core": "^7.1.0",
+		"@babel/plugin-proposal-class-properties": "^7.1.0",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/preset-react": "^7.0.0",
+		"babel-loader": "^8.0.2",
+		"classnames": "^2.2.6",
+		"css-loader": "^1.0.0",
+		"lodash": "^4.17.11",
+		"mini-css-extract-plugin": "^0.4.3",
+		"node-sass": "^4.9.3",
+		"prop-types": "^15.6.2",
+		"react": "^16.5.2",
+		"react-dom": "^16.5.2",
+		"react-redux": "^5.0.7",
+		"redux": "^4.0.0",
+		"sass-loader": "^7.1.0",
+		"webpack": "^4.20.2",
+		"webpack-cli": "^3.1.1"
+	}
 }

@@ -1,0 +1,2 @@
+export const CREATE_DATASTORE = 'CREATE_DATASTORE';
+export const UPDATE_VALUE = 'UPDATE_VALUE';
