@@ -1,2 +1,4 @@
 export const CREATE_DATASTORE = 'CREATE_DATASTORE';
 export const UPDATE_VALUE = 'UPDATE_VALUE';
+
+export const CHANGE_TAB = 'CHANGE_TAB';

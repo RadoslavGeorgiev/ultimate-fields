@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { getFieldElement, getFieldInput } from './../field/';
+import Tab from './../components/tab';
 
 export default class Fields extends Component {
 	render() {
@@ -12,18 +13,26 @@ export default class Fields extends Component {
 	}
 
 	renderFields() {
-		const { fields, layout, style } = this.props;
+		const { fields, tabs, layout, style } = this.props;
 
 		return (
 			<div className={ `uf-fields ${style} ${layout}` }>
-				{ fields.map( this.renderField ) }
+				{ fields.map( field => {
+					return ( 'tabs' === field.type )
+						? this.renderTabs()
+						: this.renderField( field )
+				} ) }
 			</div>
 		);
 	}
 
 	renderField = definition => {
-		const { datastore, description_position, layout, style } = this.props;
-		const { name, field_width } = definition;
+		const { datastore, description_position, layout, style, areDependenciesMet, activeTab } = this.props;
+		const { name, field_width, tab } = definition;
+
+		if ( activeTab && tab && tab !== activeTab ) {
+			return null;
+		}
 
 		const field = {
 			...definition,
@@ -38,7 +47,7 @@ export default class Fields extends Component {
 
 		const gridClasses = this.generateGridClasses( field_width || 100 );
 
-		return <Element { ...field } key={ field.name } classNames={ gridClasses }>
+		return <Element { ...field } key={ name } classNames={ gridClasses }>
 			<Input { ...field } />
 		</Element>
 	}
@@ -64,5 +73,13 @@ export default class Fields extends Component {
 		this.column = ( this.column + width ) % 100;
 
 		return classes;
+	}
+
+	renderTabs() {
+		const { datastore, tabs, style } = this.props;
+
+		return <div className={ `uf-tabs uf-tabs--${style}` } key="container_tabs">
+			{ tabs.map( tab => <Tab { ...tab } key={ tab.name } datastore={ datastore } style={ style } /> ) }
+		</div>
 	}
 }

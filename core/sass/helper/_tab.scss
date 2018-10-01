@@ -1,20 +1,20 @@
 // Tabs
-.uf-tab {
-	&-wrapper {
-		border-bottom: 1px solid #ccc;
-		font-size: 0;
-		width: 100%;
-		position: relative;
-		z-index: 2;
-		margin-bottom: 10px;
-		padding-left: 10px;
-		box-sizing: border-box;
+.uf-tabs {
+	border-bottom: 1px solid #ccc;
+	font-size: 0;
+	width: 100%;
+	position: relative;
+	z-index: 2;
+	margin-bottom: 10px;
+	padding-left: 10px;
+	box-sizing: border-box;
 
-		.uf-fields-inline-tabs > & {
-			display: none;
-		}
+	&--inline {
+		display: none;
 	}
+}
 
+.uf-tab {
 	display: inline-block;
 	background: #f0f0f0;
 	font-size: 11px;
@@ -29,10 +29,6 @@
 	margin-top: 3px;
 	color: #444;
 
-	.uf-boxed-fields & {
-		border-color: #ddd;
-	}
-
 	&:focus {
 		box-shadow: none;
 	}
@@ -41,59 +37,63 @@
 		color: #222;
 	}
 
-	.uf-boxed-fields > &:hover {
-		background: #fff;
-	}
-
-	&-active {
+	&--active {
 		color: #000;
 		background: none;
 		border-bottom-color: #f1f1f1;
 	}
 
-	&.disabled {
-		color: #bbb;
-		background: #f9f9f9;
-		cursor: default;
-	}
-
-	&-hidden {
+	&--hidden {
 		display: none;
 	}
 
-	&-invalid {
+	&--invalid {
 		background: $required;
 		color: #fff;
 	}
 
-	&-invalid.uf-tab-active {
+	&--invalid.uf-tab--active {
 		background: inherit;
 		color: $required;
 	}
 
-	&-text,
-	&-icon {
+	&__text,
+	&__icon {
 		display: inline-block;
 		vertical-align: middle;
 	}
 
-	&-icon {
+	&__icon {
 		margin-right: 5px;
 	}
 }
 
-.uf-boxed-fields .uf-tab {
-	&-wrapper {
-		background: #eee;
-		border-bottom-color: #ddd;
-		margin-bottom: 0;;
-	}
+// Boxed tabs
+.uf-tabs--boxed {
+	background: #eee;
+	border-bottom-color: #ddd;
+	margin-bottom: 0;;
+}
 
+.uf-tab--boxed {
 	border-color: #ddd;
 
-	&-active {
+	&:hover {
 		background: #fff;
-		border-bottom-color: #fff;
+	}
+}
+
+.uf-tab--boxed.uf-tab--active {
+	background: #fff;
+	border-bottom-color: #fff;
+}
+
+// Disabled state (must overwrite others)
+.uf-tab--disabled {
+	&, &:hover, &:focus {
+		color: #bbb;
+		background: #f9f9f9;
+		cursor: default;
 	}
 }
 
