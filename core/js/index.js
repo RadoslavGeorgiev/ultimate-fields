@@ -24,10 +24,15 @@ const store = createStore(
 );
 
 window.UltimateFields = {
-	initializeContainer( node, settings, data ) {
+	initializeContainer( node, settings, data, callback ) {
 		// Create a model and let it setup the state
 		const model = new ContainerModel( settings );
 		model.initializeStore( store, data );
+
+		// Subscribe for changes
+		store.subscribe( () => {
+			callback( model.extractDataFromStore( store ) );
+		} );
 
 		// Render the container in place
 		const Container = model.getComponent();
@@ -40,13 +45,12 @@ window.UltimateFields = {
 	},
 
 	initializeDOMContainer( id ) {
-		const wrapper = document.getElementById( id );
-		const { settings, data } = JSON.parse( wrapper.children[ 0 ].innerHTML );
-
-		store.subscribe( () => {
-			// wrapper.children[ 0 ].value = JSON.stringify( model.extractDataFromStore( store ) );
+		const wrapper  = document.getElementById( id );
+		const settings = JSON.parse( wrapper.children[ 0 ].innerHTML );
+		const data     = JSON.parse( wrapper.nextElementSibling.value );
+		
+		this.initializeContainer( wrapper, settings, data, updatedData => {
+			wrapper.nextElementSibling.value = JSON.stringify( updatedData );
 		} );
-
-		this.initializeContainer( wrapper, settings, data );
 	}
 }

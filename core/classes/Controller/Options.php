@@ -129,23 +129,23 @@ class Options extends Controller {
 		$container = $callback[ 'container' ];
 		$random_id = rand();
 
-		$json = array(
-			'type'      => 'Options',
-			'settings'  => $container->export_settings(),
-			'data'      => $container->export_data()
-		);
+		$settings = $container->export_settings();
+		$data     = $container->export_data();
 
         echo sprintf(
             '<div class="uf-container" id="%d">
 				<script type="text/json">%s</script>
 				' . $this->get_no_js_message() . '
 				<span class="spinner hide-if-no-js"></span>
-			</div>',
+			</div>
+			<input type="hidden" name="uf_options_%s" value="%s" />',
 			$random_id,
-            json_encode( $json )
+			json_encode( $settings ),
+			esc_attr( $container->get_id() ),
+			esc_attr( json_encode( $data ) )
         );
 
-		if( 'seamless' == $json[ 'settings' ][ 'style' ] ) {
+		if( 'seamless' == $settings[ 'style' ] ) {
 			$this->unbox();
 		}
 

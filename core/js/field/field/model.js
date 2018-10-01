@@ -11,7 +11,7 @@ export default class FieldModel {
 	getInitialData( context ) {
 		const { name } = this.props;
 
-		const value = context.hasOwnProperty( name )
+		const value = context.hasOwnProperty( name ) && ( null !== context[ name ] )
 			? context[ name ]
 			: this.getDefaultValue();
 
