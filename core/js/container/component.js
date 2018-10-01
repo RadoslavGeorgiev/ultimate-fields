@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { forEach, isEqual } from 'lodash';
 
+import { getTab } from './../state/tabs/selectors';
+import { areDependenciesMet } from './../state/datastores/selectors';
 import { getFieldElement, getFieldInput } from './../field/';
 import Tab from './../components/tab';
 
-export default class Fields extends Component {
+export class Container extends Component {
 	render() {
 		// Reset the grid counters
 		this.column = 0;
@@ -18,7 +22,7 @@ export default class Fields extends Component {
 		return (
 			<div className={ `uf-fields ${style} ${layout}` }>
 				{ fields.map( field => {
-					return ( 'tabs' === field.type )
+					return ( TABS_PLACEHOLDER === field )
 						? this.renderTabs()
 						: this.renderField( field )
 				} ) }
@@ -27,12 +31,8 @@ export default class Fields extends Component {
 	}
 
 	renderField = definition => {
-		const { datastore, description_position, layout, style, areDependenciesMet, activeTab } = this.props;
+		const { datastore, description_position, layout, style, areDependenciesMet } = this.props;
 		const { name, field_width, tab } = definition;
-
-		if ( activeTab && tab && tab !== activeTab ) {
-			return null;
-		}
 
 		const field = {
 			...definition,
@@ -78,8 +78,49 @@ export default class Fields extends Component {
 	renderTabs() {
 		const { datastore, tabs, style } = this.props;
 
-		return <div className={ `uf-tabs uf-tabs--${style}` } key="container_tabs">
+		return <div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
 			{ tabs.map( tab => <Tab { ...tab } key={ tab.name } datastore={ datastore } style={ style } /> ) }
 		</div>
 	}
 }
+
+const TABS_PLACEHOLDER = {
+	type: 'tabs'
+};
+
+const mapStateToProps = ( state, ownProps ) => {
+	const { datastore } = ownProps;
+
+	const tabs   = [];
+	const fields = [];
+	const tab    = getTab( state, datastore )
+
+	forEach( ownProps.fields, definition => {
+		const deps = areDependenciesMet( state, datastore, definition.dependencies );
+
+		if ( 'tab' === definition.type ) {
+			if ( 0 === tabs.length ) {
+				fields.push( TABS_PLACEHOLDER );
+			}
+
+			return tabs.push( definition );
+		}
+
+		if ( definition.tab && tab !== definition.tab ) {
+			return;
+		}
+
+		if ( ! deps ) {
+			return;
+		}
+
+		fields.push( definition );
+	} );
+
+	return {
+		tabs,
+		fields,
+	};
+};
+
+export default connect( mapStateToProps )( Container );

@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import _ from 'lodash';
 
 import reducers from './state/reducers';
-import ContainerModel from './container/model';
+import { initializeStore, loadData, extractDataFromState } from './container';
+import Container from './container/component';
 import fields from './field/default-fields';
 
 import styles from './../sass/ultimate-fields.scss';
@@ -23,22 +24,23 @@ const store = createStore(
 	window.__REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
 );
 
+const tempStoreName = 'post_5';
+
 window.UltimateFields = {
 	initializeContainer( node, settings, data, callback ) {
-		// Create a model and let it setup the state
-		const model = new ContainerModel( settings );
-		model.initializeStore( store, data );
+		const { fields } = settings;
+
+		initializeStore( store, tempStoreName, fields, data );
 
 		// Subscribe for changes
 		store.subscribe( () => {
-			callback( model.extractDataFromStore( store ) );
+			callback( extractDataFromState( store.getState(), tempStoreName, fields ) );
 		} );
 
 		// Render the container in place
-		const Container = model.getComponent();
 		ReactDOM.render(
 			<Provider store={ store }>
-				<Container datastore={ [ model.getDatastore() ] }{ ...settings } />
+				<Container datastore={ [ tempStoreName ] }{ ...settings } />
 			</Provider>,
 			node
 		);
@@ -48,7 +50,7 @@ window.UltimateFields = {
 		const wrapper  = document.getElementById( id );
 		const settings = JSON.parse( wrapper.children[ 0 ].innerHTML );
 		const data     = JSON.parse( wrapper.nextElementSibling.value );
-		
+
 		this.initializeContainer( wrapper, settings, data, updatedData => {
 			wrapper.nextElementSibling.value = JSON.stringify( updatedData );
 		} );

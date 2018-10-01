@@ -37,7 +37,13 @@ export default class FieldModel {
 	}
 
 	connect( Component ) {
-		return connect(
+		if ( this.connectedComponent ) {
+			return this.connectedComponent;
+		}
+
+		console.log('Creating a new component');
+
+		return this.connectedComponent = connect(
 			this.mapStateToProps(),
 			this.mapDispatchToProps()
 		)( Component );
