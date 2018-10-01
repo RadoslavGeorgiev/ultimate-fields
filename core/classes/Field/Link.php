@@ -15,17 +15,6 @@ class Link extends WP_Object {
 	protected $target_control = true;
 
 	/**
-	 * Enqueues the scripts for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		parent::enqueue_scripts();
-
-		wp_enqueue_script( 'uf-field-link' );
-	}
-
-	/**
 	 * Adds additional data for JavaScript.
 	 *
 	 * @since 3.0

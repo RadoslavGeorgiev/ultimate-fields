@@ -50,8 +50,6 @@ class Number extends Field {
 		if( $this->slider_enabled ) {
 			wp_enqueue_script( 'jquery-ui-slider' );
 		}
-
-		wp_enqueue_script( 'uf-field-number' );
 	}
 
 	/**

@@ -245,9 +245,6 @@ class Post_Type extends Controller {
 			}
 
 			# Enqueue post-meta scripts and then let the container include fields.
-			wp_enqueue_script( 'uf-container-post-type' );
-			wp_enqueue_script( 'ultimate-fields-min' );
-
 			$combos[] = $combination;
 		}
 

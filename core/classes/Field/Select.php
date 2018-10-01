@@ -312,8 +312,6 @@ class Select extends Field {
 			wp_enqueue_style( 'uf-select2-css' );
 		}
 
-		wp_enqueue_script( 'uf-field-select' );
-
 		$message = __( 'There are no options available for this field.', 'ultimate-fields' );
 		ultimate_fields()->localize( 'select-no-options', $message );
 	}

@@ -66,8 +66,6 @@ class Text extends Field {
 		if( ! empty( $this->suggestions ) ) {
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 		}
-
-		wp_enqueue_script( 'uf-field-text' );
 	}
 
 	/**

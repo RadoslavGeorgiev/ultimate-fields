@@ -855,6 +855,8 @@ class Container {
 	 * @since 3.0
 	 */
 	public function enqueue_scripts() {
+		wp_enqueue_script( 'ultimate-fields' );
+
 		foreach( $this->get_fields() as $field ) {
 			if( method_exists( $field, 'enqueue_scripts' ) ) {
 				$field->enqueue_scripts();

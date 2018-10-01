@@ -73,10 +73,6 @@ class Section extends Field {
 		return $settings;
 	}
 
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-section' );
-	}
-
 	/**
 	 * Imports the field.
 	 *

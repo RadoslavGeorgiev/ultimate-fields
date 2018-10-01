@@ -375,8 +375,6 @@ class Complex extends Field {
 		} else {
 			ultimate_fields()->localize( 'complex-no-group', __( 'The group with the sub-fields of this field is missing.', 'ultimate-fields' ) );
 		}
-
-		wp_enqueue_script( 'uf-field-complex' );
 	}
 
 	/**

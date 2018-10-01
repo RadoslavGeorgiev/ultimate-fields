@@ -87,11 +87,9 @@ class File extends Field {
 	 */
 	public function enqueue_scripts() {
 		if( $this->basic ) {
-			wp_enqueue_script( 'uf-field-file-uploader' );
 			wp_plupload_default_settings();
 		} else {
 			wp_enqueue_media();
-			wp_enqueue_script( 'uf-field-file' );
 		}
 
 		# Localize strings

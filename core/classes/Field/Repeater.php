@@ -247,8 +247,6 @@ class Repeater extends Field {
 	 * @since 3.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-field-repeater' );
-
 		# Enqueue the scripts for all groups
 		foreach( $this->groups as $group ) {
 			$group->enqueue_scripts();

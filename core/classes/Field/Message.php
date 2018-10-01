@@ -10,15 +10,6 @@ use Ultimate_Fields\Field;
  */
 class Message extends Field {
 	/**
-	 * Enqueues the script for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-field-message' );
-	}
-
-	/**
 	 * Ensures that unlike normal fields, no values are saved for messages.
 	 *
 	 * @since 3.0.2

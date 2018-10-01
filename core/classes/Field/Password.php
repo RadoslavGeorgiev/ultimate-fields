@@ -10,15 +10,6 @@ use Ultimate_Fields\Field;
  */
 class Password extends Text {
 	/**
-	 * Enqueues the scripts for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-field-password' );
-	}
-
-	/**
 	 * Imports the field.
 	 *
 	 * @since 3.0

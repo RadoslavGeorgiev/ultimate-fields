@@ -47,10 +47,6 @@ class Tab extends Field {
 		return $settings;
 	}
 
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-tab' );
-	}
-
 	/**
 	 * Imports the field.
 	 *

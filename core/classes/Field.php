@@ -291,7 +291,7 @@ abstract class Field {
 	 */
 	public function export_field() {
 		$type = method_exists( $this, 'get_type' ) ? $this->get_type() : get_class( $this );
-		$type = basename( str_replace( '\\', '/', $type ) );
+		$type = strtolower( basename( str_replace( '\\', '/', $type ) ) );
 
 		$data = array(
 			'type'       => $type,

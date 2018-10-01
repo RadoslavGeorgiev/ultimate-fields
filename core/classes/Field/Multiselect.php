@@ -63,8 +63,6 @@ class Multiselect extends Select {
 			wp_enqueue_script( 'uf-select2' );
 			wp_enqueue_style( 'uf-select2-css' );
 		}
-
-		wp_enqueue_script( 'uf-field-multiselect' );
 	}
 
 	/**

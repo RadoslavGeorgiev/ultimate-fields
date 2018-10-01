@@ -32,17 +32,6 @@ class Image extends File {
 	protected $output_size = 'full';
 
 	/**
-	 * Enqueues the needed scripts for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		parent::enqueue_scripts();
-
-		wp_enqueue_script( 'uf-field-image' );
-	}
-
-	/**
 	 * Changes the output type for the field.
 	 *
 	 * @since 3.0

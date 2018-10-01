@@ -45,15 +45,6 @@ class Textarea extends Field {
 	protected $paragraphs = false;
 
 	/**
-	 * Enqueues the scripts for the field.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-field-textarea' );
-	}
-
-	/**
 	 * Sets the number of visible rows for the field.
 	 *
 	 * @since 3.0

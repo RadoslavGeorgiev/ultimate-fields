@@ -93,9 +93,6 @@ class WP_Objects extends WP_Object {
 	public function enqueue_scripts() {
 		parent::enqueue_scripts();
 
-		# Add objectS-specific JS
-		wp_enqueue_script( 'uf-field-wp-objects' );
-
 		# Add translations
 		ultimate_fields()->localize( 'objects-max', __( 'Maximum amount of %d items has already been reached!', 'ultimate-fields'  ) );
 	}

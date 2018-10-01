@@ -127,6 +127,7 @@ class Options extends Controller {
 	 */
 	public function display( $callback ) {
 		$container = $callback[ 'container' ];
+		$random_id = rand();
 
 		$json = array(
 			'type'      => 'Options',
@@ -135,12 +136,12 @@ class Options extends Controller {
 		);
 
         echo sprintf(
-            '<div class="uf-container" data-type="%s">
+            '<div class="uf-container" id="%d">
 				<script type="text/json">%s</script>
 				' . $this->get_no_js_message() . '
 				<span class="spinner hide-if-no-js"></span>
 			</div>',
-            'Options',
+			$random_id,
             json_encode( $json )
         );
 
@@ -154,7 +155,7 @@ class Options extends Controller {
 		# Force-initialize
 		?>
 		<script type="text/javascript">
-		UltimateFields.initializeContainers()
+		UltimateFields.initializeDOMContainer( <?php echo $random_id ?> );
 		</script>
 		<?php
 	}
@@ -213,8 +214,6 @@ class Options extends Controller {
 		$this->ensure_unique_field_names( $combinations );
 
 		# Enqueue options scripts and then get container fields
-		wp_enqueue_script( 'uf-container-options' );
-		wp_enqueue_script( 'ultimate-fields-min' );
 		foreach( $combinations as $combination ) {
 			$combination[ 'container' ]->enqueue_scripts();
 		}

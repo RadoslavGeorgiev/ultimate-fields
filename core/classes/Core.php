@@ -269,18 +269,18 @@ class Core {
 	 */
 	public function register_scripts() {
 		// Prepare some shortcuts
-		$js = ULTIMATE_FIELDS_URL . 'js/';
+		$base = ULTIMATE_FIELDS_URL . 'assets/';
 		$v  = ULTIMATE_FIELDS_VERSION;
 
 		// Register vendor scripts and styles
-		wp_register_script( 'uf-select2', ULTIMATE_FIELDS_URL . 'assets/js/select2/select2.min.js', array( 'jquery' ), $v );
-		wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
+		wp_register_script( 'uf-select2', $base . 'js/select2/select2.min.js', array( 'jquery' ), $v );
+		wp_register_style( 'uf-select2-css', $base . 'css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
 
 		// Register regular scripts
-		wp_register_script( 'ultimate-fields', $js . 'ultimate-fields.js', array(), $v );
+		wp_register_script( 'ultimate-fields', $base . 'js/ultimate-fields.js', array(), $v );
 
 		// The admin-menu dependency is needed in the backend, in order to enqueue new styles after those of WordPress.
-		wp_register_style( 'ultimate-fields-css', ULTIMATE_FIELDS_URL . 'assets/css/ultimate-fields.css', array( 'admin-menu' ), ULTIMATE_FIELDS_VERSION );
+		wp_register_style( 'ultimate-fields-css', $base . '/css/ultimate-fields.css', array( 'admin-menu' ), ULTIMATE_FIELDS_VERSION );
 
 		/**
 		 * Allow more scripts and styles to be added.
@@ -303,8 +303,7 @@ class Core {
 	 * @since 3.0
 	 */
 	public function initialize_scripts() {
-		if( wp_script_is( 'uf-core' ) ) {
-			wp_enqueue_script( 'uf-initialize' );
+		if( wp_script_is( 'ultimate-fields' ) ) {
 			wp_enqueue_style( 'ultimate-fields-css' );
 		}
 

@@ -17,9 +17,6 @@ class WYSIWYG extends Textarea {
 	 * @since 3.0
 	 */
 	public function enqueue_scripts() {
-		# Enqueue the normal script
-		wp_enqueue_script( 'uf-field-wysiwyg' );
-
 		# Add the skeleton for the editor.
 		$this->skeleton();
 	}

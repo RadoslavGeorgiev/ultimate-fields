@@ -146,7 +146,6 @@ class WP_Object extends Field {
 	public function enqueue_scripts() {
 		# Add the basic js
 		wp_enqueue_style( 'uf-select2-css' );
-		wp_enqueue_script( 'uf-field-wp-object' );
 
 		# Localize
 		ultimate_fields()

@@ -84,15 +84,6 @@ class Image_Select extends Field {
 	}
 
 	/**
-	 * Enqueues the needed scripts.
-	 *
-	 * @since 3.0
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'uf-field-image-select' );
-	}
-
-	/**
 	 * Changes the output data type of the field.
 	 *
 	 * @since 3.0
