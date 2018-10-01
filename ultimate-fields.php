@@ -30,5 +30,5 @@ function load_ultimate_fields() {
 	define( 'ULTIMATE_FIELDS_LANGUAGES_DIR', basename( __DIR__ ) . '/languages/' );
 
 	require_once( 'core/ultimate-fields.php' );
-	require_once( 'ui/ultimate-fields-ui.php' );
+	// require_once( 'ui/ultimate-fields-ui.php' );
 }
