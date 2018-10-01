@@ -12,3 +12,6 @@ ui/assets/css/ultimate-fields-ui.css.map
 # Misc.
 .DS_Store
 thumbs.db
+
+# Updated structure
+core/assets/js/ultimate-fields.js
