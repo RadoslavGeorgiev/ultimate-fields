@@ -24,19 +24,10 @@ const store = createStore(
 );
 
 window.UltimateFields = {
-	initializeContainer( id ) {
-		const wrapper = document.getElementById( id );
-
-		const data = JSON.parse( wrapper.children[ 0 ].value );
-		const settings = JSON.parse( wrapper.dataset.settings );
-
+	initializeContainer( node, settings, data ) {
 		// Create a model and let it setup the state
 		const model = new ContainerModel( settings );
 		model.initializeStore( store, data );
-
-		store.subscribe( () => {
-			wrapper.children[ 0 ].value = JSON.stringify( model.extractDataFromStore( store ) );
-		} );
 
 		// Render the container in place
 		const Container = model.getComponent();
@@ -44,7 +35,18 @@ window.UltimateFields = {
 			<Provider store={ store }>
 				<Container datastore={ [ model.getDatastore() ] }{ ...settings } />
 			</Provider>,
-			wrapper.children[ 1 ]
+			node
 		);
+	},
+
+	initializeDOMContainer( id ) {
+		const wrapper = document.getElementById( id );
+		const { settings, data } = JSON.parse( wrapper.children[ 0 ].innerHTML );
+
+		store.subscribe( () => {
+			// wrapper.children[ 0 ].value = JSON.stringify( model.extractDataFromStore( store ) );
+		} );
+
+		this.initializeContainer( wrapper, settings, data );
 	}
 }
