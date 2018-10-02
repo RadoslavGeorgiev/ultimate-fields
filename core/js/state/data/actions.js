@@ -1,11 +1,11 @@
 import {
-	CREATE_DATASTORE,
+	INITIALIZE_CONTAINER,
 	UPDATE_VALUE,
 	CHANGE_TAB,
 } from 'state/action-types.js';
 
 export const createStore = ( name, data = {} ) => ( {
-	type: CREATE_DATASTORE,
+	type: INITIALIZE_CONTAINER,
 	name,
 	data,
 } )

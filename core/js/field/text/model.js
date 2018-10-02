@@ -11,7 +11,7 @@ export default class TextFieldModel extends FieldModel {
 	 * @return {string}       A proper string.
 	 */
 	loadValue( props, value ) {
-		if( ( undefined === value ) || false === value || null === value ) {
+		if( ( 'undefined' === value ) || false === value || null === value ) {
 			return '';
 		}
 

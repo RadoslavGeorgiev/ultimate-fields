@@ -29,7 +29,7 @@ export default class FieldModel {
 		let value = context[ name ];
 
 		// If there is no value, load a default one.
-		if ( ( undefined === typeof value ) || null === value ) {
+		if ( ( 'undefined' === typeof value ) || null === value ) {
 			value = this.getDefaultValue( props );
 		}
 
@@ -50,7 +50,7 @@ export default class FieldModel {
 	getDefaultValue( props ) {
 		const { default_value } = props;
 
-		return ( undefined === typeof default_value )
+		return ( 'undefined' === typeof default_value )
 			? this.getEmptyValue( props )
 			: default_value;
 	}

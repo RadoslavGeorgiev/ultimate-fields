@@ -1,7 +1,7 @@
 import { set, merge } from 'lodash';
 
 import {
-	CREATE_DATASTORE,
+	INITIALIZE_CONTAINER,
 	UPDATE_VALUE,
 	CHANGE_TAB,
 } from 'state/action-types';
@@ -9,7 +9,7 @@ import { TAB_KEY } from 'constants';
 
 export default function( state, action ) {
 	switch ( action.type ) {
-		case CREATE_DATASTORE:
+		case INITIALIZE_CONTAINER:
 			return merge( {}, state, {
 				[ action.name ]: action.data,
 			} );
