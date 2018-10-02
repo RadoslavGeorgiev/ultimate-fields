@@ -1,9 +1,7 @@
-import { get } from 'lodash';
-
 export const getTab = ( state, datastore ) => {
-	return get( state.tabs, datastore );
+	return state.tabs[ datastore ];
 }
 
-export const isTabActive = ( state, datastore, tab ) => {
-	return getTab( state, datastore ) === tab;
+export const isTabActive = ( state, container, tab ) => {
+	return getTab( state, container ) === tab;
 }

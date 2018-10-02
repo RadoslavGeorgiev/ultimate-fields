@@ -3,92 +3,154 @@ import { connect } from 'react-redux';
 import { updateValue } from '../../state/datastores/actions';
 import { getValue } from '../../state/datastores/selectors';
 
+/**
+ * A generic model for all field types.
+ *
+ * Each field type will have a single model instance, which is
+ * why most methods within the class and its children always
+ * receive props as their first argument.
+ *
+ * Consider them as simple functions that can be overloaded
+ * for each field type. Those functions will be both selectors
+ * and action creators that would otherwise be in separate files.
+ */
 export default class FieldModel {
-	constructor( field ) {
-		this.props = field;
-	}
+	/**
+	 * Returns the initial data that should be stored in the datastore.
+	 *
+	 * @param  {Object} props   The definition of a field.
+	 * @param  {Object} context The initial data that is available.
+	 * @return {Object}         An object that can be merged with the data of other fields.
+	 */
+	getInitialData( props, context ) {
+		const { name } = props;
 
-	getInitialData( context ) {
-		const { name } = this.props;
+		// Start with the value from the context.
+		let value = context[ name ];
 
-		const value = context.hasOwnProperty( name ) && ( null !== context[ name ] )
-			? context[ name ]
-			: this.getDefaultValue();
+		// If there is no value, load a default one.
+		if ( ( undefined === typeof value ) || null === value ) {
+			value = this.getDefaultValue( props );
+		}
+
+		// Formats the value correctly (ex `3` becoming `"3"` for text fields).
+		value = this.loadValue( props, value );
 
 		return {
-			[ name ]: this.importValue( value ),
+			[ name ]: value,
 		};
 	}
 
-	getDefaultValue() {
-		const { default_value } = this.props;
+	/**
+	 * Loads the default value of a field.
+	 *
+	 * @param  {Object} props The definition of a field.
+	 * @return                A default value.
+	 */
+	getDefaultValue( props ) {
+		const { default_value } = props;
 
-		return ( 'undefined' != typeof default_value )
-			? default_value
-			: this.getEmptyValue();
+		return ( undefined === typeof default_value )
+			? this.getEmptyValue( props )
+			: default_value;
 	}
 
-	getEmptyValue() {
+	/**
+	 * Returns a default value if one is not present in the props.
+	 *
+	 * @param  {Object} props The definition of a field.
+	 * @return {string}       An empty string, suitable for most field types.
+	 */
+	getEmptyValue( props ) {
 		return '';
 	}
 
-	importValue( value ) {
+	/**
+	 * Converts a value to the proper type when it is being loaded.
+	 *
+	 * @param  {Object} props The definition of a field.
+	 * @param  {*}      value The value that is being loaded.
+	 * @return {*}
+	 */
+	loadValue( props, value ) {
 		return value;
 	}
 
+	/**
+	 * Extracts the value of the field from the state.
+	 *
+	 * @param  {Object} props The definition of a field.
+	 * @param  {Object} state The whole Redux state.
+	 * @return {Object}       An object that should be merged with other extractions.
+	 */
+	extractDataFromState( props, state ) {
+		const { name } = props;
+
+		return {
+			[ name ]: this.getValueFromState( props, state )
+		};
+	}
+
+	/**
+	 * Creates a connected component.
+	 *
+	 * Will be used for both field elements and inputs.
+	 *
+	 * @param  {React.Component} Component A component class.
+	 * @return {React.Component}           The wrapped component.
+	 */
 	connect( Component ) {
-		if ( this.connectedComponent ) {
-			return this.connectedComponent;
-		}
-
-		console.log('Creating a new component');
-
-		return this.connectedComponent = connect(
+		return connect(
 			this.mapStateToProps(),
 			this.mapDispatchToProps()
 		)( Component );
 	}
 
+	/**
+	 * Maps the global state to the props of a wrapped component.
+	 *
+	 * @return {function} A function to be called when mapping.
+	 */
 	mapStateToProps() {
-		return state => ( {
-			value: this.getValueFromState( state ),
-			visible: this.isVisible( state ),
+		return ( state, props ) => ( {
+			value: this.getValueFromState( props, state ),
 		} );
 	}
 
+	/**
+	 * Maps a dispatcher to the props of a wrapped component.
+	 *
+	 * @return {function} A function to be called when mapping.
+	 */
 	mapDispatchToProps() {
-		return dispatch => ( {
-			onChange: value => dispatch( this.updateValue( value ) ),
+		return ( dispatch, props ) => ( {
+			onChange: value => dispatch( this.updateValue( props, value ) ),
 		} )
 	}
 
-	getValueFromState( state ) {
-		const { name, datastore } = this.props;
+	/**
+	 * Extracts the value of a field from the state.
+	 *
+	 * @param  {Object} props A field definition.
+	 * @param  {Object} state The global Redux state.
+	 * @return {*}            The value of the field.
+	 */
+	getValueFromState( props, state ) {
+		const { name, datastore } = props;
 
 		return getValue( state, [ ...datastore, name ] );
 	}
 
-	updateValue( value ) {
-		const { name, datastore } = this.props;
+	/**
+	 * Creates a new action that updates the value of a field.
+	 *
+	 * @param  {Object} props The definition of a field.
+	 * @param  {*}      value The new value.
+	 * @return {Object}       A Redux action.
+	 */
+	updateValue( props, value ) {
+		const { name, datastore } = props;
 
 		return updateValue( [ ...datastore, name ], value );
-	}
-
-	extractDataFromState( state ) {
-		const { name } = this.props;
-
-		return {
-			[ name ]: this.getValueFromState( state )
-		};
-	}
-
-	isVisible( state ) {
-		const { datastore, dependencies } = this.props;
-
-		if ( ! dependencies ) {
-			return true;
-		}
-
-		return getValue( state, [ ...datastore, dependencies[ 0 ][ 0 ].field ] ) === dependencies[ 0 ][ 0 ].value;
 	}
 }

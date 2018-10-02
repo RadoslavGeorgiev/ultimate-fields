@@ -24,6 +24,21 @@ Container::create( 'post-fields-1' )
 		Field::create( 'text', 'half_field_2' )->set_width( 50 ),
 		Field::create( 'checkbox', 'dependency_source' )
 			->set_text( 'Show the second field in the next container.' ),
+		Field::create( 'repeater', 'simple_repeater' )
+			->add_group( 'some_group', [
+				'fields' => [
+					Field::create( 'tab', 'tab_one' ),
+					Field::create( 'text', 'sub_field_1' )->set_width( 50 ),
+					Field::create( 'text', 'sub_field_2' )->set_width( 50 ),
+					Field::create( 'tab', 'tab_two' ),
+					Field::create( 'text', 'sub_field_3' )->set_width( 50 ),
+				]
+			] )
+			->set_default_value( [
+				[ '__type' => 'some_group', 'sub_field_1' => 'A', 'sub_field_2' => 'B' ],
+				[ '__type' => 'some_group', 'sub_field_1' => 'C' ],
+			] ),
+
 		Field::create( 'tab', 'second_tab' )
 			->add_dependency( 'enable_second_tab' ),
 		Field::create( 'text', 'some_field_b' ),

@@ -1,14 +1,15 @@
 import React from 'react';
 
-export default class CheckboxField extends React.Component {
-	render() {
-		const { value, text, onChange } = this.props;
+export default ( { value, text, onChange } ) => {
+	return (
+		<label>
+			<input
+				type="checkbox"
+				checked={ value }
+				onChange={ ( { target: { checked } } ) => onChange( checked ) }
+			/>
 
-		return (
-			<label>
-				<input type="checkbox" checked={ !! value } onChange={ e => onChange( e.target.checked ) } />
-				{ text }
-			</label>
-		);
-	}
+			{ text }
+		</label>
+	);
 }

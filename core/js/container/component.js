@@ -4,7 +4,7 @@ import { forEach, isEqual } from 'lodash';
 
 import { getTab } from './../state/tabs/selectors';
 import { areDependenciesMet } from './../state/datastores/selectors';
-import { getFieldElement, getFieldInput } from './../field/';
+import { getFieldComponents } from './../field/';
 import Tab from './../components/tab';
 
 export class Container extends Component {
@@ -42,11 +42,9 @@ export class Container extends Component {
 			description_position,
 		};
 
-		const Element = getFieldElement( field );
-		const Input = getFieldInput( field );
-
 		const gridClasses = this.generateGridClasses( field_width || 100 );
 
+		const { Element, Input } = getFieldComponents( field );
 		return <Element { ...field } key={ name } classNames={ gridClasses }>
 			<Input { ...field } />
 		</Element>
@@ -76,10 +74,10 @@ export class Container extends Component {
 	}
 
 	renderTabs() {
-		const { datastore, tabs, style } = this.props;
+		const { id, tabs, style, datastore } = this.props;
 
 		return <div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
-			{ tabs.map( tab => <Tab { ...tab } key={ tab.name } datastore={ datastore } style={ style } /> ) }
+			{ tabs.map( tab => <Tab { ...tab } datastore={ datastore } key={ tab.name } container={ id } style={ style } /> ) }
 		</div>
 	}
 }
@@ -89,11 +87,11 @@ const TABS_PLACEHOLDER = {
 };
 
 const mapStateToProps = ( state, ownProps ) => {
-	const { datastore } = ownProps;
+	const { id, datastore } = ownProps;
 
 	const tabs   = [];
 	const fields = [];
-	const tab    = getTab( state, datastore )
+	const tab    = getTab( state, id )
 
 	forEach( ownProps.fields, definition => {
 		const deps = areDependenciesMet( state, datastore, definition.dependencies );

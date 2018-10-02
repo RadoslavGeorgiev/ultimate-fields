@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { forEach } from 'lodash';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
+
 
 import reducers from './state/reducers';
 import { initializeStore, loadData, extractDataFromState } from './container';
 import Container from './container/component';
-import fields from './field/default-fields';
+import defaultFields from './field/default-fields';
+import { createCombinedReducer } from './field';
 
 import styles from './../sass/ultimate-fields.scss';
 
@@ -20,17 +22,17 @@ _.noConflict();
  * containers to allow for compicated top-level dependencies.
  */
 const store = createStore(
-	reducers,
+	createCombinedReducer( combineReducers( reducers ) ),
 	window.__REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
 );
 
-const tempStoreName = 'post_5';
+const tempStoreName = 'options';
 
 window.UltimateFields = {
 	initializeContainer( node, settings, data, callback ) {
 		const { fields } = settings;
 
-		initializeStore( store, tempStoreName, fields, data );
+		initializeStore( store, tempStoreName, fields, data, tempStoreName );
 
 		// Subscribe for changes
 		store.subscribe( () => {
@@ -40,7 +42,7 @@ window.UltimateFields = {
 		// Render the container in place
 		ReactDOM.render(
 			<Provider store={ store }>
-				<Container datastore={ [ tempStoreName ] }{ ...settings } />
+				<Container datastore={ [ tempStoreName ] }{ ...settings } id={ tempStoreName } />
 			</Provider>,
 			node
 		);

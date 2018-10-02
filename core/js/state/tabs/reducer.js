@@ -7,7 +7,10 @@ import {
 export default function( state, action ) {
 	switch ( action.type ) {
 		case CHANGE_TAB:
-			return Object.assign( {}, set( state, action.datastore, action.tab ) );
+			return {
+				...state,
+				[ action.datastore ]: action.tab,
+			}
 
 		default:
 			return state || {};
