@@ -1,6 +1,6 @@
 import { isString } from 'lodash';
 
-import FieldModel from 'field/field/model';
+import FieldModel from 'field/model';
 
 export default class TextFieldModel extends FieldModel {
 	/**

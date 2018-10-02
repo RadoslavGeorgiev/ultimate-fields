@@ -1,8 +1,8 @@
 import { forEach, isEqual, merge } from 'lodash';
 
-import FieldModel from 'field/field/model';
-import FieldElement from 'field/field/element';
-import FieldInput from 'field/field/component';
+import FieldModel from 'field/model';
+import FieldElement from 'field/element';
+import FieldInput from 'field/component';
 
 const types = {};
 let initialized = false;
