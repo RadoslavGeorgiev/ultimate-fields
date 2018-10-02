@@ -1,15 +1,14 @@
 import { find, reduce } from 'lodash';
 
 import { getFieldModel } from 'field/';
-import { createDatastore } from 'state/datastores/actions';
-import { changeTab } from 'state/tabs/actions';
+import { createStore, changeTab } from 'state/data/actions';
 
-export const initializeStore = ( store, datastore, fields, initialData, id ) => {
-	store.dispatch( createDatastore( datastore, loadData( fields, initialData ) ) );
+export const initializeStore = ( store, path, fields, initialData ) => {
+	store.dispatch( createStore( path, loadData( fields, initialData ) ) );
 
 	const firstTab = find( fields, { type: 'tab' } );
 	if ( firstTab ) {
-		store.dispatch( changeTab( id, firstTab.name ) );
+		store.dispatch( changeTab( [ path ], firstTab.name ) );
 	}
 }
 
@@ -24,11 +23,11 @@ export const loadData = ( fields, initialData = {} ) => {
 	}, initialData );
 }
 
-export const extractDataFromState = ( state, datastore, fields ) => {
+export const extractDataFromState = ( state, dataPath, fields ) => {
 	return reduce( fields, ( data, definition ) => {
 		const field = {
 			...definition,
-			datastore: [ datastore ]
+			dataPath: [ dataPath ]
 		};
 
 		const model = getFieldModel( field );

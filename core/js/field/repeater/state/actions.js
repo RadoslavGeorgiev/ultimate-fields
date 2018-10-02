@@ -5,16 +5,16 @@ import {
 	DELETE_REPEATER_ROW,
 } from './action-types';
 
-export const addRepeaterRow = ( name, datastore, group ) => ( {
+export const addRepeaterRow = ( name, path, group ) => ( {
 	type: ADD_REPEATER_ROW,
 	id: uniqueId( 'group-' ),
 	name,
-	datastore,
+	path,
 	group,
 } );
 
-export const deleteRepeaterRow = ( datastore, index ) => ( {
+export const deleteRepeaterRow = ( path, index ) => ( {
 	type: DELETE_REPEATER_ROW,
-	datastore: datastore.filter( ( item, i ) => i !== datastore.length - 1 ),
+	path: path.filter( ( item, i ) => i !== path.length - 1 ),
 	index,
 } );

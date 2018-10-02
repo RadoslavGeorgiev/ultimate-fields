@@ -1,7 +1,5 @@
-import datastores from 'state/datastores/reducer';
-import tabs from 'state/tabs/reducer';
+import data from 'state/data/reducer';
 
 export default {
-	datastores,
-	tabs,
+	data,
 };

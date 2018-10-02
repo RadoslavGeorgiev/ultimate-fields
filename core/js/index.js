@@ -18,7 +18,7 @@ import styles from './../sass/ultimate-fields.scss';
 _.noConflict();
 
 /**
- * Ultimate Fields uses a global datastore that will be shared amongst
+ * Ultimate Fields uses a global store that will be shared amongst
  * containers to allow for compicated top-level dependencies.
  */
 const store = createStore(
@@ -32,7 +32,7 @@ window.UltimateFields = {
 	initializeContainer( node, settings, data, callback ) {
 		const { fields } = settings;
 
-		initializeStore( store, tempStoreName, fields, data, tempStoreName );
+		initializeStore( store, tempStoreName, fields, data );
 
 		// Subscribe for changes
 		store.subscribe( () => {
@@ -42,7 +42,7 @@ window.UltimateFields = {
 		// Render the container in place
 		ReactDOM.render(
 			<Provider store={ store }>
-				<Container datastore={ [ tempStoreName ] }{ ...settings } id={ tempStoreName } />
+				<Container dataPath={ [ tempStoreName ] }{ ...settings } id={ tempStoreName } />
 			</Provider>,
 			node
 		);

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { areDependenciesMet } from 'state/datastores/selectors';
-import { isTabActive } from 'state/tabs/selectors';
-import { changeTab } from 'state/tabs/actions';
+import { areDependenciesMet, isTabActive } from 'state/data/selectors';
+import { changeTab } from 'state/data/actions';
 
 class Tab extends Component {
 	render() {
@@ -37,11 +36,11 @@ class Tab extends Component {
 }
 
 export default connect(
-	( state, { container, datastore, name, dependencies } ) => ( {
-		active: isTabActive( state, container, name ),
-		enabled: areDependenciesMet( state, datastore, dependencies ),
+	( state, { dataPath, name, dependencies } ) => ( {
+		active: isTabActive( state, dataPath, name ),
+		enabled: areDependenciesMet( state, dataPath, dependencies ),
 	} ),
-	( dispatch, { container, name } ) => ( {
-		onClick: () => dispatch( changeTab( container, name ) ),
+	( dispatch, { dataPath, name } ) => ( {
+		onClick: () => dispatch( changeTab( dataPath, name ) ),
 	} )
 )( Tab );

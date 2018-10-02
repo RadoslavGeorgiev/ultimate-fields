@@ -8,7 +8,7 @@ import {
 } from './action-types';
 
 const addRepeaterRow = ( state, action ) => {
-	const selector = [ ...action.datastore, action.name ];
+	const selector = [ ...action.path, action.name ];
 	const rows = get( state, selector, [] );
 
 	return {
@@ -23,12 +23,12 @@ const addRepeaterRow = ( state, action ) => {
 };
 
 const deleteRepeaterRow = ( state, action ) => {
-	const { datastore } = action;
+	const { path } = action;
 
-	const rows = get( state, datastore, [] );
+	const rows = get( state, path, [] );
 
 	return {
-		...set( state, datastore, rows.filter( ( row, i ) => i !== action.index ) )
+		...set( state, path, rows.filter( ( row, i ) => i !== action.index ) )
 	}
 }
 
@@ -46,7 +46,7 @@ const addRepeaterRowTabs = ( state, action ) => {
 }
 
 export default {
-	datastores: {
+	data: {
 		[ ADD_REPEATER_ROW ]: addRepeaterRow,
 		[ DELETE_REPEATER_ROW ]: deleteRepeaterRow,
 	},

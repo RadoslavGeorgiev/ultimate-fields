@@ -30,16 +30,15 @@ export default class RepeaterField extends Component {
 	}
 
 	renderGroup = ( data, index ) => {
-		const { name, datastore } = this.props;
+		const { name, dataPath } = this.props;
 
 		const settings = this.findGroup( data.__type );
 
 		return <Group
 			key={ index }
 			index={ index }
-			datastore={ [ ...datastore, name, index ] }
+			dataPath={ [ ...dataPath, name, index ] }
 			number={ index + 1 }
-			containerId={ data.__id }
 			{ ...settings }
 		/>
 	}

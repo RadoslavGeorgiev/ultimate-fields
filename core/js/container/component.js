@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, isEqual } from 'lodash';
 
-import { getTab } from 'state/tabs/selectors';
-import { areDependenciesMet } from 'state/datastores/selectors';
+import { areDependenciesMet, getTab } from 'state/data/selectors';
 import { getFieldComponents } from 'field';
 import Tab from 'components/tab';
 
@@ -31,12 +30,12 @@ export class Container extends Component {
 	}
 
 	renderField = definition => {
-		const { datastore, description_position, layout, style, areDependenciesMet } = this.props;
+		const { dataPath, description_position, layout, style, areDependenciesMet } = this.props;
 		const { name, field_width, tab } = definition;
 
 		const field = {
 			...definition,
-			datastore,
+			dataPath,
 			layout,
 			style,
 			description_position,
@@ -74,11 +73,20 @@ export class Container extends Component {
 	}
 
 	renderTabs() {
-		const { id, tabs, style, datastore } = this.props;
+		const { tabs, style, dataPath } = this.props;
 
-		return <div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
-			{ tabs.map( tab => <Tab { ...tab } datastore={ datastore } key={ tab.name } container={ id } style={ style } /> ) }
-		</div>
+		return (
+			<div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
+				{ tabs.map( tab => {
+					return <Tab
+						key={ tab.name }
+						dataPath={ dataPath }
+						style={ style }
+						{ ...tab }
+					/>;
+				} ) }
+			</div>
+		);
 	}
 }
 
@@ -87,14 +95,14 @@ const TABS_PLACEHOLDER = {
 };
 
 const mapStateToProps = ( state, ownProps ) => {
-	const { id, datastore } = ownProps;
+	const { dataPath } = ownProps;
 
 	const tabs   = [];
 	const fields = [];
-	const tab    = getTab( state, id )
+	const tab    = getTab( state, dataPath );
 
 	forEach( ownProps.fields, definition => {
-		const deps = areDependenciesMet( state, datastore, definition.dependencies );
+		const deps = areDependenciesMet( state, dataPath, definition.dependencies );
 
 		if ( 'tab' === definition.type ) {
 			if ( 0 === tabs.length ) {

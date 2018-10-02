@@ -52,9 +52,9 @@ export default class RepeaterFieldModel extends FieldModel {
 	 * @return {function} A function to be called when mapping.
 	 */
 	mapDispatchToProps() {
-		return ( dispatch, { name, datastore, groups } ) => {
+		return ( dispatch, { name, dataPath, groups } ) => {
 			return {
-				addRow: () => dispatch( addRepeaterRow( name, datastore, groups[ 0 ] ) ),
+				addRow: () => dispatch( addRepeaterRow( name, dataPath, groups[ 0 ] ) ),
 			};
 		}
 	}

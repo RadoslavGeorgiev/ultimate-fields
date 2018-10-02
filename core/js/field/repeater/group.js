@@ -7,7 +7,7 @@ import { deleteRepeaterRow } from './state/actions';
 
 class RepeaterGroup extends Component {
 	render() {
-		const { containerId, icon, number, title, datastore, fields, layout } = this.props;
+		const { icon, number, title, dataPath, fields, layout } = this.props;
 
 		return (
 			<div className="uf-group">
@@ -31,10 +31,9 @@ class RepeaterGroup extends Component {
 				<div className="uf-group__inside">
 					<Container
 						fields={ fields }
-						datastore={ datastore }
+						dataPath={ dataPath }
 						style="boxed"
 						layout={ layout }
-						id={ containerId }
 					/>
 				</div>
 			</div>
@@ -66,7 +65,7 @@ class RepeaterGroup extends Component {
 
 export default connect(
 	null,
-	( dispatch, { datastore, index } ) => ( {
-		onDelete: () => dispatch( deleteRepeaterRow( datastore, index ) ),
+	( dispatch, { dataPath, index } ) => ( {
+		onDelete: () => dispatch( deleteRepeaterRow( dataPath, index ) ),
 	} )
 )( RepeaterGroup );

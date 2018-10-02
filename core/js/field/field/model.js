@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import { updateValue } from 'state/datastores/actions';
-import { getValue } from 'state/datastores/selectors';
+import { updateValue } from 'state/data/actions';
+import { getValue } from 'state/data/selectors';
 
 /**
  * A generic model for all field types.
@@ -16,7 +16,7 @@ import { getValue } from 'state/datastores/selectors';
  */
 export default class FieldModel {
 	/**
-	 * Returns the initial data that should be stored in the datastore.
+	 * Returns the initial data that should be stored in the store.
 	 *
 	 * @param  {Object} props   The definition of a field.
 	 * @param  {Object} context The initial data that is available.
@@ -136,9 +136,9 @@ export default class FieldModel {
 	 * @return {*}            The value of the field.
 	 */
 	getValueFromState( props, state ) {
-		const { name, datastore } = props;
+		const { name, dataPath } = props;
 
-		return getValue( state, [ ...datastore, name ] );
+		return getValue( state, [ ...dataPath, name ] );
 	}
 
 	/**
@@ -149,8 +149,8 @@ export default class FieldModel {
 	 * @return {Object}       A Redux action.
 	 */
 	updateValue( props, value ) {
-		const { name, datastore } = props;
+		const { name, dataPath } = props;
 
-		return updateValue( [ ...datastore, name ], value );
+		return updateValue( [ ...dataPath, name ], value );
 	}
 }
