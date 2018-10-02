@@ -1,6 +1,6 @@
 import { set, get, find } from 'lodash';
 
-import { loadData } from './../../../container';
+import { loadData } from 'container';
 
 import {
 	ADD_REPEATER_ROW,

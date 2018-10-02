@@ -39,5 +39,13 @@ module.exports = {
 		new MiniCssExtractPlugin( {
             filename: "css/ultimate-fields.css",
         } )
-	]
+	],
+	resolve: {
+		alias: {
+			components: path.resolve( __dirname, 'js/components/' ),
+			container: path.resolve( __dirname, 'js/container/' ),
+			field: path.resolve( __dirname, 'js/field/' ),
+			state: path.resolve( __dirname, 'js/state/' ),
+		}
+	}
 };

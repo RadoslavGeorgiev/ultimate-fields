@@ -1,7 +1,7 @@
 import { find, uniqueId } from 'lodash';
 
-import { loadData } from './../../container/';
-import FieldModel from './../field/model';
+import { loadData } from 'container';
+import FieldModel from 'field/field/model';
 import { addRepeaterRow } from './state/actions';
 
 export default class RepeaterFieldModel extends FieldModel {

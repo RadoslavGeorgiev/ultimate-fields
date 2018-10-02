@@ -2,7 +2,7 @@ import { set } from 'lodash';
 
 import {
 	CHANGE_TAB,
-} from './../action-types';
+} from 'state/action-types';
 
 export default function( state, action ) {
 	switch ( action.type ) {

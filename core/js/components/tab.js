@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { areDependenciesMet } from './../state/datastores/selectors';
-import { isTabActive } from './../state/tabs/selectors';
-import { changeTab } from './../state/tabs/actions';
+import { areDependenciesMet } from 'state/datastores/selectors';
+import { isTabActive } from 'state/tabs/selectors';
+import { changeTab } from 'state/tabs/actions';
 
 class Tab extends Component {
 	render() {
@@ -17,10 +17,12 @@ class Tab extends Component {
 			! enabled && 'uf-tab--disabled',
 		] );
 
-		return <a href="#" className={ className } onClick={ this.onClick }>
-			{ icon && <span className={ `uf-tab__icon dashicons ${icon}` } /> }
-			<span className="uf-tab__text">{ label }</span>
-		</a>
+		return (
+			<a href="#" className={ className } onClick={ this.onClick }>
+				{ icon && <span className={ `uf-tab__icon dashicons ${icon}` } /> }
+				<span className="uf-tab__text">{ label }</span>
+			</a>
+		);
 	}
 
 	onClick = e => {

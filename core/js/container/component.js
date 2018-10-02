@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, isEqual } from 'lodash';
 
-import { getTab } from './../state/tabs/selectors';
-import { areDependenciesMet } from './../state/datastores/selectors';
-import { getFieldComponents } from './../field/';
-import Tab from './../components/tab';
+import { getTab } from 'state/tabs/selectors';
+import { areDependenciesMet } from 'state/datastores/selectors';
+import { getFieldComponents } from 'field';
+import Tab from 'components/tab';
 
 export class Container extends Component {
 	render() {

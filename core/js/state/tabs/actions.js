@@ -1,6 +1,6 @@
 import {
 	CHANGE_TAB,
-} from './../action-types';
+} from 'state/action-types';
 
 export const changeTab = ( datastore, tab ) => ( {
 	type: CHANGE_TAB,

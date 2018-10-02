@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { find } from 'lodash';
 
-import Button from './../../components/button';
+import Button from 'components/button';
 import Group from './group';
 
 export default class RepeaterField extends Component {

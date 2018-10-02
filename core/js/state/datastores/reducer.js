@@ -3,7 +3,7 @@ import { set, merge } from 'lodash';
 import {
 	CREATE_DATASTORE,
 	UPDATE_VALUE,
-} from './../action-types.js';
+} from 'state/action-types';
 
 export default function( state, action ) {
 	switch ( action.type ) {

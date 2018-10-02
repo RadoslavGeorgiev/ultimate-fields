@@ -1,8 +1,8 @@
 import { find, reduce } from 'lodash';
 
-import { getFieldModel } from './../field/';
-import { createDatastore } from './../state/datastores/actions';
-import { changeTab } from './../state/tabs/actions';
+import { getFieldModel } from 'field/';
+import { createDatastore } from 'state/datastores/actions';
+import { changeTab } from 'state/tabs/actions';
 
 export const initializeStore = ( store, datastore, fields, initialData, id ) => {
 	store.dispatch( createDatastore( datastore, loadData( fields, initialData ) ) );

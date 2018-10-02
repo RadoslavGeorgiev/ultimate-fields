@@ -1,4 +1,4 @@
-import FieldModel from './../field/model';
+import FieldModel from 'field/field/model';
 
 export default class TabFieldModel extends FieldModel {
 	/**

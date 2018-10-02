@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import Control from './group-control';
-import Container from './../../container/component';
+import Container from 'container/component';
 import { deleteRepeaterRow } from './state/actions';
 
 class RepeaterGroup extends Component {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import { updateValue } from '../../state/datastores/actions';
-import { getValue } from '../../state/datastores/selectors';
+import { updateValue } from 'state/datastores/actions';
+import { getValue } from 'state/datastores/selectors';
 
 /**
  * A generic model for all field types.

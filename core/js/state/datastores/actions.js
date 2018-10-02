@@ -1,7 +1,7 @@
 import {
 	CREATE_DATASTORE,
 	UPDATE_VALUE,
-} from './../action-types.js';
+} from 'state/action-types.js';
 
 export const createDatastore = ( name, data = {} ) => ( {
 	type: CREATE_DATASTORE,
