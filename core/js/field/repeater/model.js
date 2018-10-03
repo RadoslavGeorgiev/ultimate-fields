@@ -1,5 +1,6 @@
-import { find, uniqueId, reduce, mergeWith, set, isArray } from 'lodash';
+import { find, uniqueId, reduce, update } from 'lodash';
 
+import mergeWithArrays from 'utils/merge-with-arrays'
 import { loadData } from 'container';
 import FieldModel from 'field/model';
 import { addRepeaterRow } from './state/actions';
@@ -48,18 +49,19 @@ export default class RepeaterFieldModel extends FieldModel {
 		// Let each group define the rest
 		return reduce( value, ( data, row, index ) => {
 			const group = this.findGroup( props, row.__type );
-			
-			const merged = mergeWith(
-				data,
-				loadData( group.fields, [ ...dataPath, name, index ], row ),
-				( target, source ) => {
-					if ( isArray( target ) ) {
-						return target.concat( source );
-					}
-				}
-			);
+			const path  = [ ...dataPath, name, index ];
 
-			return set( merged, [ 'data', ...dataPath, name, index, '__type' ], row.__type );
+			// Generate the group data ane merge it deeply with the existing state.
+			const groupData = loadData( group.fields, path, row );
+			const state = mergeWithArrays( data, groupData );
+
+			// Return the sub-state while inclidung some more data
+			return update( state, [ 'data', ...path ], entry => ( {
+				__type:   row.__type,
+				__hidden: false,
+				
+				...entry,
+			} ) );
 		}, {} );
 	}
 

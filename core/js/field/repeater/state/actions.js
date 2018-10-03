@@ -7,7 +7,6 @@ import {
 
 export const addRepeaterRow = ( name, path, group ) => ( {
 	type: ADD_REPEATER_ROW,
-	id: uniqueId( 'group-' ),
 	name,
 	path,
 	group,

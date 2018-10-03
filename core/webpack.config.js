@@ -47,6 +47,7 @@ module.exports = {
 			field: path.resolve( __dirname, 'js/field/' ),
 			state: path.resolve( __dirname, 'js/state/' ),
 			constants: path.resolve( __dirname, 'js/constants.js' ),
+			utils: path.resolve( __dirname, 'js/utils' ),
 		}
 	}
 };
