@@ -1,4 +1,4 @@
-import { find, uniqueId } from 'lodash';
+import { find, uniqueId, reduce, mergeWith, set, isArray } from 'lodash';
 
 import { loadData } from 'container';
 import FieldModel from 'field/model';
@@ -27,23 +27,40 @@ export default class RepeaterFieldModel extends FieldModel {
 
 		return find( groups, { id: type } );
 	}
-
+	
 	/**
-	 * Loads the initial value of the field.
+	 * Returns the initial state of the field that will be 
+	 * parsed by reducers and added to the store.
 	 *
-	 * @param  {Object} props The definition of a field.
-	 * @param  {Array}  value The value that is being loaded.
-	 * @return {Array}        A properly loaded list of rows.
+	 * @param  {Object} props   The definition of a field.
+	 * @param  {Object} context The initial data that is available.
+	 * @return {Object}         An object that will be parsed by the reducers.
 	 */
-	loadValue( props, value ) {
-		return value.map( row => {
+	getInitialState( props, context ) {
+		const { name, dataPath } = props;
+		
+		// Locate the basic value
+		let value = context[ name ];
+		if ( ( 'undefined' === typeof value ) || null === value ) {
+			value = this.getDefaultValue( props );
+		}
+		
+		// Let each group define the rest
+		return reduce( value, ( data, row, index ) => {
 			const group = this.findGroup( props, row.__type );
+			
+			const merged = mergeWith(
+				data,
+				loadData( group.fields, [ ...dataPath, name, index ], row ),
+				( target, source ) => {
+					if ( isArray( target ) ) {
+						return target.concat( source );
+					}
+				}
+			);
 
-			return loadData( group.fields, {
-				__id: uniqueId( 'group-' ),
-				...row,
-			} );
-		} );
+			return set( merged, [ 'data', ...dataPath, name, index, '__type' ], row.__type );
+		}, {} );
 	}
 
 	/**

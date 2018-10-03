@@ -34,13 +34,15 @@ export default class RepeaterField extends Component {
 
 		const settings = this.findGroup( data.__type );
 
-		return <Group
-			key={ index }
-			index={ index }
-			dataPath={ [ ...dataPath, name, index ] }
-			number={ index + 1 }
-			{ ...settings }
-		/>
+		return (
+			<Group
+				key={ index }
+				index={ index }
+				dataPath={ [ ...dataPath, name, index ] }
+				number={ index + 1 }
+				{ ...settings }
+			/>
+		);
 	}
 
 	addGroup = () => {

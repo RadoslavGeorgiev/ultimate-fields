@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 
 import reducers from './state/reducers';
-import { initializeStore, loadData, extractDataFromState } from './container';
+import { initializeStore, extractDataFromState } from './container';
 import Container from './container/component';
 import defaultFields from './field/default-fields';
 import { createCombinedReducer } from './field';
@@ -32,7 +32,7 @@ window.UltimateFields = {
 	initializeContainer( node, settings, data, callback ) {
 		const { fields } = settings;
 
-		initializeStore( store, tempStoreName, fields, data );
+		initializeStore( store, [ tempStoreName ], fields, data );
 
 		// Subscribe for changes
 		store.subscribe( () => {

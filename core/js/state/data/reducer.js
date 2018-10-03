@@ -10,9 +10,7 @@ import { TAB_KEY } from 'constants';
 export default function( state, action ) {
 	switch ( action.type ) {
 		case INITIALIZE_CONTAINER:
-			return merge( {}, state, {
-				[ action.name ]: action.data,
-			} );
+			return merge( {}, state, action.data );
 
 		case UPDATE_VALUE:
 			return Object.assign( {}, set( state, action.path, action.value ) );

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, isEqual } from 'lodash';
 
-import { areDependenciesMet, getTab } from 'state/data/selectors';
+import { areDependenciesMet } from 'state/data/selectors';
+import { getTab } from 'state/tabs/selectors';
 import { getFieldComponents } from 'field';
 import Tab from 'components/tab';
 

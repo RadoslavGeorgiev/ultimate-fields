@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { set } from 'lodash';
 
 import { updateValue } from 'state/data/actions';
 import { getValue } from 'state/data/selectors';
@@ -16,7 +17,28 @@ import { getValue } from 'state/data/selectors';
  */
 export default class FieldModel {
 	/**
-	 * Returns the initial data that should be stored in the store.
+	 * Returns the initial state of the field that will be 
+	 * parsed by reducers and added to the store.
+	 *
+	 * @NB!
+	 * This is an extremely low-level method and should only be
+	 * overwritten by complex fields like repeaters, layouts and etc.
+	 * If you are creating a new field type, you should probably avoid it.
+	 *
+	 * @param  {Object} props   The definition of a field.
+	 * @param  {Object} context The initial data that is available.
+	 * @return {Object}         An object that will be parsed by the reducers.
+	 */
+	getInitialState( props, context ) {
+		const { name, dataPath } = props;
+		
+		return {
+			data: set( {}, dataPath, this.getInitialData( props, context ) ),
+		};
+	}
+	
+	/**
+	 * Returns the initial data that should be added to the store.
 	 *
 	 * @param  {Object} props   The definition of a field.
 	 * @param  {Object} context The initial data that is available.

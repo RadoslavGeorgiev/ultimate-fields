@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { areDependenciesMet, isTabActive } from 'state/data/selectors';
-import { changeTab } from 'state/data/actions';
+import { areDependenciesMet } from 'state/data/selectors';
+import { isTabActive } from 'state/tabs/selectors';
+import { changeTab } from 'state/tabs/actions';
 
 class Tab extends Component {
 	render() {

@@ -15,11 +15,3 @@ export const areDependenciesMet = ( state, context, dependencies ) => {
 
 	return !! target;
 }
-
-export const getTab = ( state, path ) => {
-	return getValue( state, [ ...path, TAB_KEY ] );
-}
-
-export const isTabActive = ( state, path, tab ) => {
-	return getTab( state, path ) === tab;
-}

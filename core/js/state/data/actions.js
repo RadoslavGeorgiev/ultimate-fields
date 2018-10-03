@@ -4,10 +4,10 @@ import {
 	CHANGE_TAB,
 } from 'state/action-types.js';
 
-export const createStore = ( name, data = {} ) => ( {
+export const createStore = ( name, state = {} ) => ( {
 	type: INITIALIZE_CONTAINER,
 	name,
-	data,
+	...state,
 } )
 
 export const updateValue = ( path, value ) => ( {
@@ -16,8 +16,3 @@ export const updateValue = ( path, value ) => ( {
 	value,
 } );
 
-export const changeTab = ( path, tab ) => ( {
-	type: CHANGE_TAB,
-	path,
-	tab,
-} );
