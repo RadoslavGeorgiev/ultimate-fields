@@ -32,7 +32,17 @@ window.UltimateFields = {
 	initializeContainer( node, settings, data, callback ) {
 		const { fields } = settings;
 
-		initializeStore( store, [ tempStoreName ], fields, data );
+		// Prepare a container ID
+		const id = `${tempStoreName}-${settings.id}`;
+
+		// Initialize the store with the container's data
+		initializeStore( {
+			store,
+			container: id,
+			dataPath: [ tempStoreName ],
+			fields,
+			data,
+		} );
 
 		// Subscribe for changes
 		store.subscribe( () => {
@@ -42,7 +52,11 @@ window.UltimateFields = {
 		// Render the container in place
 		ReactDOM.render(
 			<Provider store={ store }>
-				<Container dataPath={ [ tempStoreName ] }{ ...settings } id={ tempStoreName } />
+				<Container
+					container={ id }
+					dataPath={ [ tempStoreName ] }
+					{ ...settings }
+				/>
 			</Provider>,
 			node
 		);

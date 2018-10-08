@@ -38,6 +38,7 @@ export default class RepeaterField extends Component {
 			<Group
 				key={ index }
 				index={ index }
+				container={ data.__container }
 				dataPath={ [ ...dataPath, name, index ] }
 				number={ index + 1 }
 				{ ...settings }
@@ -46,6 +47,6 @@ export default class RepeaterField extends Component {
 	}
 
 	addGroup = () => {
-		this.props.addRow();
+		this.props.addRow( this.props.value.length );
 	}
 }

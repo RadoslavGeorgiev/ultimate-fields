@@ -17,34 +17,24 @@ import { getValue } from 'state/data/selectors';
  */
 export default class FieldModel {
 	/**
-	 * Returns the initial state of the field that will be 
-	 * parsed by reducers and added to the store.
+	 * Generates all actions, which are required to initialize the field.
 	 *
-	 * @NB!
-	 * This is an extremely low-level method and should only be
-	 * overwritten by complex fields like repeaters, layouts and etc.
-	 * If you are creating a new field type, you should probably avoid it.
-	 *
-	 * @param  {Object} props   The definition of a field.
-	 * @param  {Object} context The initial data that is available.
-	 * @return {Object}         An object that will be parsed by the reducers.
+	 * @param {Object} props   The definition of a field.
+	 * @param {Object} context The initial data that is available.
+	 * @type  {Array}          A list of actions that should be performed.
 	 */
-	getInitialState( props, context ) {
-		const { name, dataPath } = props;
-		
-		return {
-			data: set( {}, dataPath, this.getInitialData( props, context ) ),
-		};
+	getInitialActions( props, context ) {
+		return this.updateValue( props, this.getInitiaValue( props, context ) );
 	}
-	
+
 	/**
 	 * Returns the initial data that should be added to the store.
 	 *
 	 * @param  {Object} props   The definition of a field.
 	 * @param  {Object} context The initial data that is available.
-	 * @return {Object}         An object that can be merged with the data of other fields.
+	 * @return {*}              An object that can be merged with the data of other fields.
 	 */
-	getInitialData( props, context ) {
+	getInitiaValue( props, context ) {
 		const { name } = props;
 
 		// Start with the value from the context.
@@ -56,11 +46,7 @@ export default class FieldModel {
 		}
 
 		// Formats the value correctly (ex `3` becoming `"3"` for text fields).
-		value = this.loadValue( props, value );
-
-		return {
-			[ name ]: value,
-		};
+		return  this.loadValue( props, value );
 	}
 
 	/**

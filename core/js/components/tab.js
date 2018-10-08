@@ -37,11 +37,11 @@ class Tab extends Component {
 }
 
 export default connect(
-	( state, { dataPath, name, dependencies } ) => ( {
-		active: isTabActive( state, dataPath, name ),
+	( state, { dataPath, container, name, dependencies } ) => ( {
+		active: isTabActive( state, container, name ),
 		enabled: areDependenciesMet( state, dataPath, dependencies ),
 	} ),
-	( dispatch, { dataPath, name } ) => ( {
-		onClick: () => dispatch( changeTab( dataPath, name ) ),
+	( dispatch, { container, name } ) => ( {
+		onClick: () => dispatch( changeTab( container, name ) ),
 	} )
 )( Tab );

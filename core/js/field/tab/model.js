@@ -4,10 +4,10 @@ export default class TabFieldModel extends FieldModel {
 	/**
 	 * Avoids loading data.
 	 *
-	 * @return {Object} An empty object.
+	 * @return {Array} An empty list.
 	 */
-	getInitialData() {
-		return {};
+	getInitialActions() {
+		return [];
 	}
 
 	/**

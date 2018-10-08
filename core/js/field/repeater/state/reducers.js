@@ -1,7 +1,6 @@
 import { set, get, find, update } from 'lodash';
 
 import mergeWithArrays from 'utils/merge-with-arrays';
-import { loadData } from 'container';
 import {
 	ADD_REPEATER_ROW,
 	DELETE_REPEATER_ROW,
@@ -11,23 +10,16 @@ const reducers = {
 	tabs: {},
 }
 
-reducers.data[ ADD_REPEATER_ROW ] = ( state, { group, name, path: contextPath } ) => {
-	const { id: type, fields } = group;
-	
-	const path    = [ ...contextPath, name ];
-	const rows    = get( state, path, [] );
-	const index   = rows.length;
-	const subPath = [ ...path, index ];
-	
-	// Generate the new sub-state
-	const subState = update( loadData( fields, subPath ).data, subPath, entry => ( {
-		__type: type,
-		__hidden: false,
-		
-		...entry,
-	} ) );
-	
-	return mergeWithArrays( state, subState );
+reducers.data[ ADD_REPEATER_ROW ] = ( state, { groupType, name, path, container } ) => {
+	const diff = set( {}, [ ...path, name ], [
+		{
+			__container: container,
+			__type: groupType,
+			__hidden: false,
+		},
+	] );
+
+	return mergeWithArrays( state, diff );
 };
 
 reducers.data[ DELETE_REPEATER_ROW ] = ( state, action ) => {
@@ -39,18 +31,10 @@ reducers.data[ DELETE_REPEATER_ROW ] = ( state, action ) => {
 		...set( state, path, rows.filter( ( row, i ) => i !== action.index ) )
 	}
 }
-
-reducers.tabs[ ADD_REPEATER_ROW ] = ( state, action ) => {
-	const firstTab = find( action.group.fields, { type: 'tab' } );
-
-	if ( ! firstTab ) {
-		return state;
-	}
-
-	return {
-		...state,
-		[ action.id ]: firstTab.name,
-	};
-}
+//
+// reducers.tabs[ ADD_REPEATER_ROW ] = ( state, { container, name } ) => ( {
+// 	...state,
+// 	[ container ] : name,
+// } );
 
 export default reducers;

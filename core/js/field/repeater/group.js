@@ -7,7 +7,7 @@ import { deleteRepeaterRow } from './state/actions';
 
 class RepeaterGroup extends Component {
 	render() {
-		const { icon, number, title, dataPath, fields, layout } = this.props;
+		const { icon, number, title, dataPath, container, fields, layout } = this.props;
 
 		return (
 			<div className="uf-group">
@@ -32,6 +32,7 @@ class RepeaterGroup extends Component {
 					<Container
 						fields={ fields }
 						dataPath={ dataPath }
+						container={ container }
 						style="boxed"
 						layout={ layout }
 					/>

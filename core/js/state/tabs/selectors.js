@@ -1,22 +1,22 @@
 /**
  * Retrieves a currently active tab.
- * 
- * @param  {Object}   state The global state.
- * @param  {string[]} path  The path for the tab.
- * @return {string}         The name of the tab.
+ *
+ * @param  {Object} state     The global state.
+ * @param  {string} container The unique ID of the container.
+ * @return {string}           The name of the tab.
  */
-export const getTab = ( state, path ) => {
-	return state.tabs[ path.join( '/' ) ];
+export const getTab = ( state, container ) => {
+	return state.tabs[ container ];
 }
 
 /**
  * Checks whether a specific tab is active.
- * 
- * @param  {Object}   state The global state.
- * @param  {string[]} path  The path for the tab.
- * @param  {string}   tab   The name of the tab to check for.
+ *
+ * @param  {Object} state     The global state.
+ * @param  {string} container The unique ID of the container.
+ * @param  {string} tab       The name of the tab to check for.
  * @return {Boolean}
  */
-export const isTabActive = ( state, path, tab ) => {
-	return getTab( state, path ) === tab;
+export const isTabActive = ( state, container, tab ) => {
+	return getTab( state, container ) === tab;
 }

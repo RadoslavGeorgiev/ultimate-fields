@@ -8,26 +8,26 @@ import {
 } from 'state/action-types';
 
 export default createReducer( {}, {
-	[ CHANGE_TAB ]: ( state, { path, tab } ) => ( {
+	[ CHANGE_TAB ]: ( state, { container, tab } ) => ( {
 		...state,
-		[ path.join( '/' ) ]: tab,
+		[ container ]: tab,
 	} ),
-	
-	[ INITIALIZE_CONTAINER ]: ( state, { tabs } ) => reduce(
-		tabs,
-		( result, { tab, path } ) => ( {
-			...result,
-			[ path.join( '/' ) ]: tab,
-		} ),
-		Object.assign( {}, state )
-	),
-	
-	[ DESTROY_CONTAINER ]: ( state, { path } ) => {
-		const updatedState = { ...state };
-		
-		// Unset the tab for the container if any.
-		unset( updatedState, path.join( '/' ) );
-		
-		return updatedState;
-	},
+
+	// [ INITIALIZE_CONTAINER ]: ( state, { tabs } ) => reduce(
+	// 	tabs,
+	// 	( result, { tab, path } ) => ( {
+	// 		...result,
+	// 		[ path.join( '/' ) ]: tab,
+	// 	} ),
+	// 	Object.assign( {}, state )
+	// ),
+	//
+	// [ DESTROY_CONTAINER ]: ( state, { path } ) => {
+	// 	const updatedState = { ...state };
+	//
+	// 	// Unset the tab for the container if any.
+	// 	unset( updatedState, path.join( '/' ) );
+	//
+	// 	return updatedState;
+	// },
 } );

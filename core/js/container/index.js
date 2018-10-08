@@ -1,36 +1,40 @@
-import { find, reduce, merge } from 'lodash';
+import { find, reduce, forEach } from 'lodash';
 
 import { TAB_KEY } from 'constants';
 import { getFieldModel } from 'field/';
-import { createStore, changeTab } from 'state/data/actions';
+import { createStore } from 'state/data/actions';
+import { changeTab } from 'state/tabs/actions';
 
-export const initializeStore = ( store, dataPath, fields, initialData ) => {
-	const data = loadData( fields, dataPath, initialData );
-	
-	store.dispatch( createStore( dataPath[ 0 ], data ) );
+export const initializeStore = ( args ) => {
+	const { store } = args;
+	const actions = generateInitilizationActionsList( args );
+
+	actions.forEach( action => {
+		store.dispatch( action );
+	} );
 }
 
-export const loadData = ( fields, dataPath, initialData = {} ) => {
-	const data = reduce( fields, ( state, field ) => {
-		const model = getFieldModel( field );
-		const fieldState = model.getInitialState( {
-			...field,
-			dataPath,
-		}, initialData );
-		return merge( state, fieldState );
-	}, {} );
-	
+export const generateInitilizationActionsList = ( args ) => {
+	const { container, dataPath, fields, data } = args;
+
+	let actions = [];
+
 	const firstTab = find( fields, { type: 'tab' } );
 	if ( firstTab ) {
-		data.tabs = [].concat( data.tabs || [] ).concat( [
-			{
-				path: dataPath,
-				tab: firstTab.name,
-			},
-		] );
+		actions.push( changeTab( container, firstTab.name ) );
 	}
-	
-	return data;
+
+	forEach( fields, definition => {
+		const model = getFieldModel( definition );
+		const field = {
+			...definition,
+			dataPath,
+		};
+
+		actions = actions.concat( model.getInitialActions( field, data ) );
+	} );
+
+	return actions;
 }
 
 export const extractDataFromState = ( state, dataPath, fields ) => {

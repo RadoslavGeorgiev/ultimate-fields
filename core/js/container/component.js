@@ -74,13 +74,14 @@ export class Container extends Component {
 	}
 
 	renderTabs() {
-		const { tabs, style, dataPath } = this.props;
+		const { container, tabs, style, dataPath } = this.props;
 
 		return (
 			<div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
 				{ tabs.map( tab => {
 					return <Tab
 						key={ tab.name }
+						container={ container }
 						dataPath={ dataPath }
 						style={ style }
 						{ ...tab }
@@ -96,11 +97,11 @@ const TABS_PLACEHOLDER = {
 };
 
 const mapStateToProps = ( state, ownProps ) => {
-	const { dataPath } = ownProps;
+	const { dataPath, container } = ownProps;
 
 	const tabs   = [];
 	const fields = [];
-	const tab    = getTab( state, dataPath );
+	const tab    = getTab( state, container );
 
 	forEach( ownProps.fields, definition => {
 		const deps = areDependenciesMet( state, dataPath, definition.dependencies );
