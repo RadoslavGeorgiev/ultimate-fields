@@ -1,6 +1,6 @@
-import { set, get, find, update, merge } from 'lodash';
+import { set, get, find, update, merge, unset } from 'lodash';
 
-import mergeWithArrays from 'utils/merge-with-arrays';
+import { mergeWithArrays } from 'utils';
 import {
 	ADD_NEW_REPEATER_GROUP,
 	ADD_REPEATER_ROW,
@@ -38,10 +38,10 @@ reducers.data[ DELETE_REPEATER_ROW ] = ( state, action ) => {
 reducers.data[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { data } } ) => mergeWithArrays( state, data );
 reducers.tabs[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { tabs } } ) => merge( {}, state, tabs );
 
-//
-// reducers.tabs[ ADD_REPEATER_ROW ] = ( state, { container, name } ) => ( {
-// 	...state,
-// 	[ container ] : name,
-// } );
+reducers.tabs[ DELETE_REPEATER_ROW ] = ( state, { container } ) => {
+	const newState = state;
+	unset( state, container );
+	return newState;
+};
 
 export default reducers;

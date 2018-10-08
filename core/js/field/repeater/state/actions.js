@@ -15,8 +15,9 @@ export const addRepeaterRow = ( name, path, index, groupType, container ) => ( {
 	container,
 } );
 
-export const deleteRepeaterRow = ( path, index ) => ( {
+export const deleteRepeaterRow = ( path, index, container ) => ( {
 	type: DELETE_REPEATER_ROW,
 	path: path.filter( ( item, i ) => i !== path.length - 1 ),
 	index,
+	container,
 } );

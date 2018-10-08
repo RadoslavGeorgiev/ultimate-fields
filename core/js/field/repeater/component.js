@@ -19,7 +19,7 @@ export default class RepeaterField extends Component {
 
 	render() {
 		const { value } = this.props;
-
+		
 		return (
 			<Fragment>
 				{ value.map( this.renderGroup ) }

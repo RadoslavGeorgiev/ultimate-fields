@@ -1,3 +1,5 @@
+import { mergeWithArrays} from 'utils';
+
 /**
  * Creates a new reducer based on an initial state and an array of actions.
  * 
@@ -5,7 +7,7 @@
  * @param  {Object} actions      A hash of action types and action handlers.
  * @return {function}            The generated reducer.
  */
-export default ( initialState, actions ) => {
+export default ( name, initialState, actions ) => {
 	/**
 	 * A custom-made reducer.
 	 * 
@@ -14,10 +16,14 @@ export default ( initialState, actions ) => {
 	 * @return {Object}        An eventually modified state.
 	 */
 	return ( state, action ) => {
-		const { type } = action;
+		const { type, batchAction } = action;
 		
 		if ( actions.hasOwnProperty( type ) ) {
 			return actions[ type ]( state, action );
+		}
+		
+		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) ) {
+			return mergeWithArrays( state, action.diff[ name ] );
 		}
 		
 		if ( 'undefined' === typeof state ) {

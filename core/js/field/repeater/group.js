@@ -66,7 +66,7 @@ class RepeaterGroup extends Component {
 
 export default connect(
 	null,
-	( dispatch, { dataPath, index } ) => ( {
-		onDelete: () => dispatch( deleteRepeaterRow( dataPath, index ) ),
+	( dispatch, { dataPath, index, container } ) => ( {
+		onDelete: () => dispatch( deleteRepeaterRow( dataPath, index, container ) ),
 	} )
 )( RepeaterGroup );

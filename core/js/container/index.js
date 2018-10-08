@@ -4,14 +4,14 @@ import { TAB_KEY } from 'constants';
 import { getFieldModel } from 'field/';
 import { createStore } from 'state/data/actions';
 import { changeTab } from 'state/tabs/actions';
+import { createBatch } from 'state/batch/actions';
+import { INITIALIZE_CONTAINER } from 'state/action-types';
 
 export const initializeStore = ( args ) => {
 	const { store } = args;
 	const actions = generateInitilizationActionsList( args );
-
-	actions.forEach( action => {
-		store.dispatch( action );
-	} );
+	
+	store.dispatch( createBatch( INITIALIZE_CONTAINER, actions ) );
 }
 
 export const generateInitilizationActionsList = ( args ) => {

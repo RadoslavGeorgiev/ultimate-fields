@@ -11,7 +11,7 @@ import { initializeStore, extractDataFromState } from './container';
 import Container from './container/component';
 import defaultFields from './field/default-fields';
 import { createCombinedReducer } from './field';
-import batchMiddleware from 'state/batch-middleware';
+import batchMiddleware from 'state/batch';
 
 import styles from './../sass/ultimate-fields.scss';
 

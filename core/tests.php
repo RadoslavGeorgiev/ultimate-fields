@@ -8,7 +8,7 @@ $page = Options_Page::create( 'test-fields' );
 Container::create( 'post-fields-1' )
 	->set_style( 'boxed' )
 	->set_description_position( 'label' )
-	->set_layout( 'grid' )
+	->set_layout( 'rows' )
 	->add_location( 'options', $page )
 	->add_fields( [
 		Field::create( 'tab', 'first_tab' )
@@ -18,8 +18,6 @@ Container::create( 'post-fields-1' )
 		Field::create( 'text', 'some_field_a' )
 			->required()
 			->set_description( 'This is a field...' ),
-		Field::create( 'text', 'field_without_label' )
-			->hide_label(),
 		Field::create( 'text', 'half_field_1' )->set_width( 50 ),
 		Field::create( 'text', 'half_field_2' )->set_width( 50 ),
 		Field::create( 'checkbox', 'dependency_source' )
@@ -28,15 +26,32 @@ Container::create( 'post-fields-1' )
 			->add_group( 'some_group', [
 				'fields' => [
 					Field::create( 'tab', 'tab_one' ),
-					Field::create( 'text', 'sub_field_1' )->set_width( 50 ),
-					Field::create( 'text', 'sub_field_2' )->set_width( 50 ),
+					Field::create( 'text', 'sub_field_1' )
+						->set_width( 50 ),
+					Field::create( 'text', 'sub_field_2' )
+						->set_width( 50 ),
+					Field::create( 'checkbox', 'show_next_field' )
+						->set_width( 50 )
+						->set_text( 'Show' )
+						->set_default_value( true ),
+					Field::create( 'text', 'conditional_sub_field' )
+						->set_width( 50 )
+						->add_dependency( 'show_next_field' ),
 					Field::create( 'tab', 'tab_two' ),
-					Field::create( 'text', 'sub_field_3' )->set_width( 50 ),
-				]
+					Field::create( 'text', 'sub_field_3' )
+						->set_width( 50 ),
+				],
 			] )
 			->set_default_value( [
-				[ '__type' => 'some_group', 'sub_field_1' => 'A', 'sub_field_2' => 'B' ],
-				[ '__type' => 'some_group', 'sub_field_1' => 'C' ],
+				[
+					'__type'      => 'some_group',
+					'sub_field_1' => 'A',
+					'sub_field_2' => 'B',
+				],
+				[
+					'__type'      => 'some_group',
+					'sub_field_1' => 'C',
+				],
 			] ),
 
 		Field::create( 'tab', 'second_tab' )

@@ -1,10 +1,4 @@
-const CREATE_BATCH = 'CREATE_BATCH';
-
-export const createBatch = ( actions, maskAs ) => ( {
-	type: CREATE_BATCH,
-	actions,
-	maskAs,
-} );
+import { CREATE_BATCH } from 'state/action-types';
 
 export default reducers => store => next => action => {
 	if ( CREATE_BATCH !== action.type ) {
@@ -21,6 +15,8 @@ export default reducers => store => next => action => {
 
 	return next( {
 		type: maskAs,
+		batchAction: true,
 		diff,
+		actions,
 	} );
 }

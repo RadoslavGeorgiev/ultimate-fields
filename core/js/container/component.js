@@ -74,10 +74,10 @@ export class Container extends Component {
 	}
 
 	renderTabs() {
-		const { container, tabs, style, dataPath } = this.props;
+		const { container, tabs, style, layout, dataPath } = this.props;
 
 		return (
-			<div className={ `uf-tabs uf-tabs--${style}` } key="tabs">
+			<div className={ `uf-tabs uf-tabs--${style} uf-tabs--${layout}` } key="tabs">
 				{ tabs.map( tab => {
 					return <Tab
 						key={ tab.name }

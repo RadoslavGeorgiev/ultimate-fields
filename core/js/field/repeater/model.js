@@ -3,13 +3,12 @@ import {
 	isUndefined, isNull,
 } from 'lodash';
 
-import mergeWithArrays from 'utils/merge-with-arrays'
 import { generateInitilizationActionsList } from 'container';
 import FieldModel from 'field/model';
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow } from './state/actions';
-import { generateContainerId } from 'utils';
-import { createBatch } from 'state/batch-middleware';
+import { generateContainerId, mergeWithArrays } from 'utils';
+import { createBatch } from 'state/batch/actions';
 import { ADD_NEW_REPEATER_GROUP } from './state/action-types';
 
 export default class RepeaterFieldModel extends FieldModel {
@@ -117,6 +116,6 @@ export default class RepeaterFieldModel extends FieldModel {
 			data: {},
 		} ) );
 
-		dispatch( createBatch( actions, ADD_NEW_REPEATER_GROUP ) );
+		dispatch( createBatch( ADD_NEW_REPEATER_GROUP, actions ) );
 	}
 }
