@@ -9,6 +9,8 @@ import FieldModel from 'field/model';
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow } from './state/actions';
 import { generateContainerId } from 'utils';
+import { createBatch } from 'state/batch-middleware';
+import { ADD_NEW_REPEATER_GROUP } from './state/action-types';
 
 export default class RepeaterFieldModel extends FieldModel {
 	/**
@@ -62,7 +64,7 @@ export default class RepeaterFieldModel extends FieldModel {
 			const container = generateContainerId( 'group-' );
 
 			// Add the basic group
-			actions.push( addRepeaterRow( name, dataPath, row.__type, container ) );
+			actions.push( addRepeaterRow( name, dataPath, index, row.__type, container ) );
 
 			// Populate all sub-fields
 			actions = actions.concat( generateInitilizationActionsList( {
@@ -103,16 +105,18 @@ export default class RepeaterFieldModel extends FieldModel {
 		const group     = groups[ 0 ];
 
 		// Add an empty row
-		dispatch( addRepeaterRow( name, dataPath, group.id, container ) );
+		let actions = [
+			addRepeaterRow( name, dataPath, index, group.id, container ),
+		];
 
 		// Populate all sub-fields
-		const actions = generateInitilizationActionsList( {
+		actions = actions.concat( generateInitilizationActionsList( {
 			container,
 			dataPath: [ ...dataPath, name, index ],
 			fields: group.fields,
 			data: {},
-		} );
+		} ) );
 
-		actions.forEach( dispatch );
+		dispatch( createBatch( actions, ADD_NEW_REPEATER_GROUP ) );
 	}
 }

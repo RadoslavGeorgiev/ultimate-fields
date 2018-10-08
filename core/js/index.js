@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { forEach } from 'lodash';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import reducers from './state/reducers';
 import { initializeStore, extractDataFromState } from './container';
 import Container from './container/component';
 import defaultFields from './field/default-fields';
 import { createCombinedReducer } from './field';
+import batchMiddleware from 'state/batch-middleware';
 
 import styles from './../sass/ultimate-fields.scss';
 
@@ -21,9 +22,11 @@ _.noConflict();
  * Ultimate Fields uses a global store that will be shared amongst
  * containers to allow for compicated top-level dependencies.
  */
+const reducer = createCombinedReducer( combineReducers( reducers ) );
+
 const store = createStore(
-	createCombinedReducer( combineReducers( reducers ) ),
-	window.__REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
+	reducer,
+	composeWithDevTools( applyMiddleware( batchMiddleware( reducer ) ) )
 );
 
 const tempStoreName = 'options';

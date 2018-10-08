@@ -5,11 +5,12 @@ import {
 	DELETE_REPEATER_ROW,
 } from './action-types';
 
-export const addRepeaterRow = ( name, path, groupType, container ) => ( {
+export const addRepeaterRow = ( name, path, index, groupType, container ) => ( {
 	type: ADD_REPEATER_ROW,
 	container: uniqueId(),
 	name,
 	path,
+	index,
 	groupType,
 	container,
 } );
