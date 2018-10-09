@@ -1,12 +1,38 @@
+/**
+ * External dependencies
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
 import { areDependenciesMet } from 'state/data/selectors';
 import { isTabActive } from 'state/tabs/selectors';
 import { changeTab } from 'state/tabs/actions';
+import { STYLE_SEAMLESS, STYLE_BOXED } from 'constants';
 
+/**
+ * Displays tab buttons.
+ */
 class Tab extends Component {
+	static propTypes = {
+		name: PropTypes.string.isRequired,
+		label: PropTypes.string.isRequired,
+		icon: PropTypes.string,
+		style: PropTypes.oneOf( [ STYLE_SEAMLESS, STYLE_BOXED ] ),
+		dataPath: PropTypes.array.isRequired,
+		container: PropTypes.string.isRequired,
+		dependencies: PropTypes.array,
+	}
+
+	/**
+	 * Renders the tab.
+	 *
+	 * @return {React.Element}
+	 */
 	render() {
 		const { label, icon, style, active, enabled } = this.props;
 
@@ -25,6 +51,11 @@ class Tab extends Component {
 		);
 	}
 
+	/**
+	 * Handles the click event.
+	 *
+	 * @param {Event} e The event that is being handled.
+	 */
 	onClick = e => {
 		const { active, enabled, onClick } = this.props;
 
