@@ -1,134 +1,30 @@
+/**
+ * External dependencies
+ */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { forEach, isEqual } from 'lodash';
 
-import { areDependenciesMet } from 'state/data/selectors';
-import { getTab } from 'state/tabs/selectors';
-import { getFieldComponents } from 'field';
-import Tab from 'components/tab';
+/**
+ * Internal dependencies
+ */
+import Fields from 'container/fields';
 
-export class Container extends Component {
+/**
+ * Containers handle their fields, as well as environment.
+ *
+ * @type {Object}
+ */
+export default class Container extends Component {
+	static propTypes = {
+		// Currently containers don't have specific prop types.
+		// Check the propTypes of the Fields component.
+	}
+
+	/**
+	 * Renders a simple list of fields.
+	 *
+	 * @return {React.Element}
+	 */
 	render() {
-		// Reset the grid counters
-		this.column = 0;
-		this.row = 0;
-
-		return this.renderFields();
-	}
-
-	renderFields() {
-		const { fields, tabs, layout, style } = this.props;
-
-		return (
-			<div className={ `uf-fields ${style} ${layout}` }>
-				{ fields.map( field => {
-					return ( TABS_PLACEHOLDER === field )
-						? this.renderTabs()
-						: this.renderField( field )
-				} ) }
-			</div>
-		);
-	}
-
-	renderField = definition => {
-		const { dataPath, description_position, layout, style, areDependenciesMet } = this.props;
-		const { name, field_width, tab } = definition;
-
-		const field = {
-			...definition,
-			dataPath,
-			layout,
-			style,
-			description_position,
-		};
-
-		const gridClasses = this.generateGridClasses( field_width || 100 );
-
-		const { Element, Input } = getFieldComponents( field );
-		return <Element { ...field } key={ name } classNames={ gridClasses }>
-			<Input { ...field } />
-		</Element>
-	}
-
-	generateGridClasses( width ) {
-		const { layout } = this.props;
-
-		if ( 'grid' !== layout ) {
-			return [];
-		}
-
-		const classes = [];
-
-		if( ! this.row ) {
-			classes.push( 'top-row' );
-		}
-
-		if( ! this.column ) {
-			classes.push( 'first-col' );
-		}
-
-		this.row   += ( this.column + width ) >= 100 ? 1 : 0;
-		this.column = ( this.column + width ) % 100;
-
-		return classes;
-	}
-
-	renderTabs() {
-		const { container, tabs, style, layout, dataPath } = this.props;
-
-		return (
-			<div className={ `uf-tabs uf-tabs--${style} uf-tabs--${layout}` } key="tabs">
-				{ tabs.map( tab => {
-					return <Tab
-						key={ tab.name }
-						container={ container }
-						dataPath={ dataPath }
-						style={ style }
-						{ ...tab }
-					/>;
-				} ) }
-			</div>
-		);
+		return <Fields {...this.props} />
 	}
 }
-
-const TABS_PLACEHOLDER = {
-	type: 'tabs'
-};
-
-const mapStateToProps = ( state, ownProps ) => {
-	const { dataPath, container } = ownProps;
-
-	const tabs   = [];
-	const fields = [];
-	const tab    = getTab( state, container );
-
-	forEach( ownProps.fields, definition => {
-		const deps = areDependenciesMet( state, dataPath, definition.dependencies );
-
-		if ( 'tab' === definition.type ) {
-			if ( 0 === tabs.length ) {
-				fields.push( TABS_PLACEHOLDER );
-			}
-
-			return tabs.push( definition );
-		}
-
-		if ( definition.tab && tab !== definition.tab ) {
-			return;
-		}
-
-		if ( ! deps ) {
-			return;
-		}
-
-		fields.push( definition );
-	} );
-
-	return {
-		tabs,
-		fields,
-	};
-};
-
-export default connect( mapStateToProps )( Container );
