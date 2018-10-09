@@ -14,7 +14,5 @@ import styles from './../sass/ultimate-fields.scss';
 // Ensure that lodash is not conflicting with underscore.js
 _.noConflict();
 
-/**
- * Star the top-level API.
- */
+// Start the top-level API.
 window.UltimateFields = new API();
