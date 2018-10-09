@@ -10,7 +10,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createReducer from 'state/reducer';
 import batchMiddleware from 'state/batch';
 
-
 export default () => {
 	const reducer = createReducer();
 	

@@ -48,6 +48,7 @@ module.exports = {
 			state: path.resolve( __dirname, 'js/state/' ),
 			constants: path.resolve( __dirname, 'js/constants.js' ),
 			utils: path.resolve( __dirname, 'js/utils' ),
+			api: path.resolve( __dirname, 'js/api' ),
 		}
 	}
 };
