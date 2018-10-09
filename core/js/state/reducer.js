@@ -10,13 +10,16 @@ import { createCombinedReducer } from 'field';
 import data from 'state/data/reducer';
 import tabs from 'state/tabs/reducer';
 
-export const reducers = {
-	data,
-	tabs,
-};
-
+/**
+ * Generates the top-level reducer.
+ *
+ * @return {Function} The reducer.
+ */
 export default () => createCombinedReducer(
 	combineReducers(
-		reducers
+		{
+			data,
+			tabs,
+		}
 	)
 );

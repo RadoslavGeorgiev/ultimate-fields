@@ -1,18 +1,14 @@
-import {
-	INITIALIZE_CONTAINER,
-	UPDATE_VALUE,
-	CHANGE_TAB,
-} from 'state/action-types.js';
+import { UPDATE_VALUE, } from 'state/action-types.js';
 
-export const createStore = ( name, state = {} ) => ( {
-	type: INITIALIZE_CONTAINER,
-	name,
-	...state,
-} )
-
+/**
+ * Generates the actions that updates a simple value.
+ *
+ * @param  {Array}  path  A path for the value.
+ * @param  {*}      value The value to use.
+ * @return {Object}       The new action.
+ */
 export const updateValue = ( path, value ) => ( {
 	type: UPDATE_VALUE,
 	path,
 	value,
 } );
-

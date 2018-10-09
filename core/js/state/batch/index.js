@@ -1,6 +1,15 @@
 import { CREATE_BATCH } from 'state/action-types';
 
-export default reducers => store => next => action => {
+/**
+ * Generates a new middleware based on reducers.
+ *
+ * This middleware will catch all `CREATE_BATCH` actions,
+ * execute the sub-actions and generate a new action with all changes.
+ *
+ * @param  {function} reducers The reducer that handles individual actions.
+ * @return {Object}
+ */
+export default ( reducers ) => ( store ) => ( next ) => ( action ) => {
 	if ( CREATE_BATCH !== action.type ) {
 		return next( action );
 	}
@@ -12,7 +21,7 @@ export default reducers => store => next => action => {
 	actions.forEach( subAction => {
 		diff = reducers( diff, subAction );
 	} );
-	
+
 	return next( {
 		type: maskAs,
 		batchAction: true,
