@@ -1,7 +1,5 @@
 import { get } from 'lodash';
 
-import { TAB_KEY } from 'constants';
-
 export const getValue = ( state, path ) => {
 	return get( state.data, path );
 }

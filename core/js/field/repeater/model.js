@@ -100,6 +100,8 @@ export default class RepeaterFieldModel extends FieldModel {
 	addEmptyRow( props, index, dispatch ) {
 		const { name, dataPath, groups } = props;
 
+		console.time( 'repeater-add' );
+		
 		const container = generateContainerId( 'group-' );
 		const group     = groups[ 0 ];
 
@@ -115,7 +117,9 @@ export default class RepeaterFieldModel extends FieldModel {
 			fields: group.fields,
 			data: {},
 		} ) );
-
+		
 		dispatch( createBatch( ADD_NEW_REPEATER_GROUP, actions ) );
+		
+		console.timeEnd( 'repeater-add' );
 	}
 }

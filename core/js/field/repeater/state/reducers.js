@@ -13,7 +13,7 @@ const reducers = {
 
 reducers.data[ ADD_REPEATER_ROW ] = ( state, { groupType, name, path, container, index } ) => {
 	const rows = [];
-
+	
 	rows[ index ] = {
 		__container: container,
 		__type: groupType,
@@ -35,8 +35,8 @@ reducers.data[ DELETE_REPEATER_ROW ] = ( state, action ) => {
 	}
 }
 
-reducers.data[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { data } } ) => mergeWithArrays( state, data );
-reducers.tabs[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { tabs } } ) => merge( {}, state, tabs );
+// reducers.data[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { data } } ) => mergeWithArrays( state, data );
+// reducers.tabs[ ADD_NEW_REPEATER_GROUP ] = ( state, { diff: { tabs } } ) => merge( {}, state, tabs );
 
 reducers.tabs[ DELETE_REPEATER_ROW ] = ( state, { container } ) => {
 	const newState = state;

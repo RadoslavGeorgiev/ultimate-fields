@@ -1,6 +1,5 @@
 import { find, reduce, forEach } from 'lodash';
 
-import { TAB_KEY } from 'constants';
 import { getFieldModel } from 'field/';
 import { createStore } from 'state/data/actions';
 import { changeTab } from 'state/tabs/actions';

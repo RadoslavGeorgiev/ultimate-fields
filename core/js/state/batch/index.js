@@ -7,12 +7,12 @@ export default reducers => store => next => action => {
 
 	const { maskAs, actions } = action;
 	const state = store.getState();
-	let diff = {};
+	let diff = reducers( {}, { type: '@@INIT' });
 
 	actions.forEach( subAction => {
 		diff = reducers( diff, subAction );
 	} );
-
+	
 	return next( {
 		type: maskAs,
 		batchAction: true,

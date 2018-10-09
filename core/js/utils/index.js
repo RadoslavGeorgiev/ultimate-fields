@@ -19,5 +19,5 @@ export const mergeCallback = ( target, source ) => {
 };
 
 export const mergeWithArrays = ( target, source ) => {
-	return mergeWith( target, source, mergeCallback );
+	return mergeWith( {}, target, source, mergeCallback );
 }
