@@ -1,8 +1,14 @@
+/**
+ * External dependencies.
+ */
 import { isString } from 'lodash';
 
-import FieldModel from 'field/model';
+/**
+ * Internal dependencies
+ */
+import Model from 'field/model';
 
-export default class TextFieldModel extends FieldModel {
+export default class TextFieldModel extends Model {
 	/**
 	 * Converts values to the correct type during load.
 	 *

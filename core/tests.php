@@ -17,11 +17,11 @@ Container::create( 'post-fields-1' )
 			->set_text( 'enable' ),
 		Field::create( 'text', 'some_field_a' )
 			->required()
-			->set_description( 'This is a field...' ),
+			->set_description( 'This is a field...' )
+			->set_prefix( '€' )
+			->set_suffix( '.00' ),
 		Field::create( 'text', 'half_field_1' )->set_width( 50 ),
 		Field::create( 'text', 'half_field_2' )->set_width( 50 ),
-		Field::create( 'checkbox', 'dependency_source' )
-			->set_text( 'Show the second field in the next container.' ),
 		Field::create( 'repeater', 'simple_repeater' )
 			->add_group( 'some_group', [
 				'fields' => [
@@ -53,6 +53,8 @@ Container::create( 'post-fields-1' )
 					'sub_field_1' => 'C',
 				],
 			] ),
+		Field::create( 'checkbox', 'dependency_source' )
+			->set_text( 'Show the second field in the next container.' ),
 
 		Field::create( 'tab', 'second_tab' )
 			->add_dependency( 'enable_second_tab' ),

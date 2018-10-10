@@ -1,6 +1,9 @@
-import FieldModel from 'field/model';
+/**
+ * Internal dependencies
+ */
+import Model from 'field/model';
 
-export default class TabFieldModel extends FieldModel {
+export default class TabModel extends Model {
 	/**
 	 * Avoids loading data.
 	 *

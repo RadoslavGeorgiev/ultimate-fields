@@ -1,6 +1,14 @@
+/**
+ * External dependencies
+ */
 import React, { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+/**
+ * Internal dependencies
+ */
+import layoutProps, { defaultLayutProps } from 'container/layout-props';
 
 /**
  * Handles the wrapper of every field, including label, description and etc.
@@ -8,14 +16,12 @@ import classNames from 'classnames';
 export default class Element extends Component {
 	static propTypes = {
 		// Server-side
+		...layoutProps,
 		label: PropTypes.string.isRequired,
 		hide_label: PropTypes.bool,
 		description: PropTypes.string,
 		required: PropTypes.bool,
 		validation_message: PropTypes.string,
-		layout: PropTypes.oneOf( [ 'rows', 'grid' ] ),
-		description_position: PropTypes.oneOf( [ 'label', 'input' ] ),
-		style: PropTypes.oneOf( [ 'seamless', 'boxed' ] ),
 		field_width: PropTypes.number,
 		classNames: PropTypes.arrayOf( PropTypes.string ),
 
@@ -28,12 +34,10 @@ export default class Element extends Component {
 
 	static defaultProps = {
 		// Server-side
+		...defaultLayutProps,
 		hide_label: false,
 		required: false,
 		description: '',
-		description_position: 'input',
-		style: 'seamless',
-		layout: 'rows',
 		validation_message: '',
 		field_width: 100,
 
@@ -49,7 +53,8 @@ export default class Element extends Component {
 
 	render() {
 		const {
-			label, hide_label, required, children, visible, field_width, classNames,
+			label, hide_label, required, children,
+			visible, field_width, classNames,
 		} = this.props;
 
 		// A shortcut to the elementClass method

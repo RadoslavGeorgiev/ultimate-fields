@@ -30,3 +30,12 @@ export default {
 		STYLE_BOXED,
 	] ),
 }
+
+/**
+ * Default values.
+ */
+export const defaultLayutProps = {
+	description_position: DESCRIPTION_IN_INPUT,
+	style: STYLE_SEAMLESS,
+	layout: LAYOUT_ROWS,
+};

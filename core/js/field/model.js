@@ -1,6 +1,12 @@
+/**
+ * External dependencies
+ */
 import { connect } from 'react-redux';
 import { set } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
 import { updateValue } from 'state/data/actions';
 import { getValue } from 'state/data/selectors';
 
