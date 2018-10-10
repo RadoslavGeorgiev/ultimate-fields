@@ -1,11 +1,43 @@
-import React, { Component, Fragment } from 'react';
+/**
+ * External dependencies
+ */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+/**
+ * Internal dependencies
+ */
 import Control from './group-control';
 import Container from 'container/component';
 import { deleteRepeaterRow } from './state/actions';
+import layoutProps from 'container/layout-props';
+import { STYLE_BOXED } from 'constants';
+import {
+	EDIT_MODE_POPUP,
+	EDIT_MODE_INLINE,
+	EDIT_MODE_BOTH,
+} from './constants';
 
+/**
+ * The component for individual repeater groups.
+ */
 class RepeaterGroup extends Component {
+	static propTypes = {
+		number: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		dataPath: PropTypes.array.isRequired,
+		container: PropTypes.string.isRequired,
+		fields: PropTypes.arrayOf( PropTypes.object ).isRequired,
+		icon: PropTypes.string,
+		layout: layoutProps.layout,
+		edit_mode: PropTypes.oneOf( [
+			EDIT_MODE_INLINE,
+			EDIT_MODE_POPUP,
+			EDIT_MODE_BOTH,
+		] ),
+	}
+
 	render() {
 		const { icon, number, title, dataPath, container, fields, layout } = this.props;
 
@@ -33,7 +65,7 @@ class RepeaterGroup extends Component {
 						fields={ fields }
 						dataPath={ dataPath }
 						container={ container }
-						style="boxed"
+						style={ STYLE_BOXED }
 						layout={ layout }
 					/>
 				</div>
@@ -46,18 +78,18 @@ class RepeaterGroup extends Component {
 
 		return (
 			<div className="uf-group__controls">
-				<Control icon="admin-page">Duplicate</Control>
+				<Control icon="admin-page" onClick={ () => {} }>Duplicate</Control>
 				<Control icon="trash" onClick={ onDelete }>Remove</Control>
 
 				{ ( 'inline' !== edit_mode ) &&
-					<Control icon={ 'popup' === edit_mode ? 'edit' : 'editor-expand' }>
+					<Control icon={ 'popup' === edit_mode ? 'edit' : 'editor-expand' } onClick={ () => {} }>
 						Open overlay
 					</Control>
 				}
 
 				{ ( 'popup' !== edit_mode ) && (
-					<Control icon="arrow-up">Collapse</Control>,
-					<Control icon="arrow-down">Expand</Control>
+					<Control icon="arrow-up" onClick={ () => {} }>Collapse</Control>,
+					<Control icon="arrow-down" onClick={ () => {} }>Expand</Control>
 				) }
 			</div>
 		);

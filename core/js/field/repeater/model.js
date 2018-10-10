@@ -1,17 +1,20 @@
-import {
-	find, uniqueId, reduce, update, forEach,
-	isUndefined, isNull,
-} from 'lodash';
+/**
+ * External dependencies
+ */
+import { find, forEach, isUndefined, isNull } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
+import Model from 'field/model';
 import { generateInitilizationActionsList } from 'container';
-import FieldModel from 'field/model';
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
 import { createBatch } from 'state/batch/actions';
 import { ADD_NEW_REPEATER_GROUP } from './state/action-types';
 
-export default class RepeaterFieldModel extends FieldModel {
+export default class RepeaterFieldModel extends Model {
 	/**
 	 * Returns an empty value.
 	 *
@@ -101,7 +104,7 @@ export default class RepeaterFieldModel extends FieldModel {
 		const { name, dataPath, groups } = props;
 
 		console.time( 'repeater-add' );
-		
+
 		const container = generateContainerId( 'group-' );
 		const group     = groups[ 0 ];
 
@@ -117,9 +120,9 @@ export default class RepeaterFieldModel extends FieldModel {
 			fields: group.fields,
 			data: {},
 		} ) );
-		
+
 		dispatch( createBatch( ADD_NEW_REPEATER_GROUP, actions ) );
-		
+
 		console.timeEnd( 'repeater-add' );
 	}
 }

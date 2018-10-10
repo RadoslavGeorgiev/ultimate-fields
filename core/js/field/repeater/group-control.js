@@ -1,6 +1,10 @@
+/**
+ * External dependencies
+ */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default ( { children: title, icon, onClick } ) => {
+export default function GroupControl( { children: title, icon, onClick } ) {
 	return (
 		<a
 			href="#"
@@ -11,4 +15,10 @@ export default ( { children: title, icon, onClick } ) => {
 			<span className={ `dashicons dashicons-${ icon }` }></span>
 		</a>
 	);
+}
+
+GroupControl.propTypes = {
+	children: PropTypes.string.isRequired,
+	icon: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
 }
