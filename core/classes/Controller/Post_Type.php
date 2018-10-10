@@ -184,20 +184,20 @@ class Post_Type extends Controller {
 		$settings = $container->export_settings();
 		$settings[ 'locations' ] = $locations;
 
-		$json = array(
-			'type'      => 'Post_Type',
-			'settings'  => $settings,
-			'data'      => $container->export_data()
-		);
+		$data      = $container->export_data();
+		$random_id = rand();
 
-        echo sprintf(
-            '<div class="uf-container" data-type="%s">
+		echo sprintf(
+            '<div class="uf-container" id="%d">
 				<script type="text/json">%s</script>
 				' . $this->get_no_js_message() . '
-				<span class="spinner is-active hide-if-no-js"></span>
-			</div>',
-            'Post_Type',
-            json_encode( $json )
+				<span class="spinner hide-if-no-js"></span>
+			</div>
+			<input type="hidden" name="uf_post_type_%s" value="%s" />',
+			$random_id,
+			json_encode( $settings ),
+			esc_attr( $container->get_id() ),
+			esc_attr( json_encode( $data ) )
         );
 
 		if( 'seamless' == $settings[ 'style' ] ) {
@@ -210,7 +210,9 @@ class Post_Type extends Controller {
 		# Force-initialize
 		?>
 		<script type="text/javascript">
-		UltimateFields.initializeContainers()
+		UltimateFields.initializeDOMContainer( <?php echo $random_id ?>, 'postType', {
+			post: <?php echo $post->ID ?>
+		} );
 		</script>
 		<?php
 	}

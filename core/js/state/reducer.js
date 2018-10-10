@@ -9,6 +9,7 @@ import { combineReducers } from 'redux';
 import { createCombinedReducer } from 'field';
 import data from 'state/data/reducer';
 import tabs from 'state/tabs/reducer';
+import env from 'state/env/reducer';
 
 /**
  * Generates the top-level reducer.
@@ -18,6 +19,7 @@ import tabs from 'state/tabs/reducer';
 export default () => createCombinedReducer(
 	combineReducers(
 		{
+			env,
 			data,
 			tabs,
 		}

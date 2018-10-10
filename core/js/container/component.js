@@ -14,11 +14,6 @@ import Fields from 'container/fields';
  * @type {Object}
  */
 export default class Container extends Component {
-	static propTypes = {
-		// Currently containers don't have specific prop types.
-		// Check the propTypes of the Fields component.
-	}
-
 	/**
 	 * Renders a simple list of fields.
 	 *

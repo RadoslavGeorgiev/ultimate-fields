@@ -8,3 +8,9 @@ export const STYLE_BOXED = 'boxed';
 export const TABS_PLACEHOLDER = {
 	type: 'tabs'
 };
+
+/**
+ * Post Type Environment
+ */
+export const POST_ID = 'post';
+export const POST_PARENT = 'post_parent';

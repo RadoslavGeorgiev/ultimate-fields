@@ -10,6 +10,7 @@ Container::create( 'post-fields-1' )
 	->set_description_position( 'label' )
 	->set_layout( 'rows' )
 	->add_location( 'options', $page )
+	->add_location( 'post_type', 'page' )
 	->add_fields( [
 		Field::create( 'tab', 'first_tab' )
 			->set_icon( 'dashicons-admin-generic' ),
@@ -63,6 +64,9 @@ Container::create( 'post-fields-1' )
 
 Container::create( 'post-fields-2' )
 	->add_location( 'options', $page )
+	->add_location( 'post_type', 'page', [
+		'levels' => 2
+	] )
 	->set_style( 'boxed' )
 	->add_fields( [
 		Field::create( 'text', 'some_field_1' ),

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  * Internal dependencies
  */
 import Control from './group-control';
-import Container from 'container/component';
+import Fields from 'container/fields';
 import { deleteRepeaterRow } from './state/actions';
 import layoutProps from 'container/layout-props';
 import { STYLE_BOXED } from 'constants';
@@ -61,7 +61,7 @@ class RepeaterGroup extends Component {
 				</div>
 
 				<div className="uf-group__inside">
-					<Container
+					<Fields
 						fields={ fields }
 						dataPath={ dataPath }
 						container={ container }
