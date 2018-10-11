@@ -6,8 +6,9 @@ import { find, forEach, isUndefined, isNull } from 'lodash';
 /**
  * Internal dependencies
  */
+import { sprintf } from 'utils';
 import Model from 'field/model';
-import { generateInitilizationActionsList } from 'container';
+import { generateInitilizationActionsList, getValidationErrors } from 'container';
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
@@ -124,5 +125,52 @@ export default class RepeaterFieldModel extends Model {
 		dispatch( createBatch( ADD_NEW_REPEATER_GROUP, actions ) );
 
 		console.timeEnd( 'repeater-add' );
+	}
+
+	/**
+	 * Checks whether the value of the field is valid or not.
+	 *
+	 * @param  {Object}   props    The definition of the field.
+	 * @param  {Object}   state    The global Redux state.
+	 * @param  {Function} dispatch The global dispatcher.
+	 * @return {Boolean}
+	 */
+	isValid( props, state, dispatch ) {
+		const { name, dataPath, containerPath } = props;
+
+		let errors = [];
+		const value  = this.getValueFromState( props, state );
+
+		value.forEach( ( row, index ) => {
+			const group = this.findGroup( props, row.__type );
+
+			const { fields } = group;
+			const localErrors = getValidationErrors(
+				state,
+				dispatch,
+				fields,
+				[ ...dataPath, name, index ], // dataPath
+				[ ...containerPath, name, row.__container ] // containerPath
+			);;
+
+			errors = errors.concat( localErrors );
+		} );
+
+		return 0 === errors.length;
+	}
+
+	/**
+	 * Generates the required validation message.
+	 *
+	 * @param  {Object} props The definition of the field.
+	 * @return {string}
+	 */
+	getValidationMessage( props ) {
+		// Generate the message
+		const messageTemplate = props.validation_message
+			? props.validation_message
+			: uf_l10n.repeater_incorrect_value;
+
+		return sprintf( messageTemplate, props.label );
 	}
 }

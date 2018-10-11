@@ -173,6 +173,37 @@ export default class FieldModel {
 	}
 
 	/**
+	 * Checks whether the value of the field is valid or not.
+	 *
+	 * @param  {Object}   props    The definition of the field.
+	 * @param  {Object}   state    The global Redux state.
+	 * @param  {Function} dispatch The global dispatcher.
+	 * @return {Boolean}
+	 */
+	isValid( props, state ) {
+		if ( ! props.required ) {
+			return true;
+		}
+
+		return !! this.getValueFromState( props, state );
+	}
+
+	/**
+	 * Generates the required validation message.
+	 *
+	 * @param  {Object} props The definition of the field.
+	 * @return {string}
+	 */
+	getValidationMessage( props ) {
+		// Generate the message
+		const messageTemplate = props.validation_message
+			? props.validation_message
+			: uf_l10n.invalid_field_message;
+
+		return sprintf( messageTemplate, props.label );
+	}
+
+	/**
 	 * Validates the field.
 	 *
 	 * @param  {Object} props   The definition of a field.
@@ -180,12 +211,10 @@ export default class FieldModel {
 	 * @return {String|Boolean} Either an error message or false.
 	 */
 	validate( props, state, dispatch ) {
-		if ( ! props.required ) {
-			return false;
-		}
+		const valid = this.isValid( props, state, dispatch );
 
 		// Validate first
-		if ( !! this.getValueFromState( props, state ) ) {
+		if ( valid ) {
 			if ( getValidationMessage( state, props ) ) {
 				dispatch( clearValidationMessage( props ) );
 			}
@@ -193,13 +222,7 @@ export default class FieldModel {
 			return false;
 		}
 
-		// Generate the message
-		const messageTemplate = props.validation_message
-			? props.validation_message
-			: uf_l10n.invalid_field_message;
-
-		const message = sprintf( messageTemplate, props.label );
-
+		const message = this.getValidationMessage( props );
 		const existingMessage = getValidationMessage( state, props );
 		if ( existingMessage === message ) {
 			return existingMessage;

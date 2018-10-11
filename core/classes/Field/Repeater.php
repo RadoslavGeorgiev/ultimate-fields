@@ -254,17 +254,17 @@ class Repeater extends Field {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'repeater-required',        __( 'This field is required.', 'ultimate-fields' ) )
-			->localize( 'repeater-add',             __( 'Add', 'ultimate-fields' ) )
-			->localize( 'repeater-incorrect-value', __( 'There are invalid values within "%s"', 'ultimate-fields' ) )
-			->localize( 'repeater-min-value',       __( '%s requires at least %d entries to be added.', 'ultimate-fields' ) )
-			->localize( 'repeater-max-value',       __( '%s allows maximum %d entries to be added.', 'ultimate-fields' ) )
-			->localize( 'repeater-save',            _x( 'Save', 'repeater', 'ultimate-fields' ) )
-			->localize( 'repeater-cancel',          _x( 'Cancel', 'repeater', 'ultimate-fields' ) )
-			->localize( 'repeater-close',           _x( 'Close', 'repeater', 'ultimate-fields' ) )
-			->localize( 'repeater-save',            __( 'Save %s', 'ultimate-fields' ) )
-			->localize( 'repeater-delete',          __( 'Delete %s', 'ultimate-fields' ) )
-			->localize( 'repeater-no-groups',       __( 'There are no groups added to this repeater field.', 'ultimate-fields' ) );;
+			->localize( 'repeater_required',        __( 'This field is required.', 'ultimate-fields' ) )
+			->localize( 'repeater_add',             __( 'Add', 'ultimate-fields' ) )
+			->localize( 'repeater_incorrect_value', __( 'There are invalid values within "%s"', 'ultimate-fields' ) )
+			->localize( 'repeater_min_value',       __( '%s requires at least %d entries to be added.', 'ultimate-fields' ) )
+			->localize( 'repeater_max_value',       __( '%s allows maximum %d entries to be added.', 'ultimate-fields' ) )
+			->localize( 'repeater_save',            _x( 'Save', 'repeater', 'ultimate-fields' ) )
+			->localize( 'repeater_cancel',          _x( 'Cancel', 'repeater', 'ultimate-fields' ) )
+			->localize( 'repeater_close',           _x( 'Close', 'repeater', 'ultimate-fields' ) )
+			->localize( 'repeater_save',            __( 'Save %s', 'ultimate-fields' ) )
+			->localize( 'repeater_delete',          __( 'Delete %s', 'ultimate-fields' ) )
+			->localize( 'repeater_no_groups',       __( 'There are no groups added to this repeater field.', 'ultimate-fields' ) );;
 	}
 
 	/**

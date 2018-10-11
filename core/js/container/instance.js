@@ -9,8 +9,7 @@ import { isEmpty, forEach } from 'lodash';
 /**
  * Internal dependencies
  */
-import { initializeStore, extractDataFromState } from 'container';
-import { getFieldModel } from 'field';
+import { initializeStore, getValidationErrors, extractDataFromState } from 'container';
 import Container from 'container/component';
 
 /**
@@ -141,26 +140,15 @@ export default class Instance {
 	validate() {
 		const { fields } = this.settings;
 
-		const errors   = [];
 		const state    = this.store.getState();
 		const dispatch = action => this.store.dispatch( action );
 
-		forEach( fields, definition => {
-			const model = getFieldModel( definition );
-
-			const field = {
-				...definition,
-				dataPath: [ this.storeName ],
-				containerPath: [ this.storeName, this.settings.id ],
-			};
-
-			const error = model.validate( field, state, dispatch );
-
-			if ( error ) {
-				errors.push( error );
-			}
-		} );
-
-		return errors;
+		return getValidationErrors(
+			state,
+			dispatch,
+			fields,
+			[ this.storeName ], // dataPath
+			[ this.storeName, this.settings.id ] // containerPath
+		);
 	}
 }

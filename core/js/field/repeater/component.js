@@ -21,11 +21,13 @@ export default class RepeaterField extends Component {
 		const { value } = this.props;
 
 		return (
-			<Fragment>
-				{ value.map( this.renderGroup ) }
+			<div class="uf-repeater">
+				<div class="uf-repeater__groups">
+					{ value.map( this.renderGroup ) }
+				</div>
 
 				<Button type="primary" icon="plus" onClick={ this.addGroup }>Add group</Button>
-			</Fragment>
+			</div>
 		);
 	}
 

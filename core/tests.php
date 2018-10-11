@@ -30,7 +30,8 @@ Container::create( 'post-fields-1' )
 				'fields' => [
 					Field::create( 'tab', 'tab_one' ),
 					Field::create( 'text', 'sub_field_1' )
-						->set_width( 50 ),
+						->set_width( 50 )
+						->required(),
 					Field::create( 'text', 'sub_field_2' )
 						->set_width( 50 ),
 					Field::create( 'checkbox', 'show_next_field' )
