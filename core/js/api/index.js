@@ -5,7 +5,7 @@ import { registerFieldType } from 'field';
 import defaultFields from 'field/default-fields';
 import createStore from 'state/store';
 
-import PostTypeController from './../controller/post-type.js';
+import PostTypeController from 'controller/post-type.js';
 
 /**
  * Handles the top-level API of Ultimate Fields.

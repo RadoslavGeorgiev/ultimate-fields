@@ -54,6 +54,8 @@ Container::create( 'post-fields-1' )
 					'sub_field_1' => 'C',
 				],
 			] ),
+		Field::create( 'checkbox', 'container_source' )
+			->set_text( 'Show the second container.' ),
 		Field::create( 'checkbox', 'dependency_source' )
 			->set_text( 'Show the second field in the next container.' ),
 
@@ -65,7 +67,14 @@ Container::create( 'post-fields-1' )
 Container::create( 'post-fields-2' )
 	->add_location( 'options', $page )
 	->add_location( 'post_type', 'page', [
-		'levels' => 2
+		'levels'       => 2,
+		'dependencies' => array(
+			array(
+				array(
+					'field' => 'container_source'
+				)
+			)
+		),
 	] )
 	->set_style( 'boxed' )
 	->add_fields( [

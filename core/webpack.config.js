@@ -49,6 +49,8 @@ module.exports = {
 			constants: path.resolve( __dirname, 'js/constants.js' ),
 			utils: path.resolve( __dirname, 'js/utils' ),
 			api: path.resolve( __dirname, 'js/api' ),
+			location: path.resolve( __dirname, 'js/location' ),
+			controller: path.resolve( __dirname, 'js/controller' ),
 		}
 	}
 };

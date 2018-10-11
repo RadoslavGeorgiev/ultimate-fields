@@ -11,13 +11,13 @@ import { isEmpty, forEach } from 'lodash';
  */
 import { initializeStore, extractDataFromState } from 'container';
 import Container from 'container/component';
-import checkPostTypeRules from './../location/post-type';
 
 /**
  * Handles individual container instances.
  */
 export default class Instance {
 	input = null;
+	locationClass = null;
 
 	/**
 	 * Starts a container within a specific DOM node.
@@ -50,7 +50,6 @@ export default class Instance {
 
 		// Subscribe for changes
 		store.subscribe( this.populateInput );
-		store.subscribe( this.toggleVisibility );
 
 		// Render the container in place
 		ReactDOM.render(
@@ -96,6 +95,17 @@ export default class Instance {
 	 */
 	useParentNode( node ) {
 		this.parentNode = node;
+	}
+
+	/**
+	 * Instructs the instance to use a particular location class.
+	 *
+	 * @param {Function} checker The checker to use.
+	 */
+	useLocationClass( checker ) {
+		this.locationClass = checker;
+
+		this.store.subscribe( this.toggleVisibility );
 		this.toggleVisibility();
 	}
 
@@ -105,7 +115,7 @@ export default class Instance {
 	toggleVisibility = () => {
 		const { locations } = this.settings;
 
-		if ( isEmpty( locations ) ) {
+		if ( ! this.locationClass || isEmpty( locations ) ) {
 			return;
 		}
 
@@ -113,7 +123,7 @@ export default class Instance {
 		const state = this.store.getState();
 
 		forEach( locations, location => {
-			if( checkPostTypeRules( state, location ) ) {
+			if( this.locationClass( state, location, this.storeName ) ) {
 				visible = true;
 			}
 		} );

@@ -107,6 +107,9 @@ class Post_Type extends Location {
 	 */
 	protected $after_title = false;
 
+	// @todo: Manage this like in fields
+	protected $dependencies = array();
+
 	/**
 	 * Creates an instance of the class.
 	 * The parameters for this constructor are the same as the parameters of Container->add_location().
@@ -370,6 +373,11 @@ class Post_Type extends Location {
 		return $this;
 	}
 
+	protected function set_dependencies( $dependencies ) {
+		$this->dependencies = $dependencies;
+		return $this;
+	}
+
 	/**
 	 * Moves the container after the title.
 	 *
@@ -416,6 +424,7 @@ class Post_Type extends Location {
 		if( ! empty( $this->stati ) )     $data[ 'stati' ]     = $this->stati;
 		if( ! empty( $this->ids ) )       $data[ 'ids' ]   = $this->ids;
 		if( ! empty( $this->parents ) )   $data[ 'parents' ]   = $this->parents;
+		if( ! empty( $this->dependencies ) )   $data[ 'dependencies' ]   = $this->dependencies;
 
 		return $data;
 	}
