@@ -18,6 +18,7 @@ import Container from 'container/component';
 export default class Instance {
 	input = null;
 	locationClass = null;
+	visible = true;
 
 	/**
 	 * Starts a container within a specific DOM node.
@@ -129,6 +130,7 @@ export default class Instance {
 			}
 		} );
 
+		this.visible = visible;
 		this.parentNode.style.display = visible ? '' : 'none';
 	}
 
@@ -138,6 +140,10 @@ export default class Instance {
 	 * @return {Array} An array of errors.
 	 */
 	validate() {
+		if ( ! this.visible ) {
+			return [];
+		}
+
 		const { fields } = this.settings;
 
 		const state    = this.store.getState();

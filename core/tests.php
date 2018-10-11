@@ -89,4 +89,5 @@ Container::create( 'post-fields-2' )
 		Field::create( 'text', 'some_field_1' ),
 		Field::create( 'text', 'some_field_2' )
 			->add_dependency( 'dependency_source' )
+			->required()
 	] );

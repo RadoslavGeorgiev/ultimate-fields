@@ -9,7 +9,7 @@ import { set } from 'lodash';
  */
 import { sprintf } from 'utils';
 import { updateValue } from 'state/data/actions';
-import { getValue } from 'state/data/selectors';
+import { getValue, areDependenciesMet } from 'state/data/selectors';
 import { getValidationMessage } from 'state/validation/selectors';
 import { clearValidationMessage, setValidationMessage } from 'state/validation/actions';
 
@@ -211,7 +211,11 @@ export default class FieldModel {
 	 * @return {String|Boolean} Either an error message or false.
 	 */
 	validate( props, state, dispatch ) {
-		const valid = this.isValid( props, state, dispatch );
+		const { dataPath, dependencies } = props;
+
+		const valid = areDependenciesMet( state, dataPath, dependencies )
+			? this.isValid( props, state, dispatch )
+			: true;
 
 		// Validate first
 		if ( valid ) {
