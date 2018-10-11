@@ -1,4 +1,5 @@
-import { mergeWithArrays} from 'utils';
+import { isArray } from 'lodash';
+import { mergeWithArrays } from 'utils';
 
 /**
  * Creates a new reducer based on an initial state and an array of actions.
@@ -23,7 +24,7 @@ export default ( name, initialState, actions ) => {
 			return actions[ type ]( state, action );
 		}
 
-		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) ) {
+		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) && ! isArray( state ) ) {
 			return mergeWithArrays( state, action.diff[ name ] );
 		}
 

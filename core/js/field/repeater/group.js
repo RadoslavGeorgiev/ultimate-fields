@@ -39,7 +39,7 @@ class RepeaterGroup extends Component {
 	}
 
 	render() {
-		const { icon, number, title, dataPath, container, fields, layout } = this.props;
+		const { icon, number, title, dataPath, container, containerPath, fields, layout } = this.props;
 
 		return (
 			<div className="uf-group">
@@ -64,6 +64,7 @@ class RepeaterGroup extends Component {
 					<Fields
 						fields={ fields }
 						dataPath={ dataPath }
+						containerPath={ containerPath }
 						container={ container }
 						style={ STYLE_BOXED }
 						layout={ layout }

@@ -6,7 +6,7 @@ import { find, reduce, forEach } from 'lodash';
 /**
  * Internal dependencies
  */
-import { getFieldModel } from 'field/';
+import { getFieldModel } from 'field';
 import { changeTab } from 'state/tabs/actions';
 import { createBatch } from 'state/batch/actions';
 import { INITIALIZE_CONTAINER } from 'state/action-types';

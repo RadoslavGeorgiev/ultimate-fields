@@ -7,8 +7,11 @@ import { set } from 'lodash';
 /**
  * Internal dependencies
  */
+import { sprintf } from 'utils';
 import { updateValue } from 'state/data/actions';
 import { getValue } from 'state/data/selectors';
+import { getValidationMessage } from 'state/validation/selectors';
+import { clearValidationMessage, setValidationMessage } from 'state/validation/actions';
 
 /**
  * A generic model for all field types.
@@ -128,6 +131,7 @@ export default class FieldModel {
 	mapStateToProps() {
 		return ( state, props ) => ( {
 			value: this.getValueFromState( props, state ),
+			invalid: getValidationMessage( state, props ),
 		} );
 	}
 
@@ -166,5 +170,43 @@ export default class FieldModel {
 		const { name, dataPath } = props;
 
 		return updateValue( [ ...dataPath, name ], value );
+	}
+
+	/**
+	 * Validates the field.
+	 *
+	 * @param  {Object} props   The definition of a field.
+	 * @param  {Object} state   The global Redux state.
+	 * @return {String|Boolean} Either an error message or false.
+	 */
+	validate( props, state, dispatch ) {
+		if ( ! props.required ) {
+			return false;
+		}
+
+		// Validate first
+		if ( !! this.getValueFromState( props, state ) ) {
+			if ( getValidationMessage( state, props ) ) {
+				dispatch( clearValidationMessage( props ) );
+			}
+
+			return false;
+		}
+
+		// Generate the message
+		const messageTemplate = props.validation_message
+			? props.validation_message
+			: uf_l10n.invalid_field_message;
+
+		const message = sprintf( messageTemplate, props.label );
+
+		const existingMessage = getValidationMessage( state, props );
+		if ( existingMessage === message ) {
+			return existingMessage;
+		}
+
+		dispatch( setValidationMessage( props, message ) );
+
+		return message;
 	}
 }

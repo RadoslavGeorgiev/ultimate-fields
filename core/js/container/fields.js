@@ -64,7 +64,7 @@ export class Fields extends Component {
 	 * @return {React.Element}
 	 */
 	renderField( definition ) {
-		const { dataPath, description_position, layout, style } = this.props;
+		const { dataPath, containerPath, description_position, layout, style } = this.props;
 		const { name, field_width } = definition;
 
 		const field = {
@@ -73,6 +73,7 @@ export class Fields extends Component {
 
 			// Let the field use the same context as all others.
 			dataPath,
+			containerPath,
 
 			// Include the styling props.
 			layout,

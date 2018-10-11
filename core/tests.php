@@ -21,8 +21,10 @@ Container::create( 'post-fields-1' )
 			->set_description( 'This is a field...' )
 			->set_prefix( '€' )
 			->set_suffix( '.00' ),
-		Field::create( 'text', 'half_field_1' )->set_width( 50 ),
-		Field::create( 'text', 'half_field_2' )->set_width( 50 ),
+		Field::create( 'text', 'half_field_2' )->set_width( 50 )
+			->required(),
+		Field::create( 'text', 'half_field_1' )->set_width( 50 )
+			->required(),
 		Field::create( 'repeater', 'simple_repeater' )
 			->add_group( 'some_group', [
 				'fields' => [

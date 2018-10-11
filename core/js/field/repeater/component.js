@@ -19,7 +19,7 @@ export default class RepeaterField extends Component {
 
 	render() {
 		const { value } = this.props;
-		
+
 		return (
 			<Fragment>
 				{ value.map( this.renderGroup ) }
@@ -30,7 +30,7 @@ export default class RepeaterField extends Component {
 	}
 
 	renderGroup = ( data, index ) => {
-		const { name, dataPath } = this.props;
+		const { name, dataPath, containerPath } = this.props;
 
 		const settings = this.findGroup( data.__type );
 
@@ -40,6 +40,7 @@ export default class RepeaterField extends Component {
 				index={ index }
 				container={ data.__container }
 				dataPath={ [ ...dataPath, name, index ] }
+				containerPath={ [ ...containerPath, name, data.__container ] }
 				number={ index + 1 }
 				{ ...settings }
 			/>

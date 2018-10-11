@@ -10,6 +10,7 @@ import { isEmpty, forEach } from 'lodash';
  * Internal dependencies
  */
 import { initializeStore, extractDataFromState } from 'container';
+import { getFieldModel } from 'field';
 import Container from 'container/component';
 
 /**
@@ -57,6 +58,7 @@ export default class Instance {
 				<Container
 					container={ this.id }
 					dataPath={ [ this.storeName ] }
+					containerPath={ [ this.storeName, this.settings.id ] }
 					{ ...this.settings }
 				/>
 			</Provider>,
@@ -129,5 +131,36 @@ export default class Instance {
 		} );
 
 		this.parentNode.style.display = visible ? '' : 'none';
+	}
+
+	/**
+	 * Validates the data of the instance.
+	 *
+	 * @return {Array} An array of errors.
+	 */
+	validate() {
+		const { fields } = this.settings;
+
+		const errors   = [];
+		const state    = this.store.getState();
+		const dispatch = action => this.store.dispatch( action );
+
+		forEach( fields, definition => {
+			const model = getFieldModel( definition );
+
+			const field = {
+				...definition,
+				dataPath: [ this.storeName ],
+				containerPath: [ this.storeName, this.settings.id ],
+			};
+
+			const error = model.validate( field, state, dispatch );
+
+			if ( error ) {
+				errors.push( error );
+			}
+		} );
+
+		return errors;
 	}
 }

@@ -864,10 +864,10 @@ class Container {
 		}
 
 		ultimate_fields()
-			->localize( 'container-issues',        __( 'Your data cannot be saved because it contains the following issues. Please resolve them and try again:', 'ultimate-fields' ) )
-			->localize( 'error-corrections',       __( 'Please correct those errors and try saving the field again.', 'ultimate-fields' ) )
-			->localize( 'container-issues-title',  __( 'There seem to be some issues with your settings:', 'ultimate-fields' ) )
-			->localize( 'invalid-field-message',   __( 'The value of %s is not valid!', 'ultimate-fields' ) )
+			->localize( 'container_issues',        __( 'Your data cannot be saved because it contains the following issues. Please resolve them and try again:', 'ultimate-fields' ) )
+			->localize( 'error_corrections',       __( 'Please correct those errors and try saving the field again.', 'ultimate-fields' ) )
+			->localize( 'container_issues_title',  __( 'There seem to be some issues with your settings:', 'ultimate-fields' ) )
+			->localize( 'invalid_field_message',   __( 'The value of %s is not valid!', 'ultimate-fields' ) )
 			;
 	}
 

@@ -1,6 +1,8 @@
 /**
  * External dependencies
  */
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { isFunction } from 'lodash';
 
 /**
@@ -81,5 +83,40 @@ export default class Controller {
 		this.instances.push( instance );
 
 		return instance;
+	}
+
+	/**
+	 * Validates the values of all instances within the controller.
+	 *
+	 * @return {Array} A list of errors.
+	 */
+	validate() {
+		let errors = [];
+
+		this.instances.forEach( instance => {
+			errors = errors.concat( instance.validate() );
+		} );
+
+		return errors;
+	}
+
+	/**
+	 * Renders an error message.
+	 *
+	 * @param {HTMLElement} node   The node where the notice should appear.
+	 * @param {Array}       errors An array of basic errors.
+	 */
+	renderErrors( node, errors ) {
+		const notice = errors.length && <div className="error uf-error">
+			<p><strong>{ uf_l10n.container_issues }</strong></p>
+			<ul>
+				{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
+			</ul>
+		</div>;
+
+		ReactDOM.render(
+			notice,
+			node
+		);
 	}
 }

@@ -47,11 +47,18 @@ export default class PostType extends Controller {
 		 * Connet to the form
 		 */
 
+		const errorWrapper = document.createElement( 'div' );
+		document.getElementById( 'titlediv' ).appendChild( errorWrapper );
+
 		const form = document.getElementById( 'post' );
 		form.addEventListener( 'submit', e => {
-			e.preventDefault();
+			const errors = this.validate();
 
-			console.log('validate...');
+			if ( errors.length ) {
+				e.preventDefault();
+			}
+
+			this.renderErrors( errorWrapper, errors );
 		} );
 	}
 
@@ -64,7 +71,7 @@ export default class PostType extends Controller {
 	 * @return {Instance}            The new container instance.
 	 */
 	startInstance( wrapper, settings, data = {} ) {
-		const storeName = `post-${this.post}`;
+		const storeName = `post`; // @todo: Add the post ID
 		const instance  = this.makeInstance( wrapper, settings, storeName, data );
 
 		// Connect to the "real" world

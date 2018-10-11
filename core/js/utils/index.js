@@ -43,3 +43,21 @@ export const mergeCallback = ( target, source ) => {
 export const mergeWithArrays = ( target, source ) => {
 	return mergeWith( {}, target, source, mergeCallback );
 }
+
+export const sprintf = ( string, ...args ) => {
+	let result = string;
+
+	forEach( args, value => {
+		result = result.replace( /%([s|d])/, function( matches ) {
+			switch ( matches[ 1 ] ) {
+				case 'd':
+					return parseInt( value );
+
+				default:
+					return value;
+			}
+		} );
+	} );
+
+	return result;
+}

@@ -175,12 +175,6 @@ export default class Element extends Component {
 				} );
 			}, 0 );
 		}
-
-		if ( ! invalid && validationVisible ) {
-			return this.setState( {
-				validationVisible: false,
-			} );
-		}
 	}
 
 	/**
@@ -194,6 +188,15 @@ export default class Element extends Component {
 	 * When the component has been updated, the validation message might be shown.
 	 */
 	componentDidUpdate( prevProps, prevState ) {
+		const { invalid } = this.props;
+		const { validationVisible } = this.state;
+
+		if ( ! invalid && validationVisible ) {
+			return this.setState( {
+				validationVisible: false,
+			} );
+		}
+
 		this.showValidationMessage();
 	}
 }
