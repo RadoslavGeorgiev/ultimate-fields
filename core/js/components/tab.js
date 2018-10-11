@@ -26,6 +26,7 @@ class Tab extends Component {
 		dataPath: PropTypes.array.isRequired,
 		container: PropTypes.string.isRequired,
 		dependencies: PropTypes.array,
+		invalid: PropTypes.bool,
 	}
 
 	/**
@@ -34,13 +35,14 @@ class Tab extends Component {
 	 * @return {React.Element}
 	 */
 	render() {
-		const { label, icon, style, active, enabled } = this.props;
+		const { label, icon, style, active, invalid, enabled } = this.props;
 
 		const className = classNames( [
 			'uf-tab',
 			`uf-tab--${style}`,
 			active && 'uf-tab--active',
 			! enabled && 'uf-tab--disabled',
+			invalid && 'uf-tab--invalid',
 		] );
 
 		return (

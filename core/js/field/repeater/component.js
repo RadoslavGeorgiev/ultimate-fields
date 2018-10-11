@@ -21,8 +21,8 @@ export default class RepeaterField extends Component {
 		const { value } = this.props;
 
 		return (
-			<div class="uf-repeater">
-				<div class="uf-repeater__groups">
+			<div className="uf-repeater">
+				<div className="uf-repeater__groups">
 					{ value.map( this.renderGroup ) }
 				</div>
 

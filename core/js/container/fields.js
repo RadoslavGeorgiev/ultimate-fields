@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { TABS_PLACEHOLDER } from 'constants';
 import { areDependenciesMet } from 'state/data/selectors';
 import { getTab } from 'state/tabs/selectors';
+import { getValidationMessage } from 'state/validation/selectors';
 import { getFieldComponents } from 'field';
 import layoutProps from 'container/layout-props';
 import Tab from 'components/tab';
@@ -153,14 +154,14 @@ export class Fields extends Component {
  * @return {Object}          Additional props.
  */
 const mapStateToProps = ( state, ownProps ) => {
-	const { dataPath, container, fields: allFields } = ownProps;
+	const { dataPath, containerPath, container, fields: allFields } = ownProps;
 
 	const tabs   = [];
 	const fields = [];
 	const tab    = getTab( state, container );
 
 	forEach( allFields, definition => {
-		const { dependencies } = definition;
+		const { name, dependencies } = definition;
 
 		// Handle tabs separately.
 		if ( 'tab' === definition.type ) {
@@ -170,7 +171,21 @@ const mapStateToProps = ( state, ownProps ) => {
 			}
 
 			// Add to the list of tabs
-			return tabs.push( definition );
+			return tabs.push( {
+				...definition
+			} );
+		}
+
+		// Validate the field for the tab
+		if ( definition.tab ) {
+			const message = getValidationMessage( state, {
+				containerPath,
+				name
+			} );
+
+			if ( message ) {
+				tabs.find( tab => tab.name === definition.tab ).invalid = true;
+			}
 		}
 
 		// Check the visiblity of the field.

@@ -8,7 +8,7 @@ $page = Options_Page::create( 'test-fields' );
 Container::create( 'post-fields-1' )
 	->set_style( 'boxed' )
 	->set_description_position( 'label' )
-	->set_layout( 'rows' )
+	->set_layout( 'grid' )
 	->add_location( 'options', $page )
 	->add_location( 'post_type', 'page' )
 	->add_fields( [
@@ -65,6 +65,11 @@ Container::create( 'post-fields-1' )
 		Field::create( 'tab', 'second_tab' )
 			->add_dependency( 'enable_second_tab' ),
 		Field::create( 'text', 'some_field_b' ),
+
+		Field::create( 'tab', 'third_tab' ),
+		Field::create( 'checkbox', 'third_tab_checkbox' )
+			->set_text( 'Check me!' )
+			->required()
 	] );
 
 Container::create( 'post-fields-2' )
