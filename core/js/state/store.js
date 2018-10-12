@@ -8,7 +8,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
  * Internal dependencies
  */
 import createReducer from 'state/reducer';
-import batchMiddleware from 'state/batch';
 
 /**
  * Generates a store.
@@ -20,6 +19,6 @@ export default () => {
 
 	return createStore(
 		reducer,
-		composeWithDevTools( applyMiddleware( batchMiddleware( reducer ) ) )
+		composeWithDevTools()
 	)
 };

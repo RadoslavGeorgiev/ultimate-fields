@@ -2,13 +2,13 @@
  * External dependencies
  */
 import { find, reduce, forEach } from 'lodash';
+import { batchActions } from 'redux-batched-actions';
 
 /**
  * Internal dependencies
  */
 import { getFieldModel } from 'field';
 import { changeTab } from 'state/tabs/actions';
-import { createBatch } from 'state/batch/actions';
 import { INITIALIZE_CONTAINER } from 'state/action-types';
 
 /**
@@ -27,7 +27,7 @@ export const initializeStore = ( args ) => {
 	const actions = generateInitilizationActionsList( args );
 
 	// Dispatch a single actionw ith all of the changes.
-	store.dispatch( createBatch( INITIALIZE_CONTAINER, actions ) );
+	store.dispatch( batchActions( actions, INITIALIZE_CONTAINER ) );
 }
 
 /**

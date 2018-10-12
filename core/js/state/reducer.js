@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { combineReducers } from 'redux';
+import { enableBatching } from 'redux-batched-actions';
 
 /**
  * Internal dependencies
@@ -17,13 +18,15 @@ import env from 'state/env/reducer';
  *
  * @return {Function} The reducer.
  */
-export default () => createCombinedReducer(
-	combineReducers(
-		{
-			env,
-			data,
-			tabs,
-			validation,
-		}
+export default () => enableBatching(
+	createCombinedReducer(
+		combineReducers(
+			{
+				env,
+				data,
+				tabs,
+				validation,
+			}
+		)
 	)
 );

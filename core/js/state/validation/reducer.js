@@ -12,7 +12,7 @@ import {
 	CLEAR_VALIDATION_MESSAGE,
 } from 'state/action-types';
 
-export default createReducer( 'validation', {}, {
+export default createReducer( {}, {
 	[ SET_VALIDATION_MESSAGE ]: ( state, { path, message } ) => ( {
 		...state,
 		[ path.join( '/' ) ]: message,

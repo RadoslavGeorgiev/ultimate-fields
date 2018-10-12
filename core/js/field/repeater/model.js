@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { find, forEach, isUndefined, isNull } from 'lodash';
+import { batchActions } from 'redux-batched-actions';
 
 /**
  * Internal dependencies
@@ -12,7 +13,6 @@ import { generateInitilizationActionsList, getValidationErrors } from 'container
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
-import { createBatch } from 'state/batch/actions';
 import { ADD_NEW_REPEATER_GROUP } from './state/action-types';
 
 export default class RepeaterFieldModel extends Model {
@@ -122,7 +122,7 @@ export default class RepeaterFieldModel extends Model {
 			data: {},
 		} ) );
 
-		dispatch( createBatch( ADD_NEW_REPEATER_GROUP, actions ) );
+		dispatch( batchActions( actions, ADD_NEW_REPEATER_GROUP ) );
 
 		console.timeEnd( 'repeater-add' );
 	}

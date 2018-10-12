@@ -23,9 +23,10 @@
 		"react-dom": "^16.5.2",
 		"react-redux": "^5.0.7",
 		"redux": "^4.0.0",
+		"redux-batched-actions": "^0.4.1",
+		"redux-devtools-extension": "^2.13.5",
 		"sass-loader": "^7.1.0",
 		"webpack": "^4.20.2",
-		"webpack-cli": "^3.1.1",
-		"redux-devtools-extension": "^2.13.5"
+		"webpack-cli": "^3.1.1"
 	}
 }

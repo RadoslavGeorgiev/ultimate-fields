@@ -1,15 +1,11 @@
-import { isArray } from 'lodash';
-import { mergeWithArrays } from 'utils';
-
 /**
  * Creates a new reducer based on an initial state and an array of actions.
  *
- * @param  {string} name         The name of the reducer.
  * @param  {Object} initialState The state to begin with.
  * @param  {Object} actions      A hash of action types and action handlers.
  * @return {function}            The generated reducer.
  */
-export default ( name, initialState, actions ) => {
+export default ( initialState, actions ) => {
 	/**
 	 * A custom-made reducer.
 	 *
@@ -18,17 +14,10 @@ export default ( name, initialState, actions ) => {
 	 * @return {Object}        An eventually modified state.
 	 */
 	return ( state, action ) => {
-		const { type, batchAction } = action;
+		const { type } = action;
 
 		if ( actions.hasOwnProperty( type ) ) {
 			return actions[ type ]( state, action );
-		}
-
-
-		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) ) {
-			if ( ! isArray( state ) ) {
-				return mergeWithArrays( state, action.diff[ name ] );
-			}
 		}
 
 		if ( 'undefined' === typeof state ) {

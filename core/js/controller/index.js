@@ -4,13 +4,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { isFunction } from 'lodash';
+import { batchActions } from 'redux-batched-actions';
 
 /**
  * Internal dependnecies
  */
 import { setEnv } from 'state/env/actions';
 import Instance from 'container/instance';
-import { createBatch } from 'state/batch/actions';
 import { UPDATE_VALIDATION } from 'state/action-types';
 
 /**
@@ -110,7 +110,7 @@ export default class Controller {
 		} );
 
 		// Create the batch action
-		const batch = createBatch( UPDATE_VALIDATION, rawErrors );
+		const batch = batchActions( rawErrors, UPDATE_VALIDATION );
 		this.store.dispatch( batch );
 
 		return errors;

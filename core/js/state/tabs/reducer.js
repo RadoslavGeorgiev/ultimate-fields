@@ -5,7 +5,7 @@ import {
 	CHANGE_TAB,
 } from 'state/action-types';
 
-export default createReducer( 'tabs', {}, {
+export default createReducer( {}, {
 	[ CHANGE_TAB ]: ( state, { container, tab } ) => ( {
 		...state,
 		[ container ]: tab,

@@ -6,7 +6,7 @@ import {
 } from 'state/action-types';
 import { mergeWithArrays } from 'utils';
 
-export default createReducer( 'data', {}, {
+export default createReducer( {}, {
 	[ UPDATE_VALUE ]: ( state, { path, value } ) => {
 		const diff = set( {}, path, value );
 		return merge( {}, state, diff );

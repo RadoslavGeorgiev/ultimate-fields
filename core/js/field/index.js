@@ -125,7 +125,7 @@ export const createCombinedReducer = ( fallback ) => {
 		merge( reducers, type.reducers );
 	} );
 
-	return ( state, action ) => {
+	return ( state, action, ...args ) => {
 		const newState = merge( {}, state );
 
 		forEach( reducers, ( reducer, group ) => {
