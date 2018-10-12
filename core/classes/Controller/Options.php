@@ -155,7 +155,7 @@ class Options extends Controller {
 		# Force-initialize
 		?>
 		<script type="text/javascript">
-		UltimateFields.initializeDOMContainer( <?php echo $random_id ?> );
+		UltimateFields.initializeDOMContainer( <?php echo $random_id ?>, 'optionsPage' );
 		</script>
 		<?php
 	}

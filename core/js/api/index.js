@@ -5,7 +5,8 @@ import { registerFieldType } from 'field';
 import defaultFields from 'field/default-fields';
 import createStore from 'state/store';
 
-import PostTypeController from 'controller/post-type.js';
+import PostTypeController from 'controller/post-type';
+import OptionsPageController from 'controller/options-page';
 
 /**
  * Handles the top-level API of Ultimate Fields.
@@ -28,6 +29,7 @@ export default class UltimateFields {
 		 */
 		this.availableControllers = {
 			postType: PostTypeController,
+			optionsPage: OptionsPageController,
 		};
 
 		/**
