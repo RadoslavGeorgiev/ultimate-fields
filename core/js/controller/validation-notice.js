@@ -2,14 +2,28 @@
  * External dependencies
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
+/**
+ * Displays validation errors and a success message when cleared.
+ */
 export default class ValidationNotice extends Component {
+	static propTypes = {
+		errors: PropTypes.arrayOf( PropTypes.string ).isRequired,
+		message: PropTypes.string.isRequired,
+	}
+
 	state = {
 		hadErrors: false,
 	}
 
+	/**
+	 * Renders the component.
+	 *
+	 * @return {React.Element} The appropriate element.
+	 */
 	render() {
-		const { errors } = this.props;
+		const { errors, message } = this.props;
 		const { hadErrors } = this.state;
 
 		if ( errors.length > 0 ) {
@@ -26,7 +40,7 @@ export default class ValidationNotice extends Component {
 		if ( hadErrors ) {
 			return (
 				<div className="notice updated">
-					<p>{ uf_l10n.container_issues_fixed }</p>
+					<p>{ message }</p>
 				</div>
 			);
 		}
@@ -34,6 +48,10 @@ export default class ValidationNotice extends Component {
 		return null;
 	}
 
+	/**
+	 * When the component mounts, this checks whether there
+	 * have been any errors at any point.
+	 */
 	componentDidMount() {
 		const { errors } = this.props;
 

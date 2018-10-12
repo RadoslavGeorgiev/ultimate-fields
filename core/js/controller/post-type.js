@@ -47,29 +47,12 @@ export default class PostType extends Controller {
 		 * Connet to the form
 		 */
 
+		const form = document.getElementById( 'post' );
 		const errorWrapper = document.createElement( 'div' );
 		document.getElementById( 'titlediv' ).appendChild( errorWrapper );
 
-		let listening = false;
-
-		const validate = () => {
-			console.time('validation');
-			const errors = this.validate();
-
-			if ( ! listening ) {
-				listening = true;
-				this.store.subscribe( validate );
-			}
-
-			this.renderErrors( errorWrapper, errors );
-			console.timeEnd('validation');
-
-			return errors.length > 0;
-		}
-
-		const form = document.getElementById( 'post' );
 		form.addEventListener( 'submit', e => {
-			if ( validate() ) {
+			if ( this.canBeSaved( errorWrapper ) ) {
 				e.preventDefault();
 			}
 		} );

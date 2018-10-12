@@ -21,6 +21,7 @@ import ValidationNotice from 'controller/validation-notice';
  */
 export default class Controller {
 	instances = [];
+	validationEnabled = false;
 
 	/**
 	 * Starts the controler up.
@@ -117,6 +118,25 @@ export default class Controller {
 	}
 
 	/**
+	 * Checks whether all containers contain valid values.
+	 *
+	 * @param  {HTMLElement} wrapper An element where errors should be rendered.
+	 * @return {Boolean}             An flag that indicates wheter there are errors.
+	 */
+	canBeSaved( wrapper ) {
+		const errors = this.validate();
+
+		if ( ! this.validationEnabled ) {
+			this.validationEnabled = true;
+			this.store.subscribe( () => this.canBeSaved( wrapper ) );
+		}
+
+		this.renderErrors( wrapper, errors );
+
+		return errors.length > 0;
+	}
+
+	/**
 	 * Renders an error message.
 	 *
 	 * @param {HTMLElement} node   The node where the notice should appear.
@@ -124,7 +144,7 @@ export default class Controller {
 	 */
 	renderErrors( node, errors ) {
 		ReactDOM.render(
-			<ValidationNotice errors={ errors } />,
+			<ValidationNotice errors={ errors } message={ uf_l10n.container_issues_fixed } />,
 			node
 		);
 	}
