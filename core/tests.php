@@ -91,3 +91,15 @@ Container::create( 'post-fields-2' )
 			->add_dependency( 'dependency_source' )
 			->required()
 	] );
+
+$p3 = array();
+
+for($i=0; $i<100; $i++ ) {
+	$p3[] = Field::create( 'text', 'field_' . ($i+1) )
+		->required();
+}
+
+Container::create( 'post-fields-3' )
+	->set_style( 'boxed' )
+	->add_location( 'post_type', 'post' )
+	->add_fields( $p3 );

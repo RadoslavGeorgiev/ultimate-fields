@@ -139,20 +139,15 @@ export default class Instance {
 	 *
 	 * @return {Array} An array of errors.
 	 */
-	validate() {
+	validate( dispatch ) {
 		if ( ! this.visible ) {
 			return [];
 		}
 
-		const { fields } = this.settings;
-
-		const state    = this.store.getState();
-		const dispatch = action => this.store.dispatch( action );
-
 		return getValidationErrors(
-			state,
+			this.store.getState(),
 			dispatch,
-			fields,
+			this.settings.fields,
 			[ this.storeName ], // dataPath
 			[ this.storeName, this.settings.id ] // containerPath
 		);

@@ -10,6 +10,8 @@ import { isFunction } from 'lodash';
  */
 import { setEnv } from 'state/env/actions';
 import Instance from 'container/instance';
+import { createBatch } from 'state/batch/actions';
+import { UPDATE_VALIDATION } from 'state/action-types';
 
 /**
  * This class will be extended for the individual controller of
@@ -18,6 +20,7 @@ import Instance from 'container/instance';
  */
 export default class Controller {
 	instances = [];
+	validationEnabled = false;
 
 	/**
 	 * Starts the controler up.
@@ -93,9 +96,22 @@ export default class Controller {
 	validate() {
 		let errors = [];
 
+		this.validationEnabled = true;
+
+		// Trap all actions to create a batch one
+		let rawErrors = [];
+		const dispatch = action => {
+			rawErrors.push( action );
+		};
+
+		// Combine all top-level messages
 		this.instances.forEach( instance => {
-			errors = errors.concat( instance.validate() );
+			errors = errors.concat( instance.validate( dispatch ) );
 		} );
+
+		// Create the batch action
+		const batch = createBatch( UPDATE_VALIDATION, rawErrors );
+		this.store.dispatch( batch );
 
 		return errors;
 	}
@@ -107,15 +123,13 @@ export default class Controller {
 	 * @param {Array}       errors An array of basic errors.
 	 */
 	renderErrors( node, errors ) {
-		const notice = errors.length && <div className="error uf-error">
-			<p><strong>{ uf_l10n.container_issues }</strong></p>
-			<ul>
-				{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
-			</ul>
-		</div>;
-
 		ReactDOM.render(
-			notice,
+			<div className="error uf-error">
+				<p><strong>{ uf_l10n.container_issues }</strong></p>
+				<ul>
+					{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
+				</ul>
+			</div>,
 			node
 		);
 	}

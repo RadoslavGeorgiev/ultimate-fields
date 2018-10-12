@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { isEqual } from 'lodash';
+import { unset } from 'lodash';
 
 /**
  * Internal dependencies
@@ -12,13 +12,15 @@ import {
 	CLEAR_VALIDATION_MESSAGE,
 } from 'state/action-types';
 
-export default createReducer( 'validation', [], {
-	[ SET_VALIDATION_MESSAGE ]: ( state, { path, message } ) => ( [
+export default createReducer( 'validation', {}, {
+	[ SET_VALIDATION_MESSAGE ]: ( state, { path, message } ) => ( {
 		...state,
-		{ path, message },
-	] ),
-
-	[ CLEAR_VALIDATION_MESSAGE ]: ( state, { path } ) => state.filter( item => {
-		return ! isEqual( item.path, path );
+		[ path.join( '/' ) ]: message,
 	} ),
+
+	[ CLEAR_VALIDATION_MESSAGE ]: ( state, { path } ) => {
+		const updatedState = { ...state };
+		unset( updatedState, path.join( '/' ) );
+		return updatedState;
+	},
 } );

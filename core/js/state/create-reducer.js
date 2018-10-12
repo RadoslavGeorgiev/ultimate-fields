@@ -24,8 +24,11 @@ export default ( name, initialState, actions ) => {
 			return actions[ type ]( state, action );
 		}
 
-		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) && ! isArray( state ) ) {
-			return mergeWithArrays( state, action.diff[ name ] );
+
+		if ( ( true === batchAction ) && action.diff.hasOwnProperty( name ) ) {
+			if ( ! isArray( state ) ) {
+				return mergeWithArrays( state, action.diff[ name ] );
+			}
 		}
 
 		if ( 'undefined' === typeof state ) {
