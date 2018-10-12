@@ -9,6 +9,7 @@ import { batchActions } from 'redux-batched-actions';
 /**
  * Internal dependnecies
  */
+import translate from 'utils/l10n';
 import { setEnv } from 'state/env/actions';
 import Instance from 'container/instance';
 import { UPDATE_VALIDATION } from 'state/action-types';
@@ -144,7 +145,7 @@ export default class Controller {
 	 */
 	renderErrors( node, errors ) {
 		ReactDOM.render(
-			<ValidationNotice errors={ errors } message={ uf_l10n.container_issues_fixed } />,
+			<ValidationNotice errors={ errors } message={ translate( 'container_issues_fixed' ) } />,
 			node
 		);
 	}

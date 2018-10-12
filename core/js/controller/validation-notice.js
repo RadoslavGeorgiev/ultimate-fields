@@ -5,6 +5,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * Internal dependencies
+ */
+import translate from 'utils/l10n';
+
+/**
  * Displays validation errors and a success message when cleared.
  */
 export default class ValidationNotice extends Component {
@@ -29,7 +34,7 @@ export default class ValidationNotice extends Component {
 		if ( errors.length > 0 ) {
 			return (
 				<div className="error uf-error">
-					<p><strong>{ uf_l10n.container_issues }</strong></p>
+					<p><strong>{ translate( 'container_issues' ) }</strong></p>
 					<ul>
 						{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
 					</ul>

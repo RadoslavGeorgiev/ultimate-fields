@@ -8,6 +8,7 @@ import { batchActions } from 'redux-batched-actions';
  * Internal dependencies
  */
 import { sprintf } from 'utils';
+import translate from 'utils/l10n';
 import Model from 'field/model';
 import { generateInitilizationActionsList, getValidationErrors } from 'container';
 import { updateValue } from 'state/data/actions';
@@ -151,7 +152,7 @@ export default class RepeaterFieldModel extends Model {
 				fields,
 				[ ...dataPath, name, index ], // dataPath
 				[ ...containerPath, name, row.__container ] // containerPath
-			);;
+			);
 
 			errors = errors.concat( localErrors );
 		} );
@@ -166,11 +167,8 @@ export default class RepeaterFieldModel extends Model {
 	 * @return {string}
 	 */
 	getValidationMessage( props ) {
-		// Generate the message
-		const messageTemplate = props.validation_message
-			? props.validation_message
-			: uf_l10n.repeater_incorrect_value;
-
-		return sprintf( messageTemplate, props.label );
+		return props.validation_message
+			? sprintf( props.validation_message, props.label )
+			: translate( 'repeater_incorrect_value', props.label );
 	}
 }
