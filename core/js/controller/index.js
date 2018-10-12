@@ -12,6 +12,7 @@ import { batchActions } from 'redux-batched-actions';
 import { setEnv } from 'state/env/actions';
 import Instance from 'container/instance';
 import { UPDATE_VALIDATION } from 'state/action-types';
+import ValidationNotice from 'controller/validation-notice';
 
 /**
  * This class will be extended for the individual controller of
@@ -20,7 +21,6 @@ import { UPDATE_VALIDATION } from 'state/action-types';
  */
 export default class Controller {
 	instances = [];
-	validationEnabled = false;
 
 	/**
 	 * Starts the controler up.
@@ -96,8 +96,6 @@ export default class Controller {
 	validate() {
 		let errors = [];
 
-		this.validationEnabled = true;
-
 		// Trap all actions to create a batch one
 		let rawErrors = [];
 		const dispatch = action => {
@@ -110,8 +108,10 @@ export default class Controller {
 		} );
 
 		// Create the batch action
-		const batch = batchActions( rawErrors, UPDATE_VALIDATION );
-		this.store.dispatch( batch );
+		if ( rawErrors.length > 0 ) {
+			const batch = batchActions( rawErrors, UPDATE_VALIDATION );
+			this.store.dispatch( batch );
+		}
 
 		return errors;
 	}
@@ -124,12 +124,7 @@ export default class Controller {
 	 */
 	renderErrors( node, errors ) {
 		ReactDOM.render(
-			<div className="error uf-error">
-				<p><strong>{ uf_l10n.container_issues }</strong></p>
-				<ul>
-					{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
-				</ul>
-			</div>,
+			<ValidationNotice errors={ errors } />,
 			node
 		);
 	}

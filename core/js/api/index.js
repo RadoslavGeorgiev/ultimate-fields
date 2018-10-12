@@ -70,6 +70,8 @@ export default class UltimateFields {
 	 * @param {string} controller The controller to use.
 	 */
 	initializeDOMContainer( id, type, args ) {
+		console.time( 'container-' + id );
+
 		// Start the API if necessary
 		this.initialize();
 
@@ -83,5 +85,7 @@ export default class UltimateFields {
 		const controller = this.getController( type, args );
 		const instance = controller.startInstance( wrapper, settings, data );
 		instance.assignInput( input );
+
+		console.timeEnd( 'container-' + id );
 	}
 }
