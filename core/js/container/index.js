@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { find, reduce, forEach } from 'lodash';
+import { find, reduce, forEach, isArray } from 'lodash';
 import { batchActions } from 'redux-batched-actions';
 
 /**
@@ -33,21 +33,24 @@ export const initializeStore = ( args ) => {
 /**
  * Generates the list of actions to perform in order to initialize a container.
  *
- * @param {string}    args.container The ID of the container.
- * @param {Array}     args.dataPath  A data path for the container.
- * @param {Array}     args.fields    An array of fields to use.
- * @param {Object}    args.data      The initial data, if any.
- * @return {Object[]}                A list with basic Redux actions.
+ * @param {string}    args.container  The ID of the container.
+ * @param {Array}     args.dataPath   A data path for the container.
+ * @param {Array}     args.fields     An array of fields to use.
+ * @param {Object}    args.data       The initial data, if any.
+ * @param {Boolean}   args.ignoreTabs Whether not to switch the tabs.
+ * @return {Object[]}                 A list with basic Redux actions.
  */
 export const generateInitilizationActionsList = ( args ) => {
-	const { container, dataPath, fields, data } = args;
+	const { container, dataPath, fields, data, ignoreTabs } = args;
 
 	let actions = [];
 
 	// Check for a tab (@todo: Initialize later and check dependencies)
-	const firstTab = find( fields, { type: 'tab' } );
-	if ( firstTab ) {
-		actions.push( changeTab( container, firstTab.name ) );
+	if ( ! ignoreTabs ) {
+		const firstTab = find( fields, { type: 'tab' } );
+		if ( firstTab ) {
+			actions.push( changeTab( container, firstTab.name ) );
+		}
 	}
 
 	// Initialize all fields
@@ -76,7 +79,7 @@ export const extractDataFromState = ( state, dataPath, fields ) => {
 	return reduce( fields, ( data, definition ) => {
 		const field = {
 			...definition,
-			dataPath: [ dataPath ]
+			dataPath: isArray( dataPath ) ? dataPath : [ dataPath ]
 		};
 
 		const model = getFieldModel( field );

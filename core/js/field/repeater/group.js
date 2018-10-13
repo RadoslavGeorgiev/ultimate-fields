@@ -75,11 +75,11 @@ class RepeaterGroup extends Component {
 	}
 
 	renderControls() {
-		const { onDelete, edit_mode } = this.props;
+		const { onDuplicate, onDelete, edit_mode } = this.props;
 
 		return (
 			<div className="uf-group__controls">
-				<Control icon="admin-page" onClick={ () => {} }>Duplicate</Control>
+				<Control icon="admin-page" onClick={ onDuplicate }>Duplicate</Control>
 				<Control icon="trash" onClick={ onDelete }>Remove</Control>
 
 				{ ( 'inline' !== edit_mode ) &&

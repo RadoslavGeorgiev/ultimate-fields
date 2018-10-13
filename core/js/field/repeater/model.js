@@ -12,9 +12,9 @@ import translate from 'utils/l10n';
 import Model from 'field/model';
 import { generateInitilizationActionsList, getValidationErrors } from 'container';
 import { updateValue } from 'state/data/actions';
-import { addRepeaterRow } from './state/actions';
+import { addRepeaterRow, cloneRepeaterRow } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
-import { ADD_NEW_REPEATER_GROUP } from './state/action-types';
+import { ADD_NEW_REPEATER_GROUP, CLONE_REPEATER_ROW } from './state/action-types';
 
 export default class RepeaterFieldModel extends Model {
 	/**
@@ -68,7 +68,7 @@ export default class RepeaterFieldModel extends Model {
 			const container = generateContainerId( 'group-' );
 
 			// Add the basic group
-			actions.push( addRepeaterRow( name, dataPath, index, row.__type, container ) );
+			actions.push( addRepeaterRow( name, dataPath, row.__type, container ) );
 
 			// Populate all sub-fields
 			actions = actions.concat( generateInitilizationActionsList( {
@@ -91,6 +91,7 @@ export default class RepeaterFieldModel extends Model {
 		return ( dispatch, props ) => {
 			return {
 				addRow: index => this.addEmptyRow( props, index, dispatch ),
+				onDuplicate: ( data, index ) => this.duplicateRow( props, data, index, dispatch ),
 			};
 		}
 	}
@@ -112,7 +113,7 @@ export default class RepeaterFieldModel extends Model {
 
 		// Add an empty row
 		let actions = [
-			addRepeaterRow( name, dataPath, index, group.id, container ),
+			addRepeaterRow( name, dataPath, group.id, container ),
 		];
 
 		// Populate all sub-fields
@@ -170,5 +171,34 @@ export default class RepeaterFieldModel extends Model {
 		return props.validation_message
 			? sprintf( props.validation_message, props.label )
 			: translate( 'repeater_incorrect_value', props.label );
+	}
+
+	/**
+	 * Handles the duplication of a row within a repeater.
+	 *
+	 * @param {Object}   props    The definition of the repeater.
+	 * @param {Object}   data     The data of the group that is being cloned.
+	 * @param {number}   index    The index of the group to clone.
+	 * @param {Function} dispatch The store dispatcher.
+	 */
+	duplicateRow( props, data, index, dispatch ) {
+		const { dataPath: context, name } = props;
+		const dataPath = [ ...context, name ];
+		const { fields } = this.findGroup( props, data.__type );
+		const { __type: type } = data;
+		const container = generateContainerId( 'group-' );
+
+		const actions = [
+			cloneRepeaterRow( container, dataPath, index, data.__container ),
+			...generateInitilizationActionsList( {
+				container,
+				dataPath: [ ...dataPath, index + 1 ],
+				data,
+				fields,
+				ignoreTabs: true,
+			} ),
+		]
+
+		dispatch( batchActions( actions, CLONE_REPEATER_ROW ) );
 	}
 }

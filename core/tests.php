@@ -103,3 +103,19 @@ Container::create( 'post-fields-3' )
 	->set_style( 'boxed' )
 	->add_location( 'post_type', 'post' )
 	->add_fields( $p3 );
+
+Container::create( 'repeater-field' )
+	->set_style( 'boxed' )
+	->add_location( 'options' )
+	->add_fields([
+		Field::create( 'repeater', 'multi_group_repeater' )
+			->add_group( 'text', [
+				'edit_mode' => 'both',
+				'fields' => [
+					Field::create( 'tab', 'tab_1' ),
+					Field::create( 'text', 'title' ),
+					Field::create( 'tab', 'tab_2' ),
+					Field::create( 'text', 'second_title' ),
+				]
+			] )
+	]);

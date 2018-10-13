@@ -4,6 +4,7 @@
 import {
 	ADD_REPEATER_ROW,
 	DELETE_REPEATER_ROW,
+	INSERT_CLONED_REPEATER_ROW,
 } from './action-types';
 
 /**
@@ -11,16 +12,14 @@ import {
  *
  * @param {string} name      The name of the repeater field.
  * @param {Array}  path      The data path of the field.
- * @param {number} index     The index of the new group.
  * @param {string} groupType The type of the group.
  * @param {string} container An ID that should be used for the container.
  * @return {Object}
  */
-export const addRepeaterRow = ( name, path, index, groupType, container ) => ( {
+export const addRepeaterRow = ( name, path, groupType, container ) => ( {
 	type: ADD_REPEATER_ROW,
 	name,
 	path,
-	index,
 	groupType,
 	container,
 } );
@@ -38,4 +37,23 @@ export const deleteRepeaterRow = ( path, index, container ) => ( {
 	path: path.filter( ( item, i ) => i !== path.length - 1 ),
 	index,
 	container,
+} );
+
+/**
+ * Generates the action for the cloning of a repeater row (just basic data).
+ * This action will only create a (blank) row and leave the initialization
+ * to sub-actions that will be batched.
+ *
+ * @param  {string} container    The ID of the new container.
+ * @param  {Array}  path         The data path of the field that the group belongs to.
+ * @param  {number} index        The index of the group that is being cloned.
+ * @param  {string} oldContainer The container ID of the new group.
+ * @return {Object}              The new action.
+ */
+export const cloneRepeaterRow = ( container, path, index, oldContainer ) => ( {
+	type: INSERT_CLONED_REPEATER_ROW,
+	container,
+	path,
+	index,
+	oldContainer,
 } );

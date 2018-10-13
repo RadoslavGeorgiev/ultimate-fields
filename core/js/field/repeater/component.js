@@ -31,8 +31,16 @@ export default class RepeaterField extends Component {
 		);
 	}
 
+	/**
+	 * Renders an individual group.
+	 *
+	 * @param  {Object} data  The data of the group.
+	 * @param  {Number} index The index of the group.
+	 * @return {Element}
+	 */
 	renderGroup = ( data, index ) => {
 		const { name, dataPath, containerPath } = this.props;
+		const { __container: container } = data;
 
 		const settings = this.findGroup( data.__type );
 
@@ -40,16 +48,34 @@ export default class RepeaterField extends Component {
 			<Group
 				key={ index }
 				index={ index }
+				number={ index + 1 }
 				container={ data.__container }
 				dataPath={ [ ...dataPath, name, index ] }
-				containerPath={ [ ...containerPath, name, data.__container ] }
-				number={ index + 1 }
+				containerPath={ [ ...containerPath, name, container ] }
+				onDuplicate={ this.onDuplicate.bind( this, data, index ) }
 				{ ...settings }
 			/>
 		);
 	}
 
+	/**
+	 * Handles the add group button click.
+	 */
 	addGroup = () => {
-		this.props.addRow( this.props.value.length );
+		const { value } = this.props;
+
+		this.props.addRow( value.length );
+	}
+
+	/**
+	 * Prepares the onDuplicate action for the model.
+	 *
+	 * @param {Object} data  The data of the individual row.
+	 * @param {number} index The index of the row that will be cloned.
+	 */
+	onDuplicate( data, index ) {
+		const { onDuplicate } = this.props;
+
+		onDuplicate( data, index );
 	}
 }
