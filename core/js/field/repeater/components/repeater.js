@@ -2,15 +2,37 @@
  * External dependencies
  */
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { find } from 'lodash';
 
 /**
  * Internal dependencies
  */
+import {
+	CHOOSER_TYPE_WIDGETS,
+	CHOOSER_TYPE_DROPDOWN,
+	CHOOSER_TYPE_TAGS,
+} from 'field/repeater/constants';
 import Button from 'components/button';
 import Group from './group';
+import Prototype from './prototype';
+
 
 export default class RepeaterField extends Component {
+	static propTypes = {
+		add_text: PropTypes.string,
+		background: PropTypes.string,
+		groups: PropTypes.array,
+		minimum: PropTypes.number,
+		maximum: PropTypes.number,
+		placeholder_text: PropTypes.string,
+		chooser_type: PropTypes.oneOf( [
+			CHOOSER_TYPE_WIDGETS,
+			CHOOSER_TYPE_DROPDOWN,
+			CHOOSER_TYPE_TAGS,
+		] ).isRequired,
+	}
+
 	/**
 	 * Locates the definition of a group based on its type.
 	 *
@@ -32,7 +54,7 @@ export default class RepeaterField extends Component {
 					{ value.map( this.renderRow ) }
 				</div>
 
-				<Button type="primary" icon="plus" onClick={ this.addRow }>Add group</Button>
+				{ this.renderChooser() }
 			</div>
 		);
 	}
@@ -65,12 +87,45 @@ export default class RepeaterField extends Component {
 	}
 
 	/**
+	 * Renders the "chooser".
+	 */
+	renderChooser() {
+		const { groups, add_text, chooser_type, value } = this.props;
+
+		if ( 1 === groups.length ) {
+			return <Button type="primary" icon="plus" onClick={ this.addRow }>
+				{ add_text }
+			</Button>;
+		}
+
+		if ( CHOOSER_TYPE_TAGS === chooser_type ) {
+
+		}
+
+		if ( CHOOSER_TYPE_DROPDOWN === chooser_type ) {
+
+		}
+
+		return (
+			<div className="uf-repeater__prototypes">
+				{ groups.map( group => {
+					return <Prototype
+						{ ...group }
+						key={ group.id }
+						onClick={ () => this.props.addRow( group.id, value.length ) }
+					/>
+				} ) }
+			</div>
+		);
+	}
+
+	/**
 	 * Handles the add group button click.
 	 */
 	addRow = () => {
 		const { value } = this.props;
 
-		this.props.addRow( value.length );
+		this.props.addRow( this.groups[ 0 ].id, value.length );
 	}
 
 	/**

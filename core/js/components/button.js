@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
  */
 export default function Button( props ) {
 	const { type, icon, children } = props;
-	
+
 	const cssClasses = classNames( [
 		'button-' + type,
 		'uf-button',
@@ -27,11 +27,9 @@ export default function Button( props ) {
 		<button className={ cssClasses } { ...props } type="button">
 			{
 				icon &&
-				<span className="uf-button__icon">
-					<span className={ 'dashicons dashicons-' + icon } />
-				</span>
+				<span className={ 'uf-button__icon dashicons dashicons-' + icon } />
 			}
-			<span className="uf-button__text">{ children }</span>
+			<span className="uf-button__text"> { children }</span>
 		</button>
 	);
 }

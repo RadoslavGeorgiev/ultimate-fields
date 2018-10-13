@@ -8,7 +8,7 @@
 		color: inherit;
 	}
 
-	&-block {
+	&--block {
 		display: block;
 		text-align: center;
 		width: 100%;
@@ -18,7 +18,7 @@
 		}
 	}
 
-	&-icon {
+	&__icon {
 		margin: 3px 4px 0 -2px;
 
 		&.dashicons-no-alt {
@@ -30,7 +30,7 @@
 		}
 	}
 
-	&-no-text {
+	&--no-text {
 		padding: 3px 6px;
 		height: 20px;
 		line-height: 20px;
@@ -42,13 +42,13 @@
 		}
 	}
 
-	&-right {
+	&--right {
 		float: right;
 	}
 
-	&-loading {
+	&--loading {
 		animation-name: blink;
 		animation-iteration-count: infinite;
-		 animation-duration: .8s;
+		animation-duration: .8s;
 	}
 }

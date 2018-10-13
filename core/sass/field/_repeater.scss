@@ -235,6 +235,8 @@ $number-width: 38px;
 	}
 
 	&--prototype {
+		display: block;
+		color: #333;
 		cursor: move;
 		margin-bottom: 0;
 		width: 258px;
