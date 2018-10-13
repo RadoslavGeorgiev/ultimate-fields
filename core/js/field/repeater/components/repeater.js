@@ -1,6 +1,12 @@
+/**
+ * External dependencies
+ */
 import React, { Component, Fragment } from 'react';
 import { find } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
 import Button from 'components/button';
 import Group from './group';
 
@@ -23,22 +29,22 @@ export default class RepeaterField extends Component {
 		return (
 			<div className="uf-repeater">
 				<div className="uf-repeater__groups">
-					{ value.map( this.renderGroup ) }
+					{ value.map( this.renderRow ) }
 				</div>
 
-				<Button type="primary" icon="plus" onClick={ this.addGroup }>Add group</Button>
+				<Button type="primary" icon="plus" onClick={ this.addRow }>Add group</Button>
 			</div>
 		);
 	}
 
 	/**
-	 * Renders an individual group.
+	 * Renders an individual row/group.
 	 *
 	 * @param  {Object} data  The data of the group.
 	 * @param  {Number} index The index of the group.
 	 * @return {Element}
 	 */
-	renderGroup = ( data, index ) => {
+	renderRow = ( data, index ) => {
 		const { name, dataPath, containerPath } = this.props;
 		const { __container: container } = data;
 
@@ -61,7 +67,7 @@ export default class RepeaterField extends Component {
 	/**
 	 * Handles the add group button click.
 	 */
-	addGroup = () => {
+	addRow = () => {
 		const { value } = this.props;
 
 		this.props.addRow( value.length );

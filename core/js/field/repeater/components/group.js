@@ -10,14 +10,14 @@ import { connect } from 'react-redux';
  */
 import Control from './group-control';
 import Fields from 'container/fields';
-import { deleteRepeaterRow } from './state/actions';
+import { deleteRepeaterRow } from 'field/repeater/state/actions';
 import layoutProps from 'container/layout-props';
 import { STYLE_BOXED } from 'constants';
 import {
 	EDIT_MODE_POPUP,
 	EDIT_MODE_INLINE,
 	EDIT_MODE_BOTH,
-} from './constants';
+} from 'field/repeater/constants';
 
 /**
  * The component for individual repeater groups.

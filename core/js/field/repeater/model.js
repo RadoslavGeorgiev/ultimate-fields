@@ -14,7 +14,7 @@ import { generateInitilizationActionsList, getValidationErrors } from 'container
 import { updateValue } from 'state/data/actions';
 import { addRepeaterRow, cloneRepeaterRow } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
-import { ADD_NEW_REPEATER_GROUP, CLONE_REPEATER_ROW } from './state/action-types';
+import { ADD_NEW_REPEATER_ROW, CLONE_REPEATER_ROW } from './state/action-types';
 
 export default class RepeaterFieldModel extends Model {
 	/**
@@ -124,7 +124,7 @@ export default class RepeaterFieldModel extends Model {
 			data: {},
 		} ) );
 
-		dispatch( batchActions( actions, ADD_NEW_REPEATER_GROUP ) );
+		dispatch( batchActions( actions, ADD_NEW_REPEATER_ROW ) );
 
 		console.timeEnd( 'repeater-add' );
 	}
@@ -183,10 +183,11 @@ export default class RepeaterFieldModel extends Model {
 	 */
 	duplicateRow( props, data, index, dispatch ) {
 		const { dataPath: context, name } = props;
-		const dataPath = [ ...context, name ];
-		const { fields } = this.findGroup( props, data.__type );
 		const { __type: type } = data;
-		const container = generateContainerId( 'group-' );
+
+		const dataPath   = [ ...context, name ];
+		const { fields } = this.findGroup( props, type );
+		const container  = generateContainerId( 'group-' );
 
 		const actions = [
 			cloneRepeaterRow( container, dataPath, index, data.__container ),

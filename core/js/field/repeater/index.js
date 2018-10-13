@@ -1,4 +1,4 @@
-import Input from './component';
+import Input from './components/repeater';
 import Model from './model';
 import reducers from './state/reducers';
 

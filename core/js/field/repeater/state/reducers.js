@@ -8,7 +8,7 @@ import { set, get, unset, reduce } from 'lodash';
  */
 import { mergeWithArrays } from 'utils';
 import {
-	ADD_NEW_REPEATER_GROUP,
+	ADD_NEW_REPEATER_ROW,
 	ADD_REPEATER_ROW,
 	DELETE_REPEATER_ROW,
 	INSERT_CLONED_REPEATER_ROW,

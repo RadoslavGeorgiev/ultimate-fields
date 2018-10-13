@@ -118,4 +118,10 @@ Container::create( 'repeater-field' )
 					Field::create( 'text', 'second_title' ),
 				]
 			] )
+			->add_group( 'teaser', [
+				'fields' => [
+					Field::create( 'text', 'title' ),
+					Field::create( 'textarea', 'text' ),
+				]
+			] )
 	]);
