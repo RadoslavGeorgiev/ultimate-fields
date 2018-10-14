@@ -6,6 +6,7 @@ import {
 	DELETE_REPEATER_ROW,
 	INSERT_CLONED_REPEATER_ROW,
 	TOGGLE_REPEATER_ROW,
+	REORDER_REPEATER_ROWS,
 } from './action-types';
 
 /**
@@ -70,4 +71,17 @@ export const cloneRepeaterRow = ( container, path, index, oldContainer ) => ( {
 export const toggleRepeaterRow = ( path ) => ( {
 	type: TOGGLE_REPEATER_ROW,
 	path,
+} );
+
+/**
+ * Reorders the rows of a repeater.
+ *
+ * @param  {Array} path  The data path to the row.
+ * @param  {Array} order The new order.
+ * @return {Object}      An action.
+ */
+export const reorderRepeaterRows = ( path, order ) => ( {
+	type: REORDER_REPEATER_ROWS,
+	path,
+	order,
 } );

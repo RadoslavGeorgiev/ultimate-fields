@@ -3,7 +3,7 @@
  */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { find } from 'lodash';
+import { find, map } from 'lodash';
 
 /**
  * Internal dependencies
@@ -16,7 +16,6 @@ import {
 import Button from 'components/button';
 import Group from './group';
 import Prototype from './prototype';
-
 
 export default class RepeaterField extends Component {
 	static propTypes = {
@@ -50,7 +49,7 @@ export default class RepeaterField extends Component {
 
 		return (
 			<div className="uf-repeater">
-				<div className="uf-repeater__groups">
+				<div className="uf-repeater__groups" ref="groups">
 					{ value.map( this.renderRow ) }
 				</div>
 
@@ -74,7 +73,7 @@ export default class RepeaterField extends Component {
 
 		return (
 			<Group
-				key={ index }
+				key={ container }
 				index={ index }
 				number={ index + 1 }
 				container={ data.__container }
@@ -85,6 +84,32 @@ export default class RepeaterField extends Component {
 				{ ...settings }
 			/>
 		);
+	}
+
+	/**
+	 * Makes rows sortable.
+	 */
+	componentDidMount() {
+		const { groups } = this.refs;
+		const { onReorder } = this.props;
+
+		jQuery( groups ).sortable( {
+			axis:                 'y',
+ 			handle:               '> .uf-group__header, > .uf-group__number',
+ 			items:                '> .uf-group',
+			revert:               100,
+ 			forcePlaceholderSize: true,
+ 			// receive: function( e, ui ) {
+ 			// 	that.$groups.children( '.uf-group-prototype' ).each(function() {
+ 			// 		that.replacePrototype( $( this ) );
+ 			// 	});
+ 			// },
+			stop: () => {
+				onReorder( map( groups.children, group => {
+					return group.dataset.container;
+				} ) );
+			},
+		} );
 	}
 
 	/**

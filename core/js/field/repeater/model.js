@@ -12,7 +12,7 @@ import translate from 'utils/l10n';
 import Model from 'field/model';
 import { generateInitilizationActionsList, getValidationErrors } from 'container';
 import { updateValue } from 'state/data/actions';
-import { addRepeaterRow, cloneRepeaterRow } from './state/actions';
+import { addRepeaterRow, cloneRepeaterRow, reorderRepeaterRows } from './state/actions';
 import { generateContainerId, mergeWithArrays } from 'utils';
 import { ADD_NEW_REPEATER_ROW, CLONE_REPEATER_ROW } from './state/action-types';
 
@@ -89,9 +89,12 @@ export default class RepeaterFieldModel extends Model {
 	 */
 	mapDispatchToProps() {
 		return ( dispatch, props ) => {
+			const { name, dataPath } = props;
+
 			return {
 				addRow:      ( type, index ) => this.addEmptyRow( props, type, index, dispatch ),
 				onDuplicate: ( data, index ) => this.duplicateRow( props, data, index, dispatch ),
+				onReorder:   ( order )       => dispatch( reorderRepeaterRows( [ ...dataPath, name ], order ) ),
 			};
 		}
 	}

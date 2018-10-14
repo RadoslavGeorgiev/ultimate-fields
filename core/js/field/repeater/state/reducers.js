@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { set, get, unset, reduce } from 'lodash';
+import { set, get, unset, reduce, map, find } from 'lodash';
 
 /**
  * Internal dependencies
@@ -13,6 +13,7 @@ import {
 	DELETE_REPEATER_ROW,
 	INSERT_CLONED_REPEATER_ROW,
 	TOGGLE_REPEATER_ROW,
+	REORDER_REPEATER_ROWS,
 } from './action-types';
 
 export default {
@@ -100,7 +101,22 @@ export default {
 		[ TOGGLE_REPEATER_ROW ]: ( state, { path } ) => {
 			const subPath = [ ...path, '__hidden' ];
 			return set( state, subPath, ! get( state, subPath, false ) );
-		}
+		},
+
+		/**
+		 * Reorders the rows of the repeater.
+		 *
+		 * @param  {Object} state        The Redux sub-state.
+		 * @param  {Array}  action.path  The path to the field's data.
+		 * @param  {Array}  action.order The new order of the groups.
+		 * @return {Object}
+		 */
+		[ REORDER_REPEATER_ROWS ]: ( state, { path, order } ) => {
+			const source = get( state, path, [] );
+			const target = map( order, __container => find( source, { __container } ) );
+
+			return set( state, path, target );
+		},
 	},
 
 	tabs: {

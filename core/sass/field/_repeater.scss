@@ -3,10 +3,10 @@ $number-width: 38px;
 
 // The repeater field
 .uf-repeater {
-	&-groups {
+	&__groups {
 		position: relative;
 
-		&-with-placeholder {
+		&--with-placeholder {
 			min-height: 50px;
 		}
 
@@ -19,7 +19,7 @@ $number-width: 38px;
 		}
 	}
 
-	&-placeholder {
+	&__placeholder {
 		display: none;
 		position: absolute;
 		top: 0;
@@ -40,40 +40,40 @@ $number-width: 38px;
 		}
 	}
 
-	&-groups-empty &-placeholder {
+	&__groups--empty &__placeholder {
 		display: block;
 	}
 
-	&-prototypes {
+	&__prototypes {
 		overflow: hidden;
 
 		p {
 			margin: .4em 5px 0;
 		}
+	}
 
-		&-column {
-			display: inline-block;
-			vertical-align: top;
-			width: 260px;
-			max-width: 100%;
-			margin-top: 10px;
-			margin-left: 10px;
+	&__prototypes-column {
+		display: inline-block;
+		vertical-align: top;
+		width: 260px;
+		max-width: 100%;
+		margin-top: 10px;
+		margin-left: 10px;
 
-			&.top-row {
-				margin-top: 0;
-			}
+		&.top-row {
+			margin-top: 0;
+		}
 
-			&.first-col {
-				margin-left: 0;;
-			}
+		&.first-col {
+			margin-left: 0;;
 		}
 	}
 
-	&-groups-empty .uf-group {
+	&__groups--empty .uf-group {
 		margin-bottom: 0;
 	}
 
-	&-dropdown {
+	&__dropdown {
 		.uf-button {
 			vertical-align: middle;
 		}

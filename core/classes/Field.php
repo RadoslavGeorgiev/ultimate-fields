@@ -275,6 +275,29 @@ abstract class Field {
 	}
 
 	/**
+	 * Adds a script as a dependency to `ultimate-fields`.
+	 *
+	 * @since 3.1
+	 *
+	 * @param string $handle The script to add as a dependency.
+	 */
+	protected function enqueue_script( $handle ) {
+		global $wp_scripts;
+
+		$script = $GLOBALS[ 'wp_scripts' ]->query( 'ultimate-fields', 'registered' );
+
+		if ( ! $script ) {
+			return false;
+		}
+
+		if ( ! in_array( $handle, $script->deps ) ) {
+			$script->deps[] = $handle;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Exports the settings of the field.
 	 *
 	 * This method will export data for JavaScript, don't confuse with `export`,

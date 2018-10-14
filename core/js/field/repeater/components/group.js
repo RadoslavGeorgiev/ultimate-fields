@@ -53,7 +53,7 @@ class RepeaterGroup extends Component {
 		const { icon, number, title, dataPath, container, containerPath, fields, layout, visible } = this.props;
 
 		return (
-			<div className={ classNames( 'uf-group', ! visible && 'uf-group--hidden' ) }>
+			<div className={ classNames( 'uf-group', ! visible && 'uf-group--hidden' ) } data-container={ container }>
 				<div className="uf-group__header">
 					<div className="uf-group__number">
 						{ icon

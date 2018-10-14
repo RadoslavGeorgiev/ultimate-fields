@@ -252,6 +252,10 @@ class Repeater extends Field {
 			$group->enqueue_scripts();
 		}
 
+		# Add jQuery UI
+		$this->enqueue_script( 'jquery-ui-sortable' );
+		$this->enqueue_script( 'jquery-ui-draggable' );
+
 		# Localize
 		ultimate_fields()
 			->localize( 'repeater_required',        __( 'This field is required.', 'ultimate-fields' ) )
