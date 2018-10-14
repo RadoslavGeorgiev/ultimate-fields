@@ -5,23 +5,26 @@ import {
 	ADD_REPEATER_ROW,
 	DELETE_REPEATER_ROW,
 	INSERT_CLONED_REPEATER_ROW,
+	TOGGLE_REPEATER_ROW,
 } from './action-types';
 
 /**
  * Creates the action for a new repeater row.
  *
- * @param {string} name      The name of the repeater field.
- * @param {Array}  path      The data path of the field.
- * @param {string} groupType The type of the group.
- * @param {string} container An ID that should be used for the container.
+ * @param {string}  name      The name of the repeater field.
+ * @param {Array}   path      The data path of the field.
+ * @param {string}  groupType The type of the group.
+ * @param {string}  container An ID that should be used for the container.
+ * @param {boolean} hidden    An indicator whether the group is collapsed.
  * @return {Object}
  */
-export const addRepeaterRow = ( name, path, groupType, container ) => ( {
+export const addRepeaterRow = ( name, path, groupType, container, hidden = false ) => ( {
 	type: ADD_REPEATER_ROW,
 	name,
 	path,
 	groupType,
 	container,
+	hidden,
 } );
 
 /**
@@ -56,4 +59,15 @@ export const cloneRepeaterRow = ( container, path, index, oldContainer ) => ( {
 	path,
 	index,
 	oldContainer,
+} );
+
+/**
+ * Toggles the visibility of a repeater row.
+ *
+ * @param  {Array} path The data path of the row.
+ * @return {Object}     The new action.
+ */
+export const toggleRepeaterRow = ( path ) => ( {
+	type: TOGGLE_REPEATER_ROW,
+	path,
 } );

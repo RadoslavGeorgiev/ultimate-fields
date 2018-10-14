@@ -4,13 +4,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 /**
  * Internal dependencies
  */
 import Control from './group-control';
 import Fields from 'container/fields';
-import { deleteRepeaterRow } from 'field/repeater/state/actions';
+import { deleteRepeaterRow, toggleRepeaterRow } from 'field/repeater/state/actions';
+import { isGroupVisible } from 'field/repeater/state/selectors';
 import layoutProps from 'container/layout-props';
 import { STYLE_BOXED } from 'constants';
 import {
@@ -31,6 +33,7 @@ class RepeaterGroup extends Component {
 		fields: PropTypes.arrayOf( PropTypes.object ).isRequired,
 		icon: PropTypes.string,
 		layout: layoutProps.layout,
+		visible: PropTypes.bool.isRequired,
 		edit_mode: PropTypes.oneOf( [
 			EDIT_MODE_INLINE,
 			EDIT_MODE_POPUP,
@@ -39,10 +42,10 @@ class RepeaterGroup extends Component {
 	}
 
 	render() {
-		const { icon, number, title, dataPath, container, containerPath, fields, layout } = this.props;
+		const { icon, number, title, dataPath, container, containerPath, fields, layout, visible } = this.props;
 
 		return (
-			<div className="uf-group">
+			<div className={ classNames( 'uf-group', ! visible && 'uf-group--hidden' ) }>
 				<div className="uf-group__header">
 					<div className="uf-group__number">
 						{ icon
@@ -60,7 +63,7 @@ class RepeaterGroup extends Component {
 					</h3>
 				</div>
 
-				<div className="uf-group__inside">
+				{ visible && <div className="uf-group__inside">
 					<Fields
 						fields={ fields }
 						dataPath={ dataPath }
@@ -69,13 +72,13 @@ class RepeaterGroup extends Component {
 						style={ STYLE_BOXED }
 						layout={ layout }
 					/>
-				</div>
+				</div> }
 			</div>
 		);
 	}
 
 	renderControls() {
-		const { onDuplicate, onDelete, edit_mode } = this.props;
+		const { onDuplicate, onDelete, onToggle, visible, edit_mode } = this.props;
 
 		return (
 			<div className="uf-group__controls">
@@ -88,9 +91,9 @@ class RepeaterGroup extends Component {
 					</Control>
 				}
 
-				{ ( 'popup' !== edit_mode ) && (
-					<Control icon="arrow-up" onClick={ () => {} }>Collapse</Control>,
-					<Control icon="arrow-down" onClick={ () => {} }>Expand</Control>
+				{ ( 'popup' !== edit_mode ) && ( visible
+					? <Control icon="arrow-up" onClick={ onToggle }>Collapse</Control>
+					: <Control icon="arrow-down" onClick={ onToggle }>Expand</Control>
 				) }
 			</div>
 		);
@@ -98,8 +101,11 @@ class RepeaterGroup extends Component {
 }
 
 export default connect(
-	null,
+	( state, { dataPath } ) => ( {
+		visible: isGroupVisible( state, dataPath ),
+	} ),
 	( dispatch, { dataPath, index, container } ) => ( {
 		onDelete: () => dispatch( deleteRepeaterRow( dataPath, index, container ) ),
+		onToggle: () => dispatch( toggleRepeaterRow( dataPath ) ),
 	} )
 )( RepeaterGroup );

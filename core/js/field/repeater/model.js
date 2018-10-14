@@ -68,7 +68,7 @@ export default class RepeaterFieldModel extends Model {
 			const container = generateContainerId( 'group-' );
 
 			// Add the basic group
-			actions.push( addRepeaterRow( name, dataPath, row.__type, container ) );
+			actions.push( addRepeaterRow( name, dataPath, row.__type, container, row.__hidden ) );
 
 			// Populate all sub-fields
 			actions = actions.concat( generateInitilizationActionsList( {

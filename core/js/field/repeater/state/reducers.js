@@ -12,6 +12,7 @@ import {
 	ADD_REPEATER_ROW,
 	DELETE_REPEATER_ROW,
 	INSERT_CLONED_REPEATER_ROW,
+	TOGGLE_REPEATER_ROW,
 } from './action-types';
 
 export default {
@@ -19,20 +20,21 @@ export default {
 		/**
 		 * Handles the addition of a repeater row.
 		 *
-		 * @param {Object} state            The current sub-state.
-		 * @param {Object} action           The action that will be processed.
-		 * @param {string} action.groupType The type of the new group.
-		 * @param {string} action.name      The name of the repeater field.
-		 * @param {Array}  action.path      The data path of the repeater field.
-		 * @param {string} action.container A unique container ID.
-		 * @type  {Object}                  The new state.
+		 * @param {Object}  state            The current sub-state.
+		 * @param {Object}  action           The action that will be processed.
+		 * @param {string}  action.groupType The type of the new group.
+		 * @param {string}  action.name      The name of the repeater field.
+		 * @param {Array}   action.path      The data path of the repeater field.
+		 * @param {string}  action.container A unique container ID.
+		 * @param {boolean} action.hidden    An indicator for the group's visiblity.
+		 * @type  {Object}                   The new state.
 		 */
-		[ ADD_REPEATER_ROW ]: ( state, { groupType, name, path, container, index } ) => {
+		[ ADD_REPEATER_ROW ]: ( state, { groupType, name, path, container, index, hidden } ) => {
 			const rows = [
 				{
 					__container: container,
 					__type: groupType,
-					__hidden: false,
+					__hidden: hidden,
 				},
 			];
 
@@ -86,6 +88,18 @@ export default {
 			} );
 
 			return set( { ...state }, path, subState );
+		},
+
+		/**
+		 * Toggles the visibility of a repeater row.
+		 *
+		 * @param  {Object} state       The Redux sub-state.
+		 * @param  {Array}  action.path The path to the group's data.
+		 * @return {Object}
+		 */
+		[ TOGGLE_REPEATER_ROW ]: ( state, { path } ) => {
+			const subPath = [ ...path, '__hidden' ];
+			return set( state, subPath, ! get( state, subPath, false ) );
 		}
 	},
 

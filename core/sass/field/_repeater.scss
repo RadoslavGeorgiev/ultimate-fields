@@ -218,18 +218,6 @@ $number-width: 38px;
 		color: #fff;
 	}
 
-	&--hidden > &__inside {
-		display: none;
-	}
-
-	&--hidden &__control--open {
-		display: inline-block;
-	}
-
-	&--hidden &__control--close {
-		display: none;
-	}
-
 	&--hidden > &__header {
 		border-bottom: 0;
 	}
