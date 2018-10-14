@@ -109,6 +109,7 @@ Container::create( 'repeater-field' )
 	->add_location( 'options' )
 	->add_fields([
 		Field::create( 'repeater', 'multi_group_repeater' )
+			->set_chooser_type( 'tags' )
 			->add_group( 'text', [
 				'edit_mode' => 'both',
 				'layout' => 'rows',

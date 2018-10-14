@@ -50,7 +50,18 @@ class RepeaterGroup extends Component {
 	}
 
 	render() {
-		const { icon, number, title, dataPath, container, containerPath, fields, layout, visible } = this.props;
+		const {
+			icon,
+			number,
+			title,
+			dataPath,
+			container,
+			containerPath,
+			fields,
+			layout,
+			visible,
+			onToggle,
+		} = this.props;
 
 		return (
 			<div className={ classNames( 'uf-group', ! visible && 'uf-group--hidden' ) } data-container={ container }>
@@ -66,7 +77,7 @@ class RepeaterGroup extends Component {
 
 					{ this.renderControls() }
 
-					<h3 className="uf-group__title">
+					<h3 className="uf-group__title" onClick={ onToggle }>
 						{ title }
 					</h3>
 				</div>

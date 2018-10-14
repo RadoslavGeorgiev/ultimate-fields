@@ -76,6 +76,7 @@ $number-width: 38px;
 	&__dropdown {
 		.uf-button {
 			vertical-align: middle;
+			margin-left: .3em;
 		}
 	}
 }
@@ -393,35 +394,37 @@ $number-width: 38px;
 	}
 }
 
-.uf-repeater-tags {
+.uf-tags {
 	display: flex;
 	cursor: default;
 
-	&-text {
+	&__text {
 		margin: 0;
 		white-space: nowrap;
 		padding: 2px 5px 0 0;
 		line-height: 2em;
 	}
+}
 
-	&-tag {
-		display: inline-block;
-		vertical-align: middle;
-		background: #eee;
-		text-decoration: none;
-		padding: 4px 6px;
-		border-radius: 2px;
-		margin: 2px;
-		transition: all .15s ease;
+.uf-tag {
+	display: inline-block;
+	vertical-align: middle;
+	border: none;
+	cursor: pointer;
+	background: #eee;
+	text-decoration: none;
+	padding: 4px 6px;
+	border-radius: 2px;
+	margin: 2px;
+	transition: all .15s ease;
 
-		&-hidden {
-			display: none;
-		}
+	&--hidden {
+		display: none;
+	}
 
-		&:hover {
-			background: $wp-blue;
-			color: #fff;
-		}
+	&:hover {
+		background: $wp-blue;
+		color: #fff;
 	}
 }
 

@@ -13,7 +13,12 @@ export default class Prototype extends Component {
 	}
 
 	render() {
-		const { id, title, description, onClick } = this.props;
+		const { id, title, description } = this.props;
+
+		const onClick = e => {
+			e.preventDefault();
+			this.props.onClick();
+		};
 
 		return (
 			<div className="uf-prototype">

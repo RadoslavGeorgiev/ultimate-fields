@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, createElement } from 'react';
 import PropTypes from 'prop-types';
 import { find, map, forEach, filter } from 'lodash';
 
@@ -16,6 +16,7 @@ import {
 import Button from 'components/button';
 import Group from './group';
 import Prototype from './prototype';
+import translate from 'utils/l10n';
 
 export default class RepeaterField extends Component {
 	static propTypes = {
@@ -31,6 +32,10 @@ export default class RepeaterField extends Component {
 			CHOOSER_TYPE_TAGS,
 		] ).isRequired,
 	}
+
+	state = {
+		dropdownOption: this.props.groups[ 0 ].id,
+	};
 
 	/**
 	 * Locates the definition of a group based on its type.
@@ -122,11 +127,43 @@ export default class RepeaterField extends Component {
 		}
 
 		if ( CHOOSER_TYPE_TAGS === chooser_type ) {
+			return <div className="uf-tags">
+				<h4 className="uf-tags__text">{ add_text + ':' }</h4>
 
+				<div className="uf-tags__options">
+					{ groups.map( ( { id, title } ) => {
+						return createElement( 'button', {
+							key: id,
+							type: 'button',
+							className: 'uf-tag',
+							title: translate( 'repeater_click_to_add' ),
+							children: title,
+							onClick: () => this.addRow( id ),
+						} );
+					} ) }
+				</div>
+			</div>;
 		}
 
 		if ( CHOOSER_TYPE_DROPDOWN === chooser_type ) {
+			const onChange = ( { target: { value } } ) => {
+				this.setState( {
+					dropdownOption: value
+				} );
+				this.addRow( value );
+			};
 
+			return <div className="uf-repeater__dropdown">
+				<select onChange={ onChange }>
+					{ groups.map( ( { id, title } ) => {
+						return <option key={ id } value={ id }>{ title }</option>;
+					} ) }
+				</select>
+
+				<Button icon="plus" onClick={ () => this.addRow() }>
+					{ add_text || translate( 'repeater_add' ) }
+				</Button>
+			</div>;
 		}
 
 		return (
@@ -135,7 +172,7 @@ export default class RepeaterField extends Component {
 					return <Prototype
 						{ ...group }
 						key={ group.id }
-						onClick={ () => this.props.addRow( group.id, value.length ) }
+						onClick={ () => this.addRow( group.id ) }
 					/>
 				} ) }
 			</div>
@@ -144,11 +181,13 @@ export default class RepeaterField extends Component {
 
 	/**
 	 * Handles the add group button click.
+	 *
+	 * @param {string} type The type of the group to add.
 	 */
-	addRow = () => {
+	addRow = ( type = this.state.dropdownOption ) => {
 		const { value } = this.props;
 
-		this.props.addRow( this.groups[ 0 ].id, value.length );
+		this.props.addRow( type, value.length );
 	}
 
 	/**

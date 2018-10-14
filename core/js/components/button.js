@@ -24,7 +24,7 @@ export default function Button( props ) {
 	] );
 
 	return (
-		<button className={ cssClasses } { ...props } type="button">
+		<button { ...props } className={ cssClasses } onClick={ () => props.onClick() } type="button">
 			{
 				icon &&
 				<span className={ 'uf-button__icon dashicons dashicons-' + icon } />
