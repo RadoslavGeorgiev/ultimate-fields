@@ -1,5 +1,3 @@
-// @todo: Comment the file
-
 /**
  * External dependencies
  */
@@ -20,11 +18,13 @@ export const addLayer = ( {
 	title,
 	body,
 	buttons = [],
+	tabs = null,
 } = {} ) => {
 	layers.push( {
 		title,
 		body,
 		buttons,
+		tabs,
 	} );
 
 	renderOverlay();
@@ -72,13 +72,17 @@ export const renderOverlay = () => {
 
 	// Prepare stuff
 	const layer = layers[ layers.length - 1 ];
-	const { title, body, buttons } = layer
+	const { title, body, buttons, tabs } = layer
+
+	if ( tabs ) {
+		node.classList.add( 'uf-overlay--has-tabs' );
+	}
 
 	// Render
 	ReactDOM.render( [
 		<div className="uf-overlay__background" key="bg" />,
 
-	<div className="uf-overlay__box" key="box">
+		<div className="uf-overlay__box" key="box">
 			<div className="uf-overlay__header">
 				<h2 className="uf-overlay__title">{ title }</h2>
 
@@ -86,19 +90,21 @@ export const renderOverlay = () => {
 					<span className="dashicons dashicons-no-alt"></span>
 					<span className="screen-reader-text">Close overlay</span>
 				</button>
+
+				{ tabs }
 			</div>
 
 			<div className="uf-overlay__body">
 				<div className="uf-overlay__screen">
 					{ body }
 				</div>
-
-				{ currentAlert }
 			</div>
 
 			<div className="uf-overlay__footer">
 				{ buttons }
 			</div>
+			
+			{ currentAlert }
 		</div>
 		], node
 	);

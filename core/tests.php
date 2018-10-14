@@ -111,6 +111,7 @@ Container::create( 'repeater-field' )
 		Field::create( 'repeater', 'multi_group_repeater' )
 			->add_group( 'text', [
 				'edit_mode' => 'both',
+				'layout' => 'rows',
 				'fields' => [
 					Field::create( 'tab', 'tab_1' ),
 					Field::create( 'text', 'title' )

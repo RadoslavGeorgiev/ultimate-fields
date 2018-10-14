@@ -27,6 +27,7 @@ import Button from 'components/button';
 import translate from 'utils/l10n';
 import createStore from 'state/store';
 import { initializeStore, extractDataFromState, getValidationErrors } from 'container';
+import Tabs from 'components/tabs';
 
 /**
  * The component for individual repeater groups.
@@ -114,6 +115,7 @@ class RepeaterGroup extends Component {
 			title, fields, containerPath, container, dataPath, layout,
 			getStore, replaceState, onDelete,
 		} = this.props;
+		let validationStarted = false;
 
 		// This store will isolate the popup from the main state
 		const store = getStore();
@@ -124,30 +126,39 @@ class RepeaterGroup extends Component {
 			overlay.popLayer();
 		};
 
-		// Validation will be performed while saving
-		const save = () => {
+		// Retrieves errors
+		const validate = () => {
 			const state    = store.getState();
 			const dispatch = action => store.dispatch( action );
 			const errors   = getValidationErrors( state, dispatch, fields, dataPath, containerPath );
 
+			return errors;
+		};
+
+		// Validation will be performed while saving
+		const save = () => {
+			const errors = validate();
+
 			// Just replace the state and close the popup if ok
 			if ( ! errors.length ) {
-				replaceState( state );
+				replaceState( store.getState() );
 				overlay.popLayer();
 			}
 
+			if ( ! validationStarted ) {
+				validationStarted = true;
+				store.subscribe( validate );
+			}
+
 			// Show an alert with the issues
-			overlay.alert(
-				translate( 'container_issues_title' ),
-				[
+			overlay.alert( translate( 'container_issues_title' ), [
 				<p key="description">
 					<strong>{ translate( 'container_issues' ) }</strong>
 				</p>,
 				<ul key="errors">
 					{ errors.map( ( err, i ) => <li key={ i }>{ err }</li> ) }
 				</ul>
-				]
-			);
+			] );
 		};
 
 		// Prevents the standard submission of the form
@@ -156,20 +167,31 @@ class RepeaterGroup extends Component {
 			save();
 		}
 
+		const fieldsProps = {
+			fields,
+			dataPath,
+			containerPath,
+			container,
+			layout,
+			style: STYLE_BOXED,
+		};
+
 		// A mini form for the overlay
 		const body = <Provider store={ store }>
 			<form onSubmit={ submit }>
 				<Fields
-					fields={ fields }
-					dataPath={ dataPath }
-					containerPath={ containerPath }
-					container={ container }
-					style={ STYLE_BOXED }
-					layout={ layout }
+					{ ...fieldsProps }
+					showTabs={ false }
 				/>
 			</form>
 		</Provider>;
 
+		// Generate the tabs separately
+		const tabs = <Provider store={ store }>
+			<Tabs { ...fieldsProps } rawFields={ fields } />
+		</Provider>;
+
+		// Buttons will control the form
 		const buttons = [
 			<Button key="Cancel" type="secondary" icon="no-alt" onClick={ remove }>
 				{ translate( 'repeater_delete', title ) }
@@ -184,6 +206,7 @@ class RepeaterGroup extends Component {
 			title: translate( 'repeater_edit', title ),
 			buttons: buttons,
 			body,
+			tabs,
 		} );
 	}
 }

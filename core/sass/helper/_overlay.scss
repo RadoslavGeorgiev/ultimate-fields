@@ -62,19 +62,20 @@
 		border-bottom: 1px solid #ddd;
 		transition: padding-bottom .4s ease;
 
-		.uf-tab-wrapper {
+		.uf-tabs {
 			position: absolute;
-			left: 10px;
+			left: 0;
 			bottom: -1px;
 			margin-bottom: 0;
+			background: none;
 
-			.uf-tab-active {
+			.uf-tab--active {
 				background: #fff;
 				border-bottom: 1px solid #fff;
 			}
 		}
 
-		.uf-tab-wrapper.uf-tabs-layout-rows {
+		.uf-tabs.uf-tabs--layout-rows {
 			margin-left: -10px;
 			background: #e4e4e4;
 			border-top: 1px solid #cdcdcd;

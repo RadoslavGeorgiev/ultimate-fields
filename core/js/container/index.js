@@ -102,7 +102,7 @@ export const extractDataFromState = ( state, dataPath, fields ) => {
  * @return {Array}                  A list of errors.
  */
 export const getValidationErrors = ( state, dispatch, fields, dataPath, containerPath ) => {
-	const errors   = [];
+	const errors = [];
 
 	forEach( fields, definition => {
 		const model = getFieldModel( definition );

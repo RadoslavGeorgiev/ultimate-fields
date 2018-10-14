@@ -12,10 +12,9 @@ import PropTypes from 'prop-types';
 import { TABS_PLACEHOLDER } from 'constants';
 import { areDependenciesMet } from 'state/data/selectors';
 import { getTab } from 'state/tabs/selectors';
-import { getValidationMessage } from 'state/validation/selectors';
 import { getFieldComponents } from 'field';
 import layoutProps from 'container/layout-props';
-import Tab from 'components/tab';
+import Tabs from 'components/tabs';
 
 /**
  * This component is responsible for field tables and grids.
@@ -31,8 +30,15 @@ export class Fields extends Component {
 		// The path to the data of the container
 		dataPath: PropTypes.array,
 
+		// Doesn't show tab buttons inline
+		showTabs: PropTypes.bool,
+
 		// Check the layout properties in `layout-props.js`
 		...layoutProps,
+	}
+
+	static defaultProps = {
+		showTabs: true,
 	}
 
 	/**
@@ -41,7 +47,7 @@ export class Fields extends Component {
 	 * @return {React.Element}
 	 */
 	render() {
-		const { fields, layout, style } = this.props;
+		const { fields, tabs, layout, style, showTabs } = this.props;
 
 		// Reset the grid counters
 		this.column = 0;
@@ -51,7 +57,7 @@ export class Fields extends Component {
 			<div className={ `uf-fields ${style} ${layout}` }>
 				{ fields.map( field => {
 					return ( TABS_PLACEHOLDER === field )
-						? this.renderTabs()
+						? ( showTabs && <Tabs key="tabs" { ...this.props } /> )
 						: this.renderField( field )
 				} ) }
 			</div>
@@ -92,31 +98,6 @@ export class Fields extends Component {
 	}
 
 	/**
-	 * Renders all of the container's tabs.
-	 *
-	 * @param {Object} definition The definition of the field.
-	 */
-	renderTabs() {
-		const { container, tabs: all, style, layout, dataPath } = this.props;
-
-		const tabs = all.map( tab => {
-			return <Tab
-				key={ tab.name }
-				container={ container }
-				dataPath={ dataPath }
-				style={ style }
-				{ ...tab }
-			/>;
-		} );
-
-		return (
-			<div className={ `uf-tabs uf-tabs--${style} uf-tabs--${layout}` } key="tabs">
-				{ tabs }
-			</div>
-		);
-	}
-
-	/**
 	 * Generates grid classes based on the width of the next element.
 	 *
 	 * @param  {number}   width The width of the next element.
@@ -154,38 +135,24 @@ export class Fields extends Component {
  * @return {Object}          Additional props.
  */
 const mapStateToProps = ( state, ownProps ) => {
-	const { dataPath, containerPath, container, fields: allFields } = ownProps;
+	const { dataPath, containerPath, container, fields: allFields, showTabs } = ownProps;
 
-	const tabs   = [];
 	const fields = [];
 	const tab    = getTab( state, container );
+
+	let tabsAdded;
 
 	forEach( allFields, definition => {
 		const { name, dependencies } = definition;
 
 		// Handle tabs separately.
 		if ( 'tab' === definition.type ) {
-			// Replace the first tab with a palceholder
-			if ( 0 === tabs.length ) {
+			if ( ! tabsAdded ) {
+				tabsAdded = true;
 				fields.push( TABS_PLACEHOLDER );
 			}
 
-			// Add to the list of tabs
-			return tabs.push( {
-				...definition
-			} );
-		}
-
-		// Validate the field for the tab
-		if ( definition.tab ) {
-			const message = getValidationMessage( state, {
-				containerPath,
-				name
-			} );
-
-			if ( message ) {
-				tabs.find( tab => tab.name === definition.tab ).invalid = true;
-			}
+			return;
 		}
 
 		// Check the visiblity of the field.
@@ -201,8 +168,8 @@ const mapStateToProps = ( state, ownProps ) => {
 	} );
 
 	return {
-		tabs,
 		fields,
+		rawFields: allFields,
 	};
 };
 
