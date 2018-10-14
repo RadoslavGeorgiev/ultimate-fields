@@ -78,6 +78,7 @@ export default class RepeaterField extends Component {
 				index={ index }
 				number={ index + 1 }
 				container={ data.__container }
+				data={ data }
 				dataPath={ [ ...dataPath, name, index ] }
 				containerPath={ [ ...containerPath, name, container ] }
 				onDuplicate={ this.onDuplicate.bind( this, data, index ) }

@@ -263,6 +263,7 @@ class Repeater extends Field {
 			->localize( 'repeater_cancel',          _x( 'Cancel', 'repeater', 'ultimate-fields' ) )
 			->localize( 'repeater_close',           _x( 'Close', 'repeater', 'ultimate-fields' ) )
 			->localize( 'repeater_save',            __( 'Save %s', 'ultimate-fields' ) )
+			->localize( 'repeater_edit',            __( 'Edit %s', 'ultimate-fields' ) )
 			->localize( 'repeater_delete',          __( 'Delete %s', 'ultimate-fields' ) )
 			->localize( 'repeater_no_groups',       __( 'There are no groups added to this repeater field.', 'ultimate-fields' ) );;
 	}

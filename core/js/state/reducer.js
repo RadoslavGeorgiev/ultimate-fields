@@ -8,6 +8,7 @@ import { enableBatching } from 'redux-batched-actions';
  * Internal dependencies
  */
 import { createCombinedReducer } from 'field';
+import { REPLACE_STATE } from 'state/action-types';
 import data from 'state/data/reducer';
 import tabs from 'state/tabs/reducer';
 import validation from 'state/validation/reducer';
@@ -18,15 +19,23 @@ import env from 'state/env/reducer';
  *
  * @return {Function} The reducer.
  */
-export default () => enableBatching(
-	createCombinedReducer(
-		combineReducers(
-			{
-				env,
-				data,
-				tabs,
-				validation,
-			}
-		)
-	)
-);
+export default () => {
+	const reducers = {
+		env,
+		data,
+		tabs,
+		validation,
+	};
+
+	// Matryoshka
+	const basicReducer = combineReducers( reducers );
+	const combinedReducer = createCombinedReducer( basicReducer );
+	const batchedReducer = enableBatching( combinedReducer );
+
+	// Add a an action handler for state replacement
+	return ( state, action ) => {
+		return ( REPLACE_STATE === action.type )
+			? action.newState
+			: batchedReducer( state, action )
+	}
+}

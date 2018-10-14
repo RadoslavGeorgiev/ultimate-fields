@@ -113,7 +113,8 @@ Container::create( 'repeater-field' )
 				'edit_mode' => 'both',
 				'fields' => [
 					Field::create( 'tab', 'tab_1' ),
-					Field::create( 'text', 'title' ),
+					Field::create( 'text', 'title' )
+						->required(),
 					Field::create( 'tab', 'tab_2' ),
 					Field::create( 'text', 'second_title' ),
 				]

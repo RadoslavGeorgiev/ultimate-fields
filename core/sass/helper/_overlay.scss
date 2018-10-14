@@ -2,25 +2,23 @@
  * The overlay.
  */
 .uf-overlay {
-	&-open {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 160010;
+
+	.wp-customizer & {
+		z-index: 500001;
+	}
+
+	&--open {
 		// Applies to the body element
 		overflow: hidden;
 	}
 
-	&-wrapper {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 160010;
-
-		.wp-customizer & {
-			z-index: 500001;
-		}
-	}
-
-	&-background {
+	&__background {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -29,7 +27,7 @@
 		background: rgba(0,0,0,0.5);
 	}
 
-	&-box {
+	&__box {
 		position: absolute;
 		top: 30px;
 		left: 30px;
@@ -41,7 +39,7 @@
 	}
 
 	// Limited width tests
-	&-box {
+	&__box {
 		left: 50%;
 		right: auto;
 		width: 1200px;
@@ -49,8 +47,8 @@
 		transform: translate(-50%, 0);
 	}
 
-	&-header,
-	&-footer {
+	&__header,
+	&__footer {
 		background: #f8f8f8;
 		position: absolute;
 		left: 0;
@@ -59,7 +57,7 @@
 		z-index: 3;
 	}
 
-	&-header {
+	&__header {
 		top: 0;
 		border-bottom: 1px solid #ddd;
 		transition: padding-bottom .4s ease;
@@ -92,7 +90,7 @@
 		}
 	}
 
-	&-title {
+	&__title {
 		padding: 0 16px;
 		font-size: 22px;
 		line-height: 50px;
@@ -102,8 +100,8 @@
 			text-decoration: none;
 		}
 
-		.current,
-		.parent {
+		&--current,
+		&--parent {
 			display: inline-block;
 			vertical-align: top;
 		}
@@ -120,7 +118,7 @@
 		}
 	}
 
-	&-close {
+	&__close {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -138,7 +136,7 @@
 		}
 	}
 
-	&-separator {
+	&__separator {
 		display: inline-block;
 		vertical-align: top;
 		width: 20px;
@@ -168,7 +166,7 @@
 		}
 	}
 
-	&-footer {
+	&__footer {
 		bottom: 0;
 		border-top: 1px solid #ddd;
 		padding: 10px 5px;
@@ -179,49 +177,50 @@
 		}
 	}
 
-	&-body,
-	&-screen {
+	&__body,
+	&__screen {
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 	}
 
-	&-body {
+	&__body {
 		top: 51px;
 		bottom: 49px;
 		width: auto;
 		right: 0;
 		transition: top .4s ease;
 		z-index: 5;
+		overflow: hidden;
 	}
 
-	&-screen {
+	&__screen {
 		overflow: auto;
 		background: #fff;
 		height: 100%;
 
-		&.animated {
+		&--animated {
 			transition: all .5s ease;
 		}
 
-		&.going-out {
+		&--going-out {
 			transform: translate( -50px, 0 );
 			opacity: 0;
 		}
 
-		&.coming-in {
+		&--coming-in {
 			transform: translate( 50px, 0 );
 			opacity: 0;
 		}
 	}
 
 	// Tabs state
-	&-has-tabs &-header {
+	&--has-tabs &__header {
 		padding-bottom: 41px;
 	}
 
-	&-has-tabs &-body {
+	&--has-tabs &__body {
 		top: 92px;
 	}
 
@@ -233,7 +232,7 @@
 /**
  * The alert in the overlay.
  */
-.uf-overlay-alert {
+.uf-alert {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -241,7 +240,7 @@
 	height: 100%;
 	z-index: 30;
 
-	.background {
+	&__background {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -252,7 +251,7 @@
 		transition: all .3s ease;
 	}
 
-	.box {
+	&__box {
 		position: absolute;
 		top: 0;
 		background: #fff;
@@ -260,7 +259,7 @@
 		max-width: 600px;
 		left: 50%;
 		box-sizing: border-box;
-		transform: translate(-50%, -100%);
+		transform: translate(-50%, -104%);
 		box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 		border-bottom-right-radius: 3px;
 		border-bottom-left-radius: 3px;
@@ -269,29 +268,27 @@
 		overflow: hidden;
 	}
 
-	&.visible {
-		.background {
-			opacity: .2;
-		}
-
-		.box {
-			transform: translate(-50%, 0);
-		}
+	&--visible &__background {
+		opacity: .2;
 	}
 
-	h2,
-	&-body,
-	&-footer {
+	&--visible &__box {
+		transform: translate(-50%, 0);
+	}
+
+	&__title,
+	&__body,
+	&__footer {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
 
-	h2 {
+	&__title {
 		margin: 0;
 		padding-top: 10px;
 	}
 
-	&-footer {
+	&__footer {
 		text-align: center;
 		padding-top: 10px;
 		padding-bottom: 10px;
