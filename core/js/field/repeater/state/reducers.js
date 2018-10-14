@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { set, get, unset, reduce, map, find } from 'lodash';
+import { set, get, unset, reduce, map, find, merge } from 'lodash';
 
 /**
  * Internal dependencies
@@ -24,24 +24,30 @@ export default {
 		 * @param {Object}  state            The current sub-state.
 		 * @param {Object}  action           The action that will be processed.
 		 * @param {string}  action.groupType The type of the new group.
-		 * @param {string}  action.name      The name of the repeater field.
 		 * @param {Array}   action.path      The data path of the repeater field.
 		 * @param {string}  action.container A unique container ID.
 		 * @param {boolean} action.hidden    An indicator for the group's visiblity.
+		 * @param {number}  action.position  The position to place the new group at.
 		 * @type  {Object}                   The new state.
 		 */
-		[ ADD_REPEATER_ROW ]: ( state, { groupType, name, path, container, index, hidden } ) => {
-			const rows = [
-				{
-					__container: container,
-					__type: groupType,
-					__hidden: hidden,
-				},
-			];
+		[ ADD_REPEATER_ROW ]: ( state, { groupType, path, container, index, hidden, position } ) => {
+			// Load the existing data
+			const oldRows = get( state, path, [] );
 
-			const diff = set( {}, [ ...path, name ], rows );
+			// Prepare the new row
+			const row = {
+				__container: container,
+				__type: groupType,
+				__hidden: hidden,
+			};
 
-			return mergeWithArrays( state, diff );
+			if ( ( ( null !== position ) && oldRows[ position ] ) ) {
+				// Insert at a specific position
+				return merge( state, set( {}, path, oldRows.splice( position, 0, row ) ) );
+			} else {
+				// Add to the end
+				return mergeWithArrays( state, set( {}, path, [ row ] ) );
+			}
 		},
 
 		/**

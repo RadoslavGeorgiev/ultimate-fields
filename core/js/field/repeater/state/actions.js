@@ -19,13 +19,13 @@ import {
  * @param {boolean} hidden    An indicator whether the group is collapsed.
  * @return {Object}
  */
-export const addRepeaterRow = ( name, path, groupType, container, hidden = false ) => ( {
+export const addRepeaterRow = ( name, path, groupType, container, position = null, hidden = false ) => ( {
 	type: ADD_REPEATER_ROW,
-	name,
-	path,
+	path: [ ...path, name ],
 	groupType,
 	container,
 	hidden,
+	position,
 } );
 
 /**

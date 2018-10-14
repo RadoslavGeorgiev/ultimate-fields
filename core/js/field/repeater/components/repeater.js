@@ -3,7 +3,7 @@
  */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { find, map } from 'lodash';
+import { find, map, forEach, filter } from 'lodash';
 
 /**
  * Internal dependencies
@@ -99,16 +99,13 @@ export default class RepeaterField extends Component {
  			items:                '> .uf-group',
 			revert:               100,
  			forcePlaceholderSize: true,
- 			// receive: function( e, ui ) {
- 			// 	that.$groups.children( '.uf-group-prototype' ).each(function() {
- 			// 		that.replacePrototype( $( this ) );
- 			// 	});
- 			// },
-			stop: () => {
-				onReorder( map( groups.children, group => {
-					return group.dataset.container;
-				} ) );
+ 			stop: () => {
+				const containers = map( groups.children, group => group.dataset.container );
+				onReorder( filter( containers ) );
 			},
+			receive: ( e, ui ) => {
+ 				this.replacePrototype();
+ 			},
 		} );
 	}
 
@@ -164,5 +161,31 @@ export default class RepeaterField extends Component {
 		const { onDuplicate } = this.props;
 
 		onDuplicate( data, index );
+	}
+
+	/**
+	 * Replaces a prototype from the list of group with a real group.
+	 */
+	replacePrototype() {
+		const { groups } = this.refs;
+		const { addRow, value } = this.props;
+
+		// Locate the prototype
+		let prototype;
+		forEach( groups.children, child => {
+			if ( child.classList.contains( 'uf-group--prototype' ) ) {
+				prototype = child;
+			}
+		} );
+
+		// Load data
+		const { type } = prototype.dataset;
+		const position = Array.from( groups.children ).indexOf( prototype );
+
+		// Clean up
+		groups.removeChild( prototype );
+
+		// Add the new row
+		addRow( type, position );
 	}
 }

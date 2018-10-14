@@ -17,7 +17,7 @@ export default class Prototype extends Component {
 
 		return (
 			<div className="uf-prototype">
-				<a className="uf-group uf-group--prototype" data-type={ id } onClick={ onClick }>
+				<a className="uf-group uf-group--prototype" data-type={ id } onClick={ onClick } ref="group">
 					<div className="uf-group__header">
 						<div className="uf-group__number">
 							<strong className="dashicons dashicons-plus"></strong>
@@ -30,5 +30,23 @@ export default class Prototype extends Component {
 				{ description && <div dangerouslySetInnerHTML={ { __html: description } } /> }
 			</div>
 		);
+	}
+
+	/**
+	 * Makes the prototype draggable.
+	 */
+	componentDidMount() {
+		const { group } = this.refs;
+
+		const $prototype = jQuery( group );
+		const $repeater  = $prototype.closest( '.uf-repeater' );
+		const $sortable  = $repeater.children( '.uf-repeater__groups' );
+
+		$prototype.draggable( {
+			connectToSortable: $sortable,
+			helper: 'clone',
+			revert: 'invalid',
+			containment: $repeater.parent(),
+		} );
 	}
 }
