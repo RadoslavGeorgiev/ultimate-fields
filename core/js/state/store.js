@@ -15,10 +15,8 @@ import createReducer from 'state/reducer';
  * @return {Object} A Redux store.
  */
 export default ( preloadedState = {} ) => {
-	const reducer = createReducer();
-
 	return createStore(
-		reducer,
+		createReducer(),
 		preloadedState,
 		composeWithDevTools()
 	)

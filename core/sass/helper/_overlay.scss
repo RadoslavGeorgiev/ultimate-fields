@@ -75,11 +75,9 @@
 			}
 		}
 
-		.uf-tabs.uf-tabs--layout-rows {
-			margin-left: -10px;
+		.uf-tabs.uf-tabs--rows {
 			background: #e4e4e4;
 			border-top: 1px solid #cdcdcd;
-			padding-left: 20%;
 
 			&.uf-fields-label-200 {
 				padding-left: 210px;
@@ -200,6 +198,7 @@
 		overflow: auto;
 		background: #fff;
 		height: 100%;
+		z-index: 1;
 
 		&--animated {
 			transition: all .5s ease;

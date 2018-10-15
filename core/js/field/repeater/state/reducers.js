@@ -45,8 +45,9 @@ export default {
 				// Insert at a specific position
 				return merge( state, set( {}, path, oldRows.splice( position, 0, row ) ) );
 			} else {
-				// Add to the end
-				return mergeWithArrays( state, set( {}, path, [ row ] ) );
+				// Add at the end
+				return merge( state, set( {}, path, [ ...oldRows, row ] ) );
+				// return mergeWithArrays( state, set( {}, path, [ row ] ) );
 			}
 		},
 

@@ -109,14 +109,33 @@ Container::create( 'repeater-field' )
 	->add_location( 'options' )
 	->add_fields([
 		Field::create( 'repeater', 'multi_group_repeater' )
+			->hide_label()
 			->set_chooser_type( 'tags' )
 			->add_group( 'text', [
 				'edit_mode' => 'both',
 				'layout' => 'rows',
+				'icon' => 'dashicons dashicons-editor-paragraph',
 				'fields' => [
 					Field::create( 'tab', 'tab_1' ),
 					Field::create( 'text', 'title' )
 						->required(),
+					Field::create( 'repeater', 'links' )
+						->add_group( 'link', [
+							'edit_mode' => 'both',
+							'icon' => 'dashicons dashicons-admin-links',
+							'fields' => [
+								Field::create( 'text', 'link_name' ),
+								Field::create( 'text', 'link_url' ),
+								Field::create( 'repeater', 'icons' )
+									->add_group( 'icon', [
+										'edit_mode' => 'both',
+										'icon' => 'dashicons dashicons-admin-links',
+										'fields' => [
+											Field::create( 'text', 'icon' )
+										]
+									] ),
+							]
+						] ),
 					Field::create( 'tab', 'tab_2' ),
 					Field::create( 'text', 'second_title' ),
 				]

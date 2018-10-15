@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect, Provider } from 'react-redux';
 import classNames from 'classnames';
-import { get, set } from 'lodash';
+import { get, set, find } from 'lodash';
 
 /**
  * Internal dependencies
@@ -22,7 +22,7 @@ import {
 	EDIT_MODE_INLINE,
 	EDIT_MODE_BOTH,
 } from 'field/repeater/constants';
-import * as overlay from 'components/overlay';
+import overlay from 'components/overlay';
 import Button from 'components/button';
 import translate from 'utils/l10n';
 import createStore from 'state/store';
@@ -124,7 +124,7 @@ export class RepeaterGroup extends Component {
 	expand = () => {
 		const {
 			title, fields, containerPath, container, dataPath, layout,
-			getStore, replaceState, onDelete,
+			getStore, replaceState, onDelete, id, icon,
 		} = this.props;
 		let validationStarted = false;
 
@@ -153,7 +153,7 @@ export class RepeaterGroup extends Component {
 			// Just replace the state and close the popup if ok
 			if ( ! errors.length ) {
 				replaceState( store.getState() );
-				overlay.popLayer();
+				return overlay.popLayer();
 			}
 
 			if ( ! validationStarted ) {
@@ -188,27 +188,30 @@ export class RepeaterGroup extends Component {
 		};
 
 		// A mini form for the overlay
-		const body = <Provider store={ store }>
+		const body = <Provider store={ store } key={ id }>
 			<form onSubmit={ submit }>
 				<Fields
 					{ ...fieldsProps }
 					showTabs={ false }
 				/>
+
+				<input type="submit" style={ { display: 'none' } } />
 			</form>
 		</Provider>;
 
 		// Generate the tabs separately
-		const tabs = <Provider store={ store }>
-			<Tabs { ...fieldsProps } rawFields={ fields } />
-		</Provider>;
+		const tabs = find( fields, { type: 'tab'} ) &&
+			<Provider store={ store } key={ 'tabs-' + id }>
+				<Tabs { ...fieldsProps } rawFields={ fields } />
+			</Provider>;
 
 		// Buttons will control the form
 		const buttons = [
-			<Button key="Cancel" type="secondary" icon="no-alt" onClick={ remove }>
-				{ translate( 'repeater_delete', title ) }
-			</Button>,
 			<Button key="Save" icon="category" onClick={ save }>
 				{ translate( 'repeater_save', title ) }
+			</Button>,
+			<Button key="Cancel" type="secondary" icon="no-alt" onClick={ remove }>
+				{ translate( 'repeater_delete', title ) }
 			</Button>,
 		];
 
@@ -218,6 +221,7 @@ export class RepeaterGroup extends Component {
 			buttons: buttons,
 			body,
 			tabs,
+			icon,
 		} );
 	}
 }
