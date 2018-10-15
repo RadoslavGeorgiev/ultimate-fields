@@ -90,8 +90,10 @@ export class Fields extends Component {
 
 		// Generate the appropriate grid class
 		const gridClasses = this.generateGridClasses( field_width || 100 );
+		const partials    = getFieldComponents( field );
+		const Element     = this.props.element || partials.Element;
+		const Input       = partials.Input;
 
-		const { Element, Input } = getFieldComponents( field );
 		return <Element { ...field } key={ name } classNames={ gridClasses }>
 			<Input { ...field } />
 		</Element>

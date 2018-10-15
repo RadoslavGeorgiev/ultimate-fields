@@ -128,3 +128,18 @@ Container::create( 'repeater-field' )
 				]
 			] )
 	]);
+
+Container::create( 'table-repeater' )
+	->add_location( 'options' )
+	->set_style( 'boxed' )
+	->add_fields( [
+		Field::create( 'repeater', 'table' )
+			->hide_label()
+			->set_layout( 'table' )
+			->add_group( 'row', [
+				'fields' => [
+					Field::create( 'text', 'column_one' )->required(),
+					Field::create( 'text', 'column_two' )->set_description( 'Description here' ),
+				]
+			] )
+	] );

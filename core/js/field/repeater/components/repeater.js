@@ -15,6 +15,7 @@ import {
 } from 'field/repeater/constants';
 import Button from 'components/button';
 import Group from './group';
+import TableRowGroup from './table-row';
 import Prototype from './prototype';
 import translate from 'utils/l10n';
 
@@ -50,13 +51,28 @@ export default class RepeaterField extends Component {
 	}
 
 	render() {
-		const { value } = this.props;
+		const { value, groups, repeater_layout: layout } = this.props;
+
+		const isTable = ( 1 === groups.length ) && ( 'table' === layout );
 
 		return (
 			<div className="uf-repeater">
-				<div className="uf-repeater__groups" ref="groups">
+				{ ! isTable && <div className="uf-repeater__groups" ref="groups">
 					{ value.map( this.renderRow ) }
-				</div>
+				</div> }
+
+				{ isTable && <div className="uf-table">
+					<div className="uf-table__headings">
+						{ this.renderTableHeadings() }
+					</div>
+
+					<div className="uf-repeater__groups uf-table__groups" ref="groups">
+						{ ! value.length &&
+							<div className="uf-repeater__placeholder uf-table__placeholder" /> }
+
+						{ value.map( this.renderTableRow ) }
+					</div>
+				</div> }
 
 				{ this.renderChooser() }
 			</div>
@@ -78,6 +94,34 @@ export default class RepeaterField extends Component {
 
 		return (
 			<Group
+				key={ container }
+				index={ index }
+				number={ index + 1 }
+				container={ data.__container }
+				data={ data }
+				dataPath={ [ ...dataPath, name, index ] }
+				containerPath={ [ ...containerPath, name, container ] }
+				onDuplicate={ this.onDuplicate.bind( this, data, index ) }
+				{ ...settings }
+			/>
+		);
+	}
+
+	/**
+	 * Renders a row in table mode.
+	 *
+	 * @param {Object} data  The data of the row.
+	 * @param {Number} index The index of the group.
+	 * @return {Element}
+	 */
+	renderTableRow = ( data, index ) => {
+		const { name, dataPath, containerPath } = this.props;
+		const { __container: container } = data;
+
+		const settings = this.findGroup( data.__type );
+
+		return (
+			<TableRowGroup
 				key={ container }
 				index={ index }
 				number={ index + 1 }
@@ -226,5 +270,31 @@ export default class RepeaterField extends Component {
 
 		// Add the new row
 		addRow( type, position );
+	}
+
+	/**
+	 * Renders the headings in table mode.
+	 *
+	 * @return {Element}
+	 */
+	renderTableHeadings() {
+		const { fields } = this.props.groups[ 0 ];
+
+		return filter( map( fields, field => {
+			const { name, label, description, field_width, required } = field;
+
+			const width = field_width + '%';
+			const html  = { __html: description };
+
+			return <div className="uf-table__heading" key={ name } style={ { width } }>
+				<h4>
+					{ label }
+					{ required && <span className="uf-field__star">*</span> }
+				</h4>
+
+				{ description &&
+					<div className="uf-field__description" dangerouslySetInnerHTML={ html } /> }
+			</div>;
+		} ) );
 	}
 }

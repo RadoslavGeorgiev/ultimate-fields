@@ -268,7 +268,7 @@ $number-width: 38px;
 	border: 1px solid #ddd;
 	margin-bottom: 10px;
 
-	&-headings {
+	&__headings {
 		padding: 0 36px 0 39px;
 		overflow: hidden;
 		background: #f7f7f7;
@@ -300,11 +300,11 @@ $number-width: 38px;
 		}
 	}
 
-	&-groups {
+	&__groups {
 		min-height: 0;
 	}
 
-	&-heading {
+	&__heading {
 		float: left;
 		box-sizing: border-box;
 		padding: 8px 5px;
@@ -315,7 +315,7 @@ $number-width: 38px;
 			line-height: 19px;
 		}
 
-		.uf-field-description {
+		.uf-field__description {
 			padding-top: 0;
 		}
 
@@ -329,11 +329,11 @@ $number-width: 38px;
 		}
 	}
 
-	&-row.ui-sortable-placeholder {
+	&__row.ui-sortable-placeholder {
 		margin-bottom: 0;
 	}
 
-	&-row {
+	&__row {
 		position: relative;
 		padding: 0 36px 0 39px;
 		margin: 0;
@@ -350,12 +350,13 @@ $number-width: 38px;
 			border-bottom: 1px solid #ddd;
 		}
 
-		.uf-group-control-remove {
+		.uf-group__control {
 			position: absolute;
 			top: 0;
 			right: 0;
 			bottom: 0;
 			height: auto;
+			border-left: 0;
 
 			span {
 				position: absolute;
@@ -366,10 +367,14 @@ $number-width: 38px;
 		}
 	}
 
-	&-cell {
+	&__cell {
 		float: left;
-		box-sizing: border-box;
-		padding: 5px;
+
+		&.boxed.grid {
+			box-sizing: border-box;
+			padding: 5px;
+			border: 0;
+		}
 
 		&:before {
 			content: '';
@@ -385,7 +390,7 @@ $number-width: 38px;
 		}
 	}
 
-	&-placeholder {
+	&__placeholder {
 		position: relative;
 		border: 0;
 		border-top: 1px solid #ddd;

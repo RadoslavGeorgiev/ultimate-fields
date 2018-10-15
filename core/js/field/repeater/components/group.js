@@ -32,7 +32,7 @@ import Tabs from 'components/tabs';
 /**
  * The component for individual repeater groups.
  */
-class RepeaterGroup extends Component {
+export class RepeaterGroup extends Component {
 	static propTypes = {
 		number: PropTypes.number.isRequired,
 		title: PropTypes.string.isRequired,
@@ -222,14 +222,15 @@ class RepeaterGroup extends Component {
 	}
 }
 
-export default connect(
-	( state, { dataPath } ) => ( {
-		visible: isGroupVisible( state, dataPath ),
-		getStore: () => createStore( state ),
-	} ),
-	( dispatch, { dataPath, index, container } ) => ( {
-		onDelete: () => dispatch( deleteRepeaterRow( dataPath, index, container ) ),
-		onToggle: () => dispatch( toggleRepeaterRow( dataPath ) ),
-		replaceState: newState => dispatch( replaceState( newState ) ),
-	} )
-)( RepeaterGroup );
+export const mapStateToProps = ( state, { dataPath } ) => ( {
+	visible: isGroupVisible( state, dataPath ),
+	getStore: () => createStore( state ),
+} );
+
+export const mapDispatchToProps = ( dispatch, { dataPath, index, container } ) => ( {
+	onDelete: () => dispatch( deleteRepeaterRow( dataPath, index, container ) ),
+	onToggle: () => dispatch( toggleRepeaterRow( dataPath ) ),
+	replaceState: newState => dispatch( replaceState( newState ) ),
+} );
+
+export default connect( mapStateToProps, mapDispatchToProps )( RepeaterGroup );

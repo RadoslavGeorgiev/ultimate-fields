@@ -160,7 +160,7 @@ class Repeater extends Field {
 		$settings[ 'add_text' ]         = $this->get_add_text();
 		$settings[ 'placeholder_text' ] = $this->get_placeholder_text();
 		$settings[ 'background' ]       = $this->get_background_color();
-		$settings[ 'layout' ]           = $this->get_layout();
+		$settings[ 'repeater_layout' ]  = $this->get_layout();
 
 		return $settings;
 	}
