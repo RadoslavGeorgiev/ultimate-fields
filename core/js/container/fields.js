@@ -47,14 +47,14 @@ export class Fields extends Component {
 	 * @return {React.Element}
 	 */
 	render() {
-		const { fields, tabs, layout, style, showTabs } = this.props;
+		const { fields, tabs, layout, style, showTabs, className } = this.props;
 
 		// Reset the grid counters
 		this.column = 0;
 		this.row = 0;
 
 		return (
-			<div className={ `uf-fields ${style} ${layout}` }>
+			<div className={ `uf-fields ${style} ${layout} ${className || ''}` }>
 				{ fields.map( field => {
 					return ( TABS_PLACEHOLDER === field )
 						? ( showTabs && <Tabs key="tabs" { ...this.props } /> )

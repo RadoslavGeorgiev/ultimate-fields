@@ -8,7 +8,10 @@ import { mergeWithArrays } from 'utils';
 
 export default createReducer( {}, {
 	[ UPDATE_VALUE ]: ( state, { path, value } ) => {
-		const diff = set( {}, path, value );
-		return merge( {}, state, diff );
+		const newState = Object.assign( {}, state );
+		return set( newState, path, value );
+
+		// const diff = set( {}, path, value );
+		// return merge( {}, state, diff );
 	},
 } );

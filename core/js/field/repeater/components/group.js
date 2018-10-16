@@ -61,6 +61,7 @@ export class RepeaterGroup extends Component {
 			layout,
 			visible,
 			onToggle,
+			description_position,
 		} = this.props;
 
 		return (
@@ -90,6 +91,7 @@ export class RepeaterGroup extends Component {
 						container={ container }
 						style={ STYLE_BOXED }
 						layout={ layout }
+						description_position={ description_position }
 					/>
 				</div> }
 			</div>
@@ -124,7 +126,7 @@ export class RepeaterGroup extends Component {
 	expand = () => {
 		const {
 			title, fields, containerPath, container, dataPath, layout,
-			getStore, replaceState, onDelete, id, icon,
+			getStore, replaceState, onDelete, id, icon, description_position,
 		} = this.props;
 		let validationStarted = false;
 
@@ -185,6 +187,7 @@ export class RepeaterGroup extends Component {
 			container,
 			layout,
 			style: STYLE_BOXED,
+			description_position: description_position,
 		};
 
 		// A mini form for the overlay

@@ -87,7 +87,7 @@ class Complex extends Field_Helper {
 	 * @since 3.0
 	 */
 	public static function enqueue() {
-		Template::add( 'complex-group', 'field/complex-group' );
+		// Template::add( 'complex-group', 'field/complex-group' );
 		wp_enqueue_script( 'uf-field-complex' );
 	}
 

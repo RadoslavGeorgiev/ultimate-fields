@@ -320,13 +320,13 @@ class Repeater extends Field_Helper {
 	 * @since 3.0
 	 */
 	public static function enqueue() {
-		Template::add( 'field-repeater-table', 'field/repeater/table' );
-		Template::add( 'repeater-heading', 'field/repeater/heading' );
-		Template::add( 'table-row', 'field/repeater/table-row' );
-		Template::add( 'cell-wrap', 'field/wrap/cell' );
-		Template::add( 'repeater-dropdown',  'field/repeater/dropdown' );
-		Template::add( 'repeater-tags', 'field/repeater/tags' );
-		Template::add( 'repeater-prototype', 'field/repeater/prototype' );
+		// Template::add( 'field-repeater-table', 'field/repeater/table' );
+		// Template::add( 'repeater-heading', 'field/repeater/heading' );
+		// Template::add( 'table-row', 'field/repeater/table-row' );
+		// Template::add( 'cell-wrap', 'field/wrap/cell' );
+		// Template::add( 'repeater-dropdown',  'field/repeater/dropdown' );
+		// Template::add( 'repeater-tags', 'field/repeater/tags' );
+		// Template::add( 'repeater-prototype', 'field/repeater/prototype' );
 
 		ultimate_fields()->localize( 'repeater-basic-placeholder-multiple', __( 'Drag an item here to create a new entry.', 'ultimate-fields' ) );
 		ultimate_fields()->localize( 'repeater-basic-placeholder-single', __( 'Please click the "%s" button to add a new entry.', 'ultimate-fields' ) );

@@ -1,5 +1,10 @@
 // The complex field
-.uf-field-type-complex {
+.uf-field--complex > .uf-field__input {
+	padding: 0;
+	display: flex;
+}
+
+.uf-field--complex {
 	.uf-complex-fields,
 	.uf-complex-fields > .uf-fields-layout-grid,
 	> .uf-field-input-wrap,
@@ -17,7 +22,7 @@
 	}
 }
 
-.uf-field-layout-grid.uf-field-type-complex {
+.uf-field-layout-grid.uf-field--complex {
 	padding: 0;
 
 	> .uf-field-label {
@@ -34,7 +39,7 @@
 	}
 }
 
-.uf-field-layout-row.uf-field-type-complex > .uf-field-input-wrap {
+.uf-field-layout-row.uf-field--complex > .uf-field-input-wrap {
 	padding: 0;
 }
 

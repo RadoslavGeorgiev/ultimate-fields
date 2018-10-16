@@ -6,11 +6,11 @@
 	position: relative;
 	z-index: 1;
 
-	.uf-boxed-fields & {
+	&.boxed {
 		background: #fff;
 	}
 
-	.uf-fields-layout-grid & {
+	&.grid {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
@@ -28,7 +28,7 @@
 		border-top: 0;
 	}
 
-	.uf-boxed-fields.uf-fields-layout-grid > & {
+	&.boxed.grid {
 		border-top: 1px solid #ddd;
 
 		&.top-row {
@@ -36,7 +36,7 @@
 		}
 	}
 
-	.uf-fields-layout-rows > & {
+	&.rows {
 		border-bottom: 1px solid #eee;
 	}
 
@@ -56,21 +56,21 @@
 		font-size: 13px;
 	}
 
-	&-blue,
-	&-red,
-	&-green {
+	&--blue,
+	&--red,
+	&--green {
 		color: #fff;
 	}
 
-	&-blue {
+	&--blue {
 		background: #0073AF;
 	}
 
-	&-red {
+	&--red {
 		background: #e14d43;
 	}
 
-	&-green {
+	&--green {
 		background: #a3b745;
 	}
 }

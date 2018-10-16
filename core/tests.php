@@ -20,7 +20,11 @@ Container::create( 'post-fields-1' )
 			->required()
 			->set_description( 'This is a field...' )
 			->set_prefix( '€' )
-			->set_suffix( '.00' ),
+			->set_suffix( '.00' )
+			->add_suggestions( [
+				'Varna',
+				'Vienna',
+			] ),
 		Field::create( 'text', 'half_field_2' )->set_width( 50 )
 			->required(),
 		Field::create( 'text', 'half_field_1' )->set_width( 50 )
@@ -161,4 +165,89 @@ Container::create( 'table-repeater' )
 					Field::create( 'text', 'column_two' )->set_description( 'Description here' ),
 				]
 			] )
+	] );
+
+$select_options = array(
+	''      => 'None',
+	'vienna'      => 'Vienna',
+	'varna'       => 'Varna',
+	'new_york'    => 'New York',
+	'los_angeles' => 'Los Angeles',
+	'london'      => 'London',
+	'sofia'       => 'Sofia',
+	'bratislava'  => 'Bratislava'
+);
+$image_options = array();
+$raw = array(
+	'light-green'  => 'Light Green',
+	'light-blue'   => 'Light Blue',
+	'light-sky'    => 'Light Sky',
+	'light-purple' => 'Light Purple',
+	'light-red'    => 'Light Red',
+	'light-yellow' => 'Light Yellow',
+	'dark-green'   => 'Dark Green',
+	'dark-blue'    => 'Dark Blue',
+	'dark-sky'     => 'Dark Sky',
+	'dark-purple'  => 'Dark Purple',
+	'dark-red'     => 'Dark Red',
+	'dark-yellow'  => 'Dark Yellow'
+);
+foreach( $raw as $key => $label ) {
+	$image_options[ $key ] = array(
+		// 'image' => ULTIMATE_FIELDS_DEMO_URL . '/images/color-' . $key . '.png',
+		'label' => $label
+	);
+}
+
+Container::create( 'all-fields' )
+	->add_location( 'options' )
+	->set_style( 'boxed' )
+	->add_fields( [
+		Field::create( 'tab', 'demo_text_fields', 'Text Fields' )
+			->set_icon( 'dashicons-editor-spellcheck' ),
+		Field::create( 'text', 'demo_text_field', 'Fancy Text Field' )
+			->add_suggestions( array( 'Vienna', 'Varna' ) )
+			->set_description( 'Start typing something with v' ),
+		Field::create( 'text', 'demo_text_field_2', 'Dollar Value' )
+			->set_prefix( '$' )
+			->required( true, 'Please enter a dollar value (with a dot separator)' )
+			->set_validation_rule( '~^\d+\.\d\d$~i' )
+			->set_placeholder( '0.00' ),
+		Field::create( 'text', 'demo_text_field_3', 'EUR Value' )
+			->set_suffix( 'EUR' ),
+		Field::create( 'textarea', 'demo_textarea_field', 'Textarea Field' )
+			->set_rows( 4 )
+			->set_default_value( "Lorem ipsum dolor" ),
+		Field::create( 'wysiwyg', 'wysiwyg_field', 'WYSIWYG FIeld' ),
+
+		Field::create( 'tab', 'demo_choices_fields', 'Choice Fields' )
+			->set_icon( 'dashicons-forms' ),
+		Field::create( 'section', 'demo_checkbox_fields', 'Checkbox Fields' ),
+		Field::create( 'checkbox', 'demo_checkbox_field', 'Checkbox Field' )
+			->set_text( 'Yes' ),
+		Field::create( 'checkbox', 'demo_checkbox_field_2', 'Fancy Checkbox Field' )
+			->fancy()
+			->set_text( 'Yes' ),
+		Field::create( 'section', 'demo_select_fields', 'Select Fields' ),
+		Field::create( 'select', 'demo_select_field', 'Select Field' )
+			->add_options( $select_options ),
+		Field::create( 'select', 'demo_select_field_2', 'Fancy Select Field' )
+			->fancy()
+			->add_options( $select_options ),
+		Field::create( 'select', 'demo_select_field_3', 'Radio Select Field' )
+			->set_input_type( 'radio' )
+			->add_options( $select_options ),
+		Field::create( 'select', 'demo_select_field_4', 'Horizontal Radio Select Field' )
+			->set_input_type( 'radio' )
+			->set_orientation( 'horizontal' )
+			->add_options( $select_options ),
+		Field::create( 'section', 'demo_multiselect_fields', 'Multiselect Fields' ),
+		Field::create( 'multiselect', 'demo_multiselect_field', 'Multiselect Field' )
+			->add_options( $select_options ),
+		Field::create( 'multiselect', 'demo_multiselect_field_2', 'Multiselect Field with Checkboxes' )
+			->set_input_type( 'checkbox' )
+			->add_options( $select_options ),
+		Field::create( 'section', 'demo_imageselect_fields', 'Image Select Field' ),
+		Field::create( 'image_select', 'demo_image_select_field', 'Image Select' )
+			->add_options( $image_options ),
 	] );

@@ -55,7 +55,7 @@ export default class FieldModel {
 		}
 
 		// Formats the value correctly (ex `3` becoming `"3"` for text fields).
-		return  this.loadValue( props, value );
+		return this.loadValue( props, value );
 	}
 
 	/**

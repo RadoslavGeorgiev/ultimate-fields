@@ -54,14 +54,14 @@ export default class Element extends Component {
 	render() {
 		const {
 			label, hide_label, required, children,
-			visible, field_width, classNames,
+			visible, field_width, classNames, type,
 		} = this.props;
 
 		// A shortcut to the elementClass method
 		const el = this.elementClass.bind( this );
 
 		// Prepare the root classes
-		const className = el( null, hide_label && 'no-label' )
+		const className = el( null, hide_label && 'no-label', type )
 			+ classNames.map( name => ' ' + name ).join( '' );
 
 		// Prepare styles
