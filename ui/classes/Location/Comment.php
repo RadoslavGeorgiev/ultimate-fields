@@ -28,7 +28,7 @@ class Comment extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Comment', 'ultimate-fields-pro' );
+		return __( 'Comment', 'ultimate-fields' );
 	}
 
 	/**
@@ -41,21 +41,21 @@ class Comment extends Location {
 		$fields = array(
 			Field::create( 'tab', 'basic_settings', __( 'Basic Settings' ) )
 				->set_icon( 'dashicons-admin-post' ),
-			Field::create( 'select', 'status', __( 'Comment Status', 'ultimate-fields-pro' ) )
+			Field::create( 'select', 'status', __( 'Comment Status', 'ultimate-fields' ) )
 				->set_input_type( 'radio' )
 				->set_default_value( 'any' )
 				->add_options(array(
-					'any'      => __( 'Any', 'ultimate-fields-pro' ),
-					'approved' => __( 'Approved', 'ultimate-fields-pro' ),
-					'pending'  => __( 'Pending', 'ultimate-fields-pro' ),
-					'spam'     => __( 'Spam', 'ultimate-fields-pro' ),
+					'any'      => __( 'Any', 'ultimate-fields' ),
+					'approved' => __( 'Approved', 'ultimate-fields' ),
+					'pending'  => __( 'Pending', 'ultimate-fields' ),
+					'spam'     => __( 'Spam', 'ultimate-fields' ),
 				))
-				->set_description( __( 'Select which comment stati the container would work with.', 'ultimate-fields-pro' ) ),
-			Field::create( 'select', 'priority', __( 'Priority', 'ultimate-fields-pro' ) )
-				->set_description( __( 'Either normal for default flow, or High to force higher position.', 'ultimate-fields-pro' ) )
+				->set_description( __( 'Select which comment stati the container would work with.', 'ultimate-fields' ) ),
+			Field::create( 'select', 'priority', __( 'Priority', 'ultimate-fields' ) )
+				->set_description( __( 'Either normal for default flow, or High to force higher position.', 'ultimate-fields' ) )
 				->add_options(array(
-					'default' => __( 'Default', 'ultimate-fields-pro' ),
-					'high'    => __( 'High', 'ultimate-fields-pro' )
+					'default' => __( 'Default', 'ultimate-fields' ),
+					'high'    => __( 'High', 'ultimate-fields' )
 				))
 				->set_input_type( 'radio' )
 		);

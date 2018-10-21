@@ -18,12 +18,12 @@ class Audio extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Audio', 'ultimate-fields-pro' );
+		return __( 'Audio', 'ultimate-fields' );
 	}
 
 	public static function get_fields( $existing ) {
 		$general_fields = array(
-			Field::create( 'audio', 'default_value_audio', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'audio', 'default_value_audio', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		return array(

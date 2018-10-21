@@ -10,6 +10,6 @@
 	</div>
 
 	<div class="uf-embed-footer">
-		<input type="text" class="uf-embed-url" placeholder="<?php esc_attr_e( 'Enter the URL of the item that you want to embed here', 'ultimate-fields-pro' ) ?>" value="<%- url %>" />
+		<input type="text" class="uf-embed-url" placeholder="<?php esc_attr_e( 'Enter the URL of the item that you want to embed here', 'ultimate-fields' ) ?>" value="<%- url %>" />
 	</div>
 </div>

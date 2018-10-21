@@ -155,7 +155,7 @@ class Comment extends Form_Object {
 		$include = is_array( $include ) ? $include : array();
 
 		if( $all || in_array( 'comment_content', $include ) )
-			$fields[] = Field::create( 'textarea', 'comment_content', __( 'Content', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'textarea', 'comment_content', __( 'Content', 'ultimate-fields' ) )
 				->required();
 
 		if( is_user_logged_in() ) {
@@ -163,13 +163,13 @@ class Comment extends Form_Object {
 		}
 
 		if( $all || in_array( 'comment_author', $include ) )
-			$fields[] = Field::create( 'text', 'comment_author', __( 'Your name', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'text', 'comment_author', __( 'Your name', 'ultimate-fields' ) )
 				->required();
 		if( $all || in_array( 'comment_author_email', $include ) )
-			$fields[] = Field::create( 'text', 'comment_author_email', __( 'Email', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'text', 'comment_author_email', __( 'Email', 'ultimate-fields' ) )
 				->set_validation_rule( Field\Text::VALIDATION_RULE_EMAIL );
 		if( $all || in_array( 'comment_author_url', $include ) )
-			$fields[] = Field::create( 'text', 'comment_author_url', __( 'Website', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'text', 'comment_author_url', __( 'Website', 'ultimate-fields' ) );
 	}
 
 	/**

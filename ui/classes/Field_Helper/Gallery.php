@@ -18,12 +18,12 @@ class Gallery extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Gallery', 'ultimate-fields-pro' );
+		return __( 'Gallery', 'ultimate-fields' );
 	}
 
 	public static function get_fields( $existing ) {
 		$general_fields = array(
-			Field::create( 'gallery', 'default_value_gallery', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'gallery', 'default_value_gallery', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		$output_fields = array();

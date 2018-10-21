@@ -75,7 +75,7 @@ abstract class Form_Object {
 			if( isset( $keywords[ $type ] ) ) {
 				$class_name = $keywords[ $type ];
 			} else {
-				$message = __( '%s is not a valid form object type!', 'ultimate-fields-pro' );
+				$message = __( '%s is not a valid form object type!', 'ultimate-fields' );
 				wp_die( sprintf( $message, $type ) );
 			}
 		} else {
@@ -110,14 +110,14 @@ abstract class Form_Object {
 						$type = 'options';
 						$id   = null;
 					} else {
-						$message = __( '&quot;%s&quot; is not a valid form item format! Maybe you want to use the &quot;create_new&quot; parameter?', 'ultimate-fields-pro' );
+						$message = __( '&quot;%s&quot; is not a valid form item format! Maybe you want to use the &quot;create_new&quot; parameter?', 'ultimate-fields' );
 						wp_die( sprintf( $message, $item ) );
 					}
 				} elseif( is_int( $item ) ) {
 					$type = 'post';
 					$id   = $item;
 				} else {
-					wp_die( __( 'Unknown item type.', 'ultimate-fields-pro' ) );
+					wp_die( __( 'Unknown item type.', 'ultimate-fields' ) );
 				}
 			}
 

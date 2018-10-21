@@ -18,7 +18,7 @@ class Icon extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Icon', 'ultimate-fields-pro' );
+		return __( 'Icon', 'ultimate-fields' );
 	}
 
 	/**
@@ -30,8 +30,8 @@ class Icon extends Field_Helper {
 	 */
 	public static function get_fields( $existing ) {
 		$sets = array(
-			'font-awesome' => __( 'Font Awesome', 'ultimate-fields-pro' ),
-			'dashicons'    => __( 'Dashicons', 'ultimate-fields-pro' )
+			'font-awesome' => __( 'Font Awesome', 'ultimate-fields' ),
+			'dashicons'    => __( 'Dashicons', 'ultimate-fields' )
 		);
 
 		/**
@@ -45,22 +45,22 @@ class Icon extends Field_Helper {
 		$sets = apply_filters( 'uf.ui.icon_sets', $sets );
 
 		$fields = array(
-			FIeld::create( 'multiselect', 'icon_sets', __( 'Icon sets', 'ultimate-fields-pro' ) )
+			FIeld::create( 'multiselect', 'icon_sets', __( 'Icon sets', 'ultimate-fields' ) )
 				->add_options( $sets )
 				->set_default_value( array_keys( $sets ) )
 				->set_input_type( 'checkbox' ),
-			Field::create( 'icon', 'default_value_icon', __( 'Default value', 'ultimate-fields-pro' ) )
-				->set_description( __( 'Please select an icon from one of the sets you selected in the previous field, otherwise it will be ignored.', 'ultimate-fields-pro' ) )
+			Field::create( 'icon', 'default_value_icon', __( 'Default value', 'ultimate-fields' ) )
+				->set_description( __( 'Please select an icon from one of the sets you selected in the previous field, otherwise it will be ignored.', 'ultimate-fields' ) )
 		);
 
 		$output = array(
-			Field::create( 'select', 'icon_output_format', __( 'Output Format', 'ultimate-fields-pro' ) )
+			Field::create( 'select', 'icon_output_format', __( 'Output Format', 'ultimate-fields' ) )
 				->set_input_type( 'radio' )
 				->add_options(array(
-					'class' => __( 'CSS Class', 'ultimate-fields-pro' ),
-					'icon'  => __( 'The full icon <em>(A span HTML element)</em>', 'ultimate-fields-pro' )
+					'class' => __( 'CSS Class', 'ultimate-fields' ),
+					'icon'  => __( 'The full icon <em>(A span HTML element)</em>', 'ultimate-fields' )
 				))
-				->set_description( __( 'Please make sure, that the appropriate CSS styles for Dash Icons or Font Awesome are included.', 'ultimate-fields-pro' ) )
+				->set_description( __( 'Please make sure, that the appropriate CSS styles for Dash Icons or Font Awesome are included.', 'ultimate-fields' ) )
 		);
 
 		return array(

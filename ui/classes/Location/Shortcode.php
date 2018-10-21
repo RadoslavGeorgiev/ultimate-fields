@@ -36,7 +36,7 @@ class Shortcode extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Shortcode', 'ultimate-fields-pro' );
+		return __( 'Shortcode', 'ultimate-fields' );
 	}
 
 	/**
@@ -47,22 +47,22 @@ class Shortcode extends Location {
 	 */
 	public static function get_fields() {
 		$fields = array(
-			Field::create( 'text', 'tag', __( 'Tag/Slug', 'ultimate-fields-pro' ) )
+			Field::create( 'text', 'tag', __( 'Tag/Slug', 'ultimate-fields' ) )
 				->required()
-				->set_description( __( 'This is the tag which you should use within add_shortcode()', 'ultimate-fields-pro' ) ),
-			Field::create( 'select', 'preview', __( 'Preview', 'ultimate-fields-pro' ) )
+				->set_description( __( 'This is the tag which you should use within add_shortcode()', 'ultimate-fields' ) ),
+			Field::create( 'select', 'preview', __( 'Preview', 'ultimate-fields' ) )
 				->set_input_type( 'radio' )
 				->add_options(array(
-					'default' => __( 'Use the default preview (name of the shortcode)', 'ultimate-fields-pro' ),
-					'image' => __( 'Display an image', 'ultimate-fields-pro' ),
-					'template' => __( 'Use a backbone.js template', 'ultimate-fields-pro' )
+					'default' => __( 'Use the default preview (name of the shortcode)', 'ultimate-fields' ),
+					'image' => __( 'Display an image', 'ultimate-fields' ),
+					'template' => __( 'Use a backbone.js template', 'ultimate-fields' )
 				))
-				->set_description( __( 'Select what should be seen by the user within the editor when the shortcode is being used.', 'ultimate-fields-pro' ) ),
-			Field::create( 'image', 'preview_image', __( 'Preview image', 'ultimate-fields-pro' ) )
+				->set_description( __( 'Select what should be seen by the user within the editor when the shortcode is being used.', 'ultimate-fields' ) ),
+			Field::create( 'image', 'preview_image', __( 'Preview image', 'ultimate-fields' ) )
 				->add_dependency( 'preview', 'image' ),
-			Field::create( 'textarea', 'template', __( 'Preview Template', 'ultimate-fields-pro' ) )
+			Field::create( 'textarea', 'template', __( 'Preview Template', 'ultimate-fields' ) )
 				->add_dependency( 'preview', 'template' )
-				->set_description( __( 'Enter a backbone.js template here, use field names as variables.', 'ultimate-fields-pro' ) )
+				->set_description( __( 'Enter a backbone.js template here, use field names as variables.', 'ultimate-fields' ) )
 		);
 
 		return $fields;

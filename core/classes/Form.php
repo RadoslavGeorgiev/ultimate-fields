@@ -250,8 +250,8 @@ class Form {
 		 * Set labels up.
 		 */
 		$this->labels = wp_parse_args( $this->args[ 'labels' ], array(
-			'save'            => esc_html( __( 'Save', 'ultimate-fields-pro' ) ),
-			'success_title'   => __( 'Your data is now saved.', 'ultimate-fields-pro' ),
+			'save'            => esc_html( __( 'Save', 'ultimate-fields' ) ),
+			'success_title'   => __( 'Your data is now saved.', 'ultimate-fields' ),
 			'success_message' => ''
 		));
 	}
@@ -265,7 +265,7 @@ class Form {
 		$object = Form_Object::create( $this->args );
 
 		if( ! $object ) {
-			$msg = __( 'uf_head() and uf_form() can only be called when there is a clearly defined item being loaded!', 'ultimate-fields-pro' );
+			$msg = __( 'uf_head() and uf_form() can only be called when there is a clearly defined item being loaded!', 'ultimate-fields' );
 			wp_die( $msg );
 		}
 
@@ -293,12 +293,12 @@ class Form {
 					if( isset( $registered[ $container ] ) ) {
 						$containers[] = $registered[ $container ];
 					} else {
-						$msg = __( 'Container %s does not exist!', 'ultimate-fields-pro' );
+						$msg = __( 'Container %s does not exist!', 'ultimate-fields' );
 						$msg = sprintf( $msg, $container );
 						wp_die( $msg );
 					}
 				} else {
-					wp_die( __( 'uf_head(): Unknown kontainer type!', 'ultimate-fields-pro' ) );
+					wp_die( __( 'uf_head(): Unknown kontainer type!', 'ultimate-fields' ) );
 				}
 			}
 		} else {
@@ -421,7 +421,7 @@ class Form {
 		}
 
 		# We need a simple container, without any locations
-		$container = Container::create( __( 'Item Data', 'ultimate-fields-pro' ) )
+		$container = Container::create( __( 'Item Data', 'ultimate-fields' ) )
 			->set_datastore( $this->object->get_fields_datastore() )
 			->add_fields( $fields );
 
@@ -589,7 +589,7 @@ class Form {
 
 		if( empty( $this->get_containers() ) ) {
 			echo '<div class="uf-no-forms">';
-				echo wpautop( __( 'No containers to display', 'ultimate-fields-pro' ) );
+				echo wpautop( __( 'No containers to display', 'ultimate-fields' ) );
 			echo '</div>';
 			return;
 		}

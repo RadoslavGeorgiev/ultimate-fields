@@ -28,7 +28,7 @@ class User extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'User', 'ultimate-fields-pro' );
+		return __( 'User', 'ultimate-fields' );
 	}
 
 	/**
@@ -46,26 +46,26 @@ class User extends Location {
 			->set_icon( 'dashicons-admin-post' );
 
 		# Add fields for user roles.
-		$fields[] = Field::create( 'checkbox', 'all_roles', __( 'Show on all user roles', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'checkbox', 'all_roles', __( 'Show on all user roles', 'ultimate-fields' ) )
 			->fancy()
 			->set_default_value( true )
-			->set_description( __( 'The container would only be assigned to users which have a certain role.', 'ultimate-fields-pro' ) );
+			->set_description( __( 'The container would only be assigned to users which have a certain role.', 'ultimate-fields' ) );
 
 		if( get_option( 'users_can_register' ) ) {
-			$fields[] = Field::create( 'checkbox', 'registration_form', __( 'Registration Form', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'checkbox', 'registration_form', __( 'Registration Form', 'ultimate-fields' ) )
 				->fancy()
-				->set_text( __( 'Show in the registration form', 'ultimate-fields-pro' ) );
+				->set_text( __( 'Show in the registration form', 'ultimate-fields' ) );
 		}
 
-		$fields[] = Field::create( 'complex', 'user_roles', __( 'User roles', 'ultimate-fields-pro' ) )
-			->set_description( __( 'The container will only be accessible if the edited user has a role that is among the ones that are checked above.', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'complex', 'user_roles', __( 'User roles', 'ultimate-fields' ) )
+			->set_description( __( 'The container will only be accessible if the edited user has a role that is among the ones that are checked above.', 'ultimate-fields' ) )
 			->add_dependency( 'all_roles', false )
 			->add_fields(array(
-				Field::create( 'multiselect', 'visible', __( 'Show on', 'ultimate-fields-pro' ) )
+				Field::create( 'multiselect', 'visible', __( 'Show on', 'ultimate-fields' ) )
 					->add_options( $wp_roles->get_names() )
 					->set_input_type( 'checkbox' )
 					->set_width( 50 ),
-				Field::create( 'multiselect', 'hidden', __( 'Hide on', 'ultimate-fields-pro' ) )
+				Field::create( 'multiselect', 'hidden', __( 'Hide on', 'ultimate-fields' ) )
 					->add_options( $wp_roles->get_names() )
 					->set_input_type( 'checkbox' )
 					->set_width( 50 )

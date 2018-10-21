@@ -28,7 +28,7 @@ class Customizer extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Customizer', 'ultimate-fields-pro' );
+		return __( 'Customizer', 'ultimate-fields' );
 	}
 
 	/**
@@ -39,11 +39,11 @@ class Customizer extends Location {
 	 */
 	public static function get_fields() {
 		$fields = array(
-			Field::create( 'number', 'priority', __( 'Priority', 'ultimate-fields-pro' ) )
+			Field::create( 'number', 'priority', __( 'Priority', 'ultimate-fields' ) )
 				->set_default_value( 150 )
 				->enable_slider( 1, 200 )
-				->set_description( __( 'This controls where the container will be shown in the main customizer menu.', 'ultimate-fields-pro' ) ),
-			Field::create( 'fields_selector', 'customizer_fields', __( 'postMessage fields', 'ultimate-fields-pro' ) )
+				->set_description( __( 'This controls where the container will be shown in the main customizer menu.', 'ultimate-fields' ) ),
+			Field::create( 'fields_selector', 'customizer_fields', __( 'postMessage fields', 'ultimate-fields' ) )
 				->set_description( __( 'The selected fields will be sent to the page without refreshing.' ) )
 		);
 

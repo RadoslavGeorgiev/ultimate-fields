@@ -20,8 +20,8 @@ class Date extends Field {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'datepicker-today', __( 'Today', 'ultimate-fields-pro' ) )
-			->localize( 'datepicker-close', __( 'Close', 'ultimate-fields-pro' ) );
+			->localize( 'datepicker-today', __( 'Today', 'ultimate-fields' ) )
+			->localize( 'datepicker-close', __( 'Close', 'ultimate-fields' ) );
 
 		# Add additional template(s)
 		Template::add( 'date', 'field/date' );

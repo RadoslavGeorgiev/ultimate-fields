@@ -18,7 +18,7 @@ class Sidebar extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Sidebar', 'ultimate-fields-pro' );
+		return __( 'Sidebar', 'ultimate-fields' );
 	}
 
 	/**
@@ -30,11 +30,11 @@ class Sidebar extends Field_Helper {
 	 */
 	public static function get_fields( $existing ) {
 		$fields = array(
-			Field::create( 'sidebar', 'default_value_sidebar', __( 'Default Value', 'ultimate-fields-pro' ) ),
-			Field::create( 'checkbox', 'sidebar_editable', __( 'Editable', 'ultimate-fields-pro' ) )
+			Field::create( 'sidebar', 'default_value_sidebar', __( 'Default Value', 'ultimate-fields' ) ),
+			Field::create( 'checkbox', 'sidebar_editable', __( 'Editable', 'ultimate-fields' ) )
 				->fancy()
-				->set_text( __( 'Allow sidebars to be created and modified within the field', 'ultimate-fields-pro' ) ),
-			Field::create( 'complex', 'sidebar_args', __( 'Arguments', 'ultimate-fields-pro' ) )
+				->set_text( __( 'Allow sidebars to be created and modified within the field', 'ultimate-fields' ) ),
+			Field::create( 'complex', 'sidebar_args', __( 'Arguments', 'ultimate-fields' ) )
 				->add_dependency( 'sidebar_editable' )
 				->add_fields(array(
 					Field::create( 'text', 'before_widget', 'before_widget' )

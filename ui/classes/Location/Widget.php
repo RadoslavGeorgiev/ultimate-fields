@@ -28,7 +28,7 @@ class Widget extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Widget', 'ultimate-fields-pro' );
+		return __( 'Widget', 'ultimate-fields' );
 	}
 
 	/**
@@ -52,13 +52,13 @@ class Widget extends Location {
 			$widgets[ get_class( $widget ) ] = $widget->name . ' <em>' . $description . '</em>';
 		}
 
-		$fields[] = Field::create( 'checkbox', 'show_on_all', __( 'Show on all widgets', 'ultimate-fields-pro' ) )
-			->set_description( __( 'Universally shows the fields on all widgets.', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'checkbox', 'show_on_all', __( 'Show on all widgets', 'ultimate-fields' ) )
+			->set_description( __( 'Universally shows the fields on all widgets.', 'ultimate-fields' ) )
 			->fancy();
 
-		$fields[] = Field::create( 'multiselect', 'widgets', __( 'Widgets', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'multiselect', 'widgets', __( 'Widgets', 'ultimate-fields' ) )
 			->add_options( $widgets )
-			->set_description( __( 'Check the widgets that you want to use the container with.', 'ultimate-fields-pro' ) )
+			->set_description( __( 'Check the widgets that you want to use the container with.', 'ultimate-fields' ) )
 			->set_input_type( 'checkbox' )
 			->add_dependency( 'show_on_all', '1', '!=' );
 

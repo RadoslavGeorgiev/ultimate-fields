@@ -15,10 +15,10 @@
 	</div>
 
 	<div class="uf-group-controls uf-layout-group-controls">
-		<a href="#" class="uf-group-control uf-layout-group-control uf-group-control-remove" title="<?php esc_attr_e( 'Remove', 'ultimate-fields-pro' ); ?>">
+		<a href="#" class="uf-group-control uf-layout-group-control uf-group-control-remove" title="<?php esc_attr_e( 'Remove', 'ultimate-fields' ); ?>">
 			<span class="dashicons dashicons-trash"></span>
 		</a>
-		<a href="#" class="uf-group-control uf-layout-group-control uf-group-control-popup" title="<?php esc_attr_e( 'Open overlay', 'ultimate-fields-pro' ); ?>">
+		<a href="#" class="uf-group-control uf-layout-group-control uf-group-control-popup" title="<?php esc_attr_e( 'Open overlay', 'ultimate-fields' ); ?>">
 			<span class="dashicons dashicons-edit"></span>
 		</a>
 	</div>

@@ -18,18 +18,18 @@ class Video extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Video', 'ultimate-fields-pro' );
+		return __( 'Video', 'ultimate-fields' );
 	}
 
 	public static function get_fields( $existing ) {
 		$general_fields = array(
-			Field::create( 'video', 'default_value_video', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'video', 'default_value_video', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		$output_fields = array(
-			Field::create( 'text', 'video_output_width', __( 'Width', 'ultimate-fields-pro' ) )
+			Field::create( 'text', 'video_output_width', __( 'Width', 'ultimate-fields' ) )
 				->set_default_value( '1280' ),
-			Field::create( 'text', 'video_output_height', __( 'Height', 'ultimate-fields-pro' ) )
+			Field::create( 'text', 'video_output_height', __( 'Height', 'ultimate-fields' ) )
 				->set_default_value( '720' )
 		);
 

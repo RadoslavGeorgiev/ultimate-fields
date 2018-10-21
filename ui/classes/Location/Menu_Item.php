@@ -28,7 +28,7 @@ class Menu_Item extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Menu item', 'ultimate-fields-pro' );
+		return __( 'Menu item', 'ultimate-fields' );
 	}
 
 	/**
@@ -41,15 +41,15 @@ class Menu_Item extends Location {
 		$fields = array();
 
 		if( $locations = get_registered_nav_menus() ) {
-			$fields[] = Field::create( 'multiselect', 'menu_locations', __( 'Theme Locations', 'ultimate-fields-pro' ) )
-				->set_description( __( 'If you want the container to only appear on menus, associated with specific locations, select them.', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'multiselect', 'menu_locations', __( 'Theme Locations', 'ultimate-fields' ) )
+				->set_description( __( 'If you want the container to only appear on menus, associated with specific locations, select them.', 'ultimate-fields' ) )
 				->set_input_type( 'checkbox' )
 				->add_options( $locations );
 		}
 
 		# Add specific levels
-		$fields[] = Field::create( 'complex' , 'levels', __( 'Levels', 'ultimate-fields-pro' ) )
-			->set_description( __( 'Enter as numbers, separated by commas.', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'complex' , 'levels', __( 'Levels', 'ultimate-fields' ) )
+			->set_description( __( 'Enter as numbers, separated by commas.', 'ultimate-fields' ) )
 			->add_fields(array(
 				Field::create( 'text', 'visible', 'Show on' )
 					->set_default_value( '0' )
@@ -60,10 +60,10 @@ class Menu_Item extends Location {
 			));
 
 		# Add a field for a popup
-		$fields[] = Field::create( 'checkbox', 'popup_mode', __( 'Popup mode', 'ultimate-fields-pro' ) )
-			->set_text( __( 'Show fields in a popup', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'checkbox', 'popup_mode', __( 'Popup mode', 'ultimate-fields' ) )
+			->set_text( __( 'Show fields in a popup', 'ultimate-fields' ) )
 			->fancy()
-			->set_description( __( 'If there are too many fields in the container or some of them do not fit, this will show them in a popup.', 'ultimate-fields-pro' ) );
+			->set_description( __( 'If there are too many fields in the container or some of them do not fit, this will show them in a popup.', 'ultimate-fields' ) );
 
 		return $fields;
 	}

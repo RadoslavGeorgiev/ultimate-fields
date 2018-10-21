@@ -121,12 +121,12 @@ class Video extends File {
 
 		# Add translations
 		ultimate_fields()
-			->localize( 'video-add-poster',    __( 'Add poster', 'ultimate-fields-pro' ) )
-			->localize( 'video-change-poster', __( 'Change poster', 'ultimate-fields-pro' ) )
-			->localize( 'video-remove-poster', __( 'Remove poster', 'ultimate-fields-pro' ) )
-			->localize( 'video-select-files',  __( 'Select videos', 'ultimate-fields-pro' ) )
-			->localize( 'clear',               __( 'Clear', 'ultimate-fields-pro' ) )
-			->localize( 'video-select-poster', __( 'Select poster', 'ultimate-fields-pro' ) );
+			->localize( 'video-add-poster',    __( 'Add poster', 'ultimate-fields' ) )
+			->localize( 'video-change-poster', __( 'Change poster', 'ultimate-fields' ) )
+			->localize( 'video-remove-poster', __( 'Remove poster', 'ultimate-fields' ) )
+			->localize( 'video-select-files',  __( 'Select videos', 'ultimate-fields' ) )
+			->localize( 'clear',               __( 'Clear', 'ultimate-fields' ) )
+			->localize( 'video-select-poster', __( 'Select poster', 'ultimate-fields' ) );
 	}
 
 	/**

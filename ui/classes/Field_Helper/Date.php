@@ -18,7 +18,7 @@ class Date extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Date', 'ultimate-fields-pro' );
+		return __( 'Date', 'ultimate-fields' );
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Date extends Field_Helper {
 	 */
 	public static function get_fields( $existing ) {
 		$fields = array(
-			Field::create( 'date', 'default_value_date', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'date', 'default_value_date', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		$output = array(

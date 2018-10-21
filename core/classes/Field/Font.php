@@ -78,18 +78,18 @@ class Font extends Field {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'select',            _x( 'Select', 'font', 'ultimate-fields-pro' ) )
-			->localize( 'cancel',            __( 'Cancel', 'ultimate-fields-pro' ) )
-			->localize( 'select-font',       __( 'Select font', 'ultimate-fields-pro' ) )
-			->localize( 'change-font',       __( 'Change font', 'ultimate-fields-pro' ) )
-			->localize( 'font-clear',        __( 'Clear choice', 'ultimate-fields-pro' ) )
-			->localize( 'font-preview-text', __( 'Preview Text', 'ultimate-fields-pro' ) )
-			->localize( 'font-search',       __( 'Search', 'ultimate-fields-pro' ) )
-			->localize( 'font-categories',   __( 'Categories', 'ultimate-fields-pro' ) )
-			->localize( 'font-subsets',      __( 'Subsets', 'ultimate-fields-pro' ) )
-			->localize( 'font-description',  __( 'Weight: %s, Style: %s', 'ultimate-fields-pro' ) )
-			->localize( 'font',              __( 'Font', 'ultimate-fields-pro' ) )
-			->localize( 'fonts',             __( 'Fonts', 'ultimate-fields-pro' ) );
+			->localize( 'select',            _x( 'Select', 'font', 'ultimate-fields' ) )
+			->localize( 'cancel',            __( 'Cancel', 'ultimate-fields' ) )
+			->localize( 'select-font',       __( 'Select font', 'ultimate-fields' ) )
+			->localize( 'change-font',       __( 'Change font', 'ultimate-fields' ) )
+			->localize( 'font-clear',        __( 'Clear choice', 'ultimate-fields' ) )
+			->localize( 'font-preview-text', __( 'Preview Text', 'ultimate-fields' ) )
+			->localize( 'font-search',       __( 'Search', 'ultimate-fields' ) )
+			->localize( 'font-categories',   __( 'Categories', 'ultimate-fields' ) )
+			->localize( 'font-subsets',      __( 'Subsets', 'ultimate-fields' ) )
+			->localize( 'font-description',  __( 'Weight: %s, Style: %s', 'ultimate-fields' ) )
+			->localize( 'font',              __( 'Font', 'ultimate-fields' ) )
+			->localize( 'fonts',             __( 'Fonts', 'ultimate-fields' ) );
 	}
 	
 	/**
@@ -161,13 +161,13 @@ class Font extends Field {
 			# Check for a specific HTTPs error.
 			foreach( $data->errors as $err ) {
 				if( __( 'There are no HTTP transports available which can complete the requested request.' ) == $err[ 0 ] ) {
-					$this->connection_error = __( "The list of fonts could not be loaded. Please verify that your server's PHP settings allow fetching data through the HTTPS protocol.", 'ultimate-fields-pro' );
+					$this->connection_error = __( "The list of fonts could not be loaded. Please verify that your server's PHP settings allow fetching data through the HTTPS protocol.", 'ultimate-fields' );
 				}
 			}
 
 			# Set a general error message
 			if( ! $this->connection_error ) {
-				$this->connection_error = __( 'Unfortunately the list of Google Fonts could not be loaded. Please make sure that the server has a working internet connection. The error is: ', 'ultimate-fields-pro' );
+				$this->connection_error = __( 'Unfortunately the list of Google Fonts could not be loaded. Please make sure that the server has a working internet connection. The error is: ', 'ultimate-fields' );
 
 				foreach( $data->errors as $err ) {
 					$this->connection_error .= $err[ 0 ];
@@ -237,7 +237,7 @@ class Font extends Field {
 		$settings = parent::export_field();
 
 		if( ! $this->get_api_key() ) {
-			$this->connection_error = __( 'You need to set a Google API Key for this field, otherwise fonts cannot be retreived.', 'ultimate-fields-pro' );
+			$this->connection_error = __( 'You need to set a Google API Key for this field, otherwise fonts cannot be retreived.', 'ultimate-fields' );
 		}
 
 		$settings = array_merge( $settings, array(
@@ -246,23 +246,23 @@ class Font extends Field {
 			'fonts'            => $this->get_fonts(),
 			'connection_error' => $this->connection_error,
 			'subsets'          => array(
-				'latin'        => __( 'Latin', 'ultimate-fields-pro' ),
-				'latin-ext'    => __( 'Latin Extended', 'ultimate-fields-pro' ),
-				'greek'        => __( 'Greek', 'ultimate-fields-pro' ),
-				'vietnamese'   => __( 'Vietnamese', 'ultimate-fields-pro' ),
-				'cyrillic-ext' => __( 'Cyrillic Extended', 'ultimate-fields-pro' ),
-				'cyrillic'     => __( 'Cyrillic', 'ultimate-fields-pro' ),
-				'khmer'        => __( 'Khmer', 'ultimate-fields-pro' ),
-				'greek-ext'    => __( 'Greek Extended', 'ultimate-fields-pro' ),
-				'telugu'       => __( 'Telugu', 'ultimate-fields-pro' ),
-				'devanagari'   => __( 'Devanagari', 'ultimate-fields-pro' ),
+				'latin'        => __( 'Latin', 'ultimate-fields' ),
+				'latin-ext'    => __( 'Latin Extended', 'ultimate-fields' ),
+				'greek'        => __( 'Greek', 'ultimate-fields' ),
+				'vietnamese'   => __( 'Vietnamese', 'ultimate-fields' ),
+				'cyrillic-ext' => __( 'Cyrillic Extended', 'ultimate-fields' ),
+				'cyrillic'     => __( 'Cyrillic', 'ultimate-fields' ),
+				'khmer'        => __( 'Khmer', 'ultimate-fields' ),
+				'greek-ext'    => __( 'Greek Extended', 'ultimate-fields' ),
+				'telugu'       => __( 'Telugu', 'ultimate-fields' ),
+				'devanagari'   => __( 'Devanagari', 'ultimate-fields' ),
 			),
 			'categories'       => array(
-				'serif'       => __( 'Serif', 'ultimate-fields-pro' ),
-				'sans-serif'  => __( 'Sans Serif', 'ultimate-fields-pro' ),
-				'display'     => __( 'Display', 'ultimate-fields-pro' ),
-				'handwriting' => __( 'Handwriting', 'ultimate-fields-pro' ),
-				'monospace'   => __( 'Monospace', 'ultimate-fields-pro' )
+				'serif'       => __( 'Serif', 'ultimate-fields' ),
+				'sans-serif'  => __( 'Sans Serif', 'ultimate-fields' ),
+				'display'     => __( 'Display', 'ultimate-fields' ),
+				'handwriting' => __( 'Handwriting', 'ultimate-fields' ),
+				'monospace'   => __( 'Monospace', 'ultimate-fields' )
 			)
 		));
 

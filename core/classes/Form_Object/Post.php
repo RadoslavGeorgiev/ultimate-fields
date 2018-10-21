@@ -153,13 +153,13 @@ class Post extends Form_Object {
 		$include = is_array( $include ) ? $include : array();
 
 		if( $all || in_array( 'post_title', $include ) )
-			$fields[] = Field::create( 'text', 'post_title', __( 'Title', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'text', 'post_title', __( 'Title', 'ultimate-fields' ) )
 				->required()
-				->set_validation_message( __( 'A the title is required!', 'ultimate-fields-pro' ) );
+				->set_validation_message( __( 'A the title is required!', 'ultimate-fields' ) );
 
 		if( $all || in_array( 'post_content', $include ) ) {
 			$field_type = user_can_richedit() ? 'wysiwyg' : 'textarea';
-			$fields[] = Field::create( $field_type, 'post_content', __( 'Content', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( $field_type, 'post_content', __( 'Content', 'ultimate-fields' ) );
 		}
 
 		$this->fields = $fields;

@@ -202,7 +202,7 @@ class Plugin_Updater {
 
 			if ( empty( $version_info->download_link ) ) {
 				printf(
-					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'ultimate-fields-pro' ),
+					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'ultimate-fields' ),
 					esc_html( $version_info->name ),
 					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
 					esc_html( $version_info->new_version ),
@@ -210,7 +210,7 @@ class Plugin_Updater {
 				);
 			} else {
 				printf(
-					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'ultimate-fields-pro' ),
+					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'ultimate-fields' ),
 					esc_html( $version_info->name ),
 					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
 					esc_html( $version_info->new_version ),
@@ -400,7 +400,7 @@ class Plugin_Updater {
 		}
 
 		if( ! current_user_can( 'update_plugins' ) ) {
-			wp_die( __( 'You do not have permission to install plugin updates', 'ultimate-fields-pro' ), __( 'Error', 'ultimate-fields-pro' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to install plugin updates', 'ultimate-fields' ), __( 'Error', 'ultimate-fields' ), array( 'response' => 403 ) );
 		}
 
 		$data         = $edd_plugin_data[ $_REQUEST['slug'] ];

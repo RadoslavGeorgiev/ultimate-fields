@@ -18,7 +18,7 @@ class Time extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Time', 'ultimate-fields-pro' );
+		return __( 'Time', 'ultimate-fields' );
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Time extends Field_Helper {
 	 */
 	public static function get_fields( $existing ) {
 		$fields = array(
-			Field::create( 'time', 'default_value_time', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'time', 'default_value_time', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		$output = array(

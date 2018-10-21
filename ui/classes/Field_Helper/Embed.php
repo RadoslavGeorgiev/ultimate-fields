@@ -18,12 +18,12 @@ class Embed extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Embed', 'ultimate-fields-pro' );
+		return __( 'Embed', 'ultimate-fields' );
 	}
 
 	public static function get_fields( $existing ) {
 		$general_fields = array(
-			Field::create( 'embed', 'default_value_embed', __( 'Default value', 'ultimate-fields-pro' ) ),
+			Field::create( 'embed', 'default_value_embed', __( 'Default value', 'ultimate-fields' ) ),
 		);
 
 		return array(

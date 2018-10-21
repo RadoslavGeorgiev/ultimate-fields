@@ -135,11 +135,11 @@ class Term extends Form_Object {
 	public function setup_fields( $include = 'all' ) {
 		$fields = new Fields_Collection;
 
-		$fields[] = Field::create( 'text', 'name', __( 'Title', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'text', 'name', __( 'Title', 'ultimate-fields' ) )
 			->required()
-			->set_validation_message( __( 'A the title is required!', 'ultimate-fields-pro' ) );
+			->set_validation_message( __( 'A the title is required!', 'ultimate-fields' ) );
 
-		$fields[] = Field::create( 'textarea', 'description', __( 'Content', 'ultimate-fields-pro' ) );
+		$fields[] = Field::create( 'textarea', 'description', __( 'Content', 'ultimate-fields' ) );
 
 		$this->fields = $fields;
 	}

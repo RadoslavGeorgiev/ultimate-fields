@@ -74,8 +74,8 @@ class Gallery extends File {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'gallery-select', _x( 'Select images', 'gallery', 'ultimate-fields-pro' ) )
-			->localize( 'gallery-remove', __( 'Remove all images', 'ultimate-fields-pro' ) );
+			->localize( 'gallery-select', _x( 'Select images', 'gallery', 'ultimate-fields' ) )
+			->localize( 'gallery-remove', __( 'Remove all images', 'ultimate-fields' ) );
 	}
 
 	/**

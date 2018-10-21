@@ -28,7 +28,7 @@ class Attachment extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Attachment', 'ultimate-fields-pro' );
+		return __( 'Attachment', 'ultimate-fields' );
 	}
 
 	/**
@@ -42,13 +42,13 @@ class Attachment extends Location {
 		$types = array_combine( $types, $types );
 
 		$fields = array(
-			Field::create( 'select', 'types', __( 'Types', 'ultimate-fields-pro' ) )
+			Field::create( 'select', 'types', __( 'Types', 'ultimate-fields' ) )
 				->add_options(array(
-					'all'      => __( 'Show on all files', 'ultimate-fields-pro' ),
-					'selected' => __( 'Show on selected MIME types', 'ultimate-fields-pro' )
+					'all'      => __( 'Show on all files', 'ultimate-fields' ),
+					'selected' => __( 'Show on selected MIME types', 'ultimate-fields' )
 				))
 				->set_input_type( 'radio' ) ,
-			Field::create( 'multiselect', 'mime_types', __( 'MIME types', 'ultimate-fields-pro' ) )
+			Field::create( 'multiselect', 'mime_types', __( 'MIME types', 'ultimate-fields' ) )
 				->add_options( $types )
 				->add_dependency( 'types', 'selected' )
 		);

@@ -659,14 +659,11 @@ class Core {
 	 * @return Ultimate_Fields\Fields_Collection
 	 */
 	public function settings_fields( $fields ) {
-		$fields[] = Field::create( 'section', 'general_settings', __( 'Ultimate Fields Pro', 'ultimate-fields-pro' ) )
-			->set_icon( 'dashicons dashicons-admin-generic' );
-
-		$fields[] = Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields-pro' ) )
-			->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields' ) )
+			->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) )
 			->set_icon( 'dashicons dashicons-list-view' );
-		$fields[] = Field::create( 'text', 'uf_google_maps_api_key', __( 'Google Maps API Key', 'ultimate-fields-pro' ) );
-		$fields[] = Field::create( 'text', 'uf_google_fonts_api_key', __( 'Google Fonts API Key', 'ultimate-fields-pro' ) );
+		$fields[] = Field::create( 'text', 'uf_google_maps_api_key', __( 'Google Maps API Key', 'ultimate-fields' ) );
+		$fields[] = Field::create( 'text', 'uf_google_fonts_api_key', __( 'Google Fonts API Key', 'ultimate-fields' ) );
 
 		return $fields;
 	}

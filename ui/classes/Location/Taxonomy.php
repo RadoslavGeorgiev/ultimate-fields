@@ -30,7 +30,7 @@ class Taxonomy extends Location {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Taxonomy', 'ultimate-fields-pro' );
+		return __( 'Taxonomy', 'ultimate-fields' );
 	}
 
 	/**
@@ -47,53 +47,53 @@ class Taxonomy extends Location {
 		$fields[] = Field::create( 'tab', 'basic_settings', __( 'Basic Settings' ) )
 			->set_icon( 'dashicons-admin-post' );
 
-		$fields[] = Field::create( 'radio', 'location_type', __( 'Location type', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'radio', 'location_type', __( 'Location type', 'ultimate-fields' ) )
 			->add_options(array(
-				'location' => __( 'Show the container based on a taxonomy and rules', 'ultimate-fields-pro' ),
-				'term'     => __( 'Show the container based on a particular term(s)', 'ultimate-fields-pro' )
+				'location' => __( 'Show the container based on a taxonomy and rules', 'ultimate-fields' ),
+				'term'     => __( 'Show the container based on a particular term(s)', 'ultimate-fields' )
 			));
 
 		# Start with the taxonomy itself
-		$fields[] = Field::create( 'multiselect', 'taxonomy', __( 'Taxonomy', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'multiselect', 'taxonomy', __( 'Taxonomy', 'ultimate-fields' ) )
 			->add_options( $t_options )
 			->set_input_type( 'checkbox' )
 			->add_dependency( 'location_type', 'location' )
-			->set_description( __( 'The container will be displayed only for the selected taxonomies.', 'ultimate-fields-pro' ) );
+			->set_description( __( 'The container will be displayed only for the selected taxonomies.', 'ultimate-fields' ) );
 
 		# Add specific levels
-		$fields[] = Field::create( 'complex' , 'levels', __( 'Levels', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'complex' , 'levels', __( 'Levels', 'ultimate-fields' ) )
 			->add_dependency( 'taxonomy', $hierarchical, 'contains' )
 			->add_dependency( 'location_type', 'location' )
-			->set_description( __( 'Enter as numbers, separated by commas.', 'ultimate-fields-pro' ) )
+			->set_description( __( 'Enter as numbers, separated by commas.', 'ultimate-fields' ) )
 			->add_fields(array(
-				Field::create( 'text', 'visible', __( 'Show on', 'ultimate-fields-pro' ) )
+				Field::create( 'text', 'visible', __( 'Show on', 'ultimate-fields' ) )
 					->set_width( 50 ),
-				Field::create( 'text', 'hidden', __( 'Hide on', 'ultimate-fields-pro' ) )
+				Field::create( 'text', 'hidden', __( 'Hide on', 'ultimate-fields' ) )
 					->set_width( 50 ),
 			));
 
-		$fields[] = Field::create( 'complex', 'terms', __( 'Term', 'ultimate-fields-pro' ) )
+		$fields[] = Field::create( 'complex', 'terms', __( 'Term', 'ultimate-fields' ) )
 			->add_dependency( 'location_type', 'term' )
-			->set_description( __( 'Select a term to use as a base for the rules of the location.', 'ultimate-fields-pro' ) )
+			->set_description( __( 'Select a term to use as a base for the rules of the location.', 'ultimate-fields' ) )
 			->add_fields(array(
-				Field::create( 'wp_object', 'term', __( 'Item', 'ultimate-fields-pro' ) )
+				Field::create( 'wp_object', 'term', __( 'Item', 'ultimate-fields' ) )
 					->add( 'terms' )
 					->set_width( 50 )
 					->hide_label(),
-				Field::create( 'select', 'operator', __( 'Operator', 'ultimate-fields-pro' ) )
+				Field::create( 'select', 'operator', __( 'Operator', 'ultimate-fields' ) )
 					->set_input_type( 'radio' )
 					->add_dependency( 'term', '', 'NOT_NULL' )
 					->add_options(array(
-						'is'     => __( 'is', 'ultimate-fields-pro' ),
-						'is_not' => __( 'is not', 'ultimate-fields-pro' )
+						'is'     => __( 'is', 'ultimate-fields' ),
+						'is_not' => __( 'is not', 'ultimate-fields' )
 					))
 					->set_width( 20 ),
-				Field::create( 'select', 'type', __( 'Item type', 'ultimate-fields-pro' ) )
+				Field::create( 'select', 'type', __( 'Item type', 'ultimate-fields' ) )
 					->set_input_type( 'radio' )
 					->add_dependency( 'term', '', 'NOT_NULL' )
 					->add_options(array(
-						'term'   => __( 'the current term', 'ultimate-fields-pro' ),
-						'parent' => __( 'the parent of the current term', 'ultimate-fields-pro' )
+						'term'   => __( 'the current term', 'ultimate-fields' ),
+						'parent' => __( 'the parent of the current term', 'ultimate-fields' )
 					))
 					->set_width( 30 )
 			));

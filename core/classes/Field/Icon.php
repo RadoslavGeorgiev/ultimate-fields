@@ -49,10 +49,10 @@ class Icon extends Field {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'change-icon', __( 'Change', 'ultimate-fields-pro' ) )
-			->localize( 'select-icon', __( 'Select icon', 'ultimate-fields-pro' ) )
-			->localize( 'remove-icon', __( 'Remove icon', 'ultimate-fields-pro' ) )
-			->localize( 'cancel',      __( 'Cancel', 'ultimate-fields-pro' ) );
+			->localize( 'change-icon', __( 'Change', 'ultimate-fields' ) )
+			->localize( 'select-icon', __( 'Select icon', 'ultimate-fields' ) )
+			->localize( 'remove-icon', __( 'Remove icon', 'ultimate-fields' ) )
+			->localize( 'cancel',      __( 'Cancel', 'ultimate-fields' ) );
 
 		# Add sets
 		foreach( $this->get_sets() as $set )

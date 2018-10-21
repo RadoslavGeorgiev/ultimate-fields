@@ -18,7 +18,7 @@ class Color extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Color', 'ultimate-fields-pro' );
+		return __( 'Color', 'ultimate-fields' );
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Color extends Field_Helper {
 	 */
 	public static function get_fields( $existing ) {
 		$fields = array(
-			Field::create( 'color', 'default_value_color', __( 'Default value', 'ultimate-fields-pro' ) )
+			Field::create( 'color', 'default_value_color', __( 'Default value', 'ultimate-fields' ) )
 		);
 
 		$output = array(

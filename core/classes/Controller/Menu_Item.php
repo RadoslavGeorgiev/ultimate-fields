@@ -167,8 +167,8 @@ class Menu_Item extends Controller {
 
 		# Localize
 		ultimate_fields()
-			->localize( 'menu-issues', __( 'Your data cannot be saved because some menu items contain errors. Please resolve them and try again.', 'ultimate-fields-pro' ) )
-			->localize( 'close-menu-item', _x( 'Close', 'menu-item', 'ultimate-fields-pro' ) );
+			->localize( 'menu-issues', __( 'Your data cannot be saved because some menu items contain errors. Please resolve them and try again.', 'ultimate-fields' ) )
+			->localize( 'close-menu-item', _x( 'Close', 'menu-item', 'ultimate-fields' ) );
 
 		# Attach translations
 		ultimate_fields()->l10n()->enqueue();

@@ -23,7 +23,7 @@
 
 <div class="uf-icon-sidebar">
 	<div class="uf-icon-search">
-		<input type="text" placeholder="<?php _e( 'Type to search', 'ultimate-fields-pro' ) ?>" class="uf-icon-search-input" />
+		<input type="text" placeholder="<?php _e( 'Type to search', 'ultimate-fields' ) ?>" class="uf-icon-search-input" />
 	</div>
 
 	<div class="uf-icon-current">

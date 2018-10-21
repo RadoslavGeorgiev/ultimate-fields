@@ -138,22 +138,22 @@ class User extends Form_Object {
 		$fields = new Fields_Collection;
 
 		if( $all || in_array( 'first_name', $include ) )
-			$fields[] = Field::create( 'text', 'first_name', __( 'First Name', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'text', 'first_name', __( 'First Name', 'ultimate-fields' ) );
 		if( $all || in_array( 'last_name', $include ) )
-			$fields[] = Field::create( 'text', 'last_name', __( 'Last Name', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'text', 'last_name', __( 'Last Name', 'ultimate-fields' ) );
 		if( $all || in_array( 'nickname', $include ) )
-			$fields[] = Field::create( 'text', 'nickname', __( 'Nickname', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'text', 'nickname', __( 'Nickname', 'ultimate-fields' ) );
 		if( ! $this->item && ( $all || in_array( 'email', $include ) ) )
-			$fields[] = Field::create( 'text', 'email', __( 'E-Mail', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'text', 'email', __( 'E-Mail', 'ultimate-fields' ) )
 				->required()
 				->set_validation_rule( Field\Text::VALIDATION_RULE_EMAIL )
 				->set_validation_callback( array( $this, 'validate_email' ) );
 		if( $all || in_array( 'password', $include ) )
-			$fields[] = Field::create( 'password', 'password', __( 'Password', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'password', 'password', __( 'Password', 'ultimate-fields' ) );
 		if( $all || in_array( 'url', $include ) )
-			$fields[] = Field::create( 'text', 'url', __( 'Website', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'text', 'url', __( 'Website', 'ultimate-fields' ) );
 		if( $all || in_array( 'description', $include ) )
-			$fields[] = Field::create( 'textarea', 'description', __( 'Biographical Info', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'textarea', 'description', __( 'Biographical Info', 'ultimate-fields' ) );
 
 		if( ! $this->item ) {
 			$fields[ 'password' ]->required();
@@ -178,12 +178,12 @@ class User extends Form_Object {
 
 		# Check the email
 		if( ! is_email( $value ) ) {
-			return __( 'Please enter a valid email address!', 'ultimate-fields-pro' );
+			return __( 'Please enter a valid email address!', 'ultimate-fields' );
 		}
 
 		# Check if the email has already been registered
 		if( (bool) get_user_by( 'email', $value ) ) {
-			return __( 'This email is already in use.', 'ultimate-fields-pro' );
+			return __( 'This email is already in use.', 'ultimate-fields' );
 		}
 
 		return false;

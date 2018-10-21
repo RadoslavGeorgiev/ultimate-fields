@@ -19,7 +19,7 @@ class Font extends Field_Helper {
 	 * @return string
 	 */
 	public static function get_title() {
-		return __( 'Font', 'ultimate-fields-pro' );
+		return __( 'Font', 'ultimate-fields' );
 	}
 
 	/**
@@ -34,11 +34,11 @@ class Font extends Field_Helper {
 		$fields  = array();
 
 		if( $api_key ) {
-			$fields[] = Field::create( 'font', 'default_value_font', __( 'Default value', 'ultimate-fields-pro' ) )
+			$fields[] = Field::create( 'font', 'default_value_font', __( 'Default value', 'ultimate-fields' ) )
 				->set_api_key( $api_key );
 		} else {
-			$fields[] = Field::create( 'message', 'font_api_key', __( 'Google Fonts API Key', 'ultimate-fields-pro' ) )
-				->set_description( __( 'You need to generate and enter an API key in order to use the font field. Please go to the settings page of Ultimate Fields and enter the key there. If no value is entered, the Google Fonts field will be ignored. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields-pro' ) );
+			$fields[] = Field::create( 'message', 'font_api_key', __( 'Google Fonts API Key', 'ultimate-fields' ) )
+				->set_description( __( 'You need to generate and enter an API key in order to use the font field. Please go to the settings page of Ultimate Fields and enter the key there. If no value is entered, the Google Fonts field will be ignored. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) );
 		}
 
 		return array(
