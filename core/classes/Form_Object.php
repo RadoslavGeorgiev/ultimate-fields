@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro;
+namespace Ultimate_Fields;
 
 /**
  * Handles objects that front-end forms work with.

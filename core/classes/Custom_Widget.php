@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro;
+namespace Ultimate_Fields;
 
 use WP_Widget;
 
