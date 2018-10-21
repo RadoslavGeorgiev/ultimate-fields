@@ -126,6 +126,8 @@ class Post_Type extends Location {
 		$this->set_and_unset( $args, array(
 			'show_after_title' => 'show_after_title'
 		));
+		
+		$this->check_args_for_customizer( $args );
 
 		parent::__construct( $args );
 	}
@@ -453,6 +455,9 @@ class Post_Type extends Location {
 		# Export columns
 		$this->export_column_data( $settings );
 
+		# Export customizable data
+		$this->export_customizable_data( $settings );
+
 		# Export location attributes
 		if( 'normal' != $this->context )  $settings[ 'context' ]  = $this->context;
 		if( 'high'   != $this->priority ) $settings[ 'priority' ] = $this->priority;
@@ -484,6 +489,9 @@ class Post_Type extends Location {
 
 		# Check for rest data
 		$this->import_rest_data( $args );
+
+		# Check for the customizer
+		$this->import_customizable_data( $args );
 	}
 
 	/**

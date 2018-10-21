@@ -77,6 +77,7 @@ class Core {
 		add_action( 'login_enqueue_scripts', array( $this, 'initialize_scripts' ), 12 );
 		add_action( 'after_setup_theme', array( $this, 'initialize' ), 999 );
 		add_filter( 'uf.field.class', array( $this, 'generate_field_class' ), 10, 2 );
+		add_filter( 'uf.settings.fields', array( $this, 'settings_fields' ) );
 
 		// Add some generic filters/actions
 		add_filter( 'uf.api.the_value', 'wp_kses_post', 5 );
@@ -268,24 +269,60 @@ class Core {
 	 * @since 3.0
 	 */
 	public function register_scripts() {
+		$src = 'https://maps.googleapis.com/maps/api/js?libraries=places';
+		if( $key = get_option( 'uf_google_maps_api_key' ) ) {
+			$src .= '&key=' . esc_attr( $key );
+		} else {
+			// Ensure that there is something to autoload, so additional queries can be avoided.
+			update_option( 'uf_google_maps_api_key', '', true );
+		}
+
+		/**
+		 * Allows the URL that is used for loading Google Maps to be modified.
+		 *
+		 * The field instance is also provided in case it's needed, but in most
+		 * cases this should be the same for all map fields.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $src The (script) source URL for the Google Maps API.
+		 */
+		$src = apply_filters( 'uf.field.map.api_url', $src );
+		wp_register_script( 'uf-gmaps', $src, array(), '3.27.9', true );
+		
 		// Prepare some shortcuts
-		$js = ULTIMATE_FIELDS_URL . 'js/';
-		$v  = ULTIMATE_FIELDS_VERSION;
+		$js     = ULTIMATE_FIELDS_URL . 'js/';
+		$assets = ULTIMATE_FIELDS_URL . 'assets/';
+		$v      = ULTIMATE_FIELDS_VERSION;
 
 		// Register vendor scripts and styles
 		wp_register_script( 'uf-select2', ULTIMATE_FIELDS_URL . 'assets/js/select2/select2.min.js', array( 'jquery' ), $v );
 		wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
+		wp_register_script( 'uf-timepicker', $assets . 'js/jquery-ui-timepicker-addon.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), $v );
 
 		// Register regular scripts
 		wp_register_script( 'uf-core',                $js . 'uf.js',                  array( 'jquery', 'underscore', 'backbone' ), $v );
 		wp_register_script( 'uf-datastore',           $js . 'datastore.js',           array( 'uf-core' ), $v );
 		wp_register_script( 'uf-dependencies',        $js . 'dependencies.js',        array( 'uf-core' ), $v );
 		wp_register_script( 'uf-overlay',             $js . 'overlay.js',             array( 'uf-core' ), $v );
+		wp_register_script( 'uf-pagination',            $js . 'pagination.js',             array( 'uf-core' ), $v );
+		wp_register_script( 'uf-shortcode',             $js . 'shortcode.js',              array( 'uf-core' ), $v );
 		wp_register_script( 'uf-container-layout',    $js . 'container-layout.js',    array( 'uf-core' ), $v );
 		wp_register_script( 'uf-container',           $js . 'container/base.js',      array( 'uf-core', 'uf-datastore', 'uf-container-layout' ), $v );
 		wp_register_script( 'uf-container-group',     $js . 'container/group.js',     array( 'uf-container', 'uf-overlay' ), $v );
 		wp_register_script( 'uf-container-post-type', $js . 'container/post-type.js', array( 'uf-container' ), $v );
 		wp_register_script( 'uf-container-options',   $js . 'container/options.js',   array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-layout-group',$js . 'container/layout-group.js', array( 'uf-container', 'uf-container-group', 'uf-overlay' ), $v );
+		wp_register_script( 'uf-container-taxonomy',    $js . 'container/taxonomy.js',     array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-user',        $js . 'container/user.js',         array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-comment',     $js . 'container/comment.js',      array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-widget',      $js . 'container/widget.js',       array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-customizer',  $js . 'container/customizer.js',   array( 'uf-container', 'customize-controls' ), $v );
+		wp_register_script( 'uf-container-attachment',  $js . 'container/attachment.js',   array( 'uf-container' ), $v );
+		wp_register_script( 'uf-container-menu',        $js . 'container/menu.js',         array( 'uf-container', 'uf-overlay' ), $v );
+		wp_register_script( 'uf-container-shortcode',   $js . 'container/shortcode.js',    array( 'uf-container', 'uf-shortcode', 'uf-overlay' ), $v );
+		wp_register_script( 'uf-container-front-end',   $js . 'container/front-end.js',    array( 'uf-container', 'uf-overlay' ), $v );
+		wp_register_script( 'uf-container-block',       $js . 'container/block.js',    array( 'uf-container', 'uf-overlay' ), $v );
 		wp_register_script( 'uf-field',               $js . 'field/base.js',          array( 'uf-core', 'uf-dependencies', 'jquery-ui-sortable' ), $v );
 		wp_register_script( 'uf-field-message',       $js . 'field/message.js',       array( 'uf-field' ), $v );
 		wp_register_script( 'uf-field-text',          $js . 'field/text.js',          array( 'uf-field' ), $v );
@@ -305,8 +342,28 @@ class Core {
 		wp_register_script( 'uf-field-number',        $js . 'field/number.js',        array( 'uf-field', 'jquery-ui-slider' ), $v );
 		wp_register_script( 'uf-field-repeater',      $js . 'field/repeater.js',      array( 'uf-field', 'uf-container-group', 'jquery-ui-sortable', 'jquery-ui-draggable', 'uf-overlay' ), $v );
 		wp_register_script( 'uf-field-complex',       $js . 'field/complex.js',       array( 'uf-field', 'uf-container-group' ), $v );
+		wp_register_script( 'uf-field-audio',           $js . 'field/audio.js',            array( 'uf-field', 'uf-field-file', 'mediaelement' ), $v );
+		wp_register_script( 'uf-field-video',           $js . 'field/video.js',            array( 'uf-field', 'uf-field-file', 'mediaelement' ), $v );
+		wp_register_script( 'uf-field-gallery',         $js . 'field/gallery.js',          array( 'uf-field', 'uf-field-file' ), $v );
+		wp_register_script( 'uf-field-color',           $js . 'field/color.js',            array( 'uf-field', 'wp-color-picker' ), $v );
+		wp_register_script( 'uf-field-date',            $js . 'field/date.js',             array( 'uf-field', 'jquery-ui-datepicker' ), $v );
+		wp_register_script( 'uf-field-time',            $js . 'field/time.js',             array( 'uf-field', 'uf-field-date', 'uf-timepicker' ), $v );
+		wp_register_script( 'uf-field-datetime',        $js . 'field/datetime.js',         array( 'uf-field', 'uf-field-date', 'uf-timepicker' ), $v );
+		wp_register_script( 'uf-field-font',            $js . 'field/font.js',             array( 'uf-field', 'uf-overlay', 'uf-pagination' ), $v );
+		wp_register_script( 'uf-field-icon',            $js . 'field/icon.js',             array( 'uf-field', 'uf-overlay', 'uf-tab' ), $v );
+		wp_register_script( 'uf-field-sidebar',         $js . 'field/sidebar.js',          array( 'uf-field' ), $v );
+		wp_register_script( 'uf-field-map',             $js . 'field/map.js',              array( 'uf-field', 'uf-gmaps' ), $v );
+		wp_register_script( 'uf-field-number',          $js . 'field/number.js',           array( 'uf-field', 'jquery-ui-slider' ), $v );
+		wp_register_script( 'uf-field-embed',           $js . 'field/embed.js',            array( 'uf-field' ), $v );
+		wp_register_script( 'uf-field-layout',          $js . 'field/layout.js',           array( 'uf-field', 'uf-field-repeater', 'uf-layout' ), $v );
 		wp_register_script( 'uf-tab',                 $js . 'tab.js',                 array( 'uf-field' ), $v );
 		wp_register_script( 'uf-initialize',          $js . 'initialize.js',          array( 'uf-core', 'uf-container', 'uf-field' ), $v );
+		wp_register_script( 'uf-shortcode',             $js . 'shortcode.js',              array( 'uf-core' ), $v );
+		wp_register_script( 'uf-layout',                $js . 'layout.js',                 array( 'uf-field', 'jquery-ui-sortable', 'uf-container-layout-group' ), $v );
+
+		// Footer scripts
+		wp_register_script( 'uf-customize-preview',     $js . 'customizer-front-end.js',   array( 'customize-preview' ), $v, true );
+		wp_register_script( 'uf-map-start',             $js . 'front-end/map.js',          array( 'jquery', 'uf-gmaps' ), $v, true );
 
 		// The admin-menu dependency is needed in the backend, in order to enqueue new styles after those of WordPress.
 		wp_register_style( 'ultimate-fields-css', ULTIMATE_FIELDS_URL . 'assets/css/ultimate-fields.css', array( 'admin-menu' ), ULTIMATE_FIELDS_VERSION );
@@ -591,5 +648,49 @@ class Core {
 		$this->l10n()->translate( $key, $string );
 
 		return $this;
+	}
+
+	/**
+	 * Modifies the fields for the settings page.
+	 *
+	 * @since 3.0
+	 *
+	 * @param Ultimate_Fields\Fields_Collection $fields The existing fields.
+	 * @return Ultimate_Fields\Fields_Collection
+	 */
+	public function settings_fields( $fields ) {
+		$fields[] = Field::create( 'section', 'general_settings', __( 'Ultimate Fields Pro', 'ultimate-fields-pro' ) )
+			->set_icon( 'dashicons dashicons-admin-generic' );
+
+		if( $this->is_composer() ) {
+			$message = __( 'A license key is not required, as Ultimate Fields has been installed through Composer and cannot be automatically updated.', 'ultimate-fields-pro' );
+			$fields[] = Field::create( 'message', 'uf_pro_message', __( 'License key', 'ultimate-fields-pro' ) )
+				->set_description( $message );
+		} else {
+			$fields[] = Field::create( 'text', 'uf_pro_key', __( 'License key', 'ultimate-fields-pro' ) )
+				->set_description( __( 'Enter your license key here to enable automatic updates.', 'ultimate-fields-pro' ) );
+
+			if( get_option( 'uf_pro_key' ) ) {
+				$fields[] = $status_field = Field::create( 'message', 'uf_pro_status', __( 'Status', 'ultimate-fields-pro' ) );
+
+				$status = get_option( 'uf_pro_license_status' );
+
+				if( $status['active'] ) {
+					$status_field->set_description( __( 'Your license is active and updates are enbled.', 'ultimate-fields-pro' ) )
+						->set_attr( 'class', 'uf-license-state uf-license-state-valid' );
+				} else {
+					$status_field->set_description( $status['message'] )
+						->set_attr( 'class', 'uf-license-state uf-license-state-invalid' );
+				}
+			}
+		}
+
+		$fields[] = Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields-pro' ) )
+			->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields-pro' ) )
+			->set_icon( 'dashicons dashicons-list-view' );
+		$fields[] = Field::create( 'text', 'uf_google_maps_api_key', __( 'Google Maps API Key', 'ultimate-fields-pro' ) );
+		$fields[] = Field::create( 'text', 'uf_google_fonts_api_key', __( 'Google Fonts API Key', 'ultimate-fields-pro' ) );
+
+		return $fields;
 	}
 }

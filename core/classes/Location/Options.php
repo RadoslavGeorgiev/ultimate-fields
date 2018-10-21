@@ -58,6 +58,7 @@ class Options extends Location {
 	 */
 	public function __construct( $page = null, $args = array() ) {
 		$this->page = $this->prepare_page( $page );
+		$this->check_args_for_customizer( $args );
 
 		# Send all arguments to the appropriate setter.
 		$this->arguments = $args;
@@ -279,6 +280,9 @@ class Options extends Location {
 		# Export REST data
 		$this->export_rest_data( $settings );
 
+		# Export customizable data
+		$this->export_customizable_data( $settings );
+
 		return $settings;
 	}
 
@@ -293,5 +297,8 @@ class Options extends Location {
 		if( isset( $args[ 'page' ] ) ) {
 			$this->page = $this->prepare_page( $args[ 'page' ] );
 		}
+		
+		# Check for the customizer
+		$this->import_customizable_data( $args );
 	}
 }

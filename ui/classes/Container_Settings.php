@@ -150,7 +150,15 @@ class Container_Settings {
 
 		return apply_filters( 'uf.ui.location_classes', array(
 			Location\Post_Type::class,
-			Location\Options_Page::class
+			Location\Options_Page::class,
+			Location\Customizer::class,
+			Location\Comment::class,
+			Location\Attachment::class,
+			Location\Menu_Item::class,
+			Location\Shortcode::class,
+			Location\Taxonomy::class,
+			Location\User::class,
+			Location\Widget::class,
 		));
 	}
 

@@ -78,17 +78,32 @@ class Field_Editor {
 
 		$this->add_type( 'files',      'File',         Field_Helper\File::class );
 		$this->add_type( 'files',      'Image', 	   Field_Helper\Image::class );
-		$this->add_type( 'others',     'Number',       Field_Helper\Number::class );
+		$this->add_type( 'files',      'Audio', 	   Field_Helper\Audio::class );
+		$this->add_type( 'files',      'Gallery',      Field_Helper\Gallery::class );
+		$this->add_type( 'files',      'Video', 	   Field_Helper\Video::class );
+		$this->add_type( 'files',      'Embed', 	   Field_Helper\Embed::class );
+		
 
 		$this->add_type( 'relational', 'WP_Object',    Field_Helper\WP_Object::class );
 		$this->add_type( 'relational', 'WP_Objects',   Field_Helper\WP_Objects::class );
 		$this->add_type( 'relational', 'Link', 	       Field_Helper\Link::class );
 
+		$this->add_type( 'others',     'Number',       Field_Helper\Number::class );
+		$this->add_type( 'others',     'Color',        Field_Helper\Color::class );
+		$this->add_type( 'others',     'Date',         Field_Helper\Date::class );
+		$this->add_type( 'others',     'Time',         Field_Helper\Time::class );
+		$this->add_type( 'others',     'Datetime',     Field_Helper\DateTime::class );
+		$this->add_type( 'others',     'Font',         Field_Helper\Font::class );
+		$this->add_type( 'others',     'Icon',         Field_Helper\Icon::class );
+		$this->add_type( 'others',     'Map',          Field_Helper\Map::class );
+		$this->add_type( 'others',     'Sidebar',      Field_Helper\Sidebar::class );
+		
 		$this->add_type( 'advanced',   'Tab',          Field_Helper\Tab::class );
 		$this->add_type( 'advanced',   'Section',      Field_Helper\Section::class );
 		$this->add_type( 'advanced',   'Message',      Field_Helper\Message::class );
 		$this->add_type( 'advanced',   'Complex',      Field_Helper\Complex::class );
 		$this->add_type( 'advanced',   'Repeater',     Field_Helper\Repeater::class );
+		$this->add_type( 'advanced',   'Layout',       Field_Helper\Layout::class );
 
 		/**
 		 * Allows the fields from the UI to be changed.
