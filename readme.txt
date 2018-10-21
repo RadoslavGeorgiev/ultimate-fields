@@ -15,12 +15,11 @@ Easy and powerful custom fields management: Post Meta, Options Pages, Repeaters 
 
 With Ultimate Fields you can easily create fields in the admin. Those fields can be displayed when you are editing a post or page (any post type actually) or in an options page (ex. Theme Options) anywhere in the admin.
 
-Please visit [https://www.ultimate-fields.com/](https://www.ultimate-fields.com/) for more details.
+Please visit [https://github.com/RadoslavGeorgiev/ultimate-fields](https://github.com/RadoslavGeorgiev/ultimate-fields) for more details.
 
 = Features =
 * Easy to use.
 * Various field types (listed below)
-* Support for Post Type and Options Page as locations for fields. All locations have advanced placement rules, in order to only show them when needed.
 * WYSIWYG Field Creation
 * Focused on developers: A clean object-oriented API allows you to cleanly define all of your fields through code.
 * Perfected tabs, alignment and styles
@@ -33,26 +32,30 @@ Please visit [https://www.ultimate-fields.com/](https://www.ultimate-fields.com/
 * Integration with WordPress SEO for automatic field content ratings
 * Clean styles: Ultimate Fields follows WordPress' built in styles as much as possible and provides a seamless experience. It's even fully responsive.
 * Full-featured interface for data loading
+* Front-end forms
+
+= Locations =
+
+All locations have advanced placement rules, which allow them to only appear when really necessary.
+
+* Post Type
+* Options Page
+* Customizer
+* Comment
+* Attachment
+* Menu Item
+* Shortcode
+* Taxonomy
+* User
+* Widget
 
 = Fields =
-* Text
-* Textarea
-* WYSIWYG Editor
-* Password
-* Number
-* Checkbox
-* Select
-* Multiselect
-* Image-Select (a visual select)
-* File
-* Image
-* WP Object (for selection of an object among posts, terms and users)
-* WP Objects (for multiple objects)
-* Link
-* Section
-* Tab
-* Complex
-* Repeater
+* __Text:__ Text, Textarea, WYSIWYG, and Password
+* __Choices:__ Checkbox, Select, Multiselect, and Image Select
+* __Files:__ File, Image, Audio, Gallery, Video, and Embed
+* __Relational:__ WP_Object, WP_Objects, and Link
+* __Others:__ Number, Color, Date, Time, Datetime, Font, Icon, Map, and Sidebar
+* __Advanced:__ Tab, Section, Message, Complex, __Repeater__, and Layout
 
 = Repeaters =
 Repeaters can be used to add repeatable groups of fields. You can combine a text and a file field into a Slide group and allow the user to add as many slides as he needs. The value is saved in a single field!
@@ -84,6 +87,39 @@ Please make sure to check out [the documentation on our website](https://www.ult
 This is a complete rewrite of the plugin with renewed interface and various new functions. After upgrade, you will be required to migrate your containers to the format of the new version. Important: There are no immediate modifications of field values and the old container format will be stored in case you need to revert.
 
 == Changelog ==
+
+= 3.1 Merge with Ultimate Fields Pro =
+
+This version brings the functionality of Ultimate Fields Pro to Ultimate Fields. This includes:
+
+__Locations:__
+
+* The Customizer
+* Attachment
+* Comment
+* Menu
+* Shortcode
+* Taxonomy
+* User
+* Widget
+
+__Fields:__
+
+* Gallery
+* Audio
+* Video
+* Embed
+* Date
+* Time
+* Date-Time
+* Color
+* Font
+* Icon
+* Map
+* Sidebar
+* Layout
+
+Additionally, Front-End Forms are also now available.
 
 = 3.0.2 Bugfix Release with a couple of small features =
 

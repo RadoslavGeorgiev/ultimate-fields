@@ -29,15 +29,9 @@ class Section extends Field_Helper {
 	 * @return mixed[]
 	 */
 	public static function get_fields() {
-		if( defined( 'ULTIMATE_FIELDS_PRO' ) && ULTIMATE_FIELDS_PRO ) {
-			$icon = Field::create( 'icon', 'section_icon', __( 'Icon', 'ultimate-fields' ) )
-				->add_set( 'dashicons' );
-		} else {
-			$icon = Field::create( 'text', 'section_icon', __( 'Icon', 'ultimate-fields' ) );
-		}
-
 		$fields = array(
-			$icon,
+			Field::create( 'icon', 'section_icon', __( 'Icon', 'ultimate-fields' ) )
+				->add_set( 'dashicons' ),
 			Field::create( 'select', 'section_color', __( 'Color', 'ultimate-fields' ) )
 				->set_input_type( 'radio' )
 				->set_default_value( 'white' )

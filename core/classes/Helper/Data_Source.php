@@ -164,7 +164,13 @@ class Data_Source {
 		$classes = apply_filters( 'uf.data_api.datastore_classes', array(
 			Datastore\Post_Meta::class,
 			Datastore\Options::class,
-			Datastore\Network_Options::class
+			Datastore\Network_Options::class,
+			Datastore\Term_Meta::class,
+			Datastore\User_Meta::class,
+			Datastore\Widget::class,
+			Datastore\Shortcode::class,
+			Datastore\Comment_Meta::class,
+			Datastore\Gutenberg_Block::class,
 		));
 
 		# Go through each class and check for keywords

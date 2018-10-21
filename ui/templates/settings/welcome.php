@@ -146,30 +146,9 @@
 
 	<hr>
 
-	<?php if ( ! defined( 'ULTIMATE_FIELDS_PRO' ) ): ?>
-	<div class="uf-welcome-section">
-		<img src="<?php echo ULTIMATE_FIELDS_UI_URL ?>assets/images/layout-field.png" alt="Repeater Tabs" width="460" class="uf-welcome-image" />
-
-		<h2><?php _e( 'Ultimate Fields Pro', 'ultimate-fields' ) ?></h2>
-		<p><strong><?php _e( 'More Locations and Fields, Front-end Forms &amp; Faster Support', 'ultimate-fields' ) ?></strong></p>
-		<p><?php _e( 'Read more about it on the official page.', 'ultimate-fields' ) ?></p>
-
-		<a href="https://www.ultimate-fields.com/pro/" target="_blank" class="button-primary"><?php _e( 'Read More', 'ultimate-fields' ) ?> &raquo;</a>
-
-		<div class="clearfix"></div>
-	</div>
-
-	<hr />
-	<?php endif ?>
-
 	<div class="uf-welcome-section">
 		<p>
 			<a href="<?php echo admin_url( 'post-new.php?post_type=ultimate-fields&demo' ) ?>" class="button button-hero button-primary"><?php _e( 'Create your first container', 'ultimate-fields' ) ?></a>
-			&nbsp;
-
-			<?php if ( ! defined( 'ULTIMATE_FIELDS_PRO' ) ): ?>
-				<a href="https://www.ultimate-fields.com/pro/" class="button button-hero button-secondary" target="_blank"><?php _e( 'Get Ultimate Fields Pro', 'ultimate-fields' ) ?></a>
-			<?php endif; ?>
 		</p>
 	</div>
 </div>

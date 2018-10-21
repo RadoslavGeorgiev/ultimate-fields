@@ -171,10 +171,6 @@ abstract class Location {
 	 * @param mixed[]      $data     The data that will setup the location.
 	 */
 	protected static function setup_location_customizer( $location, &$data ) {
-		if( ! defined( 'ULTIMATE_FIELDS_PRO' ) || ! ULTIMATE_FIELDS_PRO ) {
-			return;
-		}
-
 		if( ! isset( $data[ 'show_in_customizer' ] ) || ! $data[ 'show_in_customizer' ] )
 			return;
 
@@ -193,10 +189,6 @@ abstract class Location {
 	 * @return Ultimate_Fields\Field[]
 	 */
 	protected static function get_customizer_fields() {
-		if( ! defined( 'ULTIMATE_FIELDS_PRO' ) || ! ULTIMATE_FIELDS_PRO ) {
-			return array();
-		}
-
 		$fields = array();
 
 		$fields[] = Field::create( 'tab', 'customizer', __( 'Customizer', 'ultimate-fields' ) )
