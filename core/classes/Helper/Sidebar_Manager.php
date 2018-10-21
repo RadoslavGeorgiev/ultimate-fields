@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Helper;
+namespace Ultimate_Fields\Helper;
 
 /**
  * Allows global sidebar settings based on field names.

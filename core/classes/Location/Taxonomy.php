@@ -1,10 +1,10 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Controller\Taxonomy as Controller;
-use Ultimate_Fields\Pro\Datastore\Term_Meta as Datastore;
-use Ultimate_Fields\Pro\Form_Object\Term as Form_Object;
+use Ultimate_Fields\Controller\Taxonomy as Controller;
+use Ultimate_Fields\Datastore\Term_Meta as Datastore;
+use Ultimate_Fields\Form_Object\Term as Form_Object;
 use Ultimate_Fields\Helper\Data_Source;
 use Ultimate_Fields\Helper\Util;
 use Ultimate_Fields\Helper\Callback;
@@ -268,7 +268,7 @@ class Taxonomy extends Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

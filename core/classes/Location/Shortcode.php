@@ -1,9 +1,9 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Controller\Shortcode as Controller;
-use Ultimate_Fields\Pro\Datastore\Shortcode as Datastore;
+use Ultimate_Fields\Controller\Shortcode as Controller;
+use Ultimate_Fields\Datastore\Shortcode as Datastore;
 use Ultimate_Fields\Helper\Data_Source;
 
 /**

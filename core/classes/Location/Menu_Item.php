@@ -1,8 +1,8 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Controller\Menu_Item as Controller;
+use Ultimate_Fields\Controller\Menu_Item as Controller;
 use Ultimate_Fields\Datastore\Post_Meta as Datastore;
 use Ultimate_Fields\Helper\Data_Source;
 

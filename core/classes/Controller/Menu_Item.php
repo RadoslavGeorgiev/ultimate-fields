@@ -1,11 +1,11 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
 use Ultimate_Fields\Datastore\Post_Meta as Datastore;
-use Ultimate_Fields\Pro\Helper\Menu_Walker;
-use Ultimate_Fields\Pro\Location\Menu_Item as Menu_Item_Location;
+use Ultimate_Fields\Helper\Menu_Walker;
+use Ultimate_Fields\Location\Menu_Item as Menu_Item_Location;
 
 /**
  * Handles containers in menus.

@@ -1,9 +1,9 @@
 <?php
-namespace Ultimate_Fields\Pro\Field;
+namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Template;
-use Ultimate_Fields\Pro\Helper\Sidebar_Manager;
+use Ultimate_Fields\Helper\Sidebar_Manager;
 
 /**
  * Allows users to select and eventually manage custom sidebars.

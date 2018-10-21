@@ -6,7 +6,7 @@ use Ultimate_Fields\Options_Page;
 use Ultimate_Fields\Controller\Options as Controller;
 use Ultimate_Fields\Datastore\Options as Datastore;
 use Ultimate_Fields\Datastore\Network_Options as Network_Datastore;
-use Ultimate_Fields\Pro\Form_Object\Options as Form_Object;
+use Ultimate_Fields\Form_Object\Options as Form_Object;
 use Ultimate_Fields\Helper\Data_Source;
 
 /**
@@ -15,6 +15,8 @@ use Ultimate_Fields\Helper\Data_Source;
  * @since 3.0
  */
 class Options extends Location {
+	use Customizable;
+	
 	/**
 	 * Holds the admin page for the location.
 	 *
@@ -239,7 +241,7 @@ class Options extends Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

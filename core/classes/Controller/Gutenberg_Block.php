@@ -1,13 +1,13 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
 use Ultimate_Fields\Helper\Callback;
 use Ultimate_Fields\Location;
 use Ultimate_Fields\Container;
-use Ultimate_Fields\Pro\Datastore\Gutenberg_Block as Datastore;
-use Ultimate_Fields\Pro\Location\Gutenberg_Block as Block_Location;
+use Ultimate_Fields\Datastore\Gutenberg_Block as Datastore;
+use Ultimate_Fields\Location\Gutenberg_Block as Block_Location;
 
 /**
  * Controls the addition of Gutenberg blocks to Gutenberg.

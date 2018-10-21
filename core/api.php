@@ -317,7 +317,7 @@ function the_group_width() {
  * @param mixed[] $args Arguments for displaying the containers/forms.
  */
 function uf_head( $args = array() ) {
-	return Ultimate_Fields\Pro\Form::instance()->head( $args );
+	return Ultimate_Fields\Form::instance()->head( $args );
 }
 
 /**
@@ -327,6 +327,6 @@ function uf_head( $args = array() ) {
  * @since 3.0
  */
 function uf_form() {
-	return Ultimate_Fields\Pro\Form::instance()->form();
+	return Ultimate_Fields\Form::instance()->form();
 }
 

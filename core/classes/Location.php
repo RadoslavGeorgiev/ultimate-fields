@@ -505,7 +505,7 @@ abstract class Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

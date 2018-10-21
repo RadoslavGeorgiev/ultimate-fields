@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Container;
+namespace Ultimate_Fields\Container;
 
 use Ultimate_Fields\Container\Repeater_Group;
 

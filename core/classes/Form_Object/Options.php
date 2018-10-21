@@ -1,7 +1,7 @@
 <?php
-namespace Ultimate_Fields\Pro\Form_Object;
+namespace Ultimate_Fields\Form_Object;
 
-use Ultimate_Fields\Pro\Form_Object;
+use Ultimate_Fields\Form_Object;
 use Ultimate_Fields\Datastore\Options as Datastore;
 
 /**

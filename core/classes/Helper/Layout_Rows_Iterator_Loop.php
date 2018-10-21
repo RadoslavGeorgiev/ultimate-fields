@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Helper;
+namespace Ultimate_Fields\Helper;
 
 /**
  * Handles the iterations over layout rows.

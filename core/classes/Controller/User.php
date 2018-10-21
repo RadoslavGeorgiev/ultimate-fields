@@ -1,12 +1,12 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
-use Ultimate_Fields\Pro\Datastore\User_Meta as Datastore;
+use Ultimate_Fields\Datastore\User_Meta as Datastore;
 use Ultimate_Fields\Data_API;
 use WP_User;
-use Ultimate_Fields\Pro\Location\User as User_Location;
+use Ultimate_Fields\Location\User as User_Location;
 use Ultimate_Fields\Controller\REST_API;
 use Ultimate_Fields\Controller\Admin_Column_Manager;
 

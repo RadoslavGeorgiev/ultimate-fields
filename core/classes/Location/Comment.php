@@ -1,11 +1,11 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Controller\Comment as Controller;
-use Ultimate_Fields\Pro\Form_Object\Comment as Form_Object;
+use Ultimate_Fields\Controller\Comment as Controller;
+use Ultimate_Fields\Form_Object\Comment as Form_Object;
 use Ultimate_Fields\Helper\Data_Source;
-use Ultimate_Fields\Pro\Datastore\Comment_Meta as Datastore;
+use Ultimate_Fields\Datastore\Comment_Meta as Datastore;
 
 /**
  * Works as a location definition for comments within containers.
@@ -201,7 +201,7 @@ class Comment extends Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\UI\Location;
+namespace Ultimate_Fields\UI\Location;
 
 use Ultimate_Fields\UI\Location;
 use Ultimate_Fields\Field;

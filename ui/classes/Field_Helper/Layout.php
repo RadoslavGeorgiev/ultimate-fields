@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\UI\Field_Helper;
+namespace Ultimate_Fields\UI\Field_Helper;
 
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Template;

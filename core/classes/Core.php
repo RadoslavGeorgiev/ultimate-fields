@@ -662,29 +662,6 @@ class Core {
 		$fields[] = Field::create( 'section', 'general_settings', __( 'Ultimate Fields Pro', 'ultimate-fields-pro' ) )
 			->set_icon( 'dashicons dashicons-admin-generic' );
 
-		if( $this->is_composer() ) {
-			$message = __( 'A license key is not required, as Ultimate Fields has been installed through Composer and cannot be automatically updated.', 'ultimate-fields-pro' );
-			$fields[] = Field::create( 'message', 'uf_pro_message', __( 'License key', 'ultimate-fields-pro' ) )
-				->set_description( $message );
-		} else {
-			$fields[] = Field::create( 'text', 'uf_pro_key', __( 'License key', 'ultimate-fields-pro' ) )
-				->set_description( __( 'Enter your license key here to enable automatic updates.', 'ultimate-fields-pro' ) );
-
-			if( get_option( 'uf_pro_key' ) ) {
-				$fields[] = $status_field = Field::create( 'message', 'uf_pro_status', __( 'Status', 'ultimate-fields-pro' ) );
-
-				$status = get_option( 'uf_pro_license_status' );
-
-				if( $status['active'] ) {
-					$status_field->set_description( __( 'Your license is active and updates are enbled.', 'ultimate-fields-pro' ) )
-						->set_attr( 'class', 'uf-license-state uf-license-state-valid' );
-				} else {
-					$status_field->set_description( $status['message'] )
-						->set_attr( 'class', 'uf-license-state uf-license-state-invalid' );
-				}
-			}
-		}
-
 		$fields[] = Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields-pro' ) )
 			->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields-pro' ) )
 			->set_icon( 'dashicons dashicons-list-view' );

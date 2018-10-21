@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 /**
  * A trait that is shared between all locations, which can be shown in

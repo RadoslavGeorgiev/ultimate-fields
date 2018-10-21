@@ -1,9 +1,9 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Controller\Gutenberg_Block as Controller;
-use Ultimate_Fields\Pro\Datastore\Gutenberg_Block as Datastore;
+use Ultimate_Fields\Controller\Gutenberg_Block as Controller;
+use Ultimate_Fields\Datastore\Gutenberg_Block as Datastore;
 use Ultimate_Fields\Helper\Data_Source;
 
 /**

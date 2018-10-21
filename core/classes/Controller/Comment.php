@@ -1,12 +1,12 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
 use Ultimate_Fields\Helper\Callback;
 use Ultimate_Fields\Data_API;
-use Ultimate_Fields\Pro\Datastore\Comment_Meta as Datastore;
-use Ultimate_Fields\Pro\Location\Comment as Comment_Location;
+use Ultimate_Fields\Datastore\Comment_Meta as Datastore;
+use Ultimate_Fields\Location\Comment as Comment_Location;
 use Ultimate_Fields\Controller\REST_API;
 
 /**

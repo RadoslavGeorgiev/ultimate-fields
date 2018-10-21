@@ -1,11 +1,11 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
 use Ultimate_Fields\Data_API;
 use Ultimate_Fields\Datastore\Post_Meta as Datastore;
-use Ultimate_Fields\Pro\Location\Attachment as Attachment_Location;
+use Ultimate_Fields\Location\Attachment as Attachment_Location;
 use Ultimate_Fields\Controller\REST_API;
 
 /**

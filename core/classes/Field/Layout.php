@@ -1,14 +1,14 @@
 <?php
-namespace Ultimate_Fields\Pro\Field;
+namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Field\Repeater;
 use Ultimate_Fields\Template;
-use Ultimate_Fields\Pro\Container\Layout_Group;
+use Ultimate_Fields\Container\Layout_Group;
 use Ultimate_Fields\Datastore\Group as Group_Datastore;
 use Ultimate_Fields\Helper\Groups_Iterator;
-use Ultimate_Fields\Pro\Helper\Layout_Group_Values;
-use Ultimate_Fields\Pro\Helper\Layout_Rows_Iterator;
+use Ultimate_Fields\Helper\Layout_Group_Values;
+use Ultimate_Fields\Helper\Layout_Rows_Iterator;
 
 /**
  * Extends the repeater field by introducing the concept of columns.

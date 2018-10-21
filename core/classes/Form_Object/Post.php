@@ -1,7 +1,7 @@
 <?php
-namespace Ultimate_Fields\Pro\Form_Object;
+namespace Ultimate_Fields\Form_Object;
 
-use Ultimate_Fields\Pro\Form_Object;
+use Ultimate_Fields\Form_Object;
 use Ultimate_Fields\Datastore\Post_Meta as Datastore;
 use Ultimate_Fields\Datastore\Values;
 use Ultimate_Fields\Field;

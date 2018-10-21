@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Datastore;
+namespace Ultimate_Fields\Datastore;
 
 use Ultimate_Fields\Datastore;
 

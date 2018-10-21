@@ -1,10 +1,10 @@
 <?php
-namespace Ultimate_Fields\Pro\Location;
+namespace Ultimate_Fields\Location;
 
 use Ultimate_Fields\Location;
-use Ultimate_Fields\Pro\Datastore\User_Meta as Datastore;
-use Ultimate_Fields\Pro\Controller\User as Controller;
-use Ultimate_Fields\Pro\Form_Object\User as Form_Object;
+use Ultimate_Fields\Datastore\User_Meta as Datastore;
+use Ultimate_Fields\Controller\User as Controller;
+use Ultimate_Fields\Form_Object\User as Form_Object;
 use Ultimate_Fields\Helper\Data_Source;
 use Ultimate_Fields\Location\Supports_Columns;
 
@@ -212,7 +212,7 @@ class User extends Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

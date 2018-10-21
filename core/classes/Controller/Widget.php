@@ -1,10 +1,10 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
-use Ultimate_Fields\Pro\Datastore\Widget as Datastore;
-use Ultimate_Fields\Pro\Location\Widget as Widget_Location;
+use Ultimate_Fields\Datastore\Widget as Datastore;
+use Ultimate_Fields\Location\Widget as Widget_Location;
 
 /**
  * Handles containers within widgets.

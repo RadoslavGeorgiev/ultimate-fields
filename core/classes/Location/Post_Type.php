@@ -4,7 +4,7 @@ namespace Ultimate_Fields\Location;
 use Ultimate_Fields\Location;
 use Ultimate_Fields\Controller\Post_Type as Controller;
 use Ultimate_Fields\Datastore\Post_Meta as Datastore;
-use Ultimate_Fields\Pro\Form_Object\Post as Form_Object;
+use Ultimate_Fields\Form_Object\Post as Form_Object;
 use Ultimate_Fields\Helper\Callback;
 use Ultimate_Fields\Helper\Data_Source;
 use Ultimate_Fields\Helper\Util;
@@ -16,7 +16,7 @@ use Ultimate_Fields\Admin_Column;
  * @since 3.0
  */
 class Post_Type extends Location {
-	use Supports_Columns;
+	use Supports_Columns, Customizable;
 
 	/**
 	 * Holds the post types for the location.
@@ -622,7 +622,7 @@ class Post_Type extends Location {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check.
+	 * @param Ultimate_Fields\Form_Object $object The object to check.
 	 * @return bool
 	 */
 	public function works_with_object( $object ) {

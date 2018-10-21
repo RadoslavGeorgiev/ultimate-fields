@@ -1,5 +1,5 @@
 <?php
-namespace Ultimate_Fields\Pro\Field;
+namespace Ultimate_Fields\Field;
 
 use Ultimate_Fields\Field\File;
 

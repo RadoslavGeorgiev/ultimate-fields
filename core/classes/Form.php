@@ -37,7 +37,7 @@ class Form {
 	 * Holds the object that is active and being edited.
 	 *
 	 * @since 3.0
-	 * @var Ultimate_Fields\Pro\Form_Object
+	 * @var Ultimate_Fields\Form_Object
 	 */
 	protected $object;
 
@@ -409,7 +409,7 @@ class Form {
 		 *
 		 * @param Ultimate_Fields\Fields_Collection $fields The collection with all object-native fields,
 		 *                                      which will be used within the form.
-		 * @param Ultimate_Fields\Pro\Form_Object       $object The object whose fields are displayed.
+		 * @param Ultimate_Fields\Form_Object       $object The object whose fields are displayed.
 		 * @param Ultimate_Fields\Form              $form   The form that will display the messages.
 		 * @return Ultimate_Fields\Fields_Collection
 		 */

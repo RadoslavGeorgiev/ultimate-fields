@@ -1,12 +1,12 @@
 <?php
-namespace Ultimate_Fields\Pro\Controller;
+namespace Ultimate_Fields\Controller;
 
 use Ultimate_Fields\Controller;
 use Ultimate_Fields\Template;
-use Ultimate_Fields\Pro\Helper\Customize_Control;
+use Ultimate_Fields\Helper\Customize_Control;
 use Ultimate_Fields\Helper\Callback;
 use Ultimate_Fields\Helper\Data_Source;
-use Ultimate_Fields\Pro\Location\Options as Options_Location;
+use Ultimate_Fields\Location\Options as Options_Location;
 
 /**
  * Handles the user location.
