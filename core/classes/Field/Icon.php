@@ -136,7 +136,7 @@ class Icon extends Field {
 		}
 
 		// Continue looking for a file
-		$path = ULTIMATE_FIELDS_PRO_DIR . 'assets/json/' . $name . '.json';
+		$path = ULTIMATE_FIELDS_DIR . 'assets/json/' . $name . '.json';
 
 		/**
 		 * Allows the path for the JSON of an icon set to be overloaded.

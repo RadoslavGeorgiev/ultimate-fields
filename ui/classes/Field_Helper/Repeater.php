@@ -89,15 +89,6 @@ class Repeater extends Field_Helper {
 			));
 		}
 
-		if( defined( 'ULTIMATE_FIELDS_PRO' ) && ULTIMATE_FIELDS_PRO ) {
-			$color_type = 'color';
-			$icon_field = Field::create( 'icon', 'icon', __( 'Icon', 'ultimate-fields' ) )
-				->add_set( 'dashicons' );
-		} else {
-			$color_type = 'text';
-			$icon_field = Field::create( 'text', 'icon', __( 'Icon', 'ultimate-fields' ) );
-		}
-
 		# Add the rest of the generic fields
 		$fields = array_merge( $fields, array(
 			Field::create( 'select', 'edit_mode', __( 'Edit Mode', 'ultimate-fields' ) )
@@ -122,21 +113,22 @@ class Repeater extends Field_Helper {
 				->set_description( __( 'Grid elements support field widths, while row elements always occupy an entire row.', 'ultimate-fields' ) ),
 			Field::create( 'textarea', 'description', __( 'Description', 'ultimate-fields' ) )
 				->set_rows( 4 ),
-			Field::create( $color_type, 'border_color', __( 'Border Color', 'ultimate-fields' ) )
+			Field::create( 'color', 'border_color', __( 'Border Color', 'ultimate-fields' ) )
 				->set_default_value( '#dddddd' )
 				->set_description( __( 'Surround the whole group.', 'ultimate-fields' ) ),
 			Field::create( 'complex', 'title_style', __( 'Title-bar style', 'ultimate-fields' ) )
 				->set_description( __( 'Visible even when closed', 'ultimate-fields' ) )
 				->merge()
 				->add_fields(array(
-					Field::create( $color_type, 'title_background', __( 'Background', 'ultimate-fields' ) )
+					Field::create( 'color', 'title_background', __( 'Background', 'ultimate-fields' ) )
 						->set_width( 50 )
 						->set_default_value( '#ffffff' ),
-					Field::create( $color_type, 'title_color', __( 'Color', 'ultimate-fields' ) )
+					Field::create( 'color', 'title_color', __( 'Color', 'ultimate-fields' ) )
 						->set_width( 50 )
 						->set_default_value( '#000000' ),
 				)),
-			$icon_field,
+			Field::create( 'icon', 'icon', __( 'Icon', 'ultimate-fields' ) )
+				->add_set( 'dashicons' ),
 			Field::create( 'textarea', 'title_template', __( 'Title Template', 'ultimate-fields' ) )
 				->set_description( __( 'You can use an underscore.js template with the names of the fields as variables. If there is an exception while parsing the template, it will not be used.', 'ultimate-fields' ) )
 		));
@@ -200,7 +192,7 @@ class Repeater extends Field_Helper {
 					'widgets'  => __( 'Widgets', 'ultimate-fields' ),
 					'dropdown' => __( 'Dropdown', 'ultimate-fields' )
 				)),
-			Field::create( defined( 'ULTIMATE_FIELDS_PRO' ) && ULTIMATE_FIELDS_PRO ? 'color' : 'text', 'repeater_background_color', __( 'Background Color', 'ultimate-fields' ) )
+			Field::create( 'color', 'repeater_background_color', __( 'Background Color', 'ultimate-fields' ) )
 				->set_default_value( '#fff' )
 		);
 
