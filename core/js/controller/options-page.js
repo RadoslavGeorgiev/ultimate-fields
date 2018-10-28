@@ -6,6 +6,7 @@
  * Internal dependencies
  */
 import Controller from 'controller';
+import { changeTab } from 'state/tabs/actions';
 
 /**
  * Adds the necessary functionality for managing the
@@ -45,8 +46,32 @@ export default class OptionsPage extends Controller {
 		const storeName = `options`; // @todo: Add the post ID
 		const instance  = this.makeInstance( wrapper, settings, storeName, data );
 
+		const tabPath = storeName + '-' + settings.id;
+
+		const getTabFromUrl = () => {
+			return window.location.hash
+				? window.location.hash.replace( /^#\/tab\//, '' )
+				: false;
+		}
+
+		const getTabFromState = () => {
+			const state = this.store.getState();
+			return state.tabs[ tabPath ];
+		}
+
+		// Check for tabs
+		if ( getTabFromUrl() ) {
+			this.store.dispatch( changeTab( tabPath, getTabFromUrl() ) );
+		}
+
 		// Connect to the "real" world
 		instance.useParentNode( wrapper.parentNode.parentNode );
+		
+		this.store.subscribe( () => {
+			if ( getTabFromUrl() !== getTabFromState() ) {
+				window.location.hash = '/tab/' + getTabFromState();
+			}
+		} );
 
 		return instance;
 	}

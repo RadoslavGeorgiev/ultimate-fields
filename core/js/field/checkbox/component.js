@@ -10,14 +10,15 @@ import classNames from 'classnames';
  */
 export default class CheckboxField extends Component {
 	static propTypes = {
-		/**
-		* @param  {Object}        props    The props of the input.
-	    * @param  {Boolean}       value    The value of the input.
-	    * @param  {string}        text     Some text to show next to the input.
-	    * @param  {Function}      onChange The main callback.
-	    * @param  {Boolean}       fancy    Whether to add CSS to the input.
-	    * @return {React.Element}
-	    */
+		value: PropTypes.bool.isRequired,
+		text: PropTypes.string,
+		onChange: PropTypes.func.isRequired,
+		fancy: PropTypes.bool,
+	}
+
+	static defaultProps = {
+		text: '',
+		fancy: false,
 	}
 
 	state = {
@@ -27,13 +28,14 @@ export default class CheckboxField extends Component {
 	render() {
 		const { value, text, onChange, fancy } = this.props;
 		const { focused } = this.state;
-		console.log(focused);
 
-		const checkbox = <input
-			type="checkbox"
-			checked={ value }
-			onChange={ ( { target: { checked } } ) => onChange( checked ) }
-		/>;
+		const checkbox = (
+			<input
+				type="checkbox"
+				checked={ value }
+				onChange={ ( { target: { checked } } ) => onChange( checked ) }
+			/>
+		);
 
 		// Nothing special in standard mode
 		if ( ! fancy ) {
@@ -51,9 +53,7 @@ export default class CheckboxField extends Component {
 				<label className="uf-toggle__label">
 					{ cloneElement( checkbox, {
 						className: 'uf-toggle__input',
-						ref: 'input',
-						onFocus: this.onFocus,
-						onBlur: this.onBlur,
+						ref: this.assignToInput,
 					} ) }
 
 					<span className="uf-toggle__wrap wp-ui-highlight">
@@ -66,15 +66,25 @@ export default class CheckboxField extends Component {
 		);
 	}
 
-	onFocus = () => {
-		if ( this.props.fancy ) {
-			this.setState( { focused: true } );
-		}
-	}
+	/**
+	 * In `fancy` mode the input should receive a
+	 * special class when focused, based on state.
+	 * 
+	 * @param {HTMLElement} input The input to add listeners to.
+	 */
+	assignToInput = input => {
+		const { fancy } = this.props;
 
-	onFocus = () => {
-		if ( this.props.fancy ) {
-			this.setState( { focused: false } );
+		if ( ! fancy || ! input ) {
+			return;
 		}
+
+		input.addEventListener( 'focus', () => {
+			this.setState( { focused: true } );
+		} );
+
+		input.addEventListener( 'blur', () => {
+			this.setState( { focused: false } );
+		} );
 	}
 }

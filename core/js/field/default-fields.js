@@ -6,6 +6,7 @@ import wysiwygField from './wysiwyg';
 import checkboxField from './checkbox';
 import selectField from './select';
 import multiselectField from './multiselect';
+import imageSelectField from './image-select';
 import complexField from './complex';
 import repeaterField from './repeater';
 
@@ -20,6 +21,8 @@ export default [
 	checkboxField,
 	selectField,
 	multiselectField,
+	imageSelectField,
+
 	complexField,
 	repeaterField,
 ];
