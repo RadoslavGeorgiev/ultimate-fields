@@ -3,10 +3,10 @@ namespace Ultimate_Fields;
 
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Data_API;
-use Ultimate_Fields\Pro\Controller\Customizer;
+use Ultimate_Fields\Controller\Customizer;
 use Ultimate_Fields\Helper\Exportable;
 use Ultimate_Fields\Helper\Importable;
-use Ultimate_Fields\Pro\Location\Customizable;
+use Ultimate_Fields\Location\Customizable;
 use Ultimate_Fields\Fields_Collection;
 use Ultimate_Fields\Template;
 use ReflectionClass;
@@ -877,7 +877,7 @@ class Container {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Ultimate_Fields\Pro\Form_Object $object The object to check for compatability with.
+	 * @param Ultimate_Fields\Form_Object $object The object to check for compatability with.
 	 * @return bool
 	 */
 	public function works_with( $object ) {

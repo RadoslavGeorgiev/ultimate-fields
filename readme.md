@@ -28,7 +28,6 @@ Once you do so, the plugin will be fully compiled and ready to use. During devel
 ## Links
 
 - [Plugin homepage](https://www.ultimate-fields.com/)
-- [Ultimate Fields Pro](https://www.ultimate-fields.com/pro/)
 - [Docs](https://www.ultimate-fields.com/docs/)
 - [Support](https://www.ultimate-fields.com/support/)
 - [Demo](https://www.ultimate-fields.com/demo/)

@@ -29,15 +29,9 @@ class Tab extends Field_Helper {
 	 * @return mixed[]
 	 */
 	public static function get_fields() {
-		if( defined( 'ULTIMATE_FIELDS_PRO' ) && ULTIMATE_FIELDS_PRO ) {
-			$field = Field::create( 'icon', 'tab_icon', __( 'Icon', 'ultimate-fields' ) )
-				->add_set( 'dashicons' );
-		} else {
-			$field = Field::create( 'text', 'tab_icon', __( 'Icon', 'ultimate-fields' ) );
-		}
-
 		$fields = array(
-			$field
+			Field::create( 'icon', 'tab_icon', __( 'Icon', 'ultimate-fields' ) )
+				->add_set( 'dashicons' )
  		);
 
  		return array(

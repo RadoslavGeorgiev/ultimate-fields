@@ -77,6 +77,7 @@ class Core {
 		add_action( 'login_enqueue_scripts', array( $this, 'initialize_scripts' ), 12 );
 		add_action( 'after_setup_theme', array( $this, 'initialize' ), 999 );
 		add_filter( 'uf.field.class', array( $this, 'generate_field_class' ), 10, 2 );
+		add_filter( 'uf.settings.fields', array( $this, 'settings_fields' ) );
 
 		// Add some generic filters/actions
 		add_filter( 'uf.api.the_value', 'wp_kses_post', 5 );
@@ -268,6 +269,27 @@ class Core {
 	 * @since 3.0
 	 */
 	public function register_scripts() {
+		$src = 'https://maps.googleapis.com/maps/api/js?libraries=places';
+		if( $key = get_option( 'uf_google_maps_api_key' ) ) {
+			$src .= '&key=' . esc_attr( $key );
+		} else {
+			// Ensure that there is something to autoload, so additional queries can be avoided.
+			update_option( 'uf_google_maps_api_key', '', true );
+		}
+
+		/**
+		 * Allows the URL that is used for loading Google Maps to be modified.
+		 *
+		 * The field instance is also provided in case it's needed, but in most
+		 * cases this should be the same for all map fields.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $src The (script) source URL for the Google Maps API.
+		 */
+		$src = apply_filters( 'uf.field.map.api_url', $src );
+		wp_register_script( 'uf-gmaps', $src, array(), '3.27.9', true );
+		
 		// Prepare some shortcuts
 		$base = ULTIMATE_FIELDS_URL . 'assets/';
 		$v  = ULTIMATE_FIELDS_VERSION;
@@ -278,6 +300,18 @@ class Core {
 
 		// Register regular scripts
 		wp_register_script( 'ultimate-fields', $base . 'js/ultimate-fields.js', array(), $v );
+		$js     = ULTIMATE_FIELDS_URL . 'js/';
+		$assets = ULTIMATE_FIELDS_URL . 'assets/';
+		$v      = ULTIMATE_FIELDS_VERSION;
+
+		// Register vendor scripts and styles
+		wp_register_script( 'uf-select2', ULTIMATE_FIELDS_URL . 'assets/js/select2/select2.min.js', array( 'jquery' ), $v );
+		wp_register_style( 'uf-select2-css', ULTIMATE_FIELDS_URL . 'assets/css/select2/select2.min.css', array(), ULTIMATE_FIELDS_VERSION );
+		wp_register_script( 'uf-timepicker', $assets . 'js/jquery-ui-timepicker-addon.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), $v );
+
+		// Footer scripts
+		wp_register_script( 'uf-customize-preview',     $js . 'customizer-front-end.js',   array( 'customize-preview' ), $v, true );
+		wp_register_script( 'uf-map-start',             $js . 'front-end/map.js',          array( 'jquery', 'uf-gmaps' ), $v, true );
 
 		// The admin-menu dependency is needed in the backend, in order to enqueue new styles after those of WordPress.
 		wp_register_style( 'ultimate-fields-css', $base . '/css/ultimate-fields.css', array( 'admin-menu' ), ULTIMATE_FIELDS_VERSION );
@@ -561,5 +595,23 @@ class Core {
 		$this->l10n()->translate( $key, $string );
 
 		return $this;
+	}
+
+	/**
+	 * Modifies the fields for the settings page.
+	 *
+	 * @since 3.0
+	 *
+	 * @param Ultimate_Fields\Fields_Collection $fields The existing fields.
+	 * @return Ultimate_Fields\Fields_Collection
+	 */
+	public function settings_fields( $fields ) {
+		$fields[] = Field::create( 'section', 'api_keys', __( 'Field Settings', 'ultimate-fields' ) )
+			->set_description( __( 'Those keys will be used through Map and Font fields throughout the site. If no value is entered, the fields field will not be available. You can generate an API key at the <a href="https://console.developers.google.com/project" target="_blank">Google APIs Console</a>.', 'ultimate-fields' ) )
+			->set_icon( 'dashicons dashicons-list-view' );
+		$fields[] = Field::create( 'text', 'uf_google_maps_api_key', __( 'Google Maps API Key', 'ultimate-fields' ) );
+		$fields[] = Field::create( 'text', 'uf_google_fonts_api_key', __( 'Google Fonts API Key', 'ultimate-fields' ) );
+
+		return $fields;
 	}
 }

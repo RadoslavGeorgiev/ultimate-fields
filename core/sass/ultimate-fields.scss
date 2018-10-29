@@ -21,10 +21,29 @@
 @import 'field/number';
 @import 'field/complex';
 @import 'field/repeater';
+@import 'field/audio';
+@import 'field/video';
+@import 'field/gallery';
+@import 'field/datepicker';
+@import 'field/date';
+@import 'field/font';
+@import 'field/color';
+@import 'field/icon';
+@import 'field/sidebar';
+@import 'field/map';
+@import 'field/embed';
+@import 'field/layout';
 
 @import 'container';
 @import 'location/customizer';
 @import 'location/options';
 @import 'location/post-type';
+@import 'location/attachment';
+@import 'location/menu-item';
+@import 'location/shortcode';
+@import 'location/taxonomy';
+@import 'location/user';
+@import 'location/widget';
+@import 'location/gutenberg';
 
 @import 'post-types';

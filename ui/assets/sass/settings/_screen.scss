@@ -24,19 +24,6 @@
 		}
 	}
 
-	&-pro-link {
-		float: right;
-		color: #a00;
-		line-height: 20px;
-		padding: 15px 5px;
-
-		.dashicons {
-			vertical-align: middle;
-			margin-right: 3px;
-			margin-top: -1px;
-		}
-	}
-
 	& + .wrap > h1 {
 		display: none;
 
