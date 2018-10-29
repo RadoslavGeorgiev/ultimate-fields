@@ -7,6 +7,7 @@ import checkboxField from './checkbox';
 import selectField from './select';
 import multiselectField from './multiselect';
 import imageSelectField from './image-select';
+import fileField from './file';
 import complexField from './complex';
 import repeaterField from './repeater';
 
@@ -22,6 +23,8 @@ export default [
 	selectField,
 	multiselectField,
 	imageSelectField,
+
+	fileField,
 
 	complexField,
 	repeaterField,

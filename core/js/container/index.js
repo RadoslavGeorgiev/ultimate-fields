@@ -10,6 +10,7 @@ import { batchActions } from 'redux-batched-actions';
 import { getFieldModel } from 'field';
 import { changeTab } from 'state/tabs/actions';
 import { INITIALIZE_CONTAINER } from 'state/action-types';
+import { ALLOW_BULK } from 'constants';
 
 /**
  * Initializes a store with the values of a container.
@@ -26,8 +27,12 @@ export const initializeStore = ( args ) => {
 	// Generate all needed actions.
 	const actions = generateInitilizationActionsList( args );
 
-	// Dispatch a single actionw ith all of the changes.
-	store.dispatch( batchActions( actions, INITIALIZE_CONTAINER ) );
+	if ( ALLOW_BULK ) {
+		// Dispatch a single actionw ith all of the changes.
+		store.dispatch( batchActions( actions, INITIALIZE_CONTAINER ) );
+	} else {
+		actions.forEach( store.dispatch );
+	}
 }
 
 /**

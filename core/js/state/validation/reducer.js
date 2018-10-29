@@ -6,7 +6,7 @@ import { unset } from 'lodash';
 /**
  * Internal dependencies
  */
-import createReducer from 'state/create-reducer';
+import { createReducer } from 'state/redux-helpers';
 import {
 	SET_VALIDATION_MESSAGE,
 	CLEAR_VALIDATION_MESSAGE,

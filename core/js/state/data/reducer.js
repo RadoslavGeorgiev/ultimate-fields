@@ -1,6 +1,6 @@
 import { set, merge } from 'lodash';
 
-import createReducer from 'state/create-reducer';
+import { createReducer } from 'state/redux-helpers';
 import {
 	UPDATE_VALUE,
 } from 'state/action-types';

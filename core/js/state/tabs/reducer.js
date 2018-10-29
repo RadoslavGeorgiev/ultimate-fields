@@ -1,6 +1,6 @@
 import { reduce, unset } from 'lodash';
 
-import createReducer from 'state/create-reducer';
+import { createReducer } from 'state/redux-helpers';
 import {
 	CHANGE_TAB,
 } from 'state/action-types';

@@ -21,6 +21,7 @@ export default function Button( props ) {
 		'button-' + type,
 		'uf-button',
 		'uf-button--' + type,
+		children ? null : 'uf-button--no-text',
 	] );
 
 	return (

@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 /**
  * Internal dependencies
@@ -185,11 +186,16 @@ class Overlay {
 			? node.classList.add( 'uf-overlay--has-tabs' )
 			: node.classList.remove( 'uf-overlay--has-tabs' );
 
+		const boxClass = classNames(
+			'uf-overlay__box',
+			( ! buttons ) && 'uf-overlay__box--no-buttons'
+		);
+
 		// Render
 		ReactDOM.render( [
 			<div className="uf-overlay__background" key="bg" />,
 
-			<div className="uf-overlay__box" key="box">
+			<div className={ boxClass } key="box">
 				<div className="uf-overlay__header">
 					<h2 className="uf-overlay__title">{ this.renderTitle() }</h2>
 
@@ -213,9 +219,9 @@ class Overlay {
 					} ) }
 				</div>
 
-				<div className="uf-overlay__footer">
+				{ buttons && <div className="uf-overlay__footer">
 					{ buttons }
-				</div>
+				</div> }
 
 				{ this.currentAlert }
 			</div>
