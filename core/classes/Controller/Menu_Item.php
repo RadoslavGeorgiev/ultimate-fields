@@ -140,7 +140,6 @@ class Menu_Item extends Controller {
 		Template::add( 'menu', 'container/menu' );
 		Template::add( 'field-menu', 'field/wrap/menu' );
 		Template::add( 'menu-error', 'container/menu-error' );
-		Template::add( 'overlay-wrapper', 'overlay-wrapper' );
 
 		# We are already in the footer, so we need to output everything
 		Template::instance()->output_templates();

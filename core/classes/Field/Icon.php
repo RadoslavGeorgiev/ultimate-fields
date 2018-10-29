@@ -43,7 +43,6 @@ class Icon extends Field {
 		wp_enqueue_script( 'uf-field-icon' );
 
 		# Add some templates
-		Template::add( 'overlay-wrapper', 'overlay-wrapper' );
 		Template::add( 'icon-popup', 'field/icon-popup' );
 		Template::add( 'icon-preview', 'field/icon-preview' );
 

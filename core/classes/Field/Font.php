@@ -73,7 +73,6 @@ class Font extends Field {
 		Template::add( 'font-popup', 'field/font-popup' );
 		Template::add( 'font-preview', 'field/font-preview' );
 		Template::add( 'font-variants', 'field/font-variants' );
-		Template::add( 'overlay-wrapper', 'overlay-wrapper' );
 		Template::add( 'pagination', 'pagination' );
 
 		# Localize

@@ -61,7 +61,6 @@ class Shortcode extends Controller {
 
 		# Register the neccessary templates
 		Template::add( 'shortcode-editor', 'container/shortcode-editor' );
-		Template::add( 'overlay-wrapper', 'overlay-wrapper' );
 
 		# Force template output, as the normal footer hook is already missed
 		Template::instance()->output_templates();
