@@ -64,7 +64,7 @@ class Text extends Field {
 	 */
 	public function enqueue_scripts() {
 		if( ! empty( $this->suggestions ) ) {
-			wp_enqueue_script( 'jquery-ui-autocomplete' );
+			$this->enqueue_script( 'jquery-ui-autocomplete' );
 		}
 	}
 

@@ -14,3 +14,10 @@ export const TABS_PLACEHOLDER = {
  */
 export const POST_ID = 'post';
 export const POST_PARENT = 'post_parent';
+
+/**
+ * Redux helpers
+ */
+export const REDUX_INIT = '@@INIT';
+export const ALLOW_BULK = true;
+export const LOADING = 'LOADING';

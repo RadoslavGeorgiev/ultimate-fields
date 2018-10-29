@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-import { combineReducers } from 'redux';
 import { enableBatching } from 'redux-batched-actions';
 
 /**
  * Internal dependencies
  */
+import { combineReducers } from 'state/redux-helpers';
 import { createCombinedReducer } from 'field';
 import { REPLACE_STATE } from 'state/action-types';
 import data from 'state/data/reducer';

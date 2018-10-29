@@ -194,6 +194,10 @@
 		overflow: hidden;
 	}
 
+	&__box--no-buttons &__body {
+		bottom: 0;
+	}
+
 	&__screen {
 		overflow: auto;
 		background: #fff;

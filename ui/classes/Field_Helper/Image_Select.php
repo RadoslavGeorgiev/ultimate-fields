@@ -65,7 +65,7 @@ class Image_Select extends Field_Helper {
 	 * @since 3.0
 	 */
 	public static function enqueue() {
-		Template::add( 'image-select', 'field/image-select' );
+		// Template::add( 'image-select', 'field/image-select' );
 		wp_enqueue_script( 'uf-field-image-select' );
 	}
 

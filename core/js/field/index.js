@@ -121,17 +121,22 @@ export const getFieldComponents = field => {
 export const createCombinedReducer = ( fallback ) => {
 	const reducers = {};
 
+	// Combine all reducers into a single place
 	forEach( types, type => {
-		merge( reducers, type.reducers );
+		forEach( type.reducers, ( reducer, key ) => {
+			reducers[ key ] = ( reducers[ key ] || [] ).concat( [ reducer ] );
+		} );
 	} );
 
-	return ( state, action, ...args ) => {
+
+	// Generate the reducer
+	return ( state, action ) => {
 		const newState = merge( {}, state );
 
-		forEach( reducers, ( reducer, group ) => {
-			if ( reducer.hasOwnProperty( action.type ) ) {
-				newState[ group ] = reducer[ action.type ]( newState[ group ], action );
-			}
+		forEach( reducers, ( subReducers, group ) => {
+			forEach( subReducers, reducer => {
+				newState[ group ] = reducer( newState[ group ], action );
+			} );
 		} );
 
 		return isEqual( newState, state )

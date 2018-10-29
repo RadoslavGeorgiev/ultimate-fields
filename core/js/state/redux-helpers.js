@@ -1,3 +1,24 @@
+import { forEach } from 'lodash';
+
+/**
+ * Works similarly to Redux's implementation, but is looser and allows new
+ * top-level trees to be created without having a reducer for them.
+ * 
+ * @param  {Object.Function} reducers A hash with all reducers.
+ * @return {Function}
+ */
+export const combineReducers = ( reducers ) => {
+    return ( state, action ) => {
+        const newState = Object.assign( {}, state );
+
+        forEach( reducers, ( reducer, treeName ) => {
+            newState[ treeName ] = reducer( newState[ treeName ], action );
+        } );
+
+        return newState;
+    }
+}
+
 /**
  * Creates a new reducer based on an initial state and an array of actions.
  *
@@ -5,7 +26,7 @@
  * @param  {Object} actions      A hash of action types and action handlers.
  * @return {function}            The generated reducer.
  */
-export default ( initialState, actions ) => {
+export const createReducer = ( initialState, actions ) => {
 	/**
 	 * A custom-made reducer.
 	 *

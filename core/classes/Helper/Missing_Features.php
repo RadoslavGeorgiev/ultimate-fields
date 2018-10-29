@@ -58,6 +58,8 @@ class Missing_Features {
 	 * @since 3.0
 	 */
 	public function display_notices() {
+		return; // @todo: Stuff here...
+
 		$generic = array();
 		$pro     = array();
 

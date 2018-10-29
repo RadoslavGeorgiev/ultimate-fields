@@ -20,7 +20,11 @@ Container::create( 'post-fields-1' )
 			->required()
 			->set_description( 'This is a field...' )
 			->set_prefix( '€' )
-			->set_suffix( '.00' ),
+			->set_suffix( '.00' )
+			->add_suggestions( [
+				'Varna',
+				'Vienna',
+			] ),
 		Field::create( 'text', 'half_field_2' )->set_width( 50 )
 			->required(),
 		Field::create( 'text', 'half_field_1' )->set_width( 50 )

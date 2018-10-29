@@ -206,6 +206,8 @@ class Complex extends Field {
 			$settings[ 'group' ] = false;
 		}
 
+		$settings[ 'merge' ] = self::MERGE_MODE === $this->save_mode;
+
 		return $settings;
 	}
 

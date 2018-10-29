@@ -5,7 +5,7 @@
 /**
  * Internal dependencies
  */
-import createReducer from 'state/create-reducer';
+import { createReducer } from 'state/redux-helpers';
 import {
 	SET_ENV,
 } from 'state/action-types';

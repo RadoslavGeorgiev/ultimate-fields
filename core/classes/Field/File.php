@@ -94,6 +94,7 @@ class File extends Field {
 
 		# Localize strings
 		ultimate_fields()
+			->localize( 'file-select-popup',  _x( 'Select file', 'file-popup', 'ultimate-fields' ) )
 			->localize( 'file-select',        _x( 'Select', 'file', 'ultimate-fields' ) )
 			->localize( 'file-select-other',  __( 'Select another file', 'ultimate-fields' ) )
 			->localize( 'file-edit',          __( 'Edit', 'ultimate-fields' ) )

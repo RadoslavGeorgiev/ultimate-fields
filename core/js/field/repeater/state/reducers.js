@@ -6,7 +6,7 @@ import { set, get, unset, reduce, map, find, merge } from 'lodash';
 /**
  * Internal dependencies
  */
-import { mergeWithArrays } from 'utils';
+import { createReducer } from 'state/redux-helpers';
 import {
 	ADD_NEW_REPEATER_ROW,
 	ADD_REPEATER_ROW,
@@ -17,7 +17,7 @@ import {
 } from './action-types';
 
 export default {
-	data: {
+	data: createReducer( {}, {
 		/**
 		 * Handles the addition of a repeater row.
 		 *
@@ -47,7 +47,6 @@ export default {
 			} else {
 				// Add at the end
 				return merge( state, set( {}, path, [ ...oldRows, row ] ) );
-				// return mergeWithArrays( state, set( {}, path, [ row ] ) );
 			}
 		},
 
@@ -124,9 +123,9 @@ export default {
 
 			return set( state, path, target );
 		},
-	},
+	} ),
 
-	tabs: {
+	tabs: createReducer( {}, {
 		/**
 		 * Clones the active tab from one repeater row to the next.
 		 *
@@ -154,5 +153,5 @@ export default {
 			unset( state, container );
 			return newState;
 		},
-	},
+	} ),
 };

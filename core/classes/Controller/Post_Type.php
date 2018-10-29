@@ -184,6 +184,10 @@ class Post_Type extends Controller {
 		$settings = $container->export_settings();
 		$settings[ 'locations' ] = $locations;
 
+		if ( 'auto' === $settings[ 'style' ] ) {
+			$settings[ 'style' ] = 'boxed';
+		}
+
 		$data      = $container->export_data();
 		$random_id = rand();
 
