@@ -2,14 +2,15 @@
  * Internal dependencies.
  */
 import Model from 'field/model';
-import { getValidationMessage } from 'state/validation/selectors';
 import { cacheFile } from './state/actions';
-import { getValue, areDependenciesMet } from 'state/data/selectors';
 import {
     getFile,
     isFileLoaded,
     isFileLoading,
 } from './state/selectors';
+import {
+    fetchFiles
+} from 'field/file/state/actions';
 
 /**
  * Handles the data and infrastructure for the file field.
@@ -50,8 +51,8 @@ export default class FileFieldModel extends Model {
             const value = this.getValueFromState( props, state );
 
             return {
+                ...this.getGenericStateProps( state, props ),
                 value,
-                invalid:   getValidationMessage( state, props ),
                 file:      ( value ? getFile( state, value ) : false ),
                 isLoaded:  ( value ? isFileLoaded( state, value ) : false ),
                 isLoading: ( value ? isFileLoading( state, value ) : false ),
@@ -62,12 +63,67 @@ export default class FileFieldModel extends Model {
     /**
 	 * Maps a dispatcher to the props of a wrapped component.
 	 *
-	 * @return {function} A function to be called when mapping.
+	 * @return {Object} An additional hash with objects to map.
 	 */
-	mapDispatchToProps() {
-		return ( dispatch, props ) => ( {
-            onChange: value => dispatch( this.updateValue( props, value ) ),
+	mapDispatchToExtraProps( props, dispatch ) {
+		return {
             cacheFile: file => dispatch( cacheFile( file ) ),
-		} )
-	}
+
+            fetchFiles: ids => {
+                // Dispatch the action in order to mark the files as loading
+                dispatch( fetchFiles( ids ) );
+
+                // Load the files
+                this.fetchFiles( props, dispatch, ids );
+            },
+		};
+    }
+    
+    /**
+     * Fetches files from the servers.
+     * 
+     * @param {Object}   props    The definition of a field.
+     * @param {Function} dispatch The dispatcher to use.
+     * @param {Array}    ids      All file IDS that should be loaded.
+     */
+    fetchFiles( props, dispatch, ids ) {
+        const { name, nonce, nonce_action } = props;
+    
+        const data = {
+            uf_action: `file_preview_${name}`,
+            file_ids: ids,
+            nonce,
+            nonce_action,
+        };
+    
+        jQuery.ajax( {
+            data,
+            url: window.location.href,
+            type: 'post',
+            success: this.receiveFiles.bind( this, dispatch ),
+        } );
+    }
+    
+    /**
+     * Processes the JSON once files have been received from PHP.
+     * 
+     * @param {Function} dispatch The store dispatcher.
+     * @param {string}   json     The JSON that has been received.
+     */
+    receiveFiles( dispatch, json ) {
+        if ( ! json ) {
+            return;
+        }
+    
+        // AJAX failed, bail
+        const data = JSON.parse( json );
+        if ( ! data ) {
+            return;
+        }
+    
+        // Cache the files
+        data.map( file => {
+            dispatch( cacheFile( file ) );
+        } );
+    }
 }

@@ -75,7 +75,15 @@ class Gallery extends File {
 		# Localize
 		ultimate_fields()
 			->localize( 'gallery-select', _x( 'Select images', 'gallery', 'ultimate-fields' ) )
-			->localize( 'gallery-remove', __( 'Remove all images', 'ultimate-fields' ) );
+			->localize( 'gallery-remove', __( 'Remove all images', 'ultimate-fields' ) )
+			->localize( 'gallery-sort', __( 'Sort', 'ultimate-fields' ) )
+			->localize( 'gallery-order-change', __( 'Change order', 'ultimate-fields' ) )
+			->localize( 'gallery-order-title', __( 'Title', 'ultimate-fields' ) )
+			->localize( 'gallery-order-file', __( 'File name', 'ultimate-fields' ) )
+			->localize( 'gallery-order-date', __( 'Date Uploaded', 'ultimate-fields' ) )
+			->localize( 'gallery-order-default', __( 'Default Order - Reversed', 'ultimate-fields' ) )
+			->localize( 'gallery-order-randomize', __( 'Randomize', 'ultimate-fields' ) )
+			;
 	}
 
 	/**

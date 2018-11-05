@@ -18,22 +18,19 @@ export default class FileField extends Component {
         const { value } = this.props;
 
         return value
-            ? this.renderPreview()
+            ? this.renderFullUI()
             : this.renderButton();
         
     }
 
-    renderPreview() {
+    renderFullUI() {
         const { file } = this.props;
-        const { thumbnail: { url, width, height } } = file.sizes;
-
+        
         return <div className="uf-file">
-            <span className="uf-file__preview">
-                <img src={ url } alt="" width={ width } height={ height } />
-            </span>
+            { this.renderPreview( file ) }
 
             <span className="uf-file__buttons">
-                <Button icon="dashicons dashicons-edit" title={ translate( 'file-edit' ) } onClick={ this.openPopup } />
+                <Button icon="dashicons dashicons-edit" title={ translate( 'file-edit' ) } onClick={ this.openFilePopup } />
 
                 <Button icon="dashicons dashicons-no" type="secondary" onClick={ this.clear }>
                     { translate( 'file-remove' ) }
@@ -42,8 +39,17 @@ export default class FileField extends Component {
         </div>;
     }
 
+    openFilePopup = () => {
+        const { value } = this.props;
+
+        this.openPopup( {
+            multiple: false,
+            selected: value ? [ value ] : [],
+        } );
+    }
+
     renderButton( stringName = 'file-select' ) {
-        return <Button icon="dashicons dashicons-admin-media" onClick={ this.openPopup }>
+        return <Button icon="dashicons dashicons-admin-media" onClick={ this.openFilePopup }>
             { translate( stringName ) }
         </Button>;
     }
@@ -52,25 +58,23 @@ export default class FileField extends Component {
         this.props.onChange( false );
     }
 
-    openPopup = () => {
-        const body = <div className="uf-file__popup" ref={ this.renderFrame } />;
-
+    openPopup( args ) {
         overlay.addLayer( {
 			title: translate( 'file-select-popup' ),
 			icon: 'dashicons dashicons-admin-media',
-			body,
+			body: <div className="uf-file__popup" ref={ this.renderFrame.bind( this, args ) } />,
 		} );
     }
 
-    renderFrame = ( wrapper ) => {
+    renderFrame = ( args, wrapper ) => {
         if ( ! wrapper ) {
             return;
         }
         
-        const { multiple } = this.props;
+        const { multiple } = args;
 
         // Arguments for the media popup
-        const args = {
+        const frameArgs = {
             title:    translate( 'file-select' ),
             multiple,
             button: {
@@ -79,24 +83,24 @@ export default class FileField extends Component {
         };
 
         // Set the needed file type.
-        const type = this.getFileType();
+        const type = args.type || this.getFileType();
         if ( type ) {
-            args.library = {
+            frameArgs.library = {
                 type,
             };
         }
 
         // Create and setup the popup
-        const frame = wp.media( args );
+        const frame = wp.media( frameArgs );
 
         // Handle selection changes
         frame.state( 'library' ).on( 'select', () => {
-            this.fileSelected( frame.state( 'library' ).get( 'selection' ) );
+            this.fileSelected( args, frame.state( 'library' ).get( 'selection' ) );
         } );
 
         // Load the right file when opening the frame.
         frame.on( 'open', () => {
-            this.changeInitialSelection( frame );
+            this.changeInitialSelection( args, frame );
         } );
 
         frame.modal.on( 'close', function() {
@@ -129,14 +133,22 @@ export default class FileField extends Component {
         return type.split( ',' );
     }
 
-    fileSelected( selection ) {
+    fileSelected( args, selection ) {
         const { onChange, cacheFile } = this.props;
+        const { multiple, fileSelected } = args;
+        const selected = [];
 
-        const raw = selection.first().toJSON();
+        selection.each( item => {
+            cacheFile( item.toJSON() );
+            selected.push( item.get( 'id' ) );
+        } );
 
-        // Cache the file and save the value
-        cacheFile( raw );
-        onChange( raw.id );
+        const callback = fileSelected || onChange;
+        if ( multiple ) {
+            callback( selected );
+        } else {
+            callback( selected.length ? selected[ 0 ] : false );
+        }
     }
 
     /**
@@ -144,18 +156,32 @@ export default class FileField extends Component {
      *
      * @param {wp.media} frame The frame that is used.
      */
-    changeInitialSelection( frame ) {
-        const { value } = this.props;
-
-        // Check if there is something to select
-        if( ! value ) {
-            return;
-        }
-
-        // Select
+    changeInitialSelection( args, frame ) {
+        const { selected } = args;
+        
         const selection = frame.state().get( 'selection' );
-        const attachment = wp.media.attachment( value );
-        attachment.fetch();
-        selection.add( attachment ? [ attachment ] : [] );
+        selected.forEach( id => {
+            const attachment = wp.media.attachment( id );
+            attachment.fetch();
+            selection.add( attachment ? [ attachment ] : [] );
+        } );
+    }
+
+    renderPreview( file = this.props.file ) {
+        const { type, title, icon, sizes } = file;
+
+        if ( 'image' === type ) {
+            const size = sizes.thumbnail || sizes.full;
+            const { url, width, height } = size;
+
+            return <span className="uf-file__preview">
+                <img className="uf-file__image" src={ url } alt="" width={ width } height={ height } />
+            </span>;
+        }
+        
+        return <span className="uf-file__preview">
+            <img src={ icon } className="uf-file__icon" alt="" />
+            <em className="uf-file__name">{ title }</em>
+        </span>;
     }
 }

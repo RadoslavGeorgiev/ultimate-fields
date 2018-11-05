@@ -1,6 +1,6 @@
 import {
     CACHE_FILE,
-    LOAD_FILE,
+    FETCH_FILES,
 } from './action-types';
 
 export const cacheFile = file => ( {
@@ -8,7 +8,9 @@ export const cacheFile = file => ( {
     file,
 } );
 
-export const loadFile = id => ( {
-    type: LOAD_FILE,
-    id,
-} );
+export const fetchFiles = ( ids, dispatch ) => {
+    return {
+        type: FETCH_FILES,
+        ids,
+    };
+};

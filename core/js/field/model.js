@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { connect } from 'react-redux';
-import { set } from 'lodash';
+import { isFunction } from 'lodash';
 
 /**
  * Internal dependencies
@@ -124,14 +124,30 @@ export default class FieldModel {
 	}
 
 	/**
+	 * Returns all generic field props that can be used in mapStateToProps.
+	 * 
+	 * @param {Object} state The global redux state.
+	 * @param {Object} props The local component props.
+	 * @return {Object}      Props that should be added to the field.
+	 */
+	getGenericStateProps( state, props ) {
+		return {
+			invalid: getValidationMessage( state, props ),
+		};
+	};
+
+	/**
 	 * Maps the global state to the props of a wrapped component.
 	 *
 	 * @return {function} A function to be called when mapping.
 	 */
 	mapStateToProps() {
 		return ( state, props ) => ( {
-			value: this.getValueFromState( props, state ),
-			invalid: getValidationMessage( state, props ),
+			// Those props should be included by all fields
+			...this.getGenericStateProps( state, props ),
+
+			// Overload-able props
+			value: this.getValueFromState( props, state ),			
 		} );
 	}
 
@@ -143,7 +159,14 @@ export default class FieldModel {
 	mapDispatchToProps() {
 		return ( dispatch, props ) => ( {
 			onChange: value => dispatch( this.updateValue( props, value ) ),
-		} )
+
+			// Allow child classes to add props
+			...(
+				isFunction( this.mapDispatchToExtraProps )
+					? this.mapDispatchToExtraProps( props, dispatch )
+					: {}
+			),
+		} );
 	}
 
 	/**

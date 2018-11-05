@@ -3,6 +3,12 @@ use Ultimate_Fields\Container;
 use Ultimate_Fields\Field;
 use Ultimate_Fields\Options_Page;
 
+// update_option('demo_gallery_field', [5,6]);
+// update_option('demo_video_field', [
+// 	'poster' => 16,
+// 	'videos' => [ 19 ],
+// ]);
+
 $page = Options_Page::create( 'test-fields' );
 
 Container::create( 'post-fields-1' )

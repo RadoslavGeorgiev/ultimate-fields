@@ -15,13 +15,14 @@ import PropTypes from 'prop-types';
  * @return {React.Element}
  */
 export default function Button( props ) {
-	const { type, icon, children } = props;
+	const { type, icon, children, className } = props;
 
 	const cssClasses = classNames( [
 		'button-' + type,
 		'uf-button',
 		'uf-button--' + type,
 		children ? null : 'uf-button--no-text',
+		className || null,
 	] );
 
 	return (

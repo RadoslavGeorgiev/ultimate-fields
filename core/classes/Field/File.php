@@ -147,9 +147,10 @@ class File extends Field {
 	public function export_field() {
 		$settings = parent::export_field();
 
-		$settings[ 'file_type' ] = $this->file_type;
-		$settings[ 'basic' ]     = $this->basic;
-		$settings[ 'nonce' ]     = wp_create_nonce( $this->get_nonce_action() );
+		$settings[ 'file_type' ]    = $this->file_type;
+		$settings[ 'basic' ]        = $this->basic;
+		$settings[ 'nonce_action' ] = $this->get_nonce_action();
+		$settings[ 'nonce' ]        = wp_create_nonce( $this->get_nonce_action() );
 
 		return $settings;
 	}
@@ -227,6 +228,10 @@ class File extends Field {
 			$this->name . '_prepared' => $data
 		);
 
+		if ( 'demo_video_field' === $this->name ) {
+			unset( $result[ $this->name . '_prepared' ] );
+		}
+
 		return $result;
 	}
 
@@ -268,7 +273,7 @@ class File extends Field {
 	 * @return string
 	 */
 	protected function get_nonce_action() {
-		return 'uf_file_preview_' . $this->index;
+		return 'uf_file_preview_' . $this->name;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import {  } from 'lodash';
+import { forEach } from 'lodash';
 
 /**
  * Internal dependencies
@@ -9,8 +9,8 @@ import {  } from 'lodash';
 import { LOADING } from 'constants';
 import {
     CACHE_FILE,
-    LOAD_FILE,
-    FILE_LOADED,
+    FETCH_FILES,
+    FILES_FETCHED,
 } from './action-types';
 import { createReducer } from 'state/redux-helpers';
 
@@ -21,14 +21,14 @@ export default {
             [ file.id ]: file,
         } ),
 
-        [ LOAD_FILE ]: ( state, { id } ) => ( {
-            ...state,
-            [ file.id ]: LOADING,
-        } ),
+        [ FETCH_FILES ]: ( state, { ids } ) => {
+            const newState = Object.assign( {}, state );
 
-        [ FILE_LOADED ]: ( state, { file } ) => ( {
-            ...state,
-            [ file.id ]: file,
-        } ),
+            forEach( ids, id => {
+                newState[ id ] = LOADING;
+            } );
+
+            return newState;
+        },
     } ),
 };

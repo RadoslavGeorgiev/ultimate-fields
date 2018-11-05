@@ -11,27 +11,27 @@
 		border-bottom: 1px solid #ccc;
 		background: #fff;
 		text-align: center;
+	}
 
-		img {
-			display: block;
-			margin: 0 auto;
-			max-width: 100%;
-			height: auto;
-		}
+	&__image {
+		display: block;
+		margin: 0 auto;
+		max-width: 100%;
+		height: auto;
+	}
 
-		.icon {
-			display: inline-block;
-			vertical-align: middle;
-			margin: 8px;
-			width: 24px;
-			height: 32px;
-		}
+	&__icon {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 8px;
+		width: 24px;
+		height: 32px;
+	}
 
-		em {
-			display: inline-block;
-			vertical-align: middle;
-			margin: 8px 8px 8px 0;
-		}
+	&__name {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 8px 8px 8px 0;
 	}
 
 	&__buttons {

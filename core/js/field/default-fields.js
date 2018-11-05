@@ -8,6 +8,10 @@ import selectField from './select';
 import multiselectField from './multiselect';
 import imageSelectField from './image-select';
 import fileField from './file';
+import imageField from './image';
+import galleryField from './gallery';
+import audioField from './audio';
+import videoField from './video';
 import complexField from './complex';
 import repeaterField from './repeater';
 
@@ -25,6 +29,10 @@ export default [
 	imageSelectField,
 
 	fileField,
+	imageField,
+	galleryField,
+	audioField,
+	videoField,
 
 	complexField,
 	repeaterField,
