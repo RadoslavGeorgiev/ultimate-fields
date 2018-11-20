@@ -1,4 +1,5 @@
 .uf-datepicker {
+	display: inline-block;
 	padding: 0 0 0 30px;
 	position: relative;
 
@@ -32,6 +33,10 @@
 
 .uf-field-type-time input.uf-datepicker-field {
 	width: 80px;
+}
+
+.uf-field-type-datetime input.uf-datepicker-field {
+	width: 196px;
 }
 
 .ui-timepicker-div {
