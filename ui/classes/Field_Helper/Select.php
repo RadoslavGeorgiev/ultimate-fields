@@ -109,9 +109,8 @@ class Select extends Field_Helper {
 						$options[ $row ] = $row;
 					}
 				}
+				$meta[ 'select_options' ] = $options;
 			}
-
-			$meta[ 'select_options' ] = $options;
 		} else {
 			$meta[ 'select_options_type' ] = 'posts';
 			unset( $meta[ 'select_options' ] );
