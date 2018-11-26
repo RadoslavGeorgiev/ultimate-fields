@@ -10,6 +10,7 @@ import { find } from 'lodash';
 import translate from 'utils/l10n';
 import FileField from 'field/file/component'
 import Button from 'components/button';
+import MediaElementPlayer from 'components/media-element-player';
 
 /**
  * Handles the input of the file field.
@@ -101,29 +102,17 @@ export default class VideoField extends FileField {
 
         // Prepare the list of sources
         const sources = videos.map( id => {
-            const file = find( files, { id } );
+            const file = find( files, { id } );            
             return <source src={ file.url } key={ id } />
         } );
 
-        return <video controls ="controls" poster={ poster } ref={ this.startPlayer }>
-            { sources }
-        </video>;
+        return <MediaElementPlayer ids={ [].concat( videos, [ posterId ] ) }>
+            <video controls="controls" poster={ poster } width="100%" height="100%">
+                { sources }
+            </video>
+        </MediaElementPlayer>;
     }
     
-    /**
-     * When the video element gets mounted, this will
-     * start a mediaelement player based on it.
-     * 
-     * @param {HTMLElement} video The video element.
-     */
-    startPlayer = ( video ) => {
-        if ( ! video ) {
-            return;
-        }
-
-        jQuery( video ).mediaelementplayer();
-    }
-
     /**
      * Opens the popup for file/video selection.
      */

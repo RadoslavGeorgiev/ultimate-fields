@@ -228,10 +228,6 @@ class File extends Field {
 			$this->name . '_prepared' => $data
 		);
 
-		if ( 'demo_video_field' === $this->name ) {
-			unset( $result[ $this->name . '_prepared' ] );
-		}
-
 		return $result;
 	}
 

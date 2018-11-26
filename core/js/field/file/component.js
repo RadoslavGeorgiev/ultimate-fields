@@ -30,7 +30,11 @@ export default class FileField extends Component {
             { this.renderPreview( file ) }
 
             <span className="uf-file__buttons">
-                <Button icon="dashicons dashicons-edit" title={ translate( 'file-edit' ) } onClick={ this.openFilePopup } />
+                <Button
+                    icon="dashicons dashicons-edit"
+                    title={ translate( 'file-edit' ) }
+                    onClick={ this.openFilePopup }
+                />
 
                 <Button icon="dashicons dashicons-no" type="secondary" onClick={ this.clear }>
                     { translate( 'file-remove' ) }
@@ -75,7 +79,7 @@ export default class FileField extends Component {
 
         // Arguments for the media popup
         const frameArgs = {
-            title:    translate( 'file-select' ),
+            title: translate( 'file-select' ),
             multiple,
             button: {
                 text: translate( 'file-save' )

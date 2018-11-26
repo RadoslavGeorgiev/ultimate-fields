@@ -2,14 +2,12 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import classNames from 'classnames';
 
 /**
  * Internal dependencies
  */
-import translate from 'utils/l10n';
 import FileField from 'field/file/component'
-import Button from 'components/button';
+import MediaElementPlayer from 'components/media-element-player';
 
 /**
  * Handles the input of the file field.
@@ -25,26 +23,12 @@ export default class AudioField extends FileField {
     }
 
     renderPreview( files = this.props.files ) {
-        return <audio controls="controls" ref="audioPreview" key={ files.map( f => f.id ).join( '-' ) }>
-            { files.map( ( { id, url } ) => {
-               return <source src={ url } key={ id } />; 
-            } ) }
-        </audio>;
-    }
-
-    startPlayer() {
-        const { audioPreview } = this.refs;
-
-        if ( audioPreview ) {
-            jQuery( audioPreview ).mediaelementplayer();
-        }
-    }
-
-    componentDidMount() {
-        this.startPlayer();
-    }
-
-    componentDidUpdate() {
-        this.startPlayer();
+        return <MediaElementPlayer ids={ files.map( file => file.id ) }>
+            <audio controls="controls">
+                { files.map( ( { id, url } ) => {
+                    return <source src={ url } key={ id } />; 
+                } ) }
+            </audio>
+        </MediaElementPlayer>;
     }
 }
