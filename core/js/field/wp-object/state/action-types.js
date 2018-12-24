@@ -1,0 +1,3 @@
+export const CACHE_OBJECT = 'CACHE_OBJECT';
+export const FETCH_OBJECTS = 'FETCH_OBJECTS';
+export const OBJECTS_FETCHED = 'OBJECTS_FETCHED';

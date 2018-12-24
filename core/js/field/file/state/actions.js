@@ -1,4 +1,8 @@
 import {
+	isArray
+} from 'lodash';
+
+import {
     CACHE_FILE,
     FETCH_FILES,
 } from './action-types';
@@ -11,6 +15,6 @@ export const cacheFile = file => ( {
 export const fetchFiles = ( ids, dispatch ) => {
     return {
         type: FETCH_FILES,
-        ids,
+        ids: isArray( ids ) ? ids : [ ids ],
     };
 };

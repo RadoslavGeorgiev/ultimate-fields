@@ -6,6 +6,12 @@
 	max-width: 100%;
 	box-sizing: border-box;
 
+	.spinner {
+		float: none;
+		display: block;
+		margin: 20px auto;
+	}
+
 	&__preview {
 		display: block;
 		border-bottom: 1px solid #ccc;

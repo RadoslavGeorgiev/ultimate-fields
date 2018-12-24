@@ -67,7 +67,7 @@ class Gallery extends File {
 		parent::enqueue_scripts();
 
 		# Add the gallery script
-		wp_enqueue_script( 'uf-field-gallery' );
+		$this->enqueue_script( 'jquery-ui-sortable' );
 
 		# Add the gallery template
 		Template::add( 'gallery', 'field/gallery' );
@@ -81,7 +81,7 @@ class Gallery extends File {
 			->localize( 'gallery-order-title', __( 'Title', 'ultimate-fields' ) )
 			->localize( 'gallery-order-file', __( 'File name', 'ultimate-fields' ) )
 			->localize( 'gallery-order-date', __( 'Date Uploaded', 'ultimate-fields' ) )
-			->localize( 'gallery-order-default', __( 'Default Order - Reversed', 'ultimate-fields' ) )
+			->localize( 'gallery-order-default', __( 'Default Order', 'ultimate-fields' ) )
 			->localize( 'gallery-order-randomize', __( 'Randomize', 'ultimate-fields' ) )
 			;
 	}

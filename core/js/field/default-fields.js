@@ -12,6 +12,9 @@ import imageField from './image';
 import galleryField from './gallery';
 import audioField from './audio';
 import videoField from './video';
+import wpObjectField from './wp-object';
+import wpObjectsField from './wp-objects';
+import linkField from './link';
 import complexField from './complex';
 import repeaterField from './repeater';
 
@@ -33,6 +36,10 @@ export default [
 	galleryField,
 	audioField,
 	videoField,
+
+	wpObjectField,
+	wpObjectsField,
+	linkField,
 
 	complexField,
 	repeaterField,

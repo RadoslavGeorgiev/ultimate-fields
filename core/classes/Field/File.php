@@ -185,7 +185,6 @@ class File extends Field {
 			$ids    = $this->extract_ids_from_value( $value );
 			$needed = array();
 
-
 			# Group into cached, non-existing and needed
 			foreach( $ids as $id ) {
 				if( isset( $cached[ $id ] ) ) {

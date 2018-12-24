@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import classNames from 'classnames';
-import { forEach } from 'lodash';
+import { forEach, find, map, shuffle } from 'lodash';
 
 /**
  * Internal dependencies
@@ -13,39 +13,65 @@ import FileField from 'field/file/component';
 import Button from 'components/button';
 
 /**
- * Handles the input of the file field.
+ * Handles the input of the gallery field.
+ * 
+ * @todo Sortable
  */
 export default class GalleryField extends FileField {
+	/**
+	 * When constructing the field, create callbacks.
+	 */
     constructor() {
         super( ...arguments );
 
+		// A this-ified callback for window resizing.
         this.windowResized = () => {
             this.responsive();
         }
     }
 
+	/**
+	 * Adjusts the grid once the component gets mounted.
+	 */
     componentDidMount() {
+		FileField.prototype.componentDidMount.apply( this );
         window.addEventListener( 'resize', this.windowResized );
-        this.windowResized();
+		this.windowResized();
+		this.sortable();
     }
-
-    componentDidUpdate() {
-        this.windowResized();
+	
+	/**
+	 * Adjusts the grid once the component gets updated.
+	 */
+	componentDidUpdate() {
+		this.windowResized();
+		this.sortable();
     }
-    
+	
+	/**
+	 * Removes global listeners on for resizing.
+	 */
     componentWillUnmount() {
         window.removeEventListener( 'resize', this.windowResized );
     }
 
+	/**
+	 * Opens the popup for file selection.
+	 */
     openFilePopup = () => {
         const { value } = this.props;
 
-        this.openPopup( {
+        this._openPopup( {
             multiple: true,
             selected: value || [],
         } );
     }
 
+	/**
+	 * Renders the full UI of the field.
+	 * 
+	 * @return {Element}
+	 */
     renderFullUI() {
         const { files, isLoaded } = this.props;
 
@@ -89,22 +115,64 @@ export default class GalleryField extends FileField {
                 <div className="uf-gallery__order">
                     <span className="dashicons dashicons-randomize"></span>
 
-                    <select>
+                    <select ref="sort">
                         { selectOptions }
                     </select>
 
-                    <Button type="secondary">
+                    <Button type="secondary" onClick={ this.onSort }>
                         { translate( 'gallery-sort' ) }
                     </Button>
                 </div>
             </div>
         </div>;
-    }
+	}
+	
+	onSort = () => {
+		const { value, files, onChange } = this.props;
+		const { sort: { value: order } } = this.refs;
 
+		if ( '' === order ) {
+			return;
+		}
+
+		if ( 'random' === order ) {
+			return onChange( shuffle( value ) );
+		}
+
+		let field;
+		let direction;
+		if( order == 'default' ) {
+			field     = 'menu_order';
+			direction = 'asc';
+		} else if( order == 'default-reversed' ) {
+			field     = 'menu_order';
+			direction = 'desc';
+		} else {
+			[ field, direction ] = order.split( '-' );
+		}
+
+		onChange( value.sort( ( a, b ) => {
+			var valueA = find( files, { id: a } )[ field ],
+				valueB = find( files, { id: b } )[ field ];
+
+			if( direction == 'desc' ) {
+				return valueB >= valueA ? -1 : 1;
+			} else {
+				return valueA >= valueB ? -1 : 1;
+			}
+		} ) );
+	}
+
+	/**
+	 * Renders the individual preview for a gallery item.
+	 * 
+	 * @param {Object} file The attachment data for the preview.
+	 * @return {Element}
+	 */
     renderGalleryItemPreview( file ) {
         const { id } = file;
 
-        return <div className="uf-gallery__image" key={ id }>
+        return <div className="uf-gallery__image" key={ id } data-id={ id }>
             <div className="uf-gallery__image-inside">
                 { this.renderPreview( file ) }
             </div>
@@ -115,6 +183,12 @@ export default class GalleryField extends FileField {
         </div>;
     }
 
+	/**
+	 * Handles the removal of selected files.
+	 * 
+	 * @param {Object} file The descriptor of the file that is being removed.
+	 * @param {Event}  e 	An event to respond to.
+	 */
     removeImage( file, e ) {
         const { value, onChange } = this.props;
         const { id } = file;
@@ -126,10 +200,17 @@ export default class GalleryField extends FileField {
         } ) );
     }
 
+	/**
+	 * Clears the value of the field.
+	 */
     clear = () => {
         this.props.onChange( [] );
     }
 
+	/**
+	 * Responds to changes in the field size and changes
+	 * the sizes of all items in order to fit nicely.
+	 */
     responsive() {
         const { images } = this.refs;
 
@@ -146,12 +227,30 @@ export default class GalleryField extends FileField {
 
         // Cleanup old classes
         forEach( images.classList, existing => {
-            if ( 0 === existing.indexOf( PREFIX ) ) {
+            if ( existing && 0 === existing.indexOf( PREFIX ) ) {
                 images.classList.remove( existing );
             }
         } );
         
         // Add the new class
         images.classList.add( className );
-    }
+	}
+	
+	/**
+	 * Makes the list of images sortable.
+	 */
+	sortable() {
+		const { images } = this.refs;
+		const { onChange } = this.props;
+
+		const collectOrder = () => {
+			return map( images.children, child => parseInt( child.dataset.id ) );
+		}
+
+		jQuery( this.refs.images ).sortable( {
+			selector: '.uf-gallery__image',
+			tolerance: 'pointer',
+			stop: () => onChange( collectOrder() ),
+		} );
+	}
 }

@@ -146,6 +146,7 @@ class WP_Object extends Field {
 	public function enqueue_scripts() {
 		# Add the basic js
 		wp_enqueue_style( 'uf-select2-css' );
+		$this->enqueue_script( 'uf-select2' );
 
 		# Localize
 		ultimate_fields()
@@ -153,10 +154,11 @@ class WP_Object extends Field {
 			->localize( 'remove',        __( 'Remove', 'ultimate-fields' ) )
 			->localize( 'remove-all',    __( 'Remove All', 'ultimate-fields' ) )
 			->localize( 'add-items',     __( 'Add items', 'ultimate-fields' ) )
-			->localize( 'select',        _x( 'Select', 'object', 'ultimate-fields' ) )
+			->localize( 'object-select', _x( 'Select', 'object', 'ultimate-fields' ) )
 			->localize( 'select-item',   __( 'Select item', 'ultimate-fields' ) )
 			->localize( 'select-items',  __( 'Select items', 'ultimate-fields' ) )
-			->localize( 'object-filter', __( 'Filter...', 'ultimate-fields' ) );
+			->localize( 'object-filter', __( 'Filter...', 'ultimate-fields' ) )
+			->localize( 'object-search', __( 'Search...', 'ultimate-fields' ) );
 	}
 
 	/**

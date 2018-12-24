@@ -16,7 +16,7 @@ export default class AudioField extends FileField {
     openFilePopup = () => {
         const { value } = this.props;
 
-        this.openPopup( {
+        this._openPopup( {
             multiple: true,
             selected: value || [],
         } );

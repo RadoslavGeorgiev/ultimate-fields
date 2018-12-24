@@ -104,9 +104,12 @@ export default class VideoField extends FileField {
         const sources = videos.map( id => {
             const file = find( files, { id } );            
             return <source src={ file.url } key={ id } />
-        } );
+		} );
+		
+		// Fetch a list of IDs in order to make the player unique
+		const allIds = [].concat( videos, posterId ? [ posterId ] : [] );
 
-        return <MediaElementPlayer ids={ [].concat( videos, [ posterId ] ) }>
+        return <MediaElementPlayer ids={ allIds }>
             <video controls="controls" poster={ poster } width="100%" height="100%">
                 { sources }
             </video>
@@ -130,7 +133,7 @@ export default class VideoField extends FileField {
             ? value.videos
             : [];
 
-        this.openPopup( {
+        this._openPopup( {
             multiple:     true,
             selected:     selection,
             type:         'video',
@@ -155,7 +158,7 @@ export default class VideoField extends FileField {
             ? [ value.poster ]
             : [];
 
-        this.openPopup( {
+        this._openPopup( {
             multiple:     false,
             selected:     selection,
             type:         'image',

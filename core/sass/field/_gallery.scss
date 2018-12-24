@@ -87,17 +87,16 @@
 		overflow: hidden;
 	}
 
-	&.ui-sortable-helper {
+	&__image.ui-sortable-helper {
 		cursor: -moz-grabbing;
 		cursor: -webkit-grabbing;
 		cursor: grabbing;
 	}
 
-	&.ui-sortable-placeholder {
+	.ui-sortable-placeholder {
+		box-sizing: border-box;
 		visibility: visible !important;
 		background: #eee;
-		border: 2px dashed #ccc;
-		margin: 3px;
 	}
 
 	&__order {

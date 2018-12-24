@@ -1,74 +1,39 @@
-// Object chooser
 .uf-object {
-	background: #eee;
-	border: 1px solid #ddd;
-	display: inline-block;
+	&__thumbnail {
+		display: block;
+		background: #eee;
 
-	a {
+		img {
+			display: block;
+			height: auto;
+			max-width: 150px;
+			margin: 0 auto;
+		}
+	}
+
+	&__title {
+		font-size: 15px;
+		margin: 0 0 6px;
+	}
+
+	&__link {
 		text-decoration: none;
 	}
 
-	&-select-button {
-		display: inline-block;
-	}
+	&__description {
+		margin: 0;
+		padding-left: 25px;
 
-	&-spinner {
-		float: none;
-		margin: 0 0 3px 10px;
-	}
-
-	&-preview {
-		background: #fff;
-
-		&-thumbnail {
-			display: block;
-			background: #eee;
-
-			img {
-				display: block;
-				height: auto;
-				max-width: 150px;
-				margin: 0 auto;
-			}
+		strong { // Types
+			padding: 3px 5px;
+			background: #e6e5e5;
+			border-radius: 3px;
+			margin-right: 5px;
+			font-weight: normal;
 		}
 
-		&-body {
-			padding: 10px;
-		}
-
-		h4 {
-			font-size: 15px;
-			margin: 0 0 6px;
-
-			a {
-				text-decoration: none;
-			}
-		}
-
-		p {
-			margin: 0;
-			padding-left: 25px;
-
-			strong {
-				padding: 3px 5px;
-				background: #e6e5e5;
-				border-radius: 3px;
-				margin-right: 5px;
-				font-weight: normal;
-			}
-		}
-	}
-
-	&-buttons {
-		border-top: 1px solid #ddd;
-		padding: 6px;
-
-		.uf-button + .uf-button {
-			margin-left: 4px;
-		}
-
-		.spinner {
-			margin-top: 4px;
+		a {
+			text-decoration: none;
 		}
 	}
 }
@@ -95,38 +60,38 @@
 		border-color: transparent transparent #eee transparent;
 	}
 
-	&-filter {
+	&__filter {
 		@extend .clearfix;
 		padding: 6px;
+	}
 
-		&-input {
-			float: left;
-			height: 32px;
+	&__filter-input {
+		float: left;
+		height: 32px;
 
-			.uf-field &[type='text'] {
-				width: 49.5%; // Avoid !important
-				margin: 0;
-				font-size: 12px;
-			}
-		}
-
-		&-mini &-input {
-			.uf-field &[type='text'] {
-				width: 100%;
-			}
-		}
-
-		&-type {
-			float: right;
-			width: 49.5%;
-
-			select {
-				width: 100%;
-			}
+		.uf-field &[type='text'] {
+			width: 49.5%; // Avoid !important
+			margin: 0;
+			font-size: 12px;
 		}
 	}
 
-	&-list {
+	&__filter--mini &__filter-input {
+		.uf-field &[type='text'] {
+			width: 100%;
+		}
+	}
+
+	&__filter-type {
+		float: right;
+		width: 49.5%;
+
+		select {
+			width: 100%;
+		}
+	}
+
+	&__list {
 		border: 1px solid #ddd;
 		border-width: 1px 0;
 		background: #fff;
@@ -134,22 +99,15 @@
 		overflow: auto;
 	}
 
-	&-footer {
+	&__footer {
 		padding: 8px;
-
-		.uf-button + .uf-button {
-			margin-left: 6px;
-		}
 	}
 
-	&-button-right {
-		float: right;
-	}
-
-	&-item {
+	&__item {
 		cursor: default;
 		position: relative;
-
+		padding: 10px;
+	
 		&:after {
 			content: '';
 			position: absolute;
@@ -158,83 +116,97 @@
 			width: 100%;
 			height: 100%;
 		}
-
+	
 		& + & {
 			border-top: 1px solid #ddd;
 		}
-
-		&-title {
-			margin: 0;
-		}
-
-		&-selected {
+	
+		&--selected {
 			background: #dedede;
-
-			.uf-object-preview p strong {
+	
+			.uf-object__description strong {
 				background: #666;
 				color: #fff;
 			}
 		}
 	}
+}
 
-	&-preloader {
-		height: auto;
-		padding: 15px;
-		text-align: center;
-		border-top: 1px solid #ddd;
+.uf-chooser__item .uf-object {
+	background: none;
 
-		.spinner {
-			float: none;
-		}
+	.dashicons-edit,
+	img {
+		display: none;
 	}
 
-	.uf-object-preview {
-		background: none;
-
-		.dashicons-edit {
-			display: none;
-		}
-
-		p {
-			padding-left: 0;
-		}
-
-		a {
-			color: #444;
-			text-decoration: none;
-		}
-
-		img {
-			display: none;
-		}
+	a {
+		color: #444;
 	}
 
-	&-no-data {
-		text-align: center;
-	    color: #444;
-	}
-
-	.select2-container {
-		max-width: 100%;	
-	}
-
-	.select2-container--default .select2-selection--multiple {
-		.select2-search__field {
-			padding-left: 4px;
-			margin-top: 6px;
-		}
-
-		.select2-selection__rendered {
-			padding: 0;
-		}
-
-		.select2-selection__choice {
-			font-size: 12px;
-			padding: 2px 5px;
-			margin: 3px 0 3px 3px;
-		}
+	&__description {
+		padding-left: 0;
 	}
 }
+
+
+.uf-chooser .select2-container {
+	max-width: 100%;	
+}
+
+.uf-chooser .select2-container--default .select2-selection--multiple {
+	.select2-search__field {
+		padding-left: 4px;
+		margin-top: 6px;
+	}
+
+	.select2-selection__rendered {
+		padding: 0;
+	}
+
+	.select2-selection__choice {
+		font-size: 12px;
+		padding: 2px 5px;
+		margin: 3px 0 3px 3px;
+	}
+}
+
+.uf-object-ui {
+	background: #eee;
+	border: 1px solid #ddd;
+	display: inline-block;
+
+	&__spinner {
+		float: none;
+		margin: 4px 0 3px 10px;
+	}
+
+	&__preview {
+		background: #fff;
+		padding: 10px;
+	}
+
+	&__buttons {
+		border-top: 1px solid #ddd;
+		padding: 6px;
+
+		.uf-button + .uf-button {
+			margin-left: 4px;
+		}
+	}
+
+	.uf-object {
+		background: #fff;
+	}
+}
+
+
+// .uf-chooser {
+// 	&-no-data {
+// 		text-align: center;
+// 	    color: #444;
+// 	}
+// }
 
 .uf-objects {
 	background: #eee;
@@ -248,7 +220,7 @@
 	}
 
 	&-buttons {
-		@extend .uf-object-buttons;
+		// @extend .uf-chooser__buttons;
 	}
 }
 

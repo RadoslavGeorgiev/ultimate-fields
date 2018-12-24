@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 
 /**
  * Handles the rendering of video and audio components.
@@ -43,12 +44,14 @@ export default class MediaElementPlayer extends Component {
     /**
      * Moves the node back to the root and cleans up after the player.
      */
-    componentWillUpdate() {
-        const { wrapper, player } = this.refs;
+    componentWillUpdate( { ids } ) {
+		const { wrapper, player } = this.refs;
 
-        player.parentNode.removeChild( player );
-        wrapper.innerHTML = '';
-        wrapper.appendChild( player );
+		if ( ! isEqual( this.props.ids, ids ) ) {
+			player.parentNode.removeChild( player );
+			wrapper.innerHTML = '';
+			wrapper.appendChild( player );
+		}
     }
 
     /**

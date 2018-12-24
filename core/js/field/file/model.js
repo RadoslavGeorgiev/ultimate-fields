@@ -1,4 +1,9 @@
 /**
+ * External dependencies.
+ */
+import { isArray } from 'lodash';
+
+/**
  * Internal dependencies.
  */
 import Model from 'field/model';
@@ -91,7 +96,7 @@ export default class FileFieldModel extends Model {
     
         const data = {
             uf_action: `file_preview_${name}`,
-            file_ids: ids,
+            file_ids: isArray( ids ) ? ids : [ ids ],
             nonce,
             nonce_action,
         };

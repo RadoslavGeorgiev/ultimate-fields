@@ -172,3 +172,13 @@ Container::create( 'table-repeater' )
 				]
 			] )
 	] );
+
+Container::create( 'object-fields' )
+	->add_location( 'options' )
+	->set_style( 'boxed')
+	->set_layout( 'grid' )
+	->add_fields( [
+		Field::create( 'wp_object', 'object_field_a' ),
+		Field::create( 'wp_objects', 'objects_field_a' ),
+		Field::create( 'link', 'link_field_a' ),
+	] );
